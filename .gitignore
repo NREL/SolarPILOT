@@ -12,3 +12,5 @@
 vc120.*
 src/Custom/
 *.pdb
+*.ilk
+*.res
