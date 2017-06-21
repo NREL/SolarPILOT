@@ -1,0 +1,253 @@
+﻿<html>
+	
+<head>
+	<title>Receiver Template</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Professional Edition 4.6.2.573">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "SolarPILOT.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("ReceiverTemplate");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Receiver Template</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="InputPageReference.html">Input Page Reference</a> &rsaquo;&rsaquo; <a href="ReceiversTree.html">Receivers</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="ReceiversTree.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="RecTempManagement.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="Simulationcontrol.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps6"><a name="top"></a>
+<span class="rvts0"><span class="rvts19">Page Overview</span></span></h1>
+<p class="rvps2"><span class="rvts6">The Receiver Template page allows you to specify geometry and properties of a receiver. Each receiver in the layout has a unique Receiver Template page with a name corresponding to that specified in the Receiver Template Management page.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><a class="rvts20" href="ReceiverTemplate.html#Receiver%20Geometry%20">Receiver Geometry </a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><a class="rvts20" href="ReceiverTemplate.html#Receiver%20Position">Receiver Position</a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><a class="rvts20" href="ReceiverTemplate.html#Optical%20Properties">Optical Properties</a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><a class="rvts20" href="ReceiverTemplate.html#Thermal%20Losses">Thermal Losses</a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
+<h1 class="rvps6"><a name="Receiver Geometry "></a>
+<span class="rvts0"><span class="rvts19">Receiver Geometry </span></span></h1>
+<p class="rvps2"><a class="rvts34" href="ReceiverTemplate.html#top">- Top of page -</a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver height</span></span></h2>
+<p class="rvps2"><span class="rvts6">The height of the receiver heat absorption surface.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver orientation azimuth</span></span></h2>
+<p class="rvps2"><span class="rvts6">The azimuthal orientation of the receiver. North=0, East=90, West=270. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">** Currently, this is only implemented for Flat Plate receivers.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver orientation elevation</span></span></h2>
+<p class="rvps2"><span class="rvts6">The elevation orientation of the receiver. The normal vector from the plane of the receiver surface is tilted at this elevation angle. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">** Currently, this is only implemented for Flat Plate receivers.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver Type</span></span></h2>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h3 class="rvps8"><span class="rvts0"><span class="rvts24">External cylindrical</span></span></h3>
+<p class="rvps9"><span class="rvts6">Select the receiver type to be "external cylindrical". The heat absorbing surface is defined as a cylinder of specified diameter and height. The centerline axis of the receiver is oriented at zenith.</span></p>
+<p class="rvps9"><span class="rvts6"><br/></span></p>
+<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Receiver diameter</span></span></h4>
+<p class="rvps11"><span class="rvts6">The diameter of the receiver cylinder.</span></p>
+<p class="rvps11"><span class="rvts6"><br/></span></p>
+<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Flat Plate</span></span></h3>
+<p class="rvps9"><span class="rvts6">Select the receiver type to be "flat plate". The heat absorbing surface lies within a flat plane with a surface normal vector pointing toward the horizon at due North unless otherwise specified. </span></p>
+<p class="rvps9"><span class="rvts6"><br/></span></p>
+<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Receiver acceptance angles shape</span></span></h4>
+<p class="rvps11"><span class="rvts6">You can limit the angular window from which the receiver can accept incoming flux. The angular limits effectively block reflected light from heliostats outside of the range. </span></p>
+<p class="rvps11"><span class="rvts6"><br/></span></p>
+<p class="rvps11"><span class="rvts6">The shape of the angular window can be either rectangular or elliptical. </span></p>
+<p class="rvps11"><span class="rvts6"><br/></span></p>
+<h3 class="rvps27"><span class="rvts0"><span class="rvts24">Rectangular</span></span></h3>
+<p class="rvps24"><span class="rvts6">Rectangular limits indicate that the receiver can accept reflected light from a rectangular profile when viewed from the perspective of the receiver. Because the limits are imposed from the perspective of the receiver, the rectangular acceptance range may be distorted when projected onto the plane of the ground. </span></p>
+<p class="rvps24"><span class="rvts6"><br/></span></p>
+<p class="rvps24"><span class="rvts6">The following layout provides an example of rectangular constraints for a flat plate receiver at a Receiver orientation elevation of -30 degrees, a Receiver horizontal acceptance angle of 60 degrees, and a Receiver vertical acceptance angle of 30 degrees.</span></p>
+<p class="rvps24"><span class="rvts6"><br/></span></p>
+<p class="rvps24"><img alt="" style="padding : 1px;" src="lib/NewItem175.png"></p>
+<p class="rvps24"><span class="rvts6"><br/></span></p>
+<h3 class="rvps27"><span class="rvts0"><span class="rvts24">Elliptical</span></span></h3>
+<p class="rvps24"><span class="rvts6">Elliptical limits indicate that the receiver can accept reflected light from an elliptical profile when viewed from the perspective of the receiver. The ellipse is defined by a maximum width and maximum height. The Receiver horizontal acceptance angle specifies the maximum width of the ellipse, while the Receiver vertical acceptance angle specifies the maximum height.</span></p>
+<p class="rvps24"><span class="rvts6"><br/></span></p>
+<p class="rvps24"><span class="rvts6">The following layout provides an example of elliptical constraints for a flat plate receiver at a Receiver orientation elevation of -30 degrees, a Receiver horizontal acceptance angle of 60 degrees, and a Receiver vertical acceptance angle of 30 degrees.</span></p>
+<p class="rvps24"><span class="rvts6"><br/></span></p>
+<p class="rvps24"><img alt="" style="padding : 1px;" src="lib/NewItem176.png"></p>
+<p class="rvps24"><span class="rvts6"><br/></span></p>
+<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Receiver horizontal acceptance angle</span></span></h4>
+<p class="rvps11"><span class="rvts6">The angular extent in the horizontal direction from the perspective of the receiver from which incident light can be accepted. The angular span is symmetric about the normal vector from the surface of the receiver.</span></p>
+<p class="rvps11"><span class="rvts6"><br/></span></p>
+<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Receiver vertical acceptance angle</span></span></h4>
+<p class="rvps11"><span class="rvts6">The angular extent in the vertical direction from the perspective of the receiver from which incident light can be accepted. The angular span is symmetric about the normal vector from the surface of the receiver.</span></p>
+<p class="rvps11"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver aspect ratio (H/W)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Calculated value indicating the aspect ratio of the receiver. The aspect ratio is defined as the height of the receiver divided by the width, where the width is equal to the specified with for a flat plate receiver or the specified diameter for a cylindrical receiver.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver absorber area</span></span></h2>
+<p class="rvps2"><span class="rvts6">The heat absorbing surface area of the receiver. For external cylindrical receivers, this is equal to the diameter times the height times Pi. For flat plate receivers, this is equal to the width times the height. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
+<h1 class="rvps6"><a name="Receiver Position"></a>
+<span class="rvts0"><span class="rvts19">Receiver Position</span></span></h1>
+<p class="rvps2"><a class="rvts34" href="ReceiverTemplate.html#top">- Top of page -</a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">You can specify an offset in the receiver position relative to the tower position using these inputs. The receiver is by default positioned at the (x=0, y=0) location relative to the heliostat coordinates. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver positioning offset - X axis</span></span></h2>
+<p class="rvps2"><span class="rvts6">Offset the receiver position in the East-West direction. A positive X-offset indicates displacement to the East.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver positioning offset - Y axis</span></span></h2>
+<p class="rvps2"><span class="rvts6">Offset the receiver position in the North-South direction. A positive Y-offset indicates displacement to the North.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver positioning offset - Z axis</span></span></h2>
+<p class="rvps2"><span class="rvts6">Offset the receiver position in the vertical direction. A positive Z-offset indicates displacement upward.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver optical height</span></span></h2>
+<p class="rvps2"><span class="rvts6">Calculated value indicating the optical height of the receiver including the receiver Z axis offset. The optical height is defined as the distance between the heliostat pivot points and the vertical center of the receiver. See </span><a class="rvts20" href="LayoutSetup.html#Tower%20Optical%20Height">Tower Optical Height</a><span class="rvts6"> for more information.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
+<h1 class="rvps6"><a name="Optical Properties"></a>
+<span class="rvts0"><span class="rvts19">Optical Properties</span></span></h1>
+<p class="rvps2"><a class="rvts34" href="ReceiverTemplate.html#top">- Top of page -</a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Allowable peak flux</span></span></h2>
+<p class="rvps2"><span class="rvts6">The allowable peak flux is used </span><span class="rvts29">only for optimization</span><span class="rvts6">. This value specifies the maximum flux allowed at any point on the receiver surface. During optimization, if the allowable flux is exceeded, the algorithm may attempt to increase the receiver surface area.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver thermal absorptance</span></span></h2>
+<p class="rvps2"><span class="rvts6">The receiver thermal absorptance specifies the fraction of light that is absorbed (before radiative and convective losses) when striking the receiver. This value typically indicates the absorptivity of the receiver surface coating. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
+<h1 class="rvps6"><a name="Thermal Losses"></a>
+<span class="rvts0"><span class="rvts19">Thermal Losses</span></span></h1>
+<p class="rvps2"><a class="rvts34" href="ReceiverTemplate.html#top">- Top of page -</a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The receiver thermal losses include convective and radiative loss from the absorbing surface of the receiver and piping loss from the riser and downcomer. The thermal losses are estimated using a design-point value that you specify, the receiver absorptive area, and polynomials that scale the thermal losses with incident power level and wind velocity.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Thermal losses are used in two ways: First, the total thermal power delivered to the receiver must equal the specified Solar field design power on the Layout Setup page plus the design-point thermal loss plus the fractional loss due to the receiver thermal absorptance fraction. Therefore, </span><span class="rvts29">the power delivered by the heliostats will typically exceed the specified Solar field design power</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Design point receiver thermal loss</span></span></h2>
+<p class="rvps2"><span class="rvts6">You can set the baseline receiver thermal loss using this coefficient. The value indicates the losses from the receiver due to convection and radiation in kWt per square meter of receiver absorber area. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Load-based thermal loss adjustment</span></span></h2>
+<p class="rvps2"><span class="rvts6">The load-based thermal loss adjustment allows you to specify how the thermal losses may vary with incident power on the receiver. The coefficients that you provide correspond to a 3rd-degree polynomial, where the argument is given by the power incident on the receiver at any particular time divided by the power on the receiver at the design point. The 0th order coefficient is a constant, the 1st order coefficient is a linear term, the 2nd order coefficient is a quadratic term, and the third order coefficient is a cubic term. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The thermal loss adjustments are used both to calculate the thermal loss at design and to calculate the thermal loss during the layout simulation when the DNI and heliostat field optical efficiency deviate from their reference conditions.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Wind-based thermal loss adjustment</span></span></h2>
+<p class="rvps2"><span class="rvts6">The wind-based thermal loss adjustment allows you to specify how the thermal losses may vary with measured wind speed from a weather file. The coefficients that you provide correspond to a constant (0), linear (1), quadratic (2), and cubic (3) term. The coefficients multiply the argument, which is wind velocity raised to the corresponding power.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The thermal loss adjustments are used both to calculate the thermal loss at design and to calculate the thermal loss during the layout simulation when the wind velocity deviates from the reference condition (zero).</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Design-point thermal loss</span></span></h2>
+<p class="rvps2"><span class="rvts6">The design-point thermal loss is the total rate of thermal loss due to radiation and convection at reference conditions. The design-point thermal loss is calculated as follows:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem177.png"></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The terms in this equation are:</span></p>
+<p class="rvps2"><span class="rvts6">(1) Design point receiver thermal loss</span></p>
+<p class="rvps2"><span class="rvts6">(2) Receiver surface area</span></p>
+<p class="rvps2"><span class="rvts6">(3) Result of the wind-based thermal loss adjustment polynomial evaluation</span></p>
+<p class="rvps2"><span class="rvts6">(4) Result of the load-based thermal loss adjustment polynomial evaluation</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The design-point thermal loss is added to the Solar field design power and the fractional loss due to imperfect absorption (if applicable) to determine the total required power to be delivered by the heliostat field at the reference condition.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver piping loss coefficient</span></span></h2>
+<p class="rvps2"><span class="rvts6">The receiver piping loss coefficient determines the loss from the receiver piping in units of kWt per meter of tower height. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver piping loss constant</span></span></h2>
+<p class="rvps2"><span class="rvts6">The receiver piping loss constant determines the thermal losses from receiver piping that is constant and does not depend on system geometry.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver piping loss</span></span></h2>
+<p class="rvps2"><span class="rvts6">The receiver piping loss is a calculated value that indicates the total receiver piping loss, including constant loss and loss that scales with tower height. The receiver piping loss is calculated as follows:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem178.png"></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">where:</span></p>
+<div class="rvps9"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<tr valign="middle">
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem179.png"></p>
+</td>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">m</span></p>
+</td>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Tower height</span></p>
+</td>
+</tr>
+<tr valign="middle">
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem180.png"></p>
+</td>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">kW/m</span></p>
+</td>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Receiver piping loss coefficient</span></p>
+</td>
+</tr>
+<tr valign="middle">
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem181.png"></p>
+</td>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">kW</span></p>
+</td>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Receiver piping loss constant</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

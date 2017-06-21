@@ -1,0 +1,28 @@
+var("solarfield.0.des_sim_ndays", 2);
+var("solarfield.0.tht", 125);
+var("solarfield.0.q_des", 300 );
+//var("fluxsim.0.y_res", 25 );
+//var("heliostat.0.width", 4);
+//var("heliostat.0.height", 4);
+var("receiver.0.rec_height", 15);
+var("receiver.0.rec_diameter", 12);
+
+layout_ok = run_layout({'nthreads'=3});
+
+all = get_heliostats('cartesian', [-10000,10000,-10000,10000]);
+allrefl = [];
+for(i=0; i<#all; i++)
+	allrefl[i] = 0.;
+	
+modify_heliostats(all, {"reflectivity"=allrefl});
+
+
+hels = get_heliostats("svgfile", "C:/Users/mwagner/Desktop/drawing.svg", {"scale"=[2., 2.], "offset"=[-500,100]}); 
+
+refls = [];
+for(i=0; i<#hels; i++)
+	refls[i] = 1.0;
+
+modify_heliostats(hels, {"reflectivity"=refls});
+
+sim_ok = run_performance();

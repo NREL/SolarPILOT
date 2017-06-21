@@ -1,0 +1,3 @@
+ncpu	3	Number of CPU's to use for simulation
+tt_delay	1500	[millisec] Tooltip delay
+nrecent_max	10	Number of items shown in File->Recent Files menu

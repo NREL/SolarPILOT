@@ -1,0 +1,150 @@
+﻿<html>
+	
+<head>
+	<title>Template management</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Professional Edition 4.6.2.573">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "SolarPILOT.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("HelioTempManagement");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Template management</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="InputPageReference.html">Input Page Reference</a> &rsaquo;&rsaquo; <a href="HeliostatsTree.html">Heliostats</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="HeliostatsTree.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="HeliostatsTree.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="HeliostatTemplate.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps6"><a name="Top of page"></a>
+<span class="rvts0"><span class="rvts19">Page Overview</span></span></h1>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">SolarPILOT can model multiple heliostat geometries in a single layout. You can manage the heliostat templates and their positioning in the field on the template management page. This page appears in the page list as </span><span class="rvts29">Heliostats.</span></p>
+<p class="rvps2"><span class="rvts29"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Two input groups are available. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><a class="rvts20" href="HelioTempManagement.html#Heliostat%20Templates">Heliostat Templates</a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><a class="rvts20" href="HelioTempManagement.html#Heliostat%20Type%20Use">Heliostat Type Use</a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
+<h1 class="rvps6"><a name="Heliostat Templates"></a>
+<span class="rvts0"><span class="rvts19">Heliostat Templates</span></span></h1>
+<p class="rvps2"><a class="rvts34" href="HelioTempManagement.html#Top%20of%20page">- Top of page -</a></p>
+<p class="rvps2"><span class="rvts51"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The Heliostat Templates group allows you to add, delete, disable, or rename heliostat templates. Actions taken in this group affect the templates that appear in the page list.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Add New [Button]</span></span></h2>
+<p class="rvps2"><span class="rvts6">Add a new heliostat template to the system. This action will create a new heliostat geometry template that will appear in the page list. The default values for the new template are copied from the first template in the template list. Once created, the geometry and properties of the heliostat template can be modified by navigating to the newly created page and specifying values as needed.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">When adding a new template, you will be prompted to provide a name for the template. You must use a unique name for each template.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Delete [Button]</span></span></h2>
+<p class="rvps2"><span class="rvts6">Delete the selected heliostat template from the template list. This button has no action unless a template is selected. Once confirmed, the action cannot be undone.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Disable [Button]</span></span></h2>
+<p class="rvps2"><span class="rvts6">Disable a selected heliostat template. This button has no action unless a template is selected. A disabled template remains a part of the project file, but is not used as part of the heliostat field layout. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Disabling a heliostat template may be desired when considering multiple heliostat options as part of a field layout, for example. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Rename [Button]</span></span></h2>
+<p class="rvps2"><span class="rvts6">Rename the selected template.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Move Item [Buttons]</span></span></h2>
+<p class="rvps2"><span class="rvts6">The order of the heliostat templates in the lists can be important, depending on the Heliostat Geometry Distribution option that you select. For more information on how order may affect your system, refer to </span><a class="rvts20" href="HelioTempManagement.html#Heliostat%20Geometry%20Distribution">Heliostat Geometry Distribution</a><span class="rvts6"> notes.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Template [List Control]</span></span></h2>
+<p class="rvps2"><span class="rvts6">The heliostat template list provides a full list of all heliostat templates that are currently part of the project file. The template name and template state are provided. The template state can be modified using the action buttons described above.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
+<h1 class="rvps6"><a name="Heliostat Type Use"></a>
+<span class="rvts0"><span class="rvts19">Heliostat Type Use</span></span></h1>
+<p class="rvps2"><a class="rvts34" href="HelioTempManagement.html#Top%20of%20page">- Top of page -</a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The Heliostat Type Use group determines how multiple heliostat templates (if applicable) are distributed in the heliostat field layout. Because SolarPILOT can model multiple heliostat geometries, rules for the positioning of each heliostat type are governed in this input group.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><a name="Heliostat Geometry Distribution"></a>
+<span class="rvts0"><span class="rvts23">Heliostat Geometry Distribution</span></span></h2>
+<p class="rvps2"><span class="rvts6">Select the heliostat geometry (template) spatial distribution method. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Use Single Template</span></span></h3>
+<p class="rvps9"><span class="rvts6">With this option, all heliostats in the field are based on the geometry defined in a single template. </span></p>
+<p class="rvps9"><span class="rvts6"><br/></span></p>
+<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Select Heliostat Geometry</span></span></h4>
+<p class="rvps11"><span class="rvts6">Select the heliostat geometry template to be used for the heliostat field layout. The drop-down list contains all active heliostat geometry templates in the template list.</span></p>
+<p class="rvps11"><span class="rvts6"><br/></span></p>
+<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Specified Range</span></span></h3>
+<p class="rvps9"><span class="rvts6">Specify the radial and azimuthal ranges in which each template may be placed. Specify the range requirements for each active template in the provided input table. </span></p>
+<p class="rvps9"><span class="rvts6"><br/></span></p>
+<p class="rvps9"><span class="rvts6">Note that:</span></p>
+<p class="rvps9"><span class="rvts6">1) Heliostats not contained within any specified range will assume the first active template in the list.</span></p>
+<p class="rvps9"><span class="rvts6">2) Heliostats contained in multiple ranges will use the first available template in the list.</span></p>
+<p class="rvps9"><span class="rvts6"><br/></span></p>
+<p class="rvps9"><span class="rvts6">The range extents are defined as:</span></p>
+<p class="rvps9"><span class="rvts6">-180 = +180 = South</span></p>
+<p class="rvps9"><span class="rvts6">angle &lt; 0 = West</span></p>
+<p class="rvps9"><span class="rvts6">angle &gt;= 0 = East</span></p>
+<p class="rvps9"><span class="rvts6">0 = North</span></p>
+<p class="rvps9"><span class="rvts6"><br/></span></p>
+<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Even Radial Distribution</span></span></h3>
+<p class="rvps9"><span class="rvts6">The active heliostat templates are assigned to evenly-spaced radial zones in the order specified in the template list control. The radial range for each template is equal to the maximum allowable positioning radius minus the minimum allowable positioning radius all divided by the number of heliostat templates.</span></p>
+<p class="rvps9"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

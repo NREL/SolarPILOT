@@ -1,0 +1,378 @@
+ambient	atm_coefs	IN	MATRIX_T	0.006789,0.1046,-0.0170,0.002845;0.01293,0.2748,-.03394,0;0.006789,0.1046,-0.0170,0.002845	none	FALSE		0.006789,0.1046,-0.0170,0.002845;0.01293,0.2748,-.03394,0;0.006789,0.1046,-0.0170,0.002845		User-defined attenuation	Atmospheric attenuation coefficients for user-defined analysis
+ambient	atm_model	IN	STRING	0	none	TRUE	combo	DELSOL3 clear day=0;DELSOL3 hazy day=1;User-defined=2		Atmospheric attenuation model	Atmospheric attenuation model {0=25km Barstow, 1 = 5km Barstow, 2 = user defined}
+ambient	class_name	IN	STRING	Climate	none	FALSE				Class name	Class name
+ambient	del_h2o	IN	DOUBLE	20	mm H2O	FALSE				Atmospheric precipitable water	Atmospheric precipitable water depth for use in the Allen insolation model
+ambient	dni_layout	IN	DOUBLE	950	W/m2	TRUE				Constant DNI for layout calculations	DNI to use during all layout calculations. CONSTANT model only.
+ambient	dpres	IN	DOUBLE	1	atm	TRUE				Ambient pressure	Local ambient pressure relative to sea-level pressure
+ambient	elevation	IN	DOUBLE	588	m	FALSE				Plant elevation	Plant mean elevation
+ambient	insol_type	IN	STRING	0	none	FALSE	combo	Weather file data=-1;Meinel model=0;Hottel model=1;Constant value=2;Allen model=3;Moon model=4		Insolation model	Model used to determine insolation as a function of time
+ambient	latitude	IN	DOUBLE	34.867	deg	FALSE				Plant latitude	Plant latitude
+ambient	loc_city	IN	STRING	city name	none	FALSE				Weather file location name	City or place name for weather station (informational only)
+ambient	loc_state	IN	STRING	state name	none	FALSE				Weather file state name	State name for weather station (informational only)
+ambient	longitude	IN	DOUBLE	-116.783	deg	FALSE				Plant longitude	Plant longitude
+ambient	sun_csr	IN	DOUBLE	0.1	none	TRUE				Circumsolar ratio	Ratio of solar flux contained in the circumsolar ring over the solar disc flux
+ambient	sun_pos_map	IN	MATRIX_T		[deg,deg]	FALSE				sun_pos_map	Map of sun positions to use for calculations
+ambient	sun_rad_limit	IN	DOUBLE	4.65	mrad	TRUE				Sunshape angular extent	Half-angle of sunshape size (4.65mrad for Pillbox, 2.73mrad for Gaussian)
+ambient	sun_type	IN	STRING	2	none	TRUE	combo	Pillbox sun=2;Gaussian sun=4;Limb-darkened sun=1;Point sun=0;Buie CSR=5;User sun=3;		Sunshape model	Sunshape model - {0=point sun, 1=limb darkened sun, 2=square wave sun, 3=user sun}
+ambient	time_zone	IN	DOUBLE	-8	hr	FALSE				Time zone	Time zone
+ambient	user_sun	IN	MATRIX_T		[deg,deg]	FALSE				user_sun	Array of intensity at various angles from the centroid of the sun
+ambient	weather_file	IN	STRING	CA Daggett.tm2	none	TRUE				Weather file	Weather file to use for analysis
+ambient	wf_data	IN	WEATHERDATA		none	FALSE				wf_data	Data entries in the weather file
+ambient	atm_atten_est	OUT	DOUBLE	0	%	FALSE				Average attenuation	Average solar field attenuation due to atmospheric scattering
+ambient	sim_time_step	OUT	DOUBLE	0	sec	FALSE				Simulation weather data time step	Simulation weather data time step
+custom_rec	A_proj	IN	DOUBLE	0	m2	FALSE				Projected absorber area	Projected absorber area
+custom_rec	A_tot	IN	DOUBLE	0	m2	FALSE				Total absorber surface area	Total absorber surface area
+custom_rec	base_name	IN	STRING	nbb_co2	none	TRUE				Output data directory base	Base name for output data. Directory will be appended with simulation number for multiple sims.
+custom_rec	basis_method	IN	STRING	0	none	TRUE	combo	Average=0;Median=1;Peak=2;Tube design point=3;Specified=4		Flux absorption basis value	Metric to use as base flux value in determining profile quality
+custom_rec	basis_specified	IN	DOUBLE	0	kW	TRUE				Specified flux absorption basis	Metric to use as base flux value in determining profile quality
+custom_rec	cav_depth	IN	DOUBLE	3	m	TRUE				Cavity depth	Length between aperture and back wall
+custom_rec	circ_min	IN	DOUBLE	0	none	TRUE				Normalized profile minimum	Minimum flux value (multiplied by max. value) in the circumferential profile.
+custom_rec	circ_profile	IN	STRING	0	none	TRUE	combo	Sinusoidal=0;Square=1		Circumferential flux profile	Method for generating circumferential flux profile based on available data points
+custom_rec	circ_res	IN	INT	20	none	TRUE				Circumferential simulation points	Number of points in the circumferential flux profile
+custom_rec	class_name	IN	STRING	NBB s-CO2 Receiver	none	FALSE				Class name	Class name
+custom_rec	D_header	IN	DOUBLE	0.1	m	TRUE				Header diameter	Header diameter
+custom_rec	d_tube	IN	DOUBLE	0.02	m	TRUE				Individual tube outer diameter	Individual tube outer diameter
+custom_rec	design_location	IN	STRING	0	none	TRUE	combo	Peak flux=0;Circumferential delta=1		Flux criteria for design point	Flux criteria to determine the tube design point location
+custom_rec	ees_path	IN	STRING	C:\\EES32\\ees.exe	none	FALSE	path			EES executable location	EES executable location
+custom_rec	enable_custom	IN	BOOL	FALSE	none	FALSE	checkbox			Enable custom receiver geometry	Use the custom receiver geometry functionality
+custom_rec	enable_ees	IN	BOOL	FALSE	none	TRUE	checkbox			Enable tube strain simulations	Run the tube strain model according to the specified settings
+custom_rec	est_flux	IN	DOUBLE	0	kW/m2	FALSE				Estimated average flux	Average flux on absorber panels at design
+custom_rec	export_quality	IN	BOOL	TRUE	none	TRUE	checkbox			Export flux profile quality results	Save tabulated flux quality results to the output directory
+custom_rec	f_h_bend	IN	DOUBLE	0.9	none	TRUE				Bend vertical fill	Bend vertical fill
+custom_rec	f_offset_zm	IN	DOUBLE	0	none	TRUE				Absorber back wall offset factor	Fraction of the total cavity depth by which the absorber is displaced from the back wall
+custom_rec	f_offset_zp	IN	DOUBLE	0	none	TRUE				Absorber aperture offset factor	Fraction of the total cavity depth by which the absorber is displaced from the aperture
+custom_rec	f_shield	IN	DOUBLE	0	none	FALSE				Shield aperture occupancy fraction	Shield aperture occupancy fraction
+custom_rec	f_x_abs	IN	DOUBLE	1	none	TRUE				Absorber horizontal occupancy factor	Absorber horizontal occupancy factor
+custom_rec	f_x_sep	IN	DOUBLE	1	none	TRUE				Vert. Panel internal spacing factor	Factor multiplying spacing length between vertical panels. Max should be (n-1)/(n-3) for n>3
+custom_rec	f_y_abs	IN	DOUBLE	1	none	TRUE				Horiz. Panel internal spacing factor	Factor multiplying spacing length between horizontal panels. Max should be (n-1)/(n-3) for n>3
+custom_rec	flux_adjust	IN	DOUBLE	0	none	FALSE				Flux magnitude multiplier	Flux magnitude multiplier
+custom_rec	generate_plots	IN	BOOL	TRUE	none	FALSE	checkbox			Generate surface flux plots	Generate surface flux plots
+custom_rec	generate_profiles	IN	BOOL	FALSE	none	FALSE	checkbox			Generate surface flux data files	Generate surface flux data files
+custom_rec	h_rec	IN	DOUBLE	8	m	FALSE				Receiver total height	Receiver total height
+custom_rec	header_domain	IN	STRING	0	none	TRUE	combo	Adjacent half panels=0;Adjacent full panels=1;Single unit surface=2		Header supply domain	Method for dividing a flux panel into header sections
+custom_rec	inlet_temp	IN	DOUBLE	470	C	TRUE				Receiver inlet temperature	Design-point receiver inlet temperature
+custom_rec	is_results_window	IN	BOOL	TRUE	none	FALSE	checkbox			Show results window	Show results window
+custom_rec	L_shield_ext	IN	DOUBLE	0.05	m	TRUE				Shield additional coverage depth	Shield additional coverage depth
+custom_rec	link_opt_props	IN	BOOL	FALSE	none	TRUE	checkbox			Separators use absorber optics	Overwrite the specified separator optical properties with absorber properties
+custom_rec	n_abs	IN	INT	8	none	TRUE				Number of absorber racks vertically	Number of absorber racks vertically
+custom_rec	n_sep	IN	INT	2	none	TRUE				Number of optical separation panels	Number of optical separation panels
+custom_rec	N_tubes	IN	INT	0	none	FALSE				Number of tubes in the receiver	Number of tubes in the receiver
+custom_rec	outlet_temp	IN	DOUBLE	650	C	TRUE				Receiver outlet temperature	Design-point receiver outlet temperature
+custom_rec	p_out	IN	DOUBLE	0	bar	FALSE				Tube outlet pressure	Tube outlet pressure
+custom_rec	profile_name	IN	STRING	none	none	FALSE				Flux profile location	Flux profile location
+custom_rec	q_ray	IN	DOUBLE	100	W	FALSE				Power per ray	Power per ray
+custom_rec	quality_method	IN	STRING	0	none	TRUE	combo	All panels together=0;Split by panel=1;Split by header=2		Flux quality evaluation domain	Method for calculating the quality of the flux profile
+custom_rec	rec_mass_flow	IN	DOUBLE	0	kg/s	FALSE				Receiver mass flow rate	Mass flow rate of the CO2 through the entire receiver
+custom_rec	rec_pressure	IN	DOUBLE	25	MPa	TRUE				Receiver operating pressure	Turbine inlet pressure
+custom_rec	rho_abs	IN	DOUBLE	0.5	none	TRUE				Absorber reflectivity	Absorber reflectivity
+custom_rec	rho_cav	IN	DOUBLE	0.95	none	TRUE				Cavity wall reflectivity	Cavity wall reflectivity
+custom_rec	rho_sep	IN	DOUBLE	0.95	none	TRUE				Separator reflectivity	Separator reflectivity
+custom_rec	rho_shield	IN	DOUBLE	0.9	none	TRUE				Shield reflectivity	Shield reflectivity
+custom_rec	sep_are_abs	IN	BOOL	FALSE	none	TRUE	checkbox			Treat separators as absorbers	Treat separators as absorbers
+custom_rec	sigma_s_abs	IN	DOUBLE	5	mrad	TRUE				Absorber specularity	Absorber specularity
+custom_rec	sigma_s_cav	IN	DOUBLE	0.75	mrad	TRUE				Cavity wall specularity	Cavity wall specularity
+custom_rec	sigma_s_sep	IN	DOUBLE	0.75	mrad	TRUE				Separator specularity	Separator specularity
+custom_rec	sigma_s_shield	IN	DOUBLE	0.75	mrad	TRUE				Shield specularity	Shield specularity
+custom_rec	sim_res	IN	INT	20	none	TRUE				Axial simulation points	Simulation discretization along each flow path
+custom_rec	T_eval_max	IN	DOUBLE	0	C	FALSE				Maximum material temperature	Maximum material temperature
+custom_rec	T_surf_max	IN	DOUBLE	0	C	FALSE				Maximum surface temperature	Maximum surface temperature
+custom_rec	tau_abs	IN	DOUBLE	0	none	TRUE				Absorber transmissivity	Absorber transmissivity
+custom_rec	tau_cav	IN	DOUBLE	0	none	TRUE				Cavity wall transmissivity	Cavity wall transmissivity
+custom_rec	tau_sep	IN	DOUBLE	0	none	TRUE				Separator transmissivity	Separator transmissivity
+custom_rec	tau_shield	IN	DOUBLE	0	none	TRUE				Shield transmissivity	Shield transmissivity
+custom_rec	theta_bend	IN	DOUBLE	120	deg	TRUE				Absorber bend angle 	Absorber bend angle 
+custom_rec	theta_shield	IN	DOUBLE	35	deg	TRUE				Angle between shield surfaces	Angle between shield surfaces
+custom_rec	tube_length_abs	IN	DOUBLE	3	m	FALSE				Absorber tube path length	Total tubing length for a tube in the absorber panel
+custom_rec	tube_length_sep	IN	DOUBLE	3	m	FALSE				Separator tube path length	Total tubing length for a tube in the separator panel
+custom_rec	tube_material	IN	STRING	0		TRUE	combo	Haynes 230=0;Stainless Steel 316=1		Tube material	Tube material
+custom_rec	tube_mdot	IN	DOUBLE	0	kg/s	FALSE				Tube mass flow rate at design	Tube mass flow rate at design
+custom_rec	tube_qdot	IN	DOUBLE	0	W	FALSE				Energy absorbed in design tube	Energy absorbed in design tube
+custom_rec	tube_rough	IN	DOUBLE	3.00E-06	m	TRUE				Tube internal roughness	Tube internal roughness
+custom_rec	tube_thickness	IN	DOUBLE	0	m	FALSE				Calculated tube thickness	Calculated tube thickness
+custom_rec	w_rec	IN	DOUBLE	8	m	FALSE				Receiver total width	Receiver total width
+custom_rec	x_bins	IN	INT	15	none	FALSE				Number of surface bins (X)	Number of surface bins (X)
+custom_rec	y_bins	IN	INT	15	none	FALSE				Number of surface bins (Y)	Number of surface bins (Y)
+financial	class_name	IN	STRING	Financial	none	FALSE				Class name	Class name
+financial	contingency_rate	IN	DOUBLE	7	%	TRUE				Contingency	Fraction of the direct capital costs added to account for contingency
+financial	fixed_cost	IN	DOUBLE	0	$	FALSE				Fixed cost	Cost that does not scale with any plant parameter
+financial	heliostat_spec_cost	IN	DOUBLE	145	$/m2	TRUE				Heliostat field	Cost per square meter of heliostat aperture area of the heliostat field
+financial	is_pmt_factors	IN	BOOL	FALSE		FALSE	checkbox			Enable payment weighting factors	Enable or disable the use of weighting factors in determining field layout
+financial	land_spec_cost	IN	DOUBLE	10000	$/acre	TRUE				Land cost per acre	Cost of land per acre including the footprint of the land occupied by the entire plant.
+financial	plant_spec_cost	IN	DOUBLE	1440	$/kWe	TRUE				Power block and plant 	Cost of the power block and balance of plant equipment per kilowatt (electric) gross design power
+financial	pmt_factors	IN	VEC_DOUBLE	2.064,1.2,1,1.1,0.8,0.7,1,1,1	none	FALSE				Payment allocation factors	Relative value of electricity produced during this period compared to the average
+financial	rec_cost_exp	IN	DOUBLE	0.7	none	TRUE				Receiver cost scaling exponent	Exponent in the equation (total cost) = (ref. cost) * ( (area) / (ref. area) ) ^ X
+financial	rec_ref_area	IN	DOUBLE	1571	m2	TRUE				Receiver reference area	Receiver surface area corresponding to the receiver reference cost
+financial	rec_ref_cost	IN	DOUBLE	103000000	$	TRUE				Receiver reference cost	Cost of the receiver at the sizing indicated by the reference receiver area
+financial	sales_tax_frac	IN	DOUBLE	80	%	TRUE				Sales tax rate portion	Fraction of the direct capital costs for which sales tax applies
+financial	sales_tax_rate	IN	DOUBLE	5	%	TRUE				Sales tax rate	Sales tax rate applid to the total direct capital cost
+financial	site_spec_cost	IN	DOUBLE	16	$/m2	TRUE				Site improvements	Cost per square meter of heliostat aperture area of site improvements
+financial	tes_spec_cost	IN	DOUBLE	24	$/kWht	TRUE				Thermal storage	Cost of thermal storage per kilowatt hour (thermal) capacity
+financial	tower_exp	IN	DOUBLE	0.0113	none	TRUE				Tower cost scaling exponent	Exponent in the equation (total cost) = (fixed cost) * exp( X * (tower height) )
+financial	tower_fixed_cost	IN	DOUBLE	3.00E+06	$	TRUE				Fixed tower cost	Fixed tower cost - used as the basis for scaling tower cost as a function of height
+financial	weekday_sched	IN	STRING	666666554444444444444555666666554444444444444555666666554444444444444555666666554444444444444555666666554444444444444555333333332222111111222333333333332222111111222333333333332222111111222333333333332222111111222333666666554444444444444555666666554444444444444555666666554444444444444555		FALSE				Weekday dispatch period schedule	Weekday dispatch period schedule
+financial	weekend_sched	IN	STRING	666666555555555555555555666666555555555555555555666666555555555555555555666666555555555555555555666666555555555555555555333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333666666555555555555555555666666555555555555555555666666555555555555555555		FALSE				Weekend dispatch period schedule	Weekend dispatch period schedule
+financial	wiring_user_spec	IN	DOUBLE	0	$/m2	TRUE				Wiring specific cost	Cost of wiring per square meter of heliostat aperture area
+financial	contingency_cost	OUT	DOUBLE	0	$	FALSE				Contingency cost	Contingency cost
+financial	cost_per_capacity	OUT	DOUBLE	0	$/kWe	FALSE				Estimated cost per capacity (net)	Estimated capital cost per capacity (net)
+financial	heliostat_cost	OUT	DOUBLE	0	$	FALSE				Heliostat field cost	Heliostat field cost
+financial	land_cost	OUT	DOUBLE	0	$	FALSE				Land cost	Land cost
+financial	plant_cost	OUT	DOUBLE	0	$	FALSE				Power block and plant cost	Cost of the power block and balance of plant equipment
+financial	pricing_array	OUT	VEC_DOUBLE	0	none	FALSE				Time series schedule of price multipliers	Yearly time series schedule of price multipliers to incentivize electricity sales at particular times
+financial	rec_cost	OUT	DOUBLE	0	$	FALSE				Receiver cost	Receiver cost
+financial	sales_tax_cost	OUT	DOUBLE	0	$	TRUE				Sales tax cost	Sales tax cost
+financial	schedule_array	OUT	VEC_INTEGER	0	none	FALSE				Time series schedule of TOU periods	Yearly time series schedule of TOU periods
+financial	site_cost	OUT	DOUBLE	0	$	FALSE				Site improvements cost	Site improvements cost
+financial	tes_cost	OUT	DOUBLE	0	$	FALSE				Thermal storage cost	Thermal storage cost
+financial	total_direct_cost	OUT	DOUBLE	0	$	FALSE				Total direct cost	Sum of all direct costs
+financial	total_indirect_cost	OUT	DOUBLE	0	$	FALSE				Total indirect cost	Sum of all indirect costs
+financial	total_installed_cost	OUT	DOUBLE	0	$	FALSE				Total installed cost	Sum of direct and indirect costs
+financial	tower_cost	OUT	DOUBLE	14736146	$	FALSE				Tower cost	Tower cost
+financial	wiring_cost	OUT	DOUBLE	0	$	FALSE				Wiring cost	Wiring cost
+fluxsim	aim_method	IN	STRING	3		TRUE	combo	Simple aim points=0;Sigma aiming=1;Probability shift=2;Image size priority=3;Keep existing=4;Freeze tracking=5		Heliostat aim point method	Method for determining the aim point for each heliostat
+fluxsim	class_name	IN	STRING	Performance Simulation	none	FALSE				Class name	Class name
+fluxsim	cloud_depth	IN	DOUBLE	250	m	TRUE				Cloud depth	Depth of the cloud shape
+fluxsim	cloud_loc_x	IN	DOUBLE	200	m	TRUE				Cloud location (X)	Base location of the cloud(s) relative to the tower position - X dimension
+fluxsim	cloud_loc_y	IN	DOUBLE	200	m	TRUE				Cloud location (Y)	Base location of the cloud(s) relative to the tower position - Y dimension
+fluxsim	cloud_opacity	IN	DOUBLE	0.8	none	TRUE				Cloud opacity	Fraction of DNI obfuscated by a cloud shadow
+fluxsim	cloud_sep_depth	IN	DOUBLE	1		TRUE				Cloud pattern depth spacing mult.	Cloud pattern depth spacing
+fluxsim	cloud_sep_width	IN	DOUBLE	2		TRUE				Cloud pattern width spacing mult.	Cloud pattern width spacing
+fluxsim	cloud_shape	IN	STRING	0		TRUE	combo	Elliptical=0;Rectangular=1;Front=2		Cloud shape	Shape used to model the cloud shadow
+fluxsim	cloud_skew	IN	DOUBLE	35	deg	TRUE				Cloud orientation angle	Angle between North and the depth direction (-180 to +180 with clockwise positive)
+fluxsim	cloud_width	IN	DOUBLE	500	m	TRUE				Cloud width	Width of the cloud shape
+fluxsim	flux_data	IN	STRING			FALSE				Flux profile in string form	2D matrix of flux data
+fluxsim	flux_day	IN	INT	20		TRUE				Day of the month	Day of the month for the flux simulation
+fluxsim	flux_dist	IN	STRING	0		TRUE	combo	Triangular=0;Normal=1;Uniform=2		Aim point distribution sampling	Sampling basis for random positioning. Non-uniform distributions are weighted away from the center.
+fluxsim	flux_dni	IN	DOUBLE	950	W/m2	TRUE				Direct Normal Irradiation	Direct Normal Irradiation at the specified simulation point
+fluxsim	flux_hour	IN	DOUBLE	12	hr	TRUE				Hour of the day	Hour of the day for the flux simulation
+fluxsim	flux_model	IN	STRING	0	none	FALSE	combo	Hermite (analytical)=0;SolTrace=1		Flux simulation model	Desired flux simulation tool. Not all geometries can be simulated using the Hermite approximation.
+fluxsim	flux_month	IN	INT	3		TRUE				Month of the year	Month of the year for the flux simulation
+fluxsim	flux_solar_az_in	IN	DOUBLE	180		TRUE				Solar azimuth angle (0=N)	Solar azimuth angle to use for the flux simulation
+fluxsim	flux_solar_el_in	IN	DOUBLE	85		TRUE				Solar elevation angle	Solar elevation angle to use for the flux simulation
+fluxsim	flux_time_type	IN	STRING	1	none	FALSE	combo	Sun position=0;Hour/Day=1		Simulation time spec. method	Method for specifying the desired flux simulation time.
+fluxsim	is_autoscale	IN	BOOL	TRUE	none	FALSE	checkbox			Autoscale	Autoscale the Z-axis of the contour plot
+fluxsim	is_cloud_pattern	IN	BOOL	TRUE		TRUE	checkbox			Enable cloud pattern	Create a pattern based on the specified cloud
+fluxsim	is_cloud_symd	IN	BOOL	TRUE		TRUE	checkbox			Pattern symmetric in depth direction	Mirror the cloud pattern below the width axis
+fluxsim	is_cloud_symw	IN	BOOL	TRUE		TRUE	checkbox			Pattern symmetric in width direction	Mirror the cloud pattern to the left of the depth axis
+fluxsim	is_cloudy	IN	BOOL	FALSE		TRUE	checkbox			Simulate cloud transient	Enable simulation for a cloud transient
+fluxsim	is_load_raydata	IN	BOOL	FALSE	none	TRUE	checkbox		X	Load existing heliostat ray data	Load heliostat field raytrace data from an existing file
+fluxsim	is_optical_err	IN	BOOL	TRUE		FALSE	checkbox			Include optical errors	Include the reflector optical error sources in the SolTrace simulation
+fluxsim	is_save_raydata	IN	BOOL	FALSE	none	TRUE	checkbox		X	Save heliostat stage ray data	Save heliostat field raytrace data to a file for future re-use
+fluxsim	is_sunshape_err	IN	BOOL	TRUE		FALSE	checkbox			Include sun shape	Include the sun shape error in the SolTrace simulation
+fluxsim	max_rays	IN	INT	1000000	none	FALSE				Maximum number of generated rays	The maximum number of generated rays allowed before terminating the simulation. Overrides the desired rays setting.
+fluxsim	min_rays	IN	INT	10000	none	FALSE				Desired number of ray intersections	The minimum number of ray hits on the receiver before terminating the simulation.
+fluxsim	norm_dist_sigma	IN	DOUBLE	0.25		TRUE				Aiming distribution standard dev.	Size of the standard distribution relative to half of the height of the receiver.
+fluxsim	plot_zmax	IN	DOUBLE	1000	none	FALSE				Max	Z-axis maximum value
+fluxsim	plot_zmin	IN	DOUBLE	0	none	FALSE				Min	Z-axis minimum value
+fluxsim	raydata_file	IN	STRING	raydata.dat	none	TRUE	path		X	Ray data file	Location and file of the ray data
+fluxsim	save_data	IN	BOOL	FALSE		FALSE	checkbox			Save all raytrace data	Save the results for each ray
+fluxsim	save_data_loc	IN	STRING	soltrace_ray_data.csv		FALSE				ray data	Choose a location to save the ray data
+fluxsim	seed	IN	INT	-1	none	FALSE				Seed value (-1 for automatic selection)	The seed for the random number generator
+fluxsim	sigma_limit_x	IN	DOUBLE	2		TRUE				Min. image offset from receiver edge - X	Minimum distance (std. dev.) between optical center of heliostat image and the receiver edge in the receiver-X direction
+fluxsim	sigma_limit_y	IN	DOUBLE	2	none	TRUE				Min. image offset from receiver edge - Y	Minimum distance (std. dev.) between optical center of heliostat image and the receiver edge in the receiver-Y direction
+fluxsim	x_res	IN	INT	25	none	FALSE				Flux grid resolution - Horizontal	Number of flux test points per panel (maximum) in the vertical direction for the flux simulation
+fluxsim	y_res	IN	INT	25	none	FALSE				Flux grid resolution - Vertical	Number of flux test points per panel (maximum) in the horizontal direction for the flux simulation
+fluxsim	flux_solar_az	OUT	DOUBLE	180	deg	FALSE				Calculated solar azimuth angle	Solar azimuth angle to use for the flux simulation
+fluxsim	flux_solar_el	OUT	DOUBLE	85	deg	FALSE				Calculated solar elevation angle	Solar elevation angle to use for the flux simulation
+heliostat	cant_day	IN	INT	82	day	TRUE				Canting day of the year	Day of the year used for canting the heliostats (1-365)
+heliostat	cant_hour	IN	DOUBLE	0	hr	TRUE				Canting hour (past noon)	Hours past noon at which the mirror panels are canted (-12 to 12)
+heliostat	cant_method	IN	STRING	1	none	TRUE	combo	No canting=0;On-axis at slant=-1;On-axis, user-defined=1;Off-axis, day and hour=3;User-defined vector=4		Heliostat canting method	Integer to specify the canting method {0=none, -1=Cant on-axis equal to slant range, 1=user-defined on-axis, 3=user-defined off-axis at hour + day}
+heliostat	cant_rad_scaled	IN	DOUBLE	6	none	TRUE				Canting radius factor	Canting radius value (absolute value if radius is not scaled, multiplied by tower height if scaled)
+heliostat	cant_vect_i	IN	DOUBLE	0	none	TRUE				Canting vector x-component	Canting vector - x-component
+heliostat	cant_vect_j	IN	DOUBLE	0	none	TRUE				Canting vector y-component	Canting vector y-component
+heliostat	cant_vect_k	IN	DOUBLE	1	none	TRUE				Canting vector z-component	Canting vector z-component
+heliostat	cant_vect_scale	IN	DOUBLE	400	m	TRUE				Canting vector magnitude	Value to scale the canting unit vector to determine actual canting magnitude
+heliostat	cbdata	IN	VOIDPTR	0	none	FALSE				Data pointer for UI page	Data pointer for UI page
+heliostat	class_name	IN	STRING	Heliostat	none	FALSE				Class name	Class name
+heliostat	diameter	IN	DOUBLE	13.77	m	TRUE				Heliostat diameter	Diameter of the heliostat structure (round heliostats only)
+heliostat	err_azimuth	IN	DOUBLE	0	rad	TRUE				Azimuth pointing error	Standard deviation of the normal error dist. of the azimuth angle
+heliostat	err_elevation	IN	DOUBLE	0	rad	TRUE				Elevation pointing error	Standard deviation of the normal error dist. of the elevation angle
+heliostat	err_reflect_x	IN	DOUBLE	0.0002	rad	TRUE				Reflected beam error in X	error in reflected vector (horiz.) caused by atmospheric refraction, tower sway, etc.
+heliostat	err_reflect_y	IN	DOUBLE	0.0002	rad	TRUE				Reflected beam error in Y	error in reflected vector (vert.) caused by atmospheric refraction, tower sway, etc.
+heliostat	err_surface_x	IN	DOUBLE	0.00153	rad	TRUE				Surface slope error in X	Std.dev. of the normal error dist. of the reflective surface normal in the X (horizontal)
+heliostat	err_surface_y	IN	DOUBLE	0.00153	rad	TRUE				Surface slope error in Y	Same as above, but in the vertical direction
+heliostat	focus_method	IN	STRING	1	none	TRUE	combo	Flat=0;At slant=1;Group average=2;User-defined=3		Heliostat focusing type	The focusing method {0=Flat, 1=Each at slant, 2=Average of group, 3=User defined}
+heliostat	height	IN	DOUBLE	12.2	m	TRUE				Structure height	Height of the heliostat structure
+heliostat	helio_name	IN	STRING	Template 1		FALSE				Heliostat template name	Heliostat template name
+heliostat	id	IN	INT	-1	none	FALSE				id	Unique ID number for the heliostat template
+heliostat	is_cant_rad_scaled	IN	BOOL	TRUE		FALSE	checkbox			Scale cant radius with tower height	The cant radius scales with tower height
+heliostat	is_cant_vect_slant	IN	BOOL	FALSE	none	FALSE	checkbox			Scale vector with slant range	Multiply the canting vector by the slant range
+heliostat	is_enabled	IN	BOOL	TRUE		FALSE				Is template enabled?	Is template enabled?
+heliostat	is_faceted	IN	BOOL	TRUE	none	FALSE	checkbox			Use multiple panels	The number of reflective panels per heliostat is greater than 1
+heliostat	is_focal_equal	IN	BOOL	TRUE	none	FALSE	checkbox			Use single focal length	Both the X and Y focal lengths will use a single value as indicated by the X focal length
+heliostat	is_round	IN	STRING	0	none	FALSE	combo	Rectangular=0;Round=1		Heliostat shape	Is the heliostat round (true) or rectangular (false)
+heliostat	is_xfocus	IN	BOOL	TRUE	none	FALSE	checkbox			Focus in X	Reflector is focused in with respect to the heliostat X axis
+heliostat	is_yfocus	IN	BOOL	TRUE	none	FALSE	checkbox			Focus in Y	Reflector is focused in with respect to the heliostat Y axis
+heliostat	n_cant_x	IN	INT	2		TRUE				No. horizontal panels	Number of cant panels in the X direction
+heliostat	n_cant_y	IN	INT	8		TRUE				No. vertical panels	Number of cant panels in the Y direction
+heliostat	reflect_ratio	IN	DOUBLE	0.97	none	TRUE				Reflective surface ratio	Ratio of mirror area to total area of the heliostat defined by wm x hm
+heliostat	reflectivity	IN	DOUBLE	0.95	none	TRUE				Mirror reflectivity	Average reflectivity (clean) of the mirrored surface
+heliostat	rvel_max_x	IN	DOUBLE	1000	rad/s	FALSE				rvel_max_x	maximum rotational velocity about the x axis
+heliostat	rvel_max_y	IN	DOUBLE	1000	rad/s	FALSE				rvel_max_y	maximum rotational velocity about the z axis
+heliostat	soiling	IN	DOUBLE	0.95	none	TRUE				Soiling factor	Average soiling factor
+heliostat	temp_az_max	IN	DOUBLE	180	deg	FALSE				Max. angular boundary for heliostat type	Angular boundary for heliostat geometry - on the clockwise side of the region
+heliostat	temp_az_min	IN	DOUBLE	-180	deg	FALSE				Min. angular boundary for heliostat type	Angular boundary for heliostat geometry - on the counter-clockwise side of the region
+heliostat	temp_rad_max	IN	DOUBLE	10	none	FALSE				Maximum radius for heliostat type	Maximum radius at which this heliostat geometry can be used
+heliostat	temp_rad_min	IN	DOUBLE	0.75	none	FALSE				Minimum radius for heliostat type	Minimum radius at which this heliostat geometry can be used
+heliostat	template_order	IN	INT	-1	none	FALSE				template_order	template_order
+heliostat	track_method	IN	STRING	0	none	TRUE	combo	Continuous=0;Periodic=1	X	Heliostat tracking update method	Specify how often heliostats update their tracking position 
+heliostat	track_period	IN	DOUBLE	10	sec	TRUE			X	Heliostat tracking update period	The amount of time between tracking updates for each heliostat
+heliostat	type	IN	INT	0		FALSE				type	Integer used to group heliostats into geometries within a field, (e.g. 5 different focal length designs)
+heliostat	width	IN	DOUBLE	12.2	m	TRUE				Structure width	Width of the heliostat structure
+heliostat	x_focal_length	IN	DOUBLE	1000	m	TRUE				Focal length in X	Reflector focal length with respect to the heliostat X (horizontal) axis
+heliostat	x_gap	IN	DOUBLE	0	m	TRUE				Cant panel horiz. gap	Separation between panels in the horizontal direction
+heliostat	y_focal_length	IN	DOUBLE	1000	m	TRUE				Focal length in Y	Reflector focal length with respect to the heliostat Y (vertical) axis
+heliostat	y_gap	IN	DOUBLE	0	m	TRUE				Cant panel vert. gap	Separation between panels in the vertical direction
+heliostat	area	OUT	DOUBLE	0	m2	FALSE				Total reflective aperture area	Aperture area including geometry penalties and gaps in the structure
+heliostat	cant_mag_i	OUT	DOUBLE	0	none	FALSE				Total canting vector - i	Total canting vector - i
+heliostat	cant_mag_j	OUT	DOUBLE	0	none	FALSE				Total canting vector - j	Total canting vector - j
+heliostat	cant_mag_k	OUT	DOUBLE	0	none	FALSE				Total canting vector - k	Total canting vector - k
+heliostat	cant_norm_i	OUT	DOUBLE	0	none	FALSE				Normalized canting vector - i	Normalized canting vector - i
+heliostat	cant_norm_j	OUT	DOUBLE	0	none	FALSE				Normalized canting vector - j	Normalized canting vector - j
+heliostat	cant_norm_k	OUT	DOUBLE	0	none	FALSE				Normalized canting vector - k	Normalized canting vector - k
+heliostat	cant_radius	OUT	DOUBLE	1000	m	FALSE				Canting radius	Radius for canting focal point assuming on-axis canting
+heliostat	cant_sun_az	OUT	DOUBLE	0	deg	FALSE				Sun azimuth at canting	Sun azimuth angle at the moment the cant panels are focused on the receiver
+heliostat	cant_sun_el	OUT	DOUBLE	0	deg	FALSE				Sun elevation at canting	Sun elevation angle at the moment the cant panels are focused on the receiver
+heliostat	err_total	OUT	DOUBLE	0	rad	FALSE				Total reflected image error	Total convolved optical error in the reflected beam from the above sources
+heliostat	r_collision	OUT	DOUBLE	0	m	FALSE				Heliostat footprint diameter	Heliostat reflector maximum footprint diameter
+heliostat	ref_total	OUT	DOUBLE	0	none	FALSE				Total optical reflectance	Effective reflectance - product of the mirror reflectance and soiling
+land	class_name	IN	STRING	Land	none	FALSE				Class name	Class name
+land	exclusions	IN	DVEC_POINT			FALSE				exclusions	Vector of arrays that specify the regions of land to exclude in the heliostat layout
+land	import_tower_lat	IN	DOUBLE	0	deg	FALSE				Imported land boundary tower latitude	Imported land boundary tower latitude
+land	import_tower_lon	IN	DOUBLE	0	deg	FALSE				Imported land boundary tower longitude	Imported land boundary tower longitude
+land	import_tower_set	IN	BOOL	FALSE	none	FALSE				Imported land boundary tower flag	Has the tower location been set for imported land geometries?
+land	inclusions	IN	DVEC_POINT			FALSE				inclusions	Vector of arrays that specify the regions of land to include in the heliostat layout
+land	is_bounds_array	IN	BOOL	FALSE	none	FALSE	checkbox			Use land boundary array	Land boundary is specified by points array
+land	is_bounds_fixed	IN	BOOL	FALSE	none	FALSE	checkbox			Use fixed land bounds	Land boundary has fixed limits (not more than | not less than)
+land	is_bounds_scaled	IN	BOOL	TRUE	none	FALSE	checkbox			Bounds scale with tower height	Land boundary scales with tower hight value
+land	is_exclusions_relative	IN	BOOL	FALSE	none	TRUE	checkbox			Exclusions relative to tower position	Shift the exclusion regions along with the tower offset values
+land	land_const	IN	DOUBLE	45	acre	TRUE				Non-solar field land area	Fixed land area that is added to the area occupied by heliostats
+land	land_mult	IN	DOUBLE	1.3	none	TRUE				Solar field land area multiplier	Factor multiplying the land area occupied by heliostats
+land	max_fixed_rad	IN	DOUBLE	2000	m	TRUE				Maximum land radius (fixed)	Outer land boundary for circular land plot
+land	max_scaled_rad	IN	DOUBLE	9.5	none	TRUE				Maximum field radius	Maximum radius (in units of tower height) for positioning of the heliostats
+land	min_fixed_rad	IN	DOUBLE	100	m	TRUE				Minimum land radius (fixed)	Inner land boundary for circular land plot
+land	min_scaled_rad	IN	DOUBLE	0.75	none	TRUE				Minimum field radius	Minimum radius (in units of tower height) for positioning of the heliostats
+land	tower_offset_x	IN	DOUBLE	0	m	TRUE				Tower location offset - X	Displacement of the tower in X relative to the X-positions specified in the land table
+land	tower_offset_y	IN	DOUBLE	0	m	TRUE				Tower location offset - Y	Displacement of the tower in Y relative to the Y-positions specified in the land table
+land	bound_area	OUT	DOUBLE	0	acre	FALSE				Solar field land area	Land area occupied by heliostats. This value is the area of a convex hull surrounding the heliostat positions.
+land	land_area	OUT	DOUBLE	0	acre	FALSE				Total land area	Land area, including solar field and multiplying factor
+land	radmax_m	OUT	DOUBLE	0	m	FALSE				Maximum heliostat distance	Calculated maximum distance between tower and last row of heliostats
+land	radmin_m	OUT	DOUBLE	0	m	FALSE				Minimum heliostat distance	Calculated minimum distance between tower and first row of heliostats
+optimize	algorithm	IN	STRING	1		TRUE	combo	BOBYQA=0;COBYLA=1;NEWOUA=2;Nelder-Mead=3;Subplex=4;RSGS=5	X	Optimization algorithm	Optimization algorithm
+optimize	class_name	IN	STRING	Optimization		FALSE					
+optimize	converge_tol	IN	DOUBLE	0.0001	none	TRUE				Convergence tolerance	Relative change in the objective function below which convergence is achieved
+optimize	flux_penalty	IN	DOUBLE	0.35	none	TRUE			X	Flux overage penalty	Relative weight in the objective function given to flux intensity over the allowable limit
+optimize	max_desc_iter	IN	INT	20	none	FALSE			X	Max. no. continuous descent steps	Maximum number of steps along the direction of steepest descent before recalculating the response surface
+optimize	max_gs_iter	IN	INT	5	none	FALSE			X	Max. refinement iterations	Maximum number of golden section iterations to refine the position of a local minimum
+optimize	max_iter	IN	INT	200	none	TRUE				Maximum iterations	Maximum number of times the optimization can iterate
+optimize	max_step	IN	DOUBLE	0.06	none	TRUE				Initial step size	Maximum total relative step size during optimization
+optimize	power_penalty	IN	DOUBLE	2	none	TRUE				Power shortage penalty	Relative weight in the objective function given to power to the receiver below the required minimum
+optimize	aspect_display	OUT	DOUBLE		none	FALSE				Current receiver aspect ratio (H/W)	Current receiver aspect ratio (H/W)
+optimize	gs_refine_ratio	OUT	DOUBLE		none	FALSE			X	Refinement relative bounding box	The relative step size of the refined area during refinement simulations. More iterations will allow greater refinement
+parametric	class_name	IN	STRING	Parametric Simulation	none	FALSE				Class name	Class name
+parametric	eff_file_name	IN	STRING	eff_array.csv		FALSE				Efficiency file name	Name of the output file containing the efficiency matrix
+parametric	flux_file_name	IN	STRING	fluxmap.csv		FALSE				Fluxmap file name	Name of the output file containing the fluxmap data
+parametric	fluxmap_format	IN	STRING	0		FALSE	combo	SAM format=0;12x10 array=1;Specified dimensions=2		Fluxmap data dimensions	Dimensions of the fluxmap data (rows,cols)
+parametric	is_fluxmap_norm	IN	BOOL	TRUE		FALSE	checkbox			Normalize flux data	Flux data is reported as normalized
+parametric	par_save_field_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save field efficiency image	Save field efficiency image
+parametric	par_save_flux_dat	IN	BOOL	FALSE	none	FALSE	checkbox			Save receiver flux data	Save receiver flux data
+parametric	par_save_flux_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save receiver flux image	Save receiver flux image
+parametric	par_save_helio	IN	BOOL	FALSE	none	FALSE	checkbox			Save heliostat performance data	Save detailed heliostat performance data for each run
+parametric	par_save_summary	IN	BOOL	FALSE	none	FALSE	checkbox			Save performance summary information	Save detailed system performance data to a file for each run
+parametric	upar_save_field_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save field efficiency image (User)	Save field efficiency image
+parametric	upar_save_flux_dat	IN	BOOL	FALSE	none	FALSE	checkbox			Save receiver flux data (User)	Save receiver flux data
+parametric	upar_save_flux_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save receiver flux image (User)	Save receiver flux image
+parametric	upar_save_helio	IN	BOOL	FALSE	none	FALSE	checkbox			Save heliostat performance data (User)	Save detailed heliostat performance data for each run
+parametric	upar_save_summary	IN	BOOL	FALSE	none	FALSE	checkbox			Save performance summary info (User)	Save detailed system performance data to a file for each run
+parametric	sam_out_dir	IN	STRING			FALSE				Output directory	Output directory
+parametric	user_par_values	IN	STRING		none	FALSE				User parametric values	User parametric values
+parametric	sam_grid_format	IN	STRING	0	none	FALSE	combo	Auto spacing=0;Even grid=1		SAM data grid format	SAM data grid format
+plant	class_name	IN	STRING	Power Cycle and BOP	none	FALSE				Class name	Class name
+plant	eta_cycle	IN	DOUBLE	0.412	none	TRUE				Rated cycle conversion efficiency	Thermodynamic efficiency of the power cycle, including feedwater pumps and cooling equipment parasitics
+plant	hours_tes	IN	DOUBLE	10	hr	TRUE				Hours of full-load thermal storage	Capacity of Hours of thermal storage operation at full cycle output
+plant	par_factor	IN	DOUBLE	0.87	none	TRUE				Estimated gross to net conversion factor	Estimated ratio of net power output to gross power output at design
+plant	solar_mult	IN	DOUBLE	2.4	none	TRUE				Solar multiple	Ratio of thermal power output from the solar field to power cycle thermal input at design
+plant	power_gross	OUT	DOUBLE	115	MWe	FALSE				Design turbine gross output	Rated nameplate design gross turbine electric output, not accounting for parasitic losses
+plant	power_net	OUT	DOUBLE	100	MWe	FALSE				Estimated net output at design	Estimated net electric power at design, accounting for all parasitic losses
+receiver	absorptance	IN	DOUBLE	0.94	none	TRUE				Receiver thermal absorptance	Energy absorbed by the receiver surface before accounting for radiation/convection losses
+receiver	accept_ang_type	IN	STRING	0	none	TRUE	combo	Rectangular=0;Elliptical=1		Receiver acceptance angles shape	Receiver angular acceptance window defines angles about the aperture normal, can be rectangular or elliptical shape
+receiver	accept_ang_x	IN	DOUBLE	180	deg	TRUE				Receiver horizontal acceptance angle	Acceptance angle of the receiver in the horizontal direction (in aperture coordinates)
+receiver	accept_ang_y	IN	DOUBLE	180	deg	TRUE				Receiver vertical acceptance angle	Acceptance angle of the receiver in the vertical direction (in aperture coordinates)
+receiver	aperture_type	IN	STRING	0		TRUE	combo	Rectangular=0		Aperture geometry shape	The shape of the receiver aperture
+receiver	cbdata	IN	VOIDPTR	0	none	FALSE				Data pointer for UI page	Data pointer for UI page
+receiver	class_name	IN	STRING	Receiver	none	FALSE				Class name	Class name
+receiver	id	IN	INT	-1		FALSE				Template ID	Template ID
+receiver	is_aspect_opt	IN	BOOL	TRUE		FALSE	checkbox			Optimize receiver aspect ratio	Optimize receiver aspect ratio (height / width)
+receiver	is_enabled	IN	BOOL	TRUE		FALSE				Is template enabled?	Is template enabled?
+receiver	is_open_geom	IN	BOOL	FALSE		FALSE	checkbox		X	Limit receiver panel span angle	If true, the receiver is represented by an arc rather than a closed circle/polygon
+receiver	is_polygon	IN	BOOL	FALSE		TRUE	checkbox		X	Represent receiver as polygon	Receiver geometry is represented as discrete polygon of N panels rather than continuous arc
+receiver	n_panels	IN	INT	12	none	TRUE			X	Number of receiver panels	Number of receiver panels (polygon facets) for a polygonal receiver geometry
+receiver	panel_rotation	IN	DOUBLE	0	deg	TRUE			X	Receiver panel azimuthal orientation	Azimuth angle between the normal vector to the primary 'north' panel and North
+receiver	peak_flux	IN	DOUBLE	1000	kW/m2	TRUE				Allowable peak flux	Maximum allowable flux intensity on any portion of the receiver surface
+receiver	piping_loss_coef	IN	DOUBLE	10.2	kW/m	TRUE				Receiver piping loss coefficient	Loss per meter of tower height
+receiver	piping_loss_const	IN	DOUBLE	0	kW	TRUE				Receiver piping loss constant	Constant thermal loss due to piping - doesn't scale with tower height
+receiver	rec_azimuth	IN	DOUBLE	0	deg	TRUE				Receiver orientation azimuth	Receiver azimuth orientation: 0 deg is north, positive clockwise
+receiver	rec_cav_cdepth	IN	DOUBLE	0	m	TRUE			X	Cavity curvature centroid offset	Offset of centroid of cavity absorber surface from the aperture plane. (Positive->Increased depth)
+receiver	rec_cav_rad	IN	DOUBLE	7.75	m	TRUE			X	Receiver cavity curvature radius	Radius of the receiver cavity absorbing surface
+receiver	rec_diameter	IN	DOUBLE	17.65	m	TRUE				Receiver diameter	Receiver diameter for cylindrical receivers
+receiver	rec_elevation	IN	DOUBLE	0	deg	TRUE				Receiver orientation elevation	Receiver elevation orientation: 0 deg to the horizon, negative rotating downward
+receiver	rec_height	IN	DOUBLE	21.6	m	TRUE				Receiver height	Height of the absorbing component
+receiver	rec_name	IN	STRING	Receiver 1		FALSE				Receiver template name	Receiver template name
+receiver	rec_offset_x	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - X axis	Offset of receiver center in the East(+)/West(-) direction from the tower
+receiver	rec_offset_y	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - Y axis	Offset of receiver center in the North(+)/South(-) direction from the tower
+receiver	rec_offset_z	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - Z axis	Offset of the receiver center in the vertical direction, positive upwards
+receiver	rec_type	IN	STRING	0	none	FALSE	combo	External cylindrical=0;Flat plate=2		Receiver type	Receiver geometrical configuration
+receiver	rec_width	IN	DOUBLE	17	m	TRUE				Receiver width	Receiver width for cavity or flat receivers
+receiver	span_max	IN	DOUBLE	180	deg	TRUE			X	Max. receiver panel span angle	Maximum (CW) bound of the arc defining the receiver surface
+receiver	span_min	IN	DOUBLE	-180	deg	TRUE			X	Min. receiver panel span angle	Minimum (CCW) bound of the arc defining the receiver surface
+receiver	therm_loss_base	IN	DOUBLE	30	kW/m2	TRUE				Design point receiver thermal loss	Thermal loss from the receiver at design-point conditions
+receiver	therm_loss_load	IN	MATRIX_T	1,0,0,0	none	FALSE				Load-based thermal loss adjustment	Temperature-dependant thermal loss
+receiver	therm_loss_wind	IN	MATRIX_T	1,0,0,0	none	FALSE				Wind-based thermal loss adjustment	Wind speed-dependant thermal loss
+receiver	absorber_area	OUT	DOUBLE	0	m2	FALSE				Receiver absorber area	Effective area of the receiver absorber panels
+receiver	optical_height	OUT	DOUBLE	195	m	FALSE				Receiver optical height	Calculated height of the centerline of the receiver above the plane of the heliostats
+receiver	piping_loss	OUT	DOUBLE	0	MW	FALSE				Receiver piping loss	Thermal loss from non-absorber receiver piping
+receiver	rec_aspect	OUT	DOUBLE	1.2	none	TRUE				Receiver aspect ratio (H/W)	Ratio of receiver height to width
+receiver	therm_eff	OUT	DOUBLE	0	none	FALSE				Receiver calculated thermal efficiency	Receiver calculated thermal efficiency
+receiver	therm_loss	OUT	DOUBLE	0	MW	FALSE				Design-point thermal loss	Receiver thermal loss at design
+solarfield	accept_max	IN	DOUBLE	180	deg	TRUE				Maximum solar field extent angle	Upper bound of the angular range containing the heliostat field
+solarfield	accept_min	IN	DOUBLE	-180	deg	TRUE				Minimum solar field extent angle	Lower bound of the angular range containing the heliostat field
+solarfield	az_spacing	IN	DOUBLE	2	none	TRUE				Azimuthal spacing factor	Azimuthal spacing factor for the first row of heliostats after a reset. Heliostats separated by heliostat width times this factor.
+solarfield	class_name	IN	STRING	Solar Field	none	FALSE				Class name	Class name
+solarfield	des_sim_detail	IN	STRING	5	none	TRUE	combo	Subset of days/hours=2;Single simulation point=1;Do not filter heliostats=0;Annual simulation=3;Limited annual simulation=4;Representative profiles=5;Efficiency map + annual=6		Optimization simulations	Simulation detail for placing heliostats (see definitions in options spreadsheet)
+solarfield	des_sim_ndays	IN	INT	4	none	TRUE				Number of days to simulate	For limited annual simulation, the number of evenly spaced days to simulate
+solarfield	des_sim_nhours	IN	INT	2	none	TRUE				Simulation hour frequency	Simulation will run with the specified hourly frequency (1=every hour, 2=every other hour...)
+solarfield	dni_des	IN	DOUBLE	950	W/m2	TRUE				Design-point DNI value	DNI value at which the design-point receiver thermal power is achieved
+solarfield	hsort_method	IN	STRING	7	none	TRUE	combo	Power to receiver=0;Total efficiency=1;Cosine efficiency=2;Attenuation efficiency=3;Intercept efficiency=4;Blocking efficiency=5;Shadowing efficiency=6;TOU-weighted power=7		Heliostat selection criteria	Select the criteria by which heliostats will be included in the solar field layout.
+solarfield	is_sliprow_skipped	IN	BOOL	FALSE	none	TRUE	checkbox			Offset slip plane for blocking	Radial gap before first row after slip plane is sufficient to eliminate blocking
+solarfield	is_opt_zoning	IN	BOOL	TRUE	none	FALSE	checkbox			Enable optical layout zone method	Enables grouping of heliostats into zones for intercept factor calculation during layout only
+solarfield	is_prox_filter	IN	BOOL	FALSE	none	TRUE	checkbox			Apply proximity filter	Post-process the layout to select heliostats that are closer to the tower.
+solarfield	is_tht_opt	IN	BOOL	TRUE	none	FALSE	checkbox			Optimize tower height	Vary the tower height during optimization to identify optimal level?
+solarfield	layout_data	IN	STRING			FALSE				Layout data in string form	Layout data in string form
+solarfield	layout_method	IN	STRING	0	none	FALSE	combo	Radial Stagger=1;Cornfield=2;User-defined=3		Layout method	Field layout method
+solarfield	max_zone_size_az	IN	DOUBLE	1	tower-ht	TRUE				Max. optical layout zone size - azimuthal	Maximum zone size (azimuthal direction) for grouping optical intercept factor calculations
+solarfield	max_zone_size_rad	IN	DOUBLE	1	tower-ht	TRUE				Max. optical layout zone size - radial	Maximum zone size (radial direction) for grouping optical intercept factor calculations
+solarfield	min_zone_size_az	IN	DOUBLE	0.1	tower-ht	TRUE				Min. optical layout zone size - azimuthal	Minimum zone size (azimuthal direction) for grouping optical intercept factor calculations
+solarfield	min_zone_size_rad	IN	DOUBLE	0.1	tower-ht	TRUE				Min. optical layout zone size - radial	Minimum zone size (radial direction) for grouping optical intercept factor calculations
+solarfield	prox_filter_frac	IN	DOUBLE	0.03	none	TRUE				Proximity filter fraction	Fraction of heliostats to subject to proximity filter.
+solarfield	q_des	IN	DOUBLE	670	MWt	TRUE				Solar field design power	Design thermal power delivered from the solar field
+solarfield	rad_spacing_method	IN	STRING	0	none	TRUE	combo	No blocking-dense=3;Eliminate blocking=2;DELSOL Empirical Fit=1		Radial spacing method	Method for determining radial spacing during field layout for radial-stagger
+solarfield	row_spacing_x	IN	DOUBLE	1.1	none	TRUE				Heliostat spacing factor - X direction	Separation between adjacent heliostats in the X-direction, multiplies heliostat radius
+solarfield	row_spacing_y	IN	DOUBLE	1.1	none	TRUE				Heliostat spacing factor - Y direction	Separation between adjacent heliostats in the Y-direction, multiplies heliostat radius
+solarfield	shadow_height	IN	DOUBLE	195	m	FALSE				Tower shadow height	Effective tower height for shadowing calculations
+solarfield	shadow_width	IN	DOUBLE	16	m	FALSE				Tower shadow width	Effective tower diameter for shadowing calculations
+solarfield	slip_plane_blocking	IN	DOUBLE	0.5	none	TRUE				Allowable blocking in slip plane	Allowable blocking in slip plane
+solarfield	spacing_reset	IN	DOUBLE	1.33	none	TRUE				Azimuthal spacing reset limit	For heliostat layout - ratio of maximum to initial azimuthal spacing before starting new compressed row
+solarfield	sun_az_des_user	IN	DOUBLE	180	deg	TRUE				Specified design-point solar azimuth	Solar azimuth angle at the design point
+solarfield	sun_el_des_user	IN	DOUBLE	85	deg	TRUE				Specified design-point solar elevation	Solar elevation angle at the design point
+solarfield	sun_loc_des	IN	STRING	0	none	TRUE	combo	Summer solstice=0;Equinox=1;Winter solstice=2;Zenith=3;Other..=4		Sun location at design point	Sun location when thermal power rating is achieved
+solarfield	temp_which	IN	STRING	0	none	TRUE	combo			Select heliostat geometry	Select the heliostat geometry template that will be used in the layout
+solarfield	template_rule	IN	STRING	0		TRUE	combo	Use single template=0;Specified range=1;Even radial distribution=2		Heliostat geometry distribution	Method for distributing heliostat geometry templates in the field
+solarfield	tht	IN	DOUBLE	195	m	TRUE				Tower optical height	Average height of the tower receiver centerline above the base heliostat pivot point elevation
+solarfield	trans_limit_fact	IN	DOUBLE	1	none	TRUE				Packing transition limit factor	Determines the point at which close-packing switches to standard layout. =1 at no-blocking transition limit.
+solarfield	xy_field_shape	IN	STRING	0		TRUE	combo	Hexagon=0;Rectangle=1;Undefined=2		Heliostat field layout shape	Enforced shape of the heliostat field
+solarfield	xy_rect_aspect	IN	DOUBLE	1	none	TRUE				Layout aspect ratio (Y/X)	Aspect ratio of the rectangular field layout (height in Y / width in X)
+solarfield	zone_div_tol	IN	DOUBLE	0.001	none	TRUE				Optical layout zone mesh tolerance	Allowable variation in optical intercept factor within a layout zone
+solarfield	rec_area	OUT	DOUBLE	0	m2	FALSE				Total receiver surface area	Surface area from all receivers included in the solar field
+solarfield	sf_area	OUT	DOUBLE	0	m2	FALSE				Total solar field area	The sum of all heliostat reflector area in the current layout
+solarfield	sim_step_data	OUT	WEATHERDATA		none	FALSE				Data used for design simulations	Data used for design simulations
+solarfield	sun_az_des	OUT	DOUBLE	0	deg	FALSE				Calculated design-point solar azimuth	Calculated design-point solar azimuth
+solarfield	sun_el_des	OUT	DOUBLE	0	deg	FALSE				Calculated design-point solar elevation	Calculated design-point solar elevation

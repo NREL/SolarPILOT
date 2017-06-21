@@ -1,0 +1,88 @@
+//WINDOWSIZE 273 10 1579 616
+EESDir$ = GetDirectory
+Model1$ = concat$( EESDir$, '\13_04_30_Model1_Find_Thickness.EES' )
+open Model1$
+//open '13_04_30_Model1_Find_Thickness.EES'
+EESDir$ = GetDirectory
+
+tube_prop$ = concat$( EESDir$, '\tube_props.txt' )
+Import tube_prop$ O_material$, O_T_in, O_T_out, O_P_in, O_d_out_cm, O_L_total, O_roughness, O_AbsEnergy_table$, O_EES_output_dir$
+
+material$ = O_material$		//Material name for custom property lookup tables
+AbsEnergy_table$ = O_AbsEnergy_table$	//Table containing absorbed energy profile
+EES_output_dir$ = O_EES_output_dir$		//Directory for EES output files
+
+T_in = O_T_in			//[C] Inlet temperature
+T_out = O_T_out		//[C] Outlet temperature
+P_in = O_P_in			//[MPa] Inlet pressure
+
+d_out_cm = O_d_out_cm	//[cm] Tube O.D.
+L_path = O_L_total		//[m] Length of flow path
+Roughness = O_roughness	//[m] Tube roughness
+
+solve
+
+// ********* Export Results ****************
+model2_inputs$ =  concat$( EES_output_dir$, '\model2_inputs.txt' )
+Export /H model2_inputs$ thickness, m_dot
+model1_outputs$ = concat$( EES_output_dir$, '\model1_outputs.txt' )
+Export /H model1_outputs$ thickness, m_dot, Q_dot_design, T_th_eval_max, T_surf_out_max, P_out
+// ********************************************
+
+// **** Open Model 2 -> All previously defined variables are cleared?? *******
+Model2$ = concat$( EESDir$, '\13_04_30_Model2_2D_Energy_Balance.EES' )
+open Model2$
+//open '13_04_30_Model2_2D_Energy_Balance.EES'
+EESDir$ = GetDirectory
+
+// **** Import Inputs/Parameters ******************************
+tube_prop$ = concat$( EESDir$, '\tube_props.txt' )
+Import tube_prop$ O_material$, O_T_in, O_T_out, O_P_in, O_d_out_cm, O_L_total, O_roughness, O_AbsEnergy_table$, O_EES_output_dir$
+EES_output_dir$ = O_EES_output_dir$
+model2_inputs$ =  concat$( EES_output_dir$, '\model2_inputs.txt' )
+Import model2_inputs$ O_thickness, O_m_dot
+
+// Conditions solved by Model 1
+thickness = O_thickness			//[m] Tube thickness
+m_dot =O_m_dot			//[kg/s] Mass flow of HTF
+
+// Tubing Material and Dimensions - From SolarPilot
+Roughness = O_roughness		//[m] Tube surface roughness
+d_out = O_d_out_cm*convert(cm,m)	//[m] Outer tube diameter
+L_total = O_L_total			//[m] Total length of flow path
+material$ = O_material$			//Material name for EES properties routines
+Absorbed_energy_table$ = O_AbsEnergy_table$
+nrows = NLOOKUPROWS(Absorbed_energy_table$)	//[-] Number of rows - corresponds to number of nodes along height of tube
+
+// *********** Nodal Inputs ********************"
+T_fluid_in = convertTemp(C, K, O_T_in)		//[C] Inlet temperature
+P_fluid_in = O_P_in*convert(MPa,Pa)		//[Pa] Inlet pressure
+z_node = 1 [-]			//[-] Axial node
+//***************************************************"
+
+solve
+
+// ******** Set up export files ***********
+model2_2D_surf_temps$ =  concat$( EES_output_dir$, '\model2_2D_surf_temps.txt' )
+model2_nodal_outputs$ =  concat$( EES_output_dir$, '\model2_nodal_outputs.txt' )
+// *****************************************
+
+Export /H model2_2D_surf_temps$ T[N_r,1..N_a]
+Export /H model2_nodal_outputs$ epsilon_t, P_fluid_in, P_fluid_out, T_fluid_in, T_fluid_out, T_wall_out_max
+
+q_total_flux_in_sum = q_sum_nodal
+
+if( nrows = 1 ) then GOTO 999
+
+Repeat
+	z_node = z_node + 1
+	T_fluid_in = T_fluid_out
+	P_fluid_in = P_fluid_out
+	solve
+	Export /A model2_2D_surf_temps$ T[N_r,1..N_a]
+	Export /A model2_nodal_outputs$ epsilon_t, P_fluid_in, P_fluid_out, T_fluid_in, T_fluid_out, T_wall_out_max
+	q_total_flux_in_sum = q_total_flux_in_sum + q_sum_nodal
+Until (z_node >= nrows)
+
+999:
+quit

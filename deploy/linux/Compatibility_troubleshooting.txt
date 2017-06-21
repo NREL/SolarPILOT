@@ -1,0 +1,18 @@
+This file contains notes on runtime issues and workarounds related to cross-platform compatibility 
+on linux systems. This will be updated as more issues are discovered. If you find compatibility 
+issues with running SolarPILOT on your linux distribution, please send me relevant information 
+including (i) exact error message, (ii) your operating system including 32 or 64 bit, (iii) steps 
+to produce the error. If you find a workaround, please also let me know!
+
+solarpilot.support@nrel.gov
+
+My comments on the issue are denoted with <.. the comment .. >
+
+---------------------------------------------------------------------------------------------------
+	OS			|	ISSUE									|	SOLUTION
+---------------------------------------------------------------------------------------------------
+Xubuntu 14.04		error while loading shared libraries:		>>cd / 
+					libtiff.so.3 <or other library>: 			>>locate libtiff* <or appropriate>
+					cannot open shared object file: No 			Create symbolic link in the same
+					such file or directory						directory with missing name.
+					.. Occurs on application launch				eg: ln -s libtiff.so.3 libtiff.so.5

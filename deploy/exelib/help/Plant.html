@@ -1,0 +1,146 @@
+﻿<html>
+	
+<head>
+	<title>Plant</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Professional Edition 4.6.2.573">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "SolarPILOT.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("Plant");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Plant</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="InputPageReference.html">Input Page Reference</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="InputPageReference.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="Costs.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="LayoutSetup.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps6"><span class="rvts0"><span class="rvts19">Plant Sizing</span></span></h1>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts28">Plant</span><span class="rvts6"> page provides information and sizing calculations for the power cycle and thermal energy storage systems. This information is primarily used to estimate total plant cost. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Note that information on this page is </span><span class="rvts29">not used to estimate annual power output</span><span class="rvts6"> and only provides basic costing information.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">SolarPILOT is an optical design and characterization tool and does not perform annual productivity simulations. You can specify the field size on the </span><span class="rvts28">Layout Setup</span><span class="rvts6"> page using the Solar Field Design Power and other settings.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Solar Field Design Power</span></span></h2>
+<p class="rvps2"><span class="rvts6">[MWt] You can specify </span><a class="rvts20" href="LayoutSetup.html#sf_des">this value</a><span class="rvts6"> on the </span><span class="rvts28">Layout Setup</span><span class="rvts6"> page. It is provided here for reference.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Solar Multiple</span></span></h2>
+<p class="rvps2"><span class="rvts6">[-] The ratio of thermal power delivered by the solar field to thermal power consumed by the power cycle at reference conditions. This ratio determines the relative sizing of the solar field and the power cycle for purposes of introducing thermal storage.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Rated Cycle Conversion Efficiency</span></span></h2>
+<p class="rvps2"><span class="rvts6">[-] Cycle thermodynamic efficiency (electric power output divided by thermal power input) at reference conditions. This value is used to estimate the gross turbine power output.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Design Power Block Thermal Input</span></span></h2>
+<p class="rvps2"><span class="rvts6">[MWt] Calculated value indicating the thermal input required by the cycle at reference conditions. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem143.png"></p>
+<p class="rvps2"><span class="rvts6">where:</span></p>
+<div class="rvps9"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<tr valign="middle">
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem145.png"></p>
+</td>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Solar Multiple</span></p>
+</td>
+</tr>
+<tr valign="middle">
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem146.png"></p>
+</td>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Solar field design power [MWt]</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Design Turbine Gross Output</span></span></h2>
+<p class="rvps2"><span class="rvts6">[MWe] Calculated power cycle gross electrical output at design. Equal to cycle thermal power input times cycle conversion efficiency.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem148.png"></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Estimated Gross to Net Conversion Factor</span></span></h2>
+<p class="rvps2"><span class="rvts6">[-] The estimated ratio of net output to the grid divided by gross output from the cycle. This provides an estimate of the parasitic losses associated with plant operation on average. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Estimated Net Output at Design</span></span></h2>
+<p class="rvps2"><span class="rvts6">[MWe] Calculated net power output estimate for reference conditions. This value is used to calculate Estimated Cost per Capacity on the </span><span class="rvts28">Costs</span><span class="rvts6"> page.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem149.png"></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Hours of Full-Load Thermal Storage</span></span></h2>
+<p class="rvps2"><span class="rvts6">[hr] Number of hours of full-load cycle operation that can be delivered by the thermal energy storage system when no energy is available from the solar field. The number of hours of thermal storage is related to the thermal capacity of the system as follows:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem150.png"></p>
+<p class="rvps2"><span class="rvts6">where:</span></p>
+<div class="rvps9"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<tr valign="middle">
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem151.png"></p>
+</td>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Thermal capacity of the TES system [MWh]</span></p>
+</td>
+</tr>
+<tr valign="middle">
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem152.png"></p>
+</td>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Hours of full-load thermal storage [hr]</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

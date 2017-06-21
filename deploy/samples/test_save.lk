@@ -1,0 +1,7 @@
+//dump_variables("C:/Users/mwagner/Documents/NREL/projects/SolarPILOT-svn/deploy/vars.csv");
+//var('heliostat.0.width', 5);
+//open("C:/Users/mwagner/Documents/NREL/projects/SolarPILOT-svn/deploy/test.spt");
+
+outln( var('heliostat.0.width') );
+
+outln( var('ambient.0.atm_coefs') );

@@ -1,0 +1,100 @@
+var("solarfield.0.des_sim_ndays", 2);
+var("solarfield.0.tht", 150);
+var("solarfield.0.q_des", 400 );
+var("fluxsim.0.y_res", 25 );
+var("heliostat.0.width", 6);
+var("heliostat.0.height", 6);
+
+layout_ok = run_layout({'nthreads'=3});
+
+//hels = get_heliostats("cylindrical", [150, 1000, -pi()*15/180., pi()*90/180.]);
+//hels = get_heliostats("cartesian", [-300,0.,0,400]);
+
+K = [
+[0,200],
+[0,700],
+[50,700],
+[50,500],
+[400,700],
+[400,650],
+[50,450],
+[400,200],
+[350,200],
+[50,400],
+[50,200]
+];
+
+
+hels = get_heliostats("polygon", K); //[[0,0],[10,250],[200,200],[100,-350]]); //, 'location');
+
+refls = [];
+for(i=0; i<#hels; i++)
+	refls[i] = 0.0;
+
+modify_heliostats(hels, {"reflectivity"=refls});
+
+sim_ok = run_performance();
+
+flux = get_fluxmap();
+
+ny = #flux;
+nx = #flux[0];
+out(ny, nx);
+dx = 1./nx;
+dy = 1./ny;
+
+xarr = [];
+yarr = [];
+for(i=0; i<ny; i++)
+{
+	xarr[i] = [];
+	yarr[i] = [];
+	for(j=0; j<nx; j++)
+	{
+		xarr[i][j] = dx*j;
+		yarr[i][j] = dy*i;
+	}
+}
+
+copts = {};
+copts{'filled'} = true;
+copts{'levels'} = 40;
+copts{'colormap'} = 'parula';
+contour(xarr, yarr, flux, copts);
+
+
+/*
+hx = [];
+hy = [];
+for(i=0; i<#hels; i++)
+{
+	hx[i] = hels[i][0];
+	hy[i] = hels[i][1];
+}
+
+plot(hx, hy, {'type'='scatter', 'size'=10});
+ 
+
+//results = get_summary_results();
+
+//detresults = get_detail_results();
+//out(results);
+
+//layout = get_layout();
+
+//outln(layout);
+
+//outln(detresults[10]);
+//outln(#detresults);
+
+
+
+
+vars = [];
+vars[0] = {'variable'="receiver.0.rec_diameter", 'lowbound'=8, 'upbound'=20, 'initial'=15};
+vars[1] = {'variable'="receiver.0.rec_height", 'lowbound'=6, 'upbound'=15, 'initial'=12};
+
+optret = run_optimization(vars, {'maxiterations'=10});
+
+out(optret);
+*/

@@ -1,0 +1,107 @@
+﻿<html>
+	
+<head>
+	<title>Template management</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Professional Edition 4.6.2.573">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "SolarPILOT.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("RecTempManagement");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Template management</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="InputPageReference.html">Input Page Reference</a> &rsaquo;&rsaquo; <a href="ReceiversTree.html">Receivers</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="ReceiversTree.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="ReceiversTree.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="ReceiverTemplate.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps6"><a name="top of page"></a>
+<span class="rvts0"><span class="rvts19">Page Overview</span></span></h1>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">SolarPILOT can model multiple receiver geometries in a single layout. You can manage the receiver templates on the template management page. This page appears in the page list as </span><span class="rvts29">Receivers.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><a class="rvts20" href="RecTempManagement.html#Receiver%20Templates">Receiver Templates</a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
+<h1 class="rvps6"><a name="Receiver Templates"></a>
+<span class="rvts0"><span class="rvts19">Receiver Templates</span></span></h1>
+<p class="rvps2"><a class="rvts34" href="RecTempManagement.html#top%20of%20page">- Top of page -</a></p>
+<p class="rvps2"><span class="rvts51"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The Receiver Templates group allows you to add, delete, disable, or rename receiver templates. Actions taken in this group affect the templates that appear in the page list.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Add New [Button]</span></span></h2>
+<p class="rvps2"><span class="rvts6">Add a new receiver template to the system. This action will create a new receiver geometry template that will appear in the page list. The default values for the new template are copied from the first template in the template list. Once created, the geometry and properties of the receiver template can be modified by navigating to the newly created page and specifying values as needed.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">When adding a new template, you will be prompted to provide a name for the template. You must use a unique name for each template.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Delete [Button]</span></span></h2>
+<p class="rvps2"><span class="rvts6">Delete the selected receiver template from the template list. This button has no action unless a template is selected. Once confirmed, the action cannot be undone.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Disable [Button]</span></span></h2>
+<p class="rvps2"><span class="rvts6">Disable a selected receiver template. This button has no action unless a template is selected. A disabled template remains a part of the project file, but is not used as part of the solar field design. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Disabling a receiver template may be desired when considering multiple receiver options as part of a field layout, for example. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Rename [Button]</span></span></h2>
+<p class="rvps2"><span class="rvts6">Rename the selected template.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Template [List Control]</span></span></h2>
+<p class="rvps2"><span class="rvts6">The receiver template list provides a full list of all receiver templates that are currently part of the project file. The template name and template state are provided. The template state can be modified using the action buttons described above.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,4 @@
+//WINDOWSIZE 0 804 1826 163
+open 'C:\Users\tneises\Documents\Projects\Call_EES\Call_EES\Debug\test.EES'
+Solve
+QUIT

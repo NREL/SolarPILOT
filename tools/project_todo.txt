@@ -1,0 +1,50 @@
+################# IDEAS ########################
+* Heliostat error as a function of wind velocity (SolarReserve)
+* Constrain inner land boundary to ensure even row spacing (SolarReserve)
+* Round heliostats (SolarReserve)
+* Plant/TES simulation
+* Secondary concentrators (Al)
+* Alternative layout methods
+* Heliostat positioning optimization methods (GD)
+* Canting error applied with random sampling on vectors (Andraka)
+* Layout with first few rows in closest packing arrangement
+* When wind speed exceeds stow value, don't count production for heliostats during layout.
+* English units
+
+############## DOE FUNDED ######################
+----FY16----
+* Significantly reduced run time for SolTrace simulations with large numbers of heliostats. Our research is targeting a reduction in run time of 95%.
+* Feature enhancements to the SolTrace engine to better integrate with SolarPILOT. These enhancements include:
+	* Methods to preserve, interpret, and maximize the utility of ray data generated at each stage in the simulation
+	* A simple model for atmospheric scattering
+	* Improved technology-specific performance metrics
+	* Useful simulation structures such as virtual elements and compound element geometries that ease the definition of receiver apertures and internal surfaces
+	* Enabling a surface to emit infrared radiation
+* Improved API functionality
+* Cross-platform support (OSX, Linux)
+----FY17----
+* Support for user-specified receiver and heliostat geometries. This enables evaluation of non-rectangular heliostats and receivers with more complex geometry than flat-plate or cylindrical.
+* Improved heliostat aim-point strategies. The work targets both the computational efficiency of the aiming algorithms and the uniformity of the resulting receiver flux distribution. Advanced aiming strategies will support multi-zone flux limitations.
+* Support for scripting using SAM's LK scripting language.
+* Improved plotting and data processing functionality. We plan to develop a widget that allows interactive simulation via a field plot interface such that individual heliostats or groups of heliostats can be evaluated and manipulated.	
+
+
+################# TO DO ########################
+* Resolve sunshape issues
+* Aim methods for flat plate/cavity receiver
+* Better var_set class with error reporting, version compatibility
+* Save simulation and parametric results
+* Simulation options for tracking error and lag time in tracking vector updates.
+* CAVITY RECEIVER!!
+* Importing cant lengths, aim points
+* re-binning 
+
+########## IN PROGRESS #########################
+* Cavity receiver flux mapping
+* Individual facet canting vectors
+
+
+############ COMPLETED #########################
+* Range limits on optimization variables + implementation in SAM
+* documentation
+* Plot zoom

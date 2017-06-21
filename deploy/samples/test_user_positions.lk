@@ -1,0 +1,49 @@
+var("solarfield.0.des_sim_ndays", 2);
+var("solarfield.0.tht", 125);
+var("solarfield.0.q_des", 300 );
+//var("fluxsim.0.y_res", 25 );
+//var("heliostat.0.width", 4);
+//var("heliostat.0.height", 4);
+var("receiver.0.rec_height", 15);
+var("receiver.0.rec_diameter", 12);
+
+
+helios = [];
+for(i=0; i<300; i++)
+{
+	helios[i] = [to_int(rand()*2), -200+rand()*400., -200+rand()*400, rand()*20 ];
+}
+outln(helios);
+layout_ok = run_layout(helios, {'nthreads'=3});
+
+sim_ok = run_performance();
+
+/*
+flux = get_fluxmap();
+
+ny = #flux;
+nx = #flux[0];
+out(ny, nx);
+dx = 1./nx;
+dy = 1./ny;
+
+xarr = [];
+yarr = [];
+for(i=0; i<ny; i++)
+{
+	xarr[i] = [];
+	yarr[i] = [];
+	for(j=0; j<nx; j++)
+	{
+		xarr[i][j] = dx*j;
+		yarr[i][j] = dy*i;
+	}
+}
+
+copts = {};
+copts{'filled'} = true;
+copts{'levels'} = 40;
+copts{'colormap'} = 'parula';
+contour(xarr, yarr, flux, copts);
+
+*/
