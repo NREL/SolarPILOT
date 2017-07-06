@@ -2508,8 +2508,8 @@ bool SPFrame::SolTraceFluxBinning(SolarField &SF)
 			fg = fs->getFluxMap();
 			e_ind = r+1;	//element index for this receiver
 
-			rel = RV->rec_elevation.val;
-			raz = RV->rec_azimuth.val;
+			rel = RV->rec_elevation.val*D2R;
+			raz = RV->rec_azimuth.val*D2R;
 			rh = RV->rec_height.val;
 			
 			Point offset(RV->rec_offset_x.val, RV->rec_offset_y.val, RV->optical_height.Val() );   //optical height includes z offset
@@ -2559,8 +2559,8 @@ bool SPFrame::SolTraceFluxBinning(SolarField &SF)
 			fg = fs->getFluxMap();
 			e_ind = r+1;	//element index for this receiver
 
-			rel = RV->rec_elevation.val;
-			raz = RV->rec_azimuth.val;
+			rel = RV->rec_elevation.val*D2R;
+			raz = RV->rec_azimuth.val*D2R;
 			rh = RV->rec_height.val;
 			rw = Rec->getReceiverWidth(*RV); 
 			

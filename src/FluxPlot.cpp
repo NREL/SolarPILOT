@@ -304,8 +304,8 @@ void FluxPlot::DoPaint(wxDC &_pdc){
 			vector<vector<double> > fdata;
 			
 			//Get receiver angles
-            double raz = vrec->rec_azimuth.val;
-            double rel = vrec->rec_elevation.val;
+            double raz = vrec->rec_azimuth.val*D2R;
+            double rel = vrec->rec_elevation.val*D2R;
             double tht = vrec->optical_height.Val();
             double offx = vrec->rec_offset_x.val;
             double offy = vrec->rec_offset_y.val;
