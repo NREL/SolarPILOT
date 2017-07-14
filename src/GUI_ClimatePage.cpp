@@ -489,7 +489,8 @@ void SPFrame::OnSunImport( wxCommandEvent &WXUNUSED(event)){
 			matrix_t<double> *vval = &_variables.amb.user_sun.val;
 
 			vval->clear();	//Clear
-			
+			vval->resize(nlines, 2);
+
 			double fdat[2];
 
 			
@@ -575,17 +576,15 @@ void SPFrame::OnSunEdit( wxCommandEvent &WXUNUSED(event)){
 	string valr, vali;
 	int nrows = _user_sun_grid->GetNumberRows();
 	_variables.amb.user_sun.val.clear();
-    _variables.amb.user_sun.val.resize(nrows);
+    _variables.amb.user_sun.val.resize(nrows,2);
 
 	for(int i=0; i<nrows; i++){
 		valr = _user_sun_grid->GetCellValue(i,0);	//radial pos
 		vali = _user_sun_grid->GetCellValue(i,1);   //intensity
 		if(valr == "" || vali == "") continue;
 		
-        string s = valr + "," + vali + ";";
-        _variables.amb.user_sun.set_from_string(s.c_str());
-
-		//val->append( valr + "," + vali + ";");
+        _variables.amb.user_sun.val.at(i, 0) = std::stod( valr );
+        _variables.amb.user_sun.val.at(i, 1) = std::stod( vali );
 	}
 	
 }

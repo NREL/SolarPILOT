@@ -302,7 +302,8 @@ static void _sp_var( lk::invoke_t &cxt )
         }
         else
         {
-            vmap->_varptrs[name.ToStdString()]->set_from_string( cxt.arg(1).as_string() );
+            std::string arg = cxt.arg(1).as_string();
+            vmap->_varptrs[name.ToStdString()]->set_from_string( arg.c_str() );
         }
 
 	}
@@ -438,6 +439,9 @@ static void _simulate( lk::invoke_t &cxt )
 	int simtype = V->flux.flux_model.mapval();	//0=Delsol, 1=Soltrace
 	
 	//Set up field, update aimpoints, and simulate at the performance sun position
+    WeatherData empty;
+	SolarField::PrepareFieldLayout(*SF, empty, true);	
+
     Hvector *helios = SF->getHeliostats();
 
 	if(! interop::PerformanceSimulationPrep(*SF, *helios, simtype) ) 
@@ -524,9 +528,18 @@ static void _detail_results( lk::invoke_t &cxt )
     LK_DOC("get_detail_results", 
         "Return an array with detailed heliostat-by-heliostat results from a simulation. "
         "Each entry in the array is a table with entries as follows:\n"
-        "{ id(integer), location (array), aimpoint (array), tracking_vector (array), layout_metric (double), power_to_receiver (double), "
-        "efficiency (double), cosine (double), intercept (double), reflectance (double), attenuation (double), "
-        "blocking (double), shading (double), clouds (double) }", 
+        "{ id(integer), location (array), aimpoint (array), tracking_vector (array), "
+        "layout_metric (double), "
+        "power_to_receiver (double), "
+        "power_reflected (double), "
+        "efficiency (double), "
+        "cosine (double), "
+        "intercept (double), "
+        "reflectance (double), "
+        "attenuation (double), "
+        "blocking (double), "
+        "shading (double), "
+        "clouds (double) }", 
         "([array:selected heliostat indices]):array");
     
     SPFrame &F = SPFrame::Instance();
@@ -593,6 +606,8 @@ static void _detail_results( lk::invoke_t &cxt )
             p.hash()->at("tracking_vector")->vec_append(H->getTrackVector()->k );
             p.hash_item( "layout_metric", H->getRankingMetricValue() );
             p.hash_item( "power_to_receiver", H->getPowerToReceiver() );
+            p.hash_item( "power_reflected", H->getArea()*H->getEfficiencyCosine()*H->getTotalReflectivity()
+                *H->getEfficiencyBlock()*H->getEfficiencyShading()*H->getEfficiencyCloudiness() );
             p.hash_item( "efficiency", H->getEfficiencyTotal() );
             p.hash_item( "cosine", H->getEfficiencyIntercept() );
             p.hash_item( "intercept", H->getEfficiencyIntercept() );
@@ -659,7 +674,8 @@ static void _optimize( lk::invoke_t &cxt )
     LK_DOC("run_optimization","Execute an optimization run, returning the optimized result and iteration information. "
         "Variables to be optimized are passed in a vector, with each row containing a table specifying "
         "{variable, step, upbound, lowbound, inital}. The table must include the variable key, others are optional. "
-        "The return table includes the following: 'result':table of variable names and associated optimized values, 'objective':number, 'flux':number, 'iterations':array of evaluation point, objective, flux. "
+        "The return table includes the following: 'result':table of variable names and associated optimized values, "
+        "'objective':number, 'flux':number, 'iterations':array of evaluation point, objective, flux. "
         "Optional arguments include maxiterations/tolerance/defaultstep/powerpenalty/nthreads.",
         "(vector:variable tables[, table:options]):table");
 
