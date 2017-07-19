@@ -1146,8 +1146,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event)){
 				//just update the geometry
 				if(! vset.sf.layout_data.val.empty() )
                 {
-					WeatherData empty;
-					_par_SF.PrepareFieldLayout(_par_SF, empty, true);	if(_par_SF.ErrCheck()) return;
+					_par_SF.PrepareFieldLayout(_par_SF, 0, true);	if(_par_SF.ErrCheck()) return;
 
                     double azzen[2];
                     _par_SF.CalcDesignPtSunPosition(vset.sf.sun_loc_des.mapval(), azzen[0], azzen[1]);

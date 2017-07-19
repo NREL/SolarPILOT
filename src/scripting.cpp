@@ -439,8 +439,7 @@ static void _simulate( lk::invoke_t &cxt )
 	int simtype = V->flux.flux_model.mapval();	//0=Delsol, 1=Soltrace
 	
 	//Set up field, update aimpoints, and simulate at the performance sun position
-    WeatherData empty;
-	SolarField::PrepareFieldLayout(*SF, empty, true);	
+	SolarField::PrepareFieldLayout(*SF, 0, true);	
 
     Hvector *helios = SF->getHeliostats();
 
@@ -1226,21 +1225,38 @@ static void _modify_heliostats( lk::invoke_t &cxt )
 
         if( varname == "location" )
         {
+            //locations need to be modified through the layout shell object
+            layout_shell *layout = SF->getLayoutShellObject();
+            
             //make sure the heliostat ID's array is the same length as the location array
             std::vector< lk::vardata_t > *locvec = cxt.arg(1).hash()->at( "location" )->vec();
             if( locvec->size() != helios.size() )
                 throw lk::error_t( "The number of locations provided does not match the number of heliostat ID's provided." );
             //assign location(s)
+            layout->clear();
+
             for(size_t i=0; i<helios.size(); i++)
             {
-                double x = locvec->at(i).vec()->at(0).as_number();
-                double y = locvec->at(i).vec()->at(1).as_number();
-                double z = 0.;
-                if( locvec->at(i).vec()->size() > 2 )
-                    z = locvec->at(i).vec()->at(2).as_number();
+                //update the layout object
+                layout->push_back( layout_obj() );
+                layout_obj& lobj = layout->back();
 
-                helios.at(i)->setLocation( x, y, z );
+                lobj.aim = *helios.at(i)->getAimPoint();
+                lobj.cant = *helios.at(i)->getCantVector();
+                lobj.focal_x = helios.at(i)->getFocalX();
+                lobj.focal_y = helios.at(i)->getFocalY();
+                lobj.helio_type = helios.at(i)->getMasterTemplate()->getId();
+                
+                //update location
+                lobj.location.x = locvec->at(i).vec()->at(0).as_number();
+                lobj.location.y = locvec->at(i).vec()->at(1).as_number();
+                lobj.location.z = 0.;
+
+                if( locvec->at(i).vec()->size() > 2 )
+                    lobj.location.z = locvec->at(i).vec()->at(2).as_number();
+
             }
+            SF->PrepareFieldLayout(*SF, 0, true);
         }
         else if( varname == "aimpoint" )
         {

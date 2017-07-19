@@ -1076,8 +1076,7 @@ void SPFrame::Open(wxString file_in, bool quiet){
 		if(!quiet) _layout_gauge->GetParent()->Refresh();
 
 		if(!quiet) pdlg->Update(400, "Generating heliostat geometry");
-		WeatherData empty;
-		_SF.PrepareFieldLayout(_SF, empty, true);	//Run the layout method in refresh_only mode
+		_SF.PrepareFieldLayout(_SF, 0, true);	//Run the layout method in refresh_only mode
 
         double azzen[2];
         _SF.CalcDesignPtSunPosition(_variables.sf.sun_loc_des.mapval(), azzen[0], azzen[1]);
@@ -3458,8 +3457,7 @@ void SPFrame::ParametricSimulate( parametric &P ){
 					//just update the geometry
 					if(! varpar.sf.layout_data.val.empty() ){
 						try{
-							WeatherData empty;
-							SolarField::PrepareFieldLayout(_par_SF, empty, true);	if(_par_SF.ErrCheck()) return;
+							SolarField::PrepareFieldLayout(_par_SF, 0, true);	if(_par_SF.ErrCheck()) return;
                             _par_SF.calcHeliostatArea();
                             _par_SF.updateAllCalculatedParameters( varpar );
 
@@ -3847,7 +3845,7 @@ bool SPFrame::DoManagedLayout(SolarField &SF, var_map &V){
 
 		//Prepare the master solar field object for layout simulation
 		WeatherData wdata;
-		bool full_sim = SF.PrepareFieldLayout(SF, wdata);
+		bool full_sim = SF.PrepareFieldLayout(SF, &wdata);
 		
 		//If full simulation is required...
 		if(full_sim){

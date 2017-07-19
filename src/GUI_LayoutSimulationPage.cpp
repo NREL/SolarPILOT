@@ -674,8 +674,7 @@ void SPFrame::OnLayoutRefresh( wxCommandEvent &WXUNUSED(event)){
 		_SF.Create(_variables);
 		if(! _variables.sf.layout_data.val.empty() )  //If there's no existing layout to refresh, skip
         {
-			WeatherData empty;
-			_SF.PrepareFieldLayout(_SF, empty, true);	if(_SF.ErrCheck()) return;
+			_SF.PrepareFieldLayout(_SF, 0, true);	if(_SF.ErrCheck()) return;
             
             double azzen[2];
             _SF.CalcDesignPtSunPosition(_variables.sf.sun_loc_des.mapval(), azzen[0], azzen[1]);
