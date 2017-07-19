@@ -249,7 +249,7 @@ static void _sp_var( lk::invoke_t &cxt )
             }
             case SP_DVEC_POINT:
             {
-                std::vector< std::vector< Point > > Vp;
+                std::vector< std::vector< sp_point > > Vp;
                 spbase::_setv( varstr, Vp );
 
                 cxt.result().empty_vector();
@@ -401,7 +401,7 @@ static void _get_layout_info( lk::invoke_t &cxt )
 
         r.vec()->at(i).vec_append( hels->at(i)->getId() );
 
-        Point *loc = hels->at(i)->getLocation();
+        sp_point *loc = hels->at(i)->getLocation();
         r.vec()->at(i).vec_append( loc->x );
         r.vec()->at(i).vec_append( loc->y );
         r.vec()->at(i).vec_append( loc->z );
@@ -959,7 +959,7 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
 
         for(size_t i=0; i<helios->size(); i++)
         {
-            Point *loc = helios->at(i)->getLocation();
+            sp_point *loc = helios->at(i)->getLocation();
 
             if(loc->x > xmin)
                 if(loc->x < xmax)
@@ -984,11 +984,11 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
     else if( lower_case(system) == "polygon" )
     {
         //construct a polygon from the listed points
-        std::vector< Point > polygon;
+        std::vector< sp_point > polygon;
         for(size_t i=0; i<cxt.arg(1).vec()->size(); i++)
         {
             lk::vardata_t *pt = &cxt.arg(1).vec()->at(i);
-            polygon.push_back( Point( pt->vec()->at(0).as_number(), pt->vec()->at(1).as_number(), 0. ) );
+            polygon.push_back( sp_point( pt->vec()->at(0).as_number(), pt->vec()->at(1).as_number(), 0. ) );
         }
 
         for(size_t i=0; i<helios->size(); i++)
@@ -1111,15 +1111,15 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
         to_double( offset_s.at(1), &offset_y );
 
         //allocate the main polygons structure
-        std::vector< std::vector< Point > > polygons;
+        std::vector< std::vector< sp_point > > polygons;
 
         double x0 = 0.;
         double y0 = 0.;
 
         for(size_t i=0; i<entries.size(); i++)
         {
-            polygons.push_back( std::vector< Point >() );
-            std::vector< Point > *P = &polygons.back();
+            polygons.push_back( std::vector< sp_point >() );
+            std::vector< sp_point > *P = &polygons.back();
 
             Toolbox::poly_from_svg( entries.at(i), *P, true);
 
@@ -1135,8 +1135,8 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
         {
             for(size_t j=0; j<polygons.size(); j++)
             {
-                std::vector< Point > *polygon = &polygons.at(j);
-                Point *loc = helios->at(i)->getLocation();
+                std::vector< sp_point > *polygon = &polygons.at(j);
+                sp_point *loc = helios->at(i)->getLocation();
 
                 if( Toolbox::pointInPolygon( *polygon,  *loc ) )
                 {

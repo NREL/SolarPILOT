@@ -327,8 +327,8 @@ void FluxPlot::DoPaint(wxDC &_pdc){
 				if( _helios.at(i)->getWhichReceiver() != rec) continue;
 				
 				
-				Point *aim = _helios.at(i)->getAimPoint();
-				Point aimc(*aim);
+				sp_point *aim = _helios.at(i)->getAimPoint();
+				sp_point aimc(*aim);
 				aimc.Add(-offx, -offy, -tht);
 				double rh = _helios.at(i)->getRadialPos();
 				

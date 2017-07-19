@@ -15,7 +15,7 @@ https://developers.google.com/kml/documentation/kmlreference
 using namespace std;
 using namespace rapidxml;
 
-static void ParseKML(wxString &file, double &tower_lat, double &tower_lon, std::vector<Point> &poly){
+static void ParseKML(wxString &file, double &tower_lat, double &tower_lon, std::vector<sp_point> &poly){
 	/* 
 	Parse the KML polygon and create a formatted polygon to be used by the bounds grid.
 
@@ -54,7 +54,7 @@ static void ParseKML(wxString &file, double &tower_lat, double &tower_lon, std::
 		//Construct the polygon
 		vector<string> pp = split(coords.ToStdString(), " ");
 		//poly.Append(wxT("[POLY]"));
-        //poly.push_back( Point() );
+        //poly.push_back( sp_point() );
 		for(unsigned int i=0; i<pp.size(); i++){
 
 			//Convert point values into doubles
@@ -75,7 +75,7 @@ static void ParseKML(wxString &file, double &tower_lat, double &tower_lon, std::
 			//Translate into some reasonable coordinate system. How to determine where tower will be?
 
 			//poly.Append(ptstr);
-            poly.push_back(Point(dx, dy, 0.));
+            poly.push_back(sp_point(dx, dy, 0.));
             //poly.back().Set(dx, dy, 0.);
 		}
 		

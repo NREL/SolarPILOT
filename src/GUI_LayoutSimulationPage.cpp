@@ -157,7 +157,7 @@ void SPFrame::UpdateLayoutGrid(){
 		H = heliostats->at(i);	//shorthand the pointer
 		if(! H->getInLayout()) continue;
 
-		Point *loc = H->getLocation();
+		sp_point *loc = H->getLocation();
 
 		_layout_grid->SetCellValue(i, 0, *H->getMasterTemplate()->getHeliostatName() );
 		_layout_grid->SetCellValue(i, 1, to_string(loc->x, "%.1f") );
@@ -172,7 +172,7 @@ void SPFrame::UpdateLayoutGrid(){
 		_layout_grid->SetCellValue(i, 9, to_string(cant->i, "%.3f"));
 		_layout_grid->SetCellValue(i, 10, to_string(cant->j, "%.3f"));
 		_layout_grid->SetCellValue(i, 11, to_string(cant->k, "%.3f"));
-		Point *aim = H->getAimPoint();
+		sp_point *aim = H->getAimPoint();
 		_layout_grid->SetCellValue(i, 12, to_string(aim->x, "%.2f"));
 		_layout_grid->SetCellValue(i, 13, to_string(aim->y, "%.2f"));
 		_layout_grid->SetCellValue(i, 14, to_string(aim->z, "%.2f"));

@@ -222,10 +222,10 @@ void FieldPlot::DoPaint(wxDC &_pdc){
 		
 		//Get the inclusions
 		//bounds_array *incs = _SF->getLandObject()->getInclusions();
-        vector<vector<Point> > *incs = &_SF->getVarMap()->land.inclusions.val;
+        vector<vector<sp_point> > *incs = &_SF->getVarMap()->land.inclusions.val;
 		//Get the exclusions
 		//bounds_array *excs = _SF->getLandObject()->getExclusions();
-        vector<vector<Point> > *excs = &_SF->getVarMap()->land.exclusions.val;
+        vector<vector<sp_point> > *excs = &_SF->getVarMap()->land.exclusions.val;
 
 		//Convert the point vectors into double arrays
 		int 
@@ -707,14 +707,14 @@ void FieldPlot::DoPaint(wxDC &_pdc){
 
                 double rcoll = H->getCollisionRadius()*ppm;
                 //check to see if this heliostat needs drawing
-                Point *loc = H->getLocation();
+                sp_point *loc = H->getLocation();
                 double xlocm = o[0] + loc->x*ppm;
                 double ylocm = o[1] - loc->y*ppm;
 
                 if((xlocm - rcoll)> canvsize[0] || (xlocm + rcoll) < 0 || (ylocm - rcoll)> canvsize[1] || (ylocm + rcoll) < 0)
                     continue;
 
-				vector<Point> *shad = H->getShadowCoords();
+				vector<sp_point> *shad = H->getShadowCoords();
 				int ns = shad->size();
 				double
 					*xs = new double[ns],
@@ -763,7 +763,7 @@ void FieldPlot::DoPaint(wxDC &_pdc){
 				H = heliostats->at(i);
                 double rcoll = H->getCollisionRadius()*ppm;
                 //check to see if this heliostat needs drawing
-                Point *loc = H->getLocation();
+                sp_point *loc = H->getLocation();
                 double xlocm = o[0] + loc->x*ppm;
                 double ylocm = o[1] - loc->y*ppm;
 
@@ -771,7 +771,7 @@ void FieldPlot::DoPaint(wxDC &_pdc){
                     continue;
 
 				//get the corner coordinates for each heliostat and plot
-				vector<Point> *corners = H->getCornerCoords();
+				vector<sp_point> *corners = H->getCornerCoords();
 				int nc = corners->size();
 				double 
 					*xc = new double[nc],

@@ -374,8 +374,8 @@ void SPFrame::setBoundsGrid( var_map &V) //string &incs, string &excs ){
 	[POLY][P]x1,y1,z1[P]x2,y2,z3... [POLY][P]...
 	*/
 
-    std::vector<std::vector<Point> > *incs = &V.land.inclusions.val;
-    std::vector<std::vector<Point> > *excs = &V.land.exclusions.val;
+    std::vector<std::vector<sp_point> > *incs = &V.land.inclusions.val;
+    std::vector<std::vector<sp_point> > *excs = &V.land.exclusions.val;
 
 	//If the strings are empty, return
 	if( incs->size() == 0 && excs->size() == 0 ) return;
@@ -406,7 +406,7 @@ void SPFrame::setBoundsGrid( var_map &V) //string &incs, string &excs ){
 			_bounds_grid->SetCellValue(row, 0, "I");	//Set the inclusion/exclusion flag
 			_bounds_grid->SetCellValue(row, 1, my_to_string(ict));	//Set the polygon number
 			//pt = split(poly.at(j), ",");	//Get a list of x, y, z in the point
-            Point *pt = &incs->at(i).at(j);
+            sp_point *pt = &incs->at(i).at(j);
 			for(k=0; k<2; k++){
 				_bounds_grid->SetCellValue( row, k+2, my_to_string( (*pt)[k] ));
 			}
@@ -428,7 +428,7 @@ void SPFrame::setBoundsGrid( var_map &V) //string &incs, string &excs ){
 			_bounds_grid->SetCellValue(row, 0, "E");	//Set the inclusion/exclusion flag
 			_bounds_grid->SetCellValue(row, 1, my_to_string(ect));	//Set the polygon number
 			//pt = split(poly.at(j), ",");	//Get a list of x, y, z in the point
-            Point *pt = &excs->at(i).at(j);
+            sp_point *pt = &excs->at(i).at(j);
 			for(k=0; k<2; k++){
 				_bounds_grid->SetCellValue(row, k+2, my_to_string( (*pt)[k] ));
 			}
@@ -857,8 +857,8 @@ void SPFrame::BoundsImport(){
 			wxString file(files);
 
 			//Pointers to the _variables for inclusions and exclusions
-			vector<vector<Point> > *incs = &_variables.land.inclusions.val;
-			vector<vector<Point> > *excs = &_variables.land.exclusions.val;
+			vector<vector<sp_point> > *incs = &_variables.land.inclusions.val;
+			vector<vector<sp_point> > *excs = &_variables.land.exclusions.val;
 
             string extension = lower_case( ioutil::ext_only( info.ToStdString() ) );
 
@@ -891,7 +891,7 @@ void SPFrame::BoundsImport(){
 				}
 
 				/*wxString poly;*/
-                vector<Point> poly;
+                vector<sp_point> poly;
 				ParseKML(file, tlat, tlon, poly);
 				
 				if(tdlg->isInclusion()){
@@ -1010,8 +1010,8 @@ void SPFrame::OnBoundsEdit( wxGridEvent &WXUNUSED(evt) ){
 	This method will update the contents of the variable map.
 	*/
 	try{
-		vector<vector< Point > > *incs = &_variables.land.inclusions.val;
-		vector<vector< Point > > *excs = &_variables.land.exclusions.val;
+		vector<vector< sp_point > > *incs = &_variables.land.inclusions.val;
+		vector<vector< sp_point > > *excs = &_variables.land.exclusions.val;
 
 		//Clear existing data and reconstruct
 		incs->clear();
@@ -1036,9 +1036,9 @@ void SPFrame::OnBoundsEdit( wxGridEvent &WXUNUSED(evt) ){
 		    
             if(ptype != ptype0 || pnum != pnum0){
 				if(ptype == "i") 
-                    incs->push_back( vector< Point >() );
+                    incs->push_back( vector< sp_point >() );
 				else 
-                    excs->push_back( vector< Point >() );
+                    excs->push_back( vector< sp_point >() );
 				ptype0 = ptype;
 				pnum0 = pnum;
 			}
@@ -1048,9 +1048,9 @@ void SPFrame::OnBoundsEdit( wxGridEvent &WXUNUSED(evt) ){
             to_double(valy, &vy);
 
             if( ptype == "i" )
-                incs->back().push_back( Point(vx, vy, 0.) );
+                incs->back().push_back( sp_point(vx, vy, 0.) );
             else
-                excs->back().push_back( Point(vx, vy, 0.) );
+                excs->back().push_back( sp_point(vx, vy, 0.) );
 
 		}
 	}
