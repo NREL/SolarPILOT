@@ -3659,7 +3659,7 @@ void SPFrame::ParametricSimulate( parametric &P ){
 
 void SPFrame::CreateResultsTable(sim_result &result, grid_emulator &table){
 	try{
-		table.CreateGrid(result.is_soltrace ? 16 : 18, 5);
+		table.CreateGrid(result.is_soltrace ? 19 : 18, 5);
 		//table.SetRowLabelSize(200);
 	
 		table.SetColLabelValue(0, "Units");
@@ -3690,6 +3690,12 @@ void SPFrame::CreateResultsTable(sim_result &result, grid_emulator &table){
 		table.AddRow(id++, "Absorption efficiency", "%", 100.*result.eff_absorption.ave, 1);
         int flux_sig = max(1,3 - (int)floor(log10(result.flux_density.ave)));
 		table.AddRow(id++, "Incident flux", "kW/m2", result.flux_density.ave, flux_sig, result.flux_density.min, result.flux_density.max, result.flux_density.stdev);
+        if( result.is_soltrace )
+        {
+            table.AddRow(id++, "No. rays traced", "-", result.num_ray_traced);
+            table.AddRow(id++, "No. heliostat ray intersections", "-", result.num_ray_heliostat);
+            table.AddRow(id++, "No. receiver ray intersections", "-", result.num_ray_receiver);
+        }
 	}
 	catch(...)
 	{
