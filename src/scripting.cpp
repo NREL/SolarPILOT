@@ -461,6 +461,8 @@ static void _simulate( lk::invoke_t &cxt )
     F.GetResultsObject()->clear();
     F.GetResultsObject()->resize(1);
 
+    F.StartSimTimer();
+
 	//Which type of simulation?
     bool ok;
     switch(simtype)
@@ -476,7 +478,8 @@ static void _simulate( lk::invoke_t &cxt )
         break;
 	}
 
-    
+    F.StopSimTimer();
+
     F.GetFluxPlotObject()->SetPlotData(*SF, *helios, 0 );
     F.GetFieldPlotObject()->SetPlotData( *SF, FIELD_PLOT::EFF_TOT ); 
     
@@ -604,9 +607,15 @@ static void _detail_results( lk::invoke_t &cxt )
             p.hash()->at("tracking_vector")->vec_append(H->getTrackVector()->j );
             p.hash()->at("tracking_vector")->vec_append(H->getTrackVector()->k );
             p.hash_item( "layout_metric", H->getRankingMetricValue() );
-            p.hash_item( "power_to_receiver", H->getPowerToReceiver() );
-            p.hash_item( "power_reflected", H->getArea()*H->getEfficiencyCosine()*H->getTotalReflectivity()
-                *H->getEfficiencyBlock()*H->getEfficiencyShading()*H->getEfficiencyCloudiness() );
+            p.hash_item( "power_to_receiver", H->getPowerToReceiver()/1000. );  //kW
+            p.hash_item( "power_reflected", H->getArea()
+                                            *H->getEfficiencyCosine()
+                                            *H->getTotalReflectivity()
+                                            *H->getEfficiencyBlock()
+                                            *H->getEfficiencyShading()
+                                            *H->getEfficiencyCloudiness() 
+                                            *SF->getVarMap()->flux.flux_dni.val/1000. //kW
+                        );
             p.hash_item( "efficiency", H->getEfficiencyTotal() );
             p.hash_item( "cosine", H->getEfficiencyIntercept() );
             p.hash_item( "intercept", H->getEfficiencyIntercept() );
