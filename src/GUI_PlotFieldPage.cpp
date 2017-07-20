@@ -212,10 +212,10 @@ void SPFrame::LayoutSimulationExport(SolarField &SF, wxString &fname, vector<boo
 		
 	int npos = SF.getHeliostats()->size();
 	Heliostat *H; 
-	Point *loc, *aim;
+	sp_point *loc, *aim;
 	Vect *track;
 	vector<double> stats;
-	vector<Point>* corners;
+	vector<sp_point>* corners;
 
 	for(int i=0; i<npos; i++){
 		H = SF.getHeliostats()->at(i);

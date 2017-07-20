@@ -190,6 +190,7 @@ heliostat	err_reflect_x	IN	DOUBLE	0.0002	rad	TRUE				Reflected beam error in X	e
 heliostat	err_reflect_y	IN	DOUBLE	0.0002	rad	TRUE				Reflected beam error in Y	error in reflected vector (vert.) caused by atmospheric refraction, tower sway, etc.
 heliostat	err_surface_x	IN	DOUBLE	0.00153	rad	TRUE				Surface slope error in X	Std.dev. of the normal error dist. of the reflective surface normal in the X (horizontal)
 heliostat	err_surface_y	IN	DOUBLE	0.00153	rad	TRUE				Surface slope error in Y	Same as above, but in the vertical direction
+heliostat	st_err_type	IN	STRING	0	none	TRUE	combo	Gaussian=0;Pillbox=1		Optical error type (SolTrace only)	Error distribution of the reflected rays from the heliostat optical surface
 heliostat	focus_method	IN	STRING	1	none	TRUE	combo	Flat=0;At slant=1;Group average=2;User-defined=3		Heliostat focusing type	The focusing method {0=Flat, 1=Each at slant, 2=Average of group, 3=User defined}
 heliostat	height	IN	DOUBLE	12.2	m	TRUE				Structure height	Height of the heliostat structure
 heliostat	helio_name	IN	STRING	Template 1		FALSE				Heliostat template name	Heliostat template name

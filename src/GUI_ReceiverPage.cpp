@@ -101,8 +101,8 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id){
 	
 	
 
-	wxStaticLine *sl1 = new wxStaticLine(parent, wxID_ANY, wxDefaultPosition, wxSize(1,1), wxHORIZONTAL);
-	sbs0->Add(sl1, 0, wxEXPAND|wxALL, 5);
+	/*wxStaticLine *sl1 = new wxStaticLine(parent, wxID_ANY, wxDefaultPosition, wxSize(1,1), wxHORIZONTAL);
+	sbs0->Add(sl1, 0, wxEXPAND|wxALL, 5);*/
 
 	//receiver diameter 
 	InputControl 

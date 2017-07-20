@@ -249,7 +249,7 @@ static void _sp_var( lk::invoke_t &cxt )
             }
             case SP_DVEC_POINT:
             {
-                std::vector< std::vector< Point > > Vp;
+                std::vector< std::vector< sp_point > > Vp;
                 spbase::_setv( varstr, Vp );
 
                 cxt.result().empty_vector();
@@ -302,7 +302,8 @@ static void _sp_var( lk::invoke_t &cxt )
         }
         else
         {
-            vmap->_varptrs[name.ToStdString()]->set_from_string( cxt.arg(1).as_string() );
+            std::string arg = cxt.arg(1).as_string();
+            vmap->_varptrs[name.ToStdString()]->set_from_string( arg.c_str() );
         }
 
 	}
@@ -400,7 +401,7 @@ static void _get_layout_info( lk::invoke_t &cxt )
 
         r.vec()->at(i).vec_append( hels->at(i)->getId() );
 
-        Point *loc = hels->at(i)->getLocation();
+        sp_point *loc = hels->at(i)->getLocation();
         r.vec()->at(i).vec_append( loc->x );
         r.vec()->at(i).vec_append( loc->y );
         r.vec()->at(i).vec_append( loc->z );
@@ -438,6 +439,8 @@ static void _simulate( lk::invoke_t &cxt )
 	int simtype = V->flux.flux_model.mapval();	//0=Delsol, 1=Soltrace
 	
 	//Set up field, update aimpoints, and simulate at the performance sun position
+	SolarField::PrepareFieldLayout(*SF, 0, true);	
+
     Hvector *helios = SF->getHeliostats();
 
 	if(! interop::PerformanceSimulationPrep(*SF, *helios, simtype) ) 
@@ -458,6 +461,8 @@ static void _simulate( lk::invoke_t &cxt )
     F.GetResultsObject()->clear();
     F.GetResultsObject()->resize(1);
 
+    F.StartSimTimer();
+
 	//Which type of simulation?
     bool ok;
     switch(simtype)
@@ -473,7 +478,8 @@ static void _simulate( lk::invoke_t &cxt )
         break;
 	}
 
-    
+    F.StopSimTimer();
+
     F.GetFluxPlotObject()->SetPlotData(*SF, *helios, 0 );
     F.GetFieldPlotObject()->SetPlotData( *SF, FIELD_PLOT::EFF_TOT ); 
     
@@ -524,9 +530,18 @@ static void _detail_results( lk::invoke_t &cxt )
     LK_DOC("get_detail_results", 
         "Return an array with detailed heliostat-by-heliostat results from a simulation. "
         "Each entry in the array is a table with entries as follows:\n"
-        "{ id(integer), location (array), aimpoint (array), tracking_vector (array), layout_metric (double), power_to_receiver (double), "
-        "efficiency (double), cosine (double), intercept (double), reflectance (double), attenuation (double), "
-        "blocking (double), shading (double), clouds (double) }", 
+        "{ id(integer), location (array), aimpoint (array), tracking_vector (array), "
+        "layout_metric (double), "
+        "power_to_receiver (double), "
+        "power_reflected (double), "
+        "efficiency (double), "
+        "cosine (double), "
+        "intercept (double), "
+        "reflectance (double), "
+        "attenuation (double), "
+        "blocking (double), "
+        "shading (double), "
+        "clouds (double) }", 
         "([array:selected heliostat indices]):array");
     
     SPFrame &F = SPFrame::Instance();
@@ -592,7 +607,15 @@ static void _detail_results( lk::invoke_t &cxt )
             p.hash()->at("tracking_vector")->vec_append(H->getTrackVector()->j );
             p.hash()->at("tracking_vector")->vec_append(H->getTrackVector()->k );
             p.hash_item( "layout_metric", H->getRankingMetricValue() );
-            p.hash_item( "power_to_receiver", H->getPowerToReceiver() );
+            p.hash_item( "power_to_receiver", H->getPowerToReceiver()/1000. );  //kW
+            p.hash_item( "power_reflected", H->getArea()
+                                            *H->getEfficiencyCosine()
+                                            *H->getTotalReflectivity()
+                                            *H->getEfficiencyBlock()
+                                            *H->getEfficiencyShading()
+                                            *H->getEfficiencyCloudiness() 
+                                            *SF->getVarMap()->flux.flux_dni.val/1000. //kW
+                        );
             p.hash_item( "efficiency", H->getEfficiencyTotal() );
             p.hash_item( "cosine", H->getEfficiencyIntercept() );
             p.hash_item( "intercept", H->getEfficiencyIntercept() );
@@ -659,7 +682,8 @@ static void _optimize( lk::invoke_t &cxt )
     LK_DOC("run_optimization","Execute an optimization run, returning the optimized result and iteration information. "
         "Variables to be optimized are passed in a vector, with each row containing a table specifying "
         "{variable, step, upbound, lowbound, inital}. The table must include the variable key, others are optional. "
-        "The return table includes the following: 'result':table of variable names and associated optimized values, 'objective':number, 'flux':number, 'iterations':array of evaluation point, objective, flux. "
+        "The return table includes the following: 'result':table of variable names and associated optimized values, "
+        "'objective':number, 'flux':number, 'iterations':array of evaluation point, objective, flux. "
         "Optional arguments include maxiterations/tolerance/defaultstep/powerpenalty/nthreads.",
         "(vector:variable tables[, table:options]):table");
 
@@ -943,7 +967,7 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
 
         for(size_t i=0; i<helios->size(); i++)
         {
-            Point *loc = helios->at(i)->getLocation();
+            sp_point *loc = helios->at(i)->getLocation();
 
             if(loc->x > xmin)
                 if(loc->x < xmax)
@@ -968,11 +992,11 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
     else if( lower_case(system) == "polygon" )
     {
         //construct a polygon from the listed points
-        std::vector< Point > polygon;
+        std::vector< sp_point > polygon;
         for(size_t i=0; i<cxt.arg(1).vec()->size(); i++)
         {
             lk::vardata_t *pt = &cxt.arg(1).vec()->at(i);
-            polygon.push_back( Point( pt->vec()->at(0).as_number(), pt->vec()->at(1).as_number(), 0. ) );
+            polygon.push_back( sp_point( pt->vec()->at(0).as_number(), pt->vec()->at(1).as_number(), 0. ) );
         }
 
         for(size_t i=0; i<helios->size(); i++)
@@ -1095,15 +1119,15 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
         to_double( offset_s.at(1), &offset_y );
 
         //allocate the main polygons structure
-        std::vector< std::vector< Point > > polygons;
+        std::vector< std::vector< sp_point > > polygons;
 
         double x0 = 0.;
         double y0 = 0.;
 
         for(size_t i=0; i<entries.size(); i++)
         {
-            polygons.push_back( std::vector< Point >() );
-            std::vector< Point > *P = &polygons.back();
+            polygons.push_back( std::vector< sp_point >() );
+            std::vector< sp_point > *P = &polygons.back();
 
             Toolbox::poly_from_svg( entries.at(i), *P, true);
 
@@ -1119,8 +1143,8 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
         {
             for(size_t j=0; j<polygons.size(); j++)
             {
-                std::vector< Point > *polygon = &polygons.at(j);
-                Point *loc = helios->at(i)->getLocation();
+                std::vector< sp_point > *polygon = &polygons.at(j);
+                sp_point *loc = helios->at(i)->getLocation();
 
                 if( Toolbox::pointInPolygon( *polygon,  *loc ) )
                 {
@@ -1210,21 +1234,38 @@ static void _modify_heliostats( lk::invoke_t &cxt )
 
         if( varname == "location" )
         {
+            //locations need to be modified through the layout shell object
+            layout_shell *layout = SF->getLayoutShellObject();
+            
             //make sure the heliostat ID's array is the same length as the location array
             std::vector< lk::vardata_t > *locvec = cxt.arg(1).hash()->at( "location" )->vec();
             if( locvec->size() != helios.size() )
                 throw lk::error_t( "The number of locations provided does not match the number of heliostat ID's provided." );
             //assign location(s)
+            layout->clear();
+
             for(size_t i=0; i<helios.size(); i++)
             {
-                double x = locvec->at(i).vec()->at(0).as_number();
-                double y = locvec->at(i).vec()->at(1).as_number();
-                double z = 0.;
-                if( locvec->at(i).vec()->size() > 2 )
-                    z = locvec->at(i).vec()->at(2).as_number();
+                //update the layout object
+                layout->push_back( layout_obj() );
+                layout_obj& lobj = layout->back();
 
-                helios.at(i)->setLocation( x, y, z );
+                lobj.aim = *helios.at(i)->getAimPoint();
+                lobj.cant = *helios.at(i)->getCantVector();
+                lobj.focal_x = helios.at(i)->getFocalX();
+                lobj.focal_y = helios.at(i)->getFocalY();
+                lobj.helio_type = helios.at(i)->getMasterTemplate()->getId();
+                
+                //update location
+                lobj.location.x = locvec->at(i).vec()->at(0).as_number();
+                lobj.location.y = locvec->at(i).vec()->at(1).as_number();
+                lobj.location.z = 0.;
+
+                if( locvec->at(i).vec()->size() > 2 )
+                    lobj.location.z = locvec->at(i).vec()->at(2).as_number();
+
             }
+            SF->PrepareFieldLayout(*SF, 0, true);
         }
         else if( varname == "aimpoint" )
         {

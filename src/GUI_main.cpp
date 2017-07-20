@@ -1076,8 +1076,7 @@ void SPFrame::Open(wxString file_in, bool quiet){
 		if(!quiet) _layout_gauge->GetParent()->Refresh();
 
 		if(!quiet) pdlg->Update(400, "Generating heliostat geometry");
-		WeatherData empty;
-		_SF.PrepareFieldLayout(_SF, empty, true);	//Run the layout method in refresh_only mode
+		_SF.PrepareFieldLayout(_SF, 0, true);	//Run the layout method in refresh_only mode
 
         double azzen[2];
         _SF.CalcDesignPtSunPosition(_variables.sf.sun_loc_des.mapval(), azzen[0], azzen[1]);
@@ -2494,7 +2493,7 @@ bool SPFrame::SolTraceFluxBinning(SolarField &SF)
 			ibin, jbin;	//indices of the flux grid bin that the current ray will go into
 		double rel, raz, rh, rw, paz, ph, pw, Arec, dqspec;
 		Vect rayhit;
-		//Point offset;
+		//sp_point offset;
 		//----------
 
 			
@@ -2508,11 +2507,11 @@ bool SPFrame::SolTraceFluxBinning(SolarField &SF)
 			fg = fs->getFluxMap();
 			e_ind = r+1;	//element index for this receiver
 
-			rel = RV->rec_elevation.val;
-			raz = RV->rec_azimuth.val;
+			rel = RV->rec_elevation.val*D2R;
+			raz = RV->rec_azimuth.val*D2R;
 			rh = RV->rec_height.val;
 			
-			Point offset(RV->rec_offset_x.val, RV->rec_offset_y.val, RV->optical_height.Val() );   //optical height includes z offset
+			sp_point offset(RV->rec_offset_x.val, RV->rec_offset_y.val, RV->optical_height.Val() );   //optical height includes z offset
 
 			//The number of points in the flux grid 
 			//(x-axis is angular around the circumference, y axis is receiver height)
@@ -2559,12 +2558,12 @@ bool SPFrame::SolTraceFluxBinning(SolarField &SF)
 			fg = fs->getFluxMap();
 			e_ind = r+1;	//element index for this receiver
 
-			rel = RV->rec_elevation.val;
-			raz = RV->rec_azimuth.val;
+			rel = RV->rec_elevation.val*D2R;
+			raz = RV->rec_azimuth.val*D2R;
 			rh = RV->rec_height.val;
 			rw = Rec->getReceiverWidth(*RV); 
 			
-			Point offset(RV->rec_offset_x.val, RV->rec_offset_y.val, RV->optical_height.Val() );   //optical height includes z offset
+			sp_point offset(RV->rec_offset_x.val, RV->rec_offset_y.val, RV->optical_height.Val() );   //optical height includes z offset
 
 			//The number of points in the flux grid 
 			//(x-axis receiver width, y axis is receiver height)
@@ -3458,8 +3457,7 @@ void SPFrame::ParametricSimulate( parametric &P ){
 					//just update the geometry
 					if(! varpar.sf.layout_data.val.empty() ){
 						try{
-							WeatherData empty;
-							SolarField::PrepareFieldLayout(_par_SF, empty, true);	if(_par_SF.ErrCheck()) return;
+							SolarField::PrepareFieldLayout(_par_SF, 0, true);	if(_par_SF.ErrCheck()) return;
                             _par_SF.calcHeliostatArea();
                             _par_SF.updateAllCalculatedParameters( varpar );
 
@@ -3659,7 +3657,7 @@ void SPFrame::ParametricSimulate( parametric &P ){
 
 void SPFrame::CreateResultsTable(sim_result &result, grid_emulator &table){
 	try{
-		table.CreateGrid(result.is_soltrace ? 16 : 18, 5);
+		table.CreateGrid(result.is_soltrace ? 19 : 18, 5);
 		//table.SetRowLabelSize(200);
 	
 		table.SetColLabelValue(0, "Units");
@@ -3690,6 +3688,12 @@ void SPFrame::CreateResultsTable(sim_result &result, grid_emulator &table){
 		table.AddRow(id++, "Absorption efficiency", "%", 100.*result.eff_absorption.ave, 1);
         int flux_sig = max(1,3 - (int)floor(log10(result.flux_density.ave)));
 		table.AddRow(id++, "Incident flux", "kW/m2", result.flux_density.ave, flux_sig, result.flux_density.min, result.flux_density.max, result.flux_density.stdev);
+        if( result.is_soltrace )
+        {
+            table.AddRow(id++, "No. rays traced", "-", result.num_ray_traced);
+            table.AddRow(id++, "No. heliostat ray intersections", "-", result.num_ray_heliostat);
+            table.AddRow(id++, "No. receiver ray intersections", "-", result.num_ray_receiver);
+        }
 	}
 	catch(...)
 	{
@@ -3841,7 +3845,7 @@ bool SPFrame::DoManagedLayout(SolarField &SF, var_map &V){
 
 		//Prepare the master solar field object for layout simulation
 		WeatherData wdata;
-		bool full_sim = SF.PrepareFieldLayout(SF, wdata);
+		bool full_sim = SF.PrepareFieldLayout(SF, &wdata);
 		
 		//If full simulation is required...
 		if(full_sim){

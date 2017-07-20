@@ -282,7 +282,7 @@ void grid_emulator::AddRow(int row, wxString label, wxString units, double value
 	//Row adding method for simple performance runs
 
 	if((GetNumberCols() < 5) || (GetNumberRows() < row+1))
-		throw spexception("Sorry! Results table incorrectly formatted. Please contact mike.wagner@nrel.gov for help.");
+		throw spexception("Sorry! Results table incorrectly formatted. Please contact solarpilot.support@nrel.gov for help.");
 	
 	bool is_currency = false;
 	if( units.Find("$") != wxString::npos ) is_currency = true;

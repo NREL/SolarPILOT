@@ -343,7 +343,7 @@ void SPFrame::UpdateFluxLC(int sortkey){
 	if(nh == 0 || sortkey < 0) return;
 
 	Heliostat *H;
-	Point *loc, *aim;
+	sp_point *loc, *aim;
 	double az;
 	
 
