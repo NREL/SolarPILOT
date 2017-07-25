@@ -96,16 +96,16 @@ void InputControl::setPanelObject(string choice, wxPanel &panel){
     if( _varobj->ctype == "combo" )
     {
         //_varobj->combo_select( choice );
-        choicedat[ choice ].has_panel = true;
-        choicedat[ choice ].panel = &panel;
+        choicedat.at( choice ).has_panel = true;
+        choicedat.at( choice ).panel = &panel;
     }
     else if( _varobj->ctype == "checkbox" )
     {
         if( choice != "true" && choice != "false" )
             throw spexception("Attempting to add a panel to a checkbox option that is neither \"true\" nor \"false\" and cannot proceed.");
 
-        choicedat[ choice ].has_panel = true;
-        choicedat[ choice ].panel = &panel;
+        choicedat.at( choice ).has_panel = true;
+        choicedat.at( choice ).panel = &panel;
     }
     else
         throw spexception("Attempting to add a choice panel to a non-choice control");
@@ -122,8 +122,8 @@ void InputControl::updateInputDisplay()
 	//If the control is permanently disabled, return here
 	if(_disabled) return;
 
-    if( choicedat[_value].has_panel )
-        choicedat[_value].panel->Show(true);
+    if( choicedat.at(_value).has_panel )
+        choicedat.at(_value).panel->Show(true);
 
 }
 
@@ -132,25 +132,25 @@ void InputControl::addDisabledSiblings(string sel, int n, wxWindow* p[] )
     
     for(int i=0; i<n; i++)
     {
-        choicedat[sel].dis_sibs.push_back( p[i] );
+        choicedat.at(sel).dis_sibs.push_back( p[i] );
         _all_dis_objs.push_back( p[i]);     //also add to vector of all disable objects
     }
 }
 void InputControl::addDisabledSiblings(string sel, wxWindow *p)
 {
-    choicedat[sel].dis_sibs.push_back( p );
+    choicedat.at(sel).dis_sibs.push_back( p );
     _all_dis_objs.push_back( p );
 }
 
 void InputControl::setDisabledSiblings(string sel, int n, wxWindow *p[])
 {
-    choicedat[sel].dis_sibs.clear();
+    choicedat.at(sel).dis_sibs.clear();
 
     addDisabledSiblings(sel, n, p);
 }
 void InputControl::setDisabledSiblings(string sel, wxWindow *p)
 {
-    choicedat[sel].dis_sibs.clear();
+    choicedat.at(sel).dis_sibs.clear();
     addDisabledSiblings(sel, p);
 }
 
@@ -239,7 +239,7 @@ vector<wxWindow*> *InputControl::getAllDisabledSiblings()
 
 vector<wxWindow*> *InputControl::getDisabledSiblings(string &choice)
 {
-    return &choicedat[choice].dis_sibs;
+    return &choicedat.at(choice).dis_sibs;
 }
 
 void InputControl::updateComboChoices()
@@ -253,8 +253,13 @@ void InputControl::updateComboChoices()
     //initialize
     wxArrayString choices_temp;
     choicedat.clear();
-    for(int i=0; i<n; i++){
-        choicedat[choice_keys.at(i)].has_panel = false;
+    for(int i=0; i<n; i++)
+    {
+        //create
+        choicedat[choice_keys.at(i)];
+
+        //initialize
+        choicedat.at(choice_keys.at(i)).has_panel = false;
         choices_temp.Add( choice_keys.at(i) );
 	}
 
@@ -384,8 +389,13 @@ void InputControl::Build(){
         //initialize
         wxArrayString choices_temp;
         choicedat.clear();
-        for(int i=0; i<n; i++){
-            choicedat[choice_keys.at(i)].has_panel = false;
+        for(int i=0; i<n; i++)
+        {
+            //create
+            choicedat[choice_keys.at(i)];
+
+            //initialize
+            choicedat.at(choice_keys.at(i)).has_panel = false;
             choices_temp.Add( choice_keys.at(i) );
 		}
 
@@ -409,8 +419,13 @@ void InputControl::Build(){
 		//create a map of true/false and values to return
         choicedat.clear();
 
-        choicedat["true"].has_panel = false;  //"false"
-        choicedat["false"].has_panel = false;  //"true"
+        //create
+        choicedat["true"];
+        choicedat["false"];
+
+        //initialize
+        choicedat.at("true").has_panel = false;  //"false"
+        choicedat.at("false").has_panel = false;  //"true"
         
 		//Create the checkbox
 		chk = new wxCheckBox(this, wxID_ANY, "");

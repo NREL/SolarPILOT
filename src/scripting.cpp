@@ -295,15 +295,41 @@ static void _sp_var( lk::invoke_t &cxt )
 	else if (cxt.arg_count() == 2)      //set variable
 	{
 	
-        if( vmap->_varptrs.find( name.ToStdString() ) == vmap->_varptrs.end() ) 
+        std::string arg = cxt.arg(1).as_string();
+        std::string sname = (std::string)name;
+            
+        //make sure the specified variable exists
+        if( vmap->_varptrs.find( sname ) == vmap->_varptrs.end() )
         {
+            cxt.error( "Invalid variable name: " + sname );
             cxt.result().assign(0.);
             return;
         }
         else
         {
-            std::string arg = cxt.arg(1).as_string();
-            vmap->_varptrs[name.ToStdString()]->set_from_string( arg.c_str() );
+            //if it's a combo, make sure the specified combo choice exists
+            if( vmap->_varptrs.at( sname )->ctype == "combo" )
+            {
+                std::vector< std::string > cbchoices = vmap->_varptrs.at( sname )->combo_get_choices();
+                if( std::find( cbchoices.begin(), cbchoices.end(), arg ) != cbchoices.end() )
+                {
+                    //valid variable and selection
+                    vmap->_varptrs.at(sname)->set_from_string( arg.c_str() );
+                    cxt.result().assign( arg );
+                }
+                else
+                {
+                    cxt.error("Invalid variable choice for \"" + sname + "\": \"" + arg + "\" is not a valid option.");
+                    cxt.result().assign(0.);
+                    return;
+                }
+            }
+            else
+            {
+                //no problems, just set the variable
+                vmap->_varptrs.at(sname)->set_from_string( arg.c_str() );
+                cxt.result().assign( arg );
+            }
         }
 
 	}

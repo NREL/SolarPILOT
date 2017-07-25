@@ -1633,7 +1633,8 @@ void SPFrame::UpdateInputValues(){
     {
     	std::string ifas = it->first->as_string();
         it->second->setValue( ifas );
-		if(it->second->isCombo()) it->second->updateInputDisplay();
+		if(it->second->isCombo()) 
+            it->second->updateInputDisplay();
 	}
 
 	//Other inputs not in the _input_map
