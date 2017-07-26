@@ -699,6 +699,7 @@ public:
 	void UpdateInputValues();
 	void UpdateCalculatedGUIValues();
     void UpdateFieldPlotSelections();
+    void UpdateFluxPlotSelections();
 	
 	bool CreateRestorePoint();
 	void PreSimulation();

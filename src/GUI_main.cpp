@@ -1842,6 +1842,15 @@ void SPFrame::UpdateFieldPlotSelections()
 
 }
 
+void SPFrame::UpdateFluxPlotSelections()
+{
+    _rec_select->Clear();
+
+    for( int i=0; i<_SF.getVarMap()->recs.size(); i++)
+        _rec_select->Append( _SF.getVarMap()->recs.at(i).rec_name.val );
+
+}
+
 void SPFrame::GridCount( wxSpinCtrl *sc, wxGrid *grid){
 	int nnew = sc->GetValue();
 	int nprev = grid->GetNumberRows();

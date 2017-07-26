@@ -589,7 +589,7 @@ void SPFrame::OnDoPerformanceSimulation( wxCommandEvent &event){
             _plot_frame->SetPlotData( _SF, FIELD_PLOT::EFF_TOT ); 
             //update the selection combo
             UpdateFieldPlotSelections();
-            //_plot_select->SetSelection( FIELD_PLOT::EFF_TOT );
+            UpdateFluxPlotSelections();
 
 			DoResultsPage(results);
 			

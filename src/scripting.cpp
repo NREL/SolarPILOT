@@ -1503,6 +1503,7 @@ static void _update_interface( lk::invoke_t &cxt )
     F.UpdateCalculatedGUIValues();
     F.UpdateInputValues();
     F.UpdateFieldPlotSelections();
+    F.UpdateFluxPlotSelections();
 }
 
 static lk::fcall_t *solarpilot_functions()

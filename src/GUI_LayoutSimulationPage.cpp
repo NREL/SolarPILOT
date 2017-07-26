@@ -377,7 +377,8 @@ void SPFrame::OnDoLayout( wxCommandEvent &event){
             _plot_frame->SetPlotData( _SF, FIELD_PLOT::EFF_TOT );
             //update the selection combo
             UpdateFieldPlotSelections();
-            //_plot_select->SetSelection( FIELD_PLOT::EFF_TOT );
+            //update the receiver flux map selection combo
+            UpdateFluxPlotSelections();
 	
 			DoResultsPage(results);
 			proctime = _sim_watch.Time() - simtime;
