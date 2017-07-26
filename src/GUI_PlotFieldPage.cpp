@@ -382,21 +382,10 @@ void SPFrame::OnLayoutSimulationExport( wxCommandEvent &WXUNUSED(event)){
 void SPFrame::OnPlotSelectCombo( wxCommandEvent &event){
 	/* The selection for the plot to display on the field plot page has been changed */
 	wxString tsel = ( (wxComboBox*)event.GetEventObject() )->GetStringSelection();
-	//make sure to map the combo choices to the correct item. 
-	int sel;
-	if( tsel == "Field layout") sel = FIELD_PLOT::LAYOUT ;
-	else if( tsel == "Total efficiency") sel = FIELD_PLOT::EFF_TOT ;
-	else if( tsel == "Cosine efficiency") sel = FIELD_PLOT::EFF_COS ;
-	else if( tsel == "Attenuation efficiency") sel = FIELD_PLOT::EFF_ATT ;
-	else if( tsel == "Blocking efficiency") sel = FIELD_PLOT::EFF_BLOCK ;
-	else if( tsel == "Shading efficiency") sel = FIELD_PLOT::EFF_SHAD ;
-	else if( tsel == "Image intercept efficiency") sel = FIELD_PLOT::EFF_INT ;
-	else if( tsel == "Delivered power") sel = FIELD_PLOT::POWER ;
-	else if( tsel == "Layout ranking metric") sel = FIELD_PLOT::RANK ;
-	else if( tsel == "Which receiver") sel = FIELD_PLOT::RECEIVER ;
-	else if( tsel == "Optical mesh") sel = FIELD_PLOT::MESH ;
-	else if( tsel == "Cloudiness efficiency") sel = FIELD_PLOT::EFF_CLOUD ;
-	else sel = FIELD_PLOT::LAND;
+
+    std::vector< std::string > choices = _plot_frame->GetPlotChoices();
+
+    int sel = std::find( choices.begin(), choices.end(), tsel ) - choices.begin();
 
 	_plot_frame->SetPlotOption(sel);
 

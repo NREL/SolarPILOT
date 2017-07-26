@@ -1,0 +1,22 @@
+var("solarfield.0.des_sim_ndays", 2);
+var("solarfield.0.tht", 60);
+var("solarfield.0.q_des", 25 );
+var("receiver.0.rec_type", "Flat plate");
+var("receiver.0.rec_height", 15);
+var("receiver.0.rec_width", 12);
+
+
+id = add_receiver("Test template");
+outln(id);
+id = to_string( id );
+
+var("receiver."+id+".rec_type", "Flat plate");
+var("receiver."+id+".rec_height", 15);
+var("receiver."+id+".rec_width", 12);
+var("receiver."+id+".x_offset", 15);
+
+layout_ok = run_layout({'nthreads'=3});
+
+update_interface();
+
+//sim_ok = run_performance();

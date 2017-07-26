@@ -26,6 +26,44 @@ FieldPlot::FieldPlot(wxPanel *parent, SolarField &SF, const int plot_option,
     _origin_offset[1] = 0;
     _is_data_visible = false;
     _is_zoom_rectangle = false;
+
+    _plot_choices.clear();
+    /* 
+	0 | Land boundaries
+	1 | Field layout
+	2 | Total efficiency
+	3 | Cosine efficiency
+	4 | Attenuation efficiency
+	5 | Blocking efficiency
+	6 | Shading efficiency
+	7 | Image intercept efficiency
+	8 | Delivered power
+	9 | Ranking metric
+	10| receiver map
+	11| Optical mesh
+	12| Cloudiness efficiency
+    */
+    _plot_choices = {
+        "Land boundaries",
+        "Field layout",
+        "Total efficiency",
+        "Cosine efficiency",
+        "Attenuation efficiency",
+        "Blocking efficiency",
+        "Shading efficiency",
+        "Image intercept efficiency",
+        "Delivered power",
+        "Ranking metric",
+        "Receiver map",
+        "Optical mesh",
+        "Cloudiness efficiency",
+    };
+
+}
+
+bool FieldPlot::IsDataReady()
+{
+    return _is_data_ready;
 }
 
 void FieldPlot::SetPlotZoomFact(double fact)
@@ -61,6 +99,11 @@ void FieldPlot::SetZoomRectangle(int *xyxy)
 void FieldPlot::EnableZoomRectangle(bool is_enabled)
 {
     _is_zoom_rectangle = is_enabled;
+}
+
+std::vector< std::string > FieldPlot::GetPlotChoices()
+{
+    return _plot_choices;
 }
 
 void FieldPlot::SetPlotData(SolarField &SF, int plot_option){

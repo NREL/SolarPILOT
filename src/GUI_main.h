@@ -698,6 +698,7 @@ public:
     void UpdateReceiverUITemplates();
 	void UpdateInputValues();
 	void UpdateCalculatedGUIValues();
+    void UpdateFieldPlotSelections();
 	
 	bool CreateRestorePoint();
 	void PreSimulation();

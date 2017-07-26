@@ -58,6 +58,7 @@ private:
     int _origin_offset[2];  //offset in pixels for origin
     int _zoom_rectangle[4]; //x0,y0,x1,y1
     bool _is_zoom_rectangle;
+    std::vector< std::string > _plot_choices;
 	DECLARE_EVENT_TABLE()
 
 
@@ -80,6 +81,9 @@ public:
     void SetDataVisible(bool is_visible);
     void SetZoomRectangle(int xy0_xy1[4]);
     void EnableZoomRectangle(bool is_enabled=true);
+
+    std::vector< std::string > GetPlotChoices();
+    bool IsDataReady();
 
     double GetPlotZoomFact(){return _zoom_fact;}
 	int GetFontSize(){return _fontsize;}

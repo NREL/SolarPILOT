@@ -722,21 +722,21 @@ void SPFrame::CreateInputPages(wxWindow *parent, PagePanel *pagepanel, bool is_f
 	choices.Add("Land boundaries");
 	
 	//if(has_data){
-	choices.Add("Field layout");
-	choices.Add("Total efficiency");
-	choices.Add("Cosine efficiency");
-	choices.Add("Attenuation efficiency");
-	choices.Add("Blocking efficiency");
-	choices.Add("Shading efficiency");
-	choices.Add("Image intercept efficiency");
-	choices.Add("Delivered power");
-	choices.Add("Layout ranking metric");
-	if((int)_SF.getReceivers()->size() > 1)
-		choices.Add("Which receiver");
-	if(_SF.getOpticalHashTree()->get_terminal_nodes().size() > 0)
-		choices.Add("Optical mesh");
-	//if(_SF.getCloudObject()->isCloudy())
-	choices.Add("Cloudiness efficiency");
+	//choices.Add("Field layout");
+	//choices.Add("Total efficiency");
+	//choices.Add("Cosine efficiency");
+	//choices.Add("Attenuation efficiency");
+	//choices.Add("Blocking efficiency");
+	//choices.Add("Shading efficiency");
+	//choices.Add("Image intercept efficiency");
+	//choices.Add("Delivered power");
+	//choices.Add("Layout ranking metric");
+	//if((int)_SF.getReceivers()->size() > 1)
+	//	choices.Add("Which receiver");
+	//if(_SF.getOpticalHashTree()->get_terminal_nodes().size() > 0)
+	//	choices.Add("Optical mesh");
+	////if(_SF.getCloudObject()->isCloudy())
+	//choices.Add("Cloudiness efficiency");
 	//}
 	wxScrolledWindow *layoutresults = new wxScrolledWindow(this);
 	CreateFieldPlotPage(layoutresults, choices, 0);
@@ -1801,6 +1801,44 @@ void SPFrame::UpdateCalculatedGUIValues(){
         _variables.flux.plot_zmin.val,
         _variables.flux.plot_zmax.val,
         _variables.flux.is_autoscale.val);
+
+}
+
+void SPFrame::UpdateFieldPlotSelections()
+{
+    /* 
+    Update the field plot selection combo based on the system being simulated
+    */
+    _plot_select->Clear();
+
+    std::vector< std::string > choices = _plot_frame->GetPlotChoices();
+    
+    _plot_select->Append( choices.at( FIELD_PLOT::LAND ) );
+    _plot_select->SetValue( choices.front() );
+
+    if( _plot_frame->IsDataReady() )
+    {
+        _plot_select->Append( choices.at(  FIELD_PLOT::LAYOUT ) );
+        _plot_select->Append( choices.at(  FIELD_PLOT::EFF_TOT ) );
+            _plot_select->SetValue( choices.at( FIELD_PLOT::EFF_TOT ) );
+        _plot_select->Append( choices.at(  FIELD_PLOT::EFF_COS ) );
+        _plot_select->Append( choices.at(  FIELD_PLOT::EFF_ATT ) );
+        _plot_select->Append( choices.at(  FIELD_PLOT::EFF_BLOCK ) );
+        _plot_select->Append( choices.at(  FIELD_PLOT::EFF_SHAD ) );
+        _plot_select->Append( choices.at(  FIELD_PLOT::EFF_INT ) );
+        _plot_select->Append( choices.at(  FIELD_PLOT::POWER ) );
+        _plot_select->Append( choices.at(  FIELD_PLOT::RANK ) );
+    }
+
+    if( _SF.getVarMap()->recs.size() > 1 )
+        _plot_select->Append( choices.at(  FIELD_PLOT::RECEIVER ) );
+
+    if( _SF.getVarMap()->sf.is_opt_zoning.val )
+        _plot_select->Append( choices.at(  FIELD_PLOT::MESH ) );
+
+    if( _SF.getVarMap()->flux.is_cloudy.val )
+        _plot_select->Append( choices.at(  FIELD_PLOT::EFF_CLOUD ) );
+
 
 }
 

@@ -187,14 +187,18 @@ void InputControl::setValue(string &val){
 	input as-is.
 	*/
 
-	if(_varobj->ctype == "combo"){	
-		int ival;
-		to_integer(val, &ival);
-        setValue(ival);
+	if(_varobj->ctype == "combo")
+    {	
+        if( choicedat.find( val ) != choicedat.end() )
+        {
+            cb->SetValue( val );
+            _value = val;
+        }
 	}
 	else if(_varobj->ctype == "checkbox"){
 		//convert the text "true" or "false" into a bool value
 		chk->SetValue( lower_case( val ) == "true" );
+        _value = lower_case( val );
 	}
 	else{
         if( _varobj->dattype == SP_DATTYPE::SP_DOUBLE )
@@ -206,6 +210,8 @@ void InputControl::setValue(string &val){
             fv << x;
 
 		    tc->SetValue( fv.str() );
+
+            _value = val;
         }
 	}
 }

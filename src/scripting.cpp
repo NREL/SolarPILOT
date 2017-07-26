@@ -90,9 +90,26 @@ static void _drop_receiver( lk::invoke_t &cxt )
 {
     LK_DOC("drop_receiver", "Drop a receiver from the current solar field", "(integer:index)");
 
-    int index = cxt.arg(0).as_integer();
+    SPFrame &F = SPFrame::Instance();
+    SolarField *SF = F.GetSolarFieldObject();
+    var_map *V = SF->getVarMap();
 
-    //SPFrame::Instance().DropReceiver(index);
+    int id = -1;
+    std::string tname = lower_case( cxt.arg(0).as_string().ToStdString() );
+
+    for(size_t i=0; i<V->hels.size(); i++)
+    {
+        if( tname == lower_case( V->recs.at(i).rec_name.val ) )
+        {
+            //delete the item
+            V->drop_receiver( V->recs.at(i).id.val );
+            SF->Create(*V);
+            cxt.result().assign( 1. );
+            return;
+        }
+    }
+
+    cxt.result().assign( 0. );
 
     return;
 }
@@ -165,13 +182,6 @@ static void _add_heliostat( lk::invoke_t &cxt )
 
 };
 
-
-static void _select_heliostat( lk::invoke_t &cxt )
-{
-    LK_DOC("select_heliostat", "Select the heliostat to which any variable updates apply, (-1=all)", "(integer:index, variant:value)");
-
-    return;
-}
 
 static void _drop_heliostat( lk::invoke_t &cxt )
 {
@@ -505,6 +515,7 @@ static void _simulate( lk::invoke_t &cxt )
 	}
 
     F.StopSimTimer();
+    SF->getSimInfoObject()->Reset();
 
     F.GetFluxPlotObject()->SetPlotData(*SF, *helios, 0 );
     F.GetFieldPlotObject()->SetPlotData( *SF, FIELD_PLOT::EFF_TOT ); 
@@ -1481,16 +1492,29 @@ static void _open_from_script( lk::invoke_t &cxt )
 }
 
 
+static void _update_interface( lk::invoke_t &cxt )
+{
+    LK_DOC("update_interface", "Synchronize the user interface input and calculated values to match changes introduced by the script.", "(void):void" );
+
+    SPFrame &F = SPFrame::Instance();
+    SolarField *SF = F.GetSolarFieldObject();
+    var_map *V = SF->getVarMap();
+
+    F.UpdateCalculatedGUIValues();
+    F.UpdateInputValues();
+    F.UpdateFieldPlotSelections();
+}
+
 static lk::fcall_t *solarpilot_functions()
 {
 	static lk::fcall_t st[] = {
         _generate_layout,
-        //_add_receiver,
-        //_drop_receiver,
-        //_select_receiver,
+        
+        _add_receiver,
+        _drop_receiver,
         //_add_heliostat,
         //_drop_heliostat,
-        //_select_heliostat,
+
         _sp_var,
         _simulate,
         _summary_results,
@@ -1506,6 +1530,7 @@ static lk::fcall_t *solarpilot_functions()
         _save_from_script,
         _dump_varmap,
         _open_from_script,
+        _update_interface,
 		0 };
 
 	return (lk::fcall_t*)st;

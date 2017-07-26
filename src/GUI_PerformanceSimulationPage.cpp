@@ -588,7 +588,8 @@ void SPFrame::OnDoPerformanceSimulation( wxCommandEvent &event){
 			//DoLayoutPlot(true);	//also update the layout plot
             _plot_frame->SetPlotData( _SF, FIELD_PLOT::EFF_TOT ); 
             //update the selection combo
-            _plot_select->SetSelection( FIELD_PLOT::EFF_TOT );
+            UpdateFieldPlotSelections();
+            //_plot_select->SetSelection( FIELD_PLOT::EFF_TOT );
 
 			DoResultsPage(results);
 			
