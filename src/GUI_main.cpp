@@ -3698,7 +3698,7 @@ void SPFrame::CreateResultsTable(sim_result &result, grid_emulator &table){
 	try{
 		table.CreateGrid(result.is_soltrace ? 19 : 18, 5);
 		//table.SetRowLabelSize(200);
-	
+	    
 		table.SetColLabelValue(0, "Units");
 		table.SetColLabelValue(1, "Mean");
 		table.SetColLabelValue(2, "Minimum");
@@ -3707,31 +3707,35 @@ void SPFrame::CreateResultsTable(sim_result &result, grid_emulator &table){
 	
 		int id=0;
 		table.AddRow(id++, "Total plant cost", "$", result.total_installed_cost, 0);
-		table.AddRow(id++, "Cost/Energy metric", "-", result.coe_metric, 3);
-		table.AddRow(id++, "Simulated heliostat area", "m^2", result.total_heliostat_area, 1);
+		table.AddRow(id++, "Cost/Energy metric", "-", result.coe_metric);
+		table.AddRow(id++, "Simulated heliostat area", "m^2", result.total_heliostat_area);
 		table.AddRow(id++, "Simulated heliostat count", "-", result.num_heliostats_used, 0);
-		table.AddRow(id++, "Power incident on field", "kW", result.power_on_field, 1);
-		table.AddRow(id++, "Power absorbed by the receiver", "kW", result.power_absorbed, 1);
-        table.AddRow(id++, "Power absorbed by HTF", "kW", result.power_to_htf, 1);
-		table.AddRow(id++, "Solar field optical efficiency", "%", 100.*result.eff_total_sf.ave/result.eff_absorption.ave, 1, 100.*result.eff_total_sf.min/result.eff_absorption.ave, 100.*result.eff_total_sf.max/result.eff_absorption.ave, 100.*result.eff_total_sf.stdev/result.eff_absorption.ave);
-		table.AddRow(id++, "Optical efficiency incl. reciever", "%", 100.*result.eff_total_sf.ave, 1, 100.*result.eff_total_sf.min, 100.*result.eff_total_sf.max, 100.*result.eff_total_sf.stdev);
-		table.AddRow(id++, "Cosine efficiency", "%", 100.*result.eff_cosine.ave, 1, 100.*result.eff_cosine.min, 100.*result.eff_cosine.max, 100.*result.eff_cosine.stdev);
-		table.AddRow(id++, "Blocking efficiency", "%", 100.*result.eff_blocking.ave, 1, 100.*result.eff_blocking.min, 100.*result.eff_blocking.max, 100.*result.eff_blocking.stdev);
+		table.AddRow(id++, "Power incident on field", "kW", result.power_on_field);
+		table.AddRow(id++, "Power absorbed by the receiver", "kW", result.power_absorbed);
+        table.AddRow(id++, "Power absorbed by HTF", "kW", result.power_to_htf);
+		table.AddRow(id++, "Solar field optical efficiency", "%", 100.*result.eff_total_sf.ave/result.eff_absorption.ave, -1, 100.*result.eff_total_sf.min/result.eff_absorption.ave, 100.*result.eff_total_sf.max/result.eff_absorption.ave, 100.*result.eff_total_sf.stdev/result.eff_absorption.ave);
+		table.AddRow(id++, "Optical efficiency incl. reciever", "%", 100.*result.eff_total_sf.ave, -1, 100.*result.eff_total_sf.min, 100.*result.eff_total_sf.max, 100.*result.eff_total_sf.stdev);
+		table.AddRow(id++, "Cosine efficiency", "%", 100.*result.eff_cosine.ave, -1, 100.*result.eff_cosine.min, 100.*result.eff_cosine.max, 100.*result.eff_cosine.stdev);
+		table.AddRow(id++, "Blocking efficiency", "%", 100.*result.eff_blocking.ave, -1, 100.*result.eff_blocking.min, 100.*result.eff_blocking.max, 100.*result.eff_blocking.stdev);
 		if(! result.is_soltrace){
-			table.AddRow(id++, "Shading efficiency", "%", 100.*result.eff_shading.ave, 1, 100.*result.eff_shading.min, 100.*result.eff_shading.max, 100.*result.eff_shading.stdev);
-			table.AddRow(id++, "Attenuation efficiency", "%", 100.*result.eff_attenuation.ave, 1, 100.*result.eff_attenuation.min, 100.*result.eff_attenuation.max, 100.*result.eff_attenuation.stdev);
+			table.AddRow(id++, "Shading efficiency", "%", 100.*result.eff_shading.ave, -1, 100.*result.eff_shading.min, 100.*result.eff_shading.max, 100.*result.eff_shading.stdev);
+			table.AddRow(id++, "Attenuation efficiency", "%", 100.*result.eff_attenuation.ave, -1, 100.*result.eff_attenuation.min, 100.*result.eff_attenuation.max, 100.*result.eff_attenuation.stdev);
 		}
-		table.AddRow(id++, "Reflection efficiency", "%", 100.*result.eff_reflect.ave, 1);
-		table.AddRow(id++, "Image intercept efficiency", "%", 100.*result.eff_intercept.ave, 1, 100.*result.eff_intercept.min, 100.*result.eff_intercept.max, 100.*result.eff_intercept.stdev);
-		table.AddRow(id++, "Cloudiness efficiency", "%", 100.*result.eff_cloud.ave, 1, 100.*result.eff_cloud.min, 100.*result.eff_cloud.max, 100.*result.eff_cloud.stdev);
-		table.AddRow(id++, "Absorption efficiency", "%", 100.*result.eff_absorption.ave, 1);
-        int flux_sig = max(1,3 - (int)floor(log10(result.flux_density.ave)));
-		table.AddRow(id++, "Incident flux", "kW/m2", result.flux_density.ave, flux_sig, result.flux_density.min, result.flux_density.max, result.flux_density.stdev);
+		table.AddRow(id++, "Reflection efficiency", "%", 100.*result.eff_reflect.ave);
+		table.AddRow(id++, "Image intercept efficiency", "%", 100.*result.eff_intercept.ave, -1, 100.*result.eff_intercept.min, 100.*result.eff_intercept.max, 100.*result.eff_intercept.stdev);
+        
+        if( _SF.getVarMap()->flux.is_cloudy.val )
+		    table.AddRow(id++, "Cloudiness efficiency", "%", 100.*result.eff_cloud.ave, -1, 100.*result.eff_cloud.min, 100.*result.eff_cloud.max, 100.*result.eff_cloud.stdev);
+        else
+		    table.AddRow(id++, "Cloudiness efficiency", "%", 100., -1, 100., 100., 100.);
+
+		table.AddRow(id++, "Absorption efficiency", "%", 100.*result.eff_absorption.ave);
+		table.AddRow(id++, "Incident flux", "kW/m2", result.flux_density.ave, -1, result.flux_density.min, result.flux_density.max, result.flux_density.stdev);
         if( result.is_soltrace )
         {
-            table.AddRow(id++, "No. rays traced", "-", result.num_ray_traced);
-            table.AddRow(id++, "No. heliostat ray intersections", "-", result.num_ray_heliostat);
-            table.AddRow(id++, "No. receiver ray intersections", "-", result.num_ray_receiver);
+            table.AddRow(id++, "No. rays traced", "-", result.num_ray_traced, 0);
+            table.AddRow(id++, "No. heliostat ray intersections", "-", result.num_ray_heliostat, 0);
+            table.AddRow(id++, "No. receiver ray intersections", "-", result.num_ray_receiver, 0);
         }
 	}
 	catch(...)

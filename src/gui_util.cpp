@@ -286,7 +286,14 @@ void grid_emulator::AddRow(int row, wxString label, wxString units, double value
 	
 	bool is_currency = false;
 	if( units.Find("$") != wxString::npos ) is_currency = true;
-		
+
+    //calculate a good precision
+    if( sigfigs < 0 )
+    {
+        int prec = 5-(int)log10f(value);
+        sigfigs = prec < 0 ? 0 : prec;
+    }
+
 	wxString infmt = wxString::Format("%s.%df", "%", sigfigs);
 	wxString stfmt = wxString::Format("%s.%df", "%", sigfigs+2);
 

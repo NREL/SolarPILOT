@@ -78,7 +78,7 @@ public:
 	bool SetRowLabelValue(int row, wxString value);
 	bool SetCellValue(int row, int col, wxString value);
 	bool SetCellValue(wxString value, int row, int col);
-	void AddRow(int row, wxString label, wxString units, double value, int sigfigs=1, double min=std::numeric_limits<double>::quiet_NaN(), double max=std::numeric_limits<double>::quiet_NaN(), double stdev=std::numeric_limits<double>::quiet_NaN());
+	void AddRow(int row, wxString label, wxString units, double value, int sigfigs=-1, double min=std::numeric_limits<double>::quiet_NaN(), double max=std::numeric_limits<double>::quiet_NaN(), double stdev=std::numeric_limits<double>::quiet_NaN());
 	//void AddRow(int row, wxString label, wxString units, vector<double> &values, int sigfigs=1);
 	int GetNumberRows(){return _nrow;}
 	int GetNumberCols(){return _ncol;}
