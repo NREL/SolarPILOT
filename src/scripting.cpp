@@ -475,7 +475,7 @@ static void _simulate( lk::invoke_t &cxt )
 	int simtype = V->flux.flux_model.mapval();	//0=Delsol, 1=Soltrace
 	
 	//Set up field, update aimpoints, and simulate at the performance sun position
-	SolarField::PrepareFieldLayout(*SF, 0, true);	
+	//SolarField::PrepareFieldLayout(*SF, 0, true);	
 
     Hvector *helios = SF->getHeliostats();
 
@@ -898,6 +898,97 @@ static void _optimize( lk::invoke_t &cxt )
     cxt.result().hash_item( "objective", obj_vals.back() );
     cxt.result().hash_item( "flux", flux_vals.back() );
     cxt.result().hash_item( "iterations", iter_vec );
+
+}
+
+static void _clear_land( lk::invoke_t &cxt )
+{
+    LK_DOC("clear_land", "Reset the land boundary polygons, clearing any data. Optionally specify 'type' as 'inclusion' or 'exclusion'.", "([string:type]):void");
+
+    bool clear_inclusions = true;
+    bool clear_exclusions = true;
+
+    if( cxt.arg_count() == 1 )
+    {
+        std::string arg = cxt.arg(0).as_string();
+        arg = lower_case(arg);
+
+        if( arg.find( "inclusion" ) != std::string::npos )
+            clear_exclusions = false;
+        else if( arg.find( "exclusion" ) != std::string::npos )
+            clear_inclusions = false;
+    }
+
+    var_map *V = SPFrame::Instance().GetSolarFieldObject()->getVarMap();
+
+    if( clear_inclusions )
+        V->land.inclusions.val.clear();
+    if( clear_exclusions )
+        V->land.exclusions.val.clear();
+
+    if( clear_inclusions && clear_exclusions )
+        V->land.is_bounds_array.val = false;
+
+}
+
+static void _add_land( lk::invoke_t &cxt )
+{
+    LK_DOC("add_land_area", 
+            "Add land inclusion or a land exclusion region within a specified polygon. "
+            "Specify the type as 'inclusion' or 'exclusion', and optionally append (true) or overwrite (false) the existing regions.",
+            "(array:polygon, string:type[, boolean:append=true]):boolean");
+
+    var_land &L = SPFrame::Instance().GetSolarFieldObject()->getVarMap()->land;
+
+    bool is_append = true;
+
+    if( cxt.arg_count() == 3 )
+        is_append = cxt.arg(2).as_boolean();
+
+    std::string type = lower_case( cxt.arg(1).as_string().ToStdString() );
+
+    if( type.find("incl") != std::string::npos )
+        type = "inclusion";
+    else if( type.find("excl") != std::string::npos )
+        type = "exclusion";
+    else
+    {
+        //invalid argument
+        cxt.result().assign(0.);
+        return;
+    }
+
+    //convert the polygon into the required string format
+    std::vector< std::string > pt, poly;
+    for(size_t i=0; i<cxt.arg(0).vec()->size(); i++)
+    {
+        pt.clear();
+        for(size_t j=0; j<cxt.arg(0).vec()->at(i).vec()->size(); j++)
+            pt.push_back( cxt.arg(0).vec()->at(i).vec()->at(j).as_string().ToStdString() );
+
+        poly.push_back( join( pt, "," ) );
+    }
+
+    std::string spoly = "[POLY]" + join( poly, "[P]" );
+    
+    if( type == "inclusion" )
+    {
+        if(! is_append ) 
+            L.inclusions.val.clear();
+
+        L.inclusions.set_from_string( spoly.c_str() );
+    }
+    else
+    {
+        if(! is_append )
+            L.exclusions.val.clear();
+
+        L.exclusions.set_from_string( spoly.c_str() );
+    }
+
+    L.is_bounds_array.val = true;
+    
+    cxt.result().assign(1.);
 
 }
 
@@ -1504,6 +1595,8 @@ static void _update_interface( lk::invoke_t &cxt )
     F.UpdateInputValues();
     F.UpdateFieldPlotSelections();
     F.UpdateFluxPlotSelections();
+    //F.UpdateLayoutGrid();
+    
 }
 
 static lk::fcall_t *solarpilot_functions()
@@ -1532,6 +1625,8 @@ static lk::fcall_t *solarpilot_functions()
         _dump_varmap,
         _open_from_script,
         _update_interface,
+        _add_land,
+        _clear_land,
 		0 };
 
 	return (lk::fcall_t*)st;

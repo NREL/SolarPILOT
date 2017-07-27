@@ -725,7 +725,7 @@ public:
 	void ImportGrid( wxGrid *grid );
 	void GridCount( wxSpinCtrl *sc, wxGrid *grid );
 	
-	void setSunGrid();
+	void UpdateUserSunGrid();
 	void setHelioTemplateGrid();
 	void UpdateDesignSelect(int sel, var_map &vset);
 
@@ -733,7 +733,7 @@ public:
 	void UpdateClimateListValues();
 	void UpdateClimateFile( wxString &file, var_map &V, bool mapval_only=false);
 
-	void setBoundsGrid(var_map &V); //string &incs, string &excs);	
+	void UpdateLandBoundsGrid(var_map &V); //string &incs, string &excs);	
 	void BoundsImport();
 	void BoundsExport();
 

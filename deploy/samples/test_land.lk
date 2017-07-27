@@ -1,0 +1,29 @@
+/*
+Test land boundaries
+*/
+
+var("solarfield.0.des_sim_detail", "Do not filter heliostats" );
+var("is_bounds_scaled", false );
+
+poly = [];
+for(i=0; i<18; i++)
+{
+	if( mod(i,2) == 0 )
+		rad = 2000;
+	else
+		rad = 500;
+		
+	az = 20*i*pi()/180.;
+	
+	x = rad*sin(az);
+	y = rad*cos(az);
+	
+	poly[i] = [x,y];
+}
+
+clear_land();
+
+add_land_area(poly, 'inclusion', false );
+
+run_layout();
+update_interface();

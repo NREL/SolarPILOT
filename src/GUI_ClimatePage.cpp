@@ -213,7 +213,7 @@ void SPFrame::CreateClimatePage(wxScrolledWindow *parent){
 	//set the climate list
 	LoadClimateFiles();
 	//Format the user sun table
-	setSunGrid();
+	UpdateUserSunGrid();
 
 	parent->SetScrollbars(10, 10, parent->GetSize().GetWidth()/10, parent->GetSize().GetWidth()/10);
 	return;
@@ -318,7 +318,7 @@ void SPFrame::UpdateClimateFile( wxString &file,  var_map &V, bool mapval_only )
 		
 }
 
-void SPFrame::setSunGrid(){
+void SPFrame::UpdateUserSunGrid(){
 	//string *valstr = &_variables.amb.user_sun.val;
 	//if(valstr->size() < 3) {valstr->clear(); valstr->append("0,0");}
 	//vector<string> lines = split(*valstr, ";");
@@ -513,7 +513,7 @@ void SPFrame::OnSunImport( wxCommandEvent &WXUNUSED(event)){
 				
 			}
 			//Call to the function that sets the user_sun_grid data
-			setSunGrid();
+			UpdateUserSunGrid();
 
 			//Update the calculated values
 			UpdateCalculatedGUIValues();

@@ -1643,9 +1643,9 @@ void SPFrame::UpdateInputValues(){
 	UpdateDesignSelect( _variables.sf.des_sim_detail.mapval(), _variables);
 
 	//Bounds table
-	setBoundsGrid(_variables);
+	UpdateLandBoundsGrid(_variables);
 	//User sun grid
-	setSunGrid();
+	UpdateUserSunGrid();
 	//emittance grids
 	
 	//update heliostat template grid
@@ -1826,6 +1826,7 @@ void SPFrame::UpdateFieldPlotSelections()
         _plot_select->Append( choices.at(  FIELD_PLOT::EFF_BLOCK ) );
         _plot_select->Append( choices.at(  FIELD_PLOT::EFF_SHAD ) );
         _plot_select->Append( choices.at(  FIELD_PLOT::EFF_INT ) );
+        _plot_select->Append( choices.at(  FIELD_PLOT::EFF_REFLECT ) );
         _plot_select->Append( choices.at(  FIELD_PLOT::POWER ) );
         _plot_select->Append( choices.at(  FIELD_PLOT::RANK ) );
     }

@@ -191,7 +191,7 @@ void SPFrame::CreateLayoutPage(wxScrolledWindow *parent){
 	_bounds_grid->SetColLabelValue(2,wxT("X"));
 	_bounds_grid->SetColLabelValue(3,wxT("Y"));
 	//display any data from the variable map in the bounds grid
-	setBoundsGrid(_variables);
+	UpdateLandBoundsGrid(_variables);
 	bounds_sizer->Add(_bounds_grid, 0, wxALIGN_CENTER|wxALL, 5);
 	
 	//disable the controls when "is_bounds_array" is false
@@ -366,7 +366,7 @@ void SPFrame::OnBoundsCount( wxCommandEvent &event){
 	GridCount( (wxSpinCtrl*)event.GetEventObject(), _bounds_grid );
 }
 
-void SPFrame::setBoundsGrid( var_map &V) //string &incs, string &excs ){
+void SPFrame::UpdateLandBoundsGrid( var_map &V) //string &incs, string &excs ){
 {
 	/*
 	Take strings "incs" and "excs" and fill the _bounds_grid array with the data in each. "data" should be of the
@@ -440,10 +440,6 @@ void SPFrame::setBoundsGrid( var_map &V) //string &incs, string &excs ){
 	_bounds_ct->SetValue(row);
 	
 }
-
-//void SPFrame::setBoundsGrid(){
-//	setBoundsGrid( _variables["land"][0]["inclusions"].value, _variables["land"][0]["exclusions"].value );
-//}
 
 void SPFrame::UpdateDesignSelect( int sel, var_map &vset ){
 	/* 
@@ -937,7 +933,7 @@ void SPFrame::BoundsImport(){
 			}
 
 			//Call to the function that sets the bounds_grid data
-			setBoundsGrid(_variables);
+			UpdateLandBoundsGrid(_variables);
 
 			//Update the calculated values
 			UpdateCalculatedGUIValues();

@@ -1,0 +1,46 @@
+/* 
+Test the soiling functionality
+*/
+
+function soil( loc )
+{
+	//create an arbitrary function to affect soiling in an area near a road
+	x = loc[0];
+	y = loc[1];
+	
+	if( y > 0 || x < y)
+		return 1.;
+		
+	dx = x-y;
+	
+	S = 1. - 0.5*rand()*exp(-abs(dx)/500);
+	
+	return S;
+}
+
+radmax = 2000;
+road = "[POLY][P]0,0[P]-2000,-2000[P]-2000,-2040[P]0,-40";
+
+var("land.0.exclusions", road);
+var("land.0.is_bounds_array", true );
+
+run_layout();
+
+hels = get_layout();
+
+refs = [];
+hids = [];
+
+for(i=0; i<#hels; i++)
+{
+	refl = 0.95 * soil( [hels[i][1],hels[i][2]] );
+	
+	hids[i] = hels[i][0];
+	refs[i] = refl;
+}
+
+modify_heliostats(hids, {'soiling'=refs});
+
+run_performance();
+
+update_interface();

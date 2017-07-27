@@ -37,11 +37,12 @@ FieldPlot::FieldPlot(wxPanel *parent, SolarField &SF, const int plot_option,
 	5 | Blocking efficiency
 	6 | Shading efficiency
 	7 | Image intercept efficiency
-	8 | Delivered power
-	9 | Ranking metric
-	10| receiver map
-	11| Optical mesh
-	12| Cloudiness efficiency
+    8 | Heliostat reflectivity
+	9 | Delivered power
+	10| Ranking metric
+	11| receiver map
+	12| Optical mesh
+	13| Cloudiness efficiency
     */
     _plot_choices = {
         "Land boundaries",
@@ -52,6 +53,7 @@ FieldPlot::FieldPlot(wxPanel *parent, SolarField &SF, const int plot_option,
         "Blocking efficiency",
         "Shading efficiency",
         "Image intercept efficiency",
+        "Reflectivity",
         "Delivered power",
         "Ranking metric",
         "Receiver map",
@@ -653,6 +655,9 @@ void FieldPlot::DoPaint(wxDC &_pdc){
 				else if(_option == FIELD_PLOT::EFF_INT){	//Image intercept efficiency
 					plot_vals[i] = H->getEfficiencyIntercept();
 				}
+                else if(_option == FIELD_PLOT::EFF_REFLECT){  //Heliostat reflectivity
+                    plot_vals[i] = H->getTotalReflectivity();
+                }
 				else if(_option == FIELD_PLOT::POWER){	// Delivered power
 					plot_vals[i] = H->getPowerToReceiver();
 				}
