@@ -1165,6 +1165,9 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
 
             std::string fname = cxt.arg(1).as_string();
 
+            if( ! ioutil::file_exists(fname.c_str()) )
+                throw lk::error_t("Invalid SVG file - not found.");
+
             if( cxt.arg_count() == 3 )
             {
                 //options table provided
@@ -1214,7 +1217,9 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
 	        xml_node<> *top_node = doc.first_node();	//<data>
 
             xml_node<> *node = top_node->first_node("g");
-            node = node->first_node("g");
+            xml_node<> *tnode = node->first_node("g");
+            if(tnode)
+                node = tnode;
             node = node->first_node("path"); 
             
             //assume that this is consistent with SVG files created by inkscape.. I don't know whether other SVG creators have a consistent XML structure. 

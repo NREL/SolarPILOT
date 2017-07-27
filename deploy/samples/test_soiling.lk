@@ -1,46 +1,36 @@
 /* 
-Test the soiling functionality
+Script to test modifying heliostat soiling
 */
 
+//create an arbitrary function to affect soiling in an area near a road
 function soil( loc )
 {
-	//create an arbitrary function to affect soiling in an area near a road
 	x = loc[0];
 	y = loc[1];
 	
 	if( y > 0 || x < y)
 		return 1.;
-		
-	dx = x-y;
 	
-	S = 1. - 0.5*rand()*exp(-abs(dx)/500);
-	
-	return S;
-}
+	return 1. - 0.5*rand()*exp(-abs(x-y)/500);
+} //.. end of function
 
-radmax = 2000;
-road = "[POLY][P]0,0[P]-2000,-2000[P]-2000,-2040[P]0,-40";
+//add the access road and assign variables
+//var("land.0.exclusions", "[POLY][P]0,0[P]-2000,-2000[P]-2000,-2040[P]0,-40");
+//var("land.0.is_bounds_array", true );
+radmax = 2000; rw=40;
+add_land_area([[0,0],[-radmax,-radmax],[-radmax,-radmax-rw],[0,-rw]], 'exclusion', false);
 
-var("land.0.exclusions", road);
-var("land.0.is_bounds_array", true );
-
-run_layout();
-
-hels = get_layout();
-
-refs = [];
-hids = [];
-
+run_layout();           //Generate a new heliostat field layout
+hels = get_layout();    //get information about all heliostats in the layout
+//modify the soiling factor based on location
+refs = []; hids = [];
 for(i=0; i<#hels; i++)
 {
-	refl = 0.95 * soil( [hels[i][1],hels[i][2]] );
-	
+	refl = 0.95 * soil( [hels[i][1],hels[i][2]] ); //call the soiling function
 	hids[i] = hels[i][0];
 	refs[i] = refl;
 }
 
-modify_heliostats(hids, {'soiling'=refs});
-
-run_performance();
-
-update_interface();
+modify_heliostats(hids, {'soiling'=refs});    //update heliostat soiling
+run_performance();    //run a performance simulation
+update_interface();   //update the solarpilot GUI with the results

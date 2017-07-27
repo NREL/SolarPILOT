@@ -1,0 +1,13 @@
+run_layout();
+
+hels = get_heliostats('svgfile', 
+	'C:/Users/mwagner/Documents/NREL/Systems Analysis/report_fy17-continuation/cloud.svg', 
+	{'offset'=[-1500,1500], 'scale'=[20,25]});
+
+refl = [];
+for(i=0; i<#hels; i++)
+	refl[i] = 0.2;
+	
+modify_heliostats(hels, {'soiling'=refl});
+run_performance();
+update_interface();
