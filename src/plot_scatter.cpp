@@ -58,7 +58,7 @@ bool PlotScatter::Plot(PlotBase &base, vector<vector<double> > &data){
 	// -----------------------------------------------------
 	bool has_data = true;
 
-	_dc.SetPen( wxPen( base._gray, 1, wxSOLID ) );
+	_dc.SetPen( wxPen( base._gray, 1, wxPENSTYLE_SOLID ) );
 	_dc.SetBrush( *wxTRANSPARENT_BRUSH );
 	double zvalave = zvaltot / (double)data.size();
 	//---- Draw the intensity ----
@@ -88,8 +88,8 @@ bool PlotScatter::Plot(PlotBase &base, vector<vector<double> > &data){
 			double z = (data.at(i).at(2) - minval)*zscale;
 
 			base.ColorGradientJet(fcolor, z);
-			_dc.SetPen( wxPen(fcolor, 1, wxSOLID) );
-			_dc.SetBrush( wxBrush(fcolor, wxSOLID) );
+			_dc.SetPen( wxPen(fcolor, 1, wxPENSTYLE_SOLID) );
+			_dc.SetBrush( wxBrush(fcolor, wxBRUSHSTYLE_SOLID) );
 
 			int csize = 2+(int)(data.at(i).at(3)/(double)maxsize*8);
 			_dc.DrawCircle(x,y,csize);
@@ -99,7 +99,7 @@ bool PlotScatter::Plot(PlotBase &base, vector<vector<double> > &data){
 	
 	
 	
-	_dc.SetPen( wxPen( base._gray, 2, wxSOLID ) );
+	_dc.SetPen( wxPen( base._gray, 2, wxPENSTYLE_SOLID ) );
 	_dc.SetBrush( *wxTRANSPARENT_BRUSH );
 	double 
 		XX[] = {base._xaxmin, base._xaxmax, base._xaxmax, base._xaxmin},

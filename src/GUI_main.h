@@ -469,7 +469,7 @@ private:
 	bool CheckLicense();
 
 	//void CreateNotebook(bool is_fileopen_call = false);
-    void CreateInputPages(wxWindow *parent, PagePanel *pagepanel, bool is_fileopen_call = false);
+    void CreateInputPages(wxWindow *parent, PagePanel *pagepanel);
 	void SetCaseName(wxString case_name = _T("New Case"));
 	void bindControls();
     void SetSimulationStatus(bool in_sim, bool &sim_type_flag, wxBitmapButton *button);
@@ -678,7 +678,7 @@ public:
     static SPFrame &Instance();
 	//virtual ~SPFrame();
 	wxSize getDefaultInputSize(){return _default_input_size;}
-    bool CloseProject( bool force = false);
+    bool CloseProject();
 	void ShowContextHelp();
 
     SolarField *GetSolarFieldObject();

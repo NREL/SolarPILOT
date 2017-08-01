@@ -36,7 +36,7 @@ bool PlotContourf::Plot(PlotBase &base, vector<vector<double> > &data){
 	// -----------------------------------------------------
 	bool has_data = true;
 
-	_dc.SetPen( wxPen( base._gray, 1, wxSOLID ) );
+	_dc.SetPen( wxPen( base._gray, 1, wxPENSTYLE_SOLID ) );
 	_dc.SetBrush( *wxTRANSPARENT_BRUSH );
 	//Draw the boundaries of the surface
 	double zvaltot=0., zvalave=0., fval;
@@ -167,8 +167,8 @@ bool PlotContourf::Plot(PlotBase &base, vector<vector<double> > &data){
 						}
 						
 						//base.ColorGradientGrayscale(fcolor, z);
-						_dc.SetPen( wxPen(fcolor, 1, wxSOLID) );
-						_dc.SetBrush( wxBrush(fcolor, wxSOLID) );
+						_dc.SetPen( wxPen(fcolor, 1, wxPENSTYLE_SOLID) );
+						_dc.SetBrush( wxBrush(fcolor, wxBRUSHSTYLE_SOLID) );
 
 						//Construct the poly
 						double
@@ -187,7 +187,7 @@ bool PlotContourf::Plot(PlotBase &base, vector<vector<double> > &data){
 			}
 		}
 	}
-	_dc.SetPen( wxPen( base._gray, 2, wxSOLID ) );
+	_dc.SetPen( wxPen( base._gray, 2, wxPENSTYLE_SOLID ) );
 	_dc.SetBrush( *wxTRANSPARENT_BRUSH );
 	double 
 		XX[] = {base._xaxmin, base._xaxmax, base._xaxmax, base._xaxmin},

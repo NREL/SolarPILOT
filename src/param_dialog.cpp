@@ -34,7 +34,7 @@ par_variables_dialog::par_variables_dialog(wxWindow *parent, wxWindowID winid, w
 	button_sizer->Add( new wxButton(this, wxID_CANCEL), 0, wxALL|wxEXPAND, 4  );
 
 	tree = new AFTreeView(this, ID_tree, imagedir);
-	wxStaticText *layout_lab;
+	wxStaticText *layout_lab=0;
 	if(_value_mode){
 		wxArrayStr val_choices;
 		val_choices.Add(wxT("Keep existing layout"));
@@ -428,7 +428,7 @@ bool par_values_dialog::ShowFixedDomainDialog(const wxString &title, const wxArr
 
 bool par_values_dialog::ShowSelectVariableDialog(const wxString &title, const wxArrayStr &names, const wxArrayStr &labels, const wxArrayStr &contexts, wxArrayStr &list, bool expand_all)
 {
-	par_variables_dialog dlg(_parent, wxID_ANY, _image_dir, true, wxT("Select variable values"));
+	par_variables_dialog dlg(_parent, wxID_ANY, _image_dir, true, title);
 	dlg.SetSize(450,550);
 	dlg.SetItems( names, labels, contexts );
 	dlg.SetCheckedNames( list );

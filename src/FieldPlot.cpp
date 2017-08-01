@@ -831,7 +831,6 @@ void FieldPlot::DoPaint(wxDC &_pdc){
 				}
 
 				//Plot
-				//_dc.SetPen( wxPen( helio_border, 1, wxSOLID) );
 				if(_option == FIELD_PLOT::LAYOUT){
 					_dc.SetPen( wxPen( black, 1, wxPENSTYLE_SOLID) );
 					_dc.SetBrush( wxBrush( helio_region, wxBRUSHSTYLE_SOLID) );

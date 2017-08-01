@@ -486,7 +486,7 @@ void SPFrame::OnDisableDetailUpdate( wxCommandEvent &evt)
 	
 }
 
-void SPFrame::OnOptimizeAddVar( wxCommandEvent &event)
+void SPFrame::OnOptimizeAddVar( wxCommandEvent &WXUNUSED(event))
 {
 	try{
 		//Call the new parametric variable dialog
@@ -534,7 +534,7 @@ int compare_int(int *a, int *b)
   else return 0;
 }
 
-void SPFrame::OnOptimizeRemoveVar( wxCommandEvent &event)
+void SPFrame::OnOptimizeRemoveVar( wxCommandEvent &WXUNUSED(event))
 {
 	try{
 		if( _opt_var_grid->GetNumberRows() == 0 )

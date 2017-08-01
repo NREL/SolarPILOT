@@ -1090,9 +1090,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event)){
 		SetSimulationStatus(true, _in_user_param_simulation, _user_par_button);
 	
 		//determine the number of simulations
-		int 
-			nsim = _user_sim_table.nsim(),
-			nvar = _user_sim_table.nvar();
+		int  nsim = _user_sim_table.nsim();
 
         //clear previous results
         results.clear();

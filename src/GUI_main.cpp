@@ -33,15 +33,14 @@ using namespace std;
 #include "scripting.h"
 
 //Memory leak detection - remove for dist
-/*
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-#ifdef _DEBUG
-#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
-#define new DEBUG_NEW
-#endif
-*/
+
+//#define _CRTDBG_MAP_ALLOC
+//#include <stdlib.h>
+//#include <crtdbg.h>
+//#ifdef _DEBUG
+//#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+//#define new DEBUG_NEW
+//#endif
 //----
 
 
@@ -619,7 +618,7 @@ void SPFrame::PostSimulation(){
 	::wxRemoveFile(_backup_file.GetFullPath());
 }
 
-void SPFrame::CreateInputPages(wxWindow *parent, PagePanel *pagepanel, bool is_fileopen_call){
+void SPFrame::CreateInputPages(wxWindow *parent, PagePanel *pagepanel){
 	/* 
 	This method creates all of the pages and subpages for the main notebook based on the 
 	contents of the _variables array. If this is called within the program, the previous 
@@ -639,7 +638,6 @@ void SPFrame::CreateInputPages(wxWindow *parent, PagePanel *pagepanel, bool is_f
 	
 	wxYieldIfNeeded();
 
-	//_nb_main->SetImageList( _imageList );
 	//Climate page
 	wxScrolledWindow *climate_page = new wxScrolledWindow(parent);
 	CreateClimatePage(climate_page);
@@ -670,15 +668,8 @@ void SPFrame::CreateInputPages(wxWindow *parent, PagePanel *pagepanel, bool is_f
 	wxScrolledWindow *m_receiver_page = new wxScrolledWindow(parent);
 	CreateMasterReceiverPage( m_receiver_page );
 	pagepanel->AddPage( m_receiver_page, pageNames.receiver_master, ID_ICON_RECEIVER_FOLDER );
-	//--sub receiver page
-	//for(std::map<int, var_map>::iterator it = _variables["receiver"].begin(); it != _variables["receiver"].end(); it++){
- //   for(int i=0; i<_variables.recs.size(); i++)
- //   {
-	//	AddReceiverPage( _variables.recs.at(i).rec_name.val, _variables.recs.at(i).is_enabled.val, i, 
-	//		!is_fileopen_call		//Flag whether the data structure should be copied or left alone. On file->open, leave it alone.
-	//		); 
-	//}
     UpdateReceiverUITemplates();
+
 #if _CUSTOM_REC == 1
 	wxScrolledWindow *custom_receiver_page = new wxScrolledWindow(parent);
 	CreateCustomReceiverPage(custom_receiver_page);
@@ -689,7 +680,6 @@ void SPFrame::CreateInputPages(wxWindow *parent, PagePanel *pagepanel, bool is_f
 	CreateSimulationsPage( sim_page );
 	pagepanel->AddPage( sim_page, pageNames.simulations, ID_ICON_SIMULATIONS32);
 	//-----Simulations subpages-----
-	//int npage = pagepanel->GetPageCount()-1;
 	//layout tab
 	wxScrolledWindow *layout = new wxScrolledWindow(parent);
 	CreateSimulationsLayoutTab( layout );
@@ -712,32 +702,9 @@ void SPFrame::CreateInputPages(wxWindow *parent, PagePanel *pagepanel, bool is_f
 	pagepanel->AddPage( results, pageNames.results, ID_ICON_RESULTS);
 
 
-    //Show the land boundaries
-	//DoLayoutPlot(false);
-
-    //Delete old layout plot page
-    //_page_panel->DestroyPage( pageNames.results_layout );
-
 	wxArrayStr choices;
 	choices.Add("Land boundaries");
 	
-	//if(has_data){
-	//choices.Add("Field layout");
-	//choices.Add("Total efficiency");
-	//choices.Add("Cosine efficiency");
-	//choices.Add("Attenuation efficiency");
-	//choices.Add("Blocking efficiency");
-	//choices.Add("Shading efficiency");
-	//choices.Add("Image intercept efficiency");
-	//choices.Add("Delivered power");
-	//choices.Add("Layout ranking metric");
-	//if((int)_SF.getReceivers()->size() > 1)
-	//	choices.Add("Which receiver");
-	//if(_SF.getOpticalHashTree()->get_terminal_nodes().size() > 0)
-	//	choices.Add("Optical mesh");
-	////if(_SF.getCloudObject()->isCloudy())
-	//choices.Add("Cloudiness efficiency");
-	//}
 	wxScrolledWindow *layoutresults = new wxScrolledWindow(this);
 	CreateFieldPlotPage(layoutresults, choices, 0);
     pagepanel->AddPage( layoutresults, pageNames.results_layout, ID_ICON_LAYOUT, 1, pageNames.results);
@@ -749,7 +716,6 @@ void SPFrame::CreateInputPages(wxWindow *parent, PagePanel *pagepanel, bool is_f
 
 	//Display a black results page
 	this->results.clear();
-	//DoResultsPage(this->results);
     wxScrolledWindow *page = new wxScrolledWindow(this);
 	CreateResultsSummaryPage(page, this->results);
     _page_panel->InsertPage( _page_panel->GetPagePosition( pageNames.results_flux )+1, page, pageNames.results_summary, ID_ICON_TABLE, 1, pageNames.results );
@@ -903,7 +869,7 @@ void SPFrame::OnFileNew( wxCommandEvent &WXUNUSED(event)){
 //    event.Skip(true);
 //}
 
-bool SPFrame::CloseProject( bool force )
+bool SPFrame::CloseProject()
 {	
 	if(! ModCheckPrompt() ) 
         return false;	//prompt to save. if the user cancels, return.
@@ -1065,7 +1031,7 @@ void SPFrame::Open(wxString file_in, bool quiet){
 	
 	if(!_variables.sf.layout_data.val.empty()){
 		//Create a progress dialog
-		wxProgressDialog *pdlg;
+		wxProgressDialog *pdlg=0; //initialize null
 		if(!quiet) pdlg = new wxProgressDialog(wxT("File import progress..."), wxEmptyString, 1000, this, wxPD_SMOOTH|wxPD_AUTO_HIDE);
 		if(!quiet) pdlg->Show();
 		wxYieldIfNeeded();
@@ -1095,7 +1061,7 @@ void SPFrame::Open(wxString file_in, bool quiet){
 	//_nb_main->Destroy();
 	//CreateNotebook(true);	//Flag that this is a "file -> open" call
     _page_panel->DestroyPages();
-    CreateInputPages(this, _page_panel, true);
+    CreateInputPages(this, _page_panel);
     this->GetSizer()->Clear();
 	this->GetSizer()->Add(_page_panel, 0, wxEXPAND, 0);
 
@@ -1169,7 +1135,7 @@ void SPFrame::NewFile(){
     //Freeze();
 	//Destroy the notebook and recreate
 	_page_panel->DestroyPages();
-    CreateInputPages(this, _page_panel, true);
+    CreateInputPages(this, _page_panel);
 
     this->GetSizer()->Clear();
     this->GetSizer()->Add(_page_panel, 0, wxEXPAND, 0);
@@ -2007,6 +1973,7 @@ void SPFrame::FluxProgressBase(int n_complete, int n_tot, wxGauge *active_gauge,
 int SPFrame::SolTraceProgressUpdate(st_uint_t ntracedtotal, st_uint_t ntraced, st_uint_t ntotrace, st_uint_t curstage, st_uint_t nstages, void *data)
 {
     (void)data;
+    (void)ntracedtotal; //these are currently unreferenced.
 	/* 
 	UI callback for SolTrace simulation progress 
 	

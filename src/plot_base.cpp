@@ -401,13 +401,13 @@ void PlotBase::AxesSetup(wxMemoryDC &dc, double minval, double maxval){
 	_origin[1] = _top_buffer + _drawsize[1]/2. + (yaxspan/2. + _yaxmin)*_ppy;
 
 	//Draw the plot boundary
-	dc.SetPen( wxPen( _black, 1, wxSOLID) );
+	dc.SetPen( wxPen( _black, 1, wxPENSTYLE_SOLID) );
 	dc.SetBrush( *wxBLACK_BRUSH );
 	dc.DrawRectangle( _left_buffer, _top_buffer/*-1-_drawsize[1]*/, _drawsize[0], _drawsize[1]);
     
 	dc.SetBrush( *wxWHITE_BRUSH);
 	//Draw the x axis
-	dc.SetPen( wxPen( _black, 1, wxSOLID) );
+	dc.SetPen( wxPen( _black, 1, wxPENSTYLE_SOLID) );
 	dc.SetBrush( *wxWHITE_BRUSH );
 	dc.DrawLine(_origin[0], _drawsize[1], _origin[0], _drawsize[1]+10);
 	ets = "0";
@@ -490,18 +490,17 @@ void PlotBase::AxesSetup(wxMemoryDC &dc, double minval, double maxval){
 
 void PlotBase::DrawText(wxMemoryDC &dc, std::string message, double x, double y){
 
-    wxMemoryDC _dc;
-	_dc.SelectObject( _bitmap );
+	dc.SelectObject( _bitmap );
 
-    wxPen oldpen = _dc.GetPen();
-    _dc.SetTextForeground(wxColour("orange"));
-    _dc.SetFont(wxFont(15,wxFONTFAMILY_DEFAULT, wxFONTSTYLE_ITALIC, wxFONTWEIGHT_NORMAL) );
+    wxPen oldpen = dc.GetPen();
+    dc.SetTextForeground(wxColour("orange"));
+    dc.SetFont(wxFont(15,wxFONTFAMILY_DEFAULT, wxFONTSTYLE_ITALIC, wxFONTWEIGHT_NORMAL) );
     double dx,dy;
 	dx = _plotsize.GetWidth();
 	dy = _plotsize.GetHeight();
 
-	_dc.DrawText(message,(int)(x*dx), (int)(y*dy)); // tlab , canvsize[0]-_right_buffer+5, gtop - dc.GetTextExtent( tlab).GetHeight()-2);
-    _dc.SetPen(oldpen);
+	dc.DrawText(message,(int)(x*dx), (int)(y*dy)); // tlab , canvsize[0]-_right_buffer+5, gtop - dc.GetTextExtent( tlab).GetHeight()-2);
+    dc.SetPen(oldpen);
 
 }
 
@@ -566,7 +565,7 @@ void PlotBase::DrawColorbar(wxMemoryDC &dc, double minval, double maxval, double
 
 	double lineave = 50+(_drawsize[1]-100.)*(1.-(aveval-minval)/(maxval-minval));	//where should the average line indicator be in Y?
 	//Draw the average line
-	dc.SetPen( wxPen( _white, 1, wxSOLID) );
+	dc.SetPen( wxPen( _white, 1, wxPENSTYLE_SOLID) );
 	dc.DrawLine(canvsize[0]-_right_buffer+5, lineave, canvsize[0]-_right_buffer+25, lineave);
 	//Label the gradient bar
 	wxString tlab, blab, alab;

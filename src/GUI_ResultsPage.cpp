@@ -105,6 +105,8 @@ void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &re
     }
     catch( int throwflag )
     {
+        //do nothing
+        (void*)throwflag;
     }
 	
 	parent->SetSizer(main_sizer);

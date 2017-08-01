@@ -246,7 +246,7 @@ std::string PagePanel::GetPageName( int order_index )
     return (std::string)m_pages.at(order_index).label;
 }
 
-void PagePanel::OnPaint( wxPaintEvent &event )
+void PagePanel::OnPaint( wxPaintEvent &WXUNUSED(event) )
 {
     wxPaintDC dc( this );
 	PrepareDC( dc );

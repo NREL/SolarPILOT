@@ -94,7 +94,6 @@ static void _drop_receiver( lk::invoke_t &cxt )
     SolarField *SF = F.GetSolarFieldObject();
     var_map *V = SF->getVarMap();
 
-    int id = -1;
     std::string tname = lower_case( cxt.arg(0).as_string().ToStdString() );
 
     for(size_t i=0; i<V->hels.size(); i++)
@@ -157,7 +156,6 @@ static void _drop_heliostat_template( lk::invoke_t &cxt )
     SolarField *SF = F.GetSolarFieldObject();
     var_map *V = SF->getVarMap();
 
-    int id = -1;
     std::string tname = lower_case( cxt.arg(0).as_string().ToStdString() );
 
     for(size_t i=0; i<V->hels.size(); i++)
@@ -530,7 +528,6 @@ static void _summary_results( lk::invoke_t &cxt )
     LK_DOC("get_summary_results", "Return a table with summary results from a simulation", "(void):table");
 
     SPFrame &F = SPFrame::Instance();
-    SolarField *SF = F.GetSolarFieldObject();
 
     grid_emulator table;
     sim_results *results = F.GetResultsObject();
@@ -1254,9 +1251,6 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
         //allocate the main polygons structure
         std::vector< std::vector< sp_point > > polygons;
 
-        double x0 = 0.;
-        double y0 = 0.;
-
         for(size_t i=0; i<entries.size(); i++)
         {
             polygons.push_back( std::vector< sp_point >() );
@@ -1593,14 +1587,11 @@ static void _update_interface( lk::invoke_t &cxt )
     LK_DOC("update_interface", "Synchronize the user interface input and calculated values to match changes introduced by the script.", "(void):void" );
 
     SPFrame &F = SPFrame::Instance();
-    SolarField *SF = F.GetSolarFieldObject();
-    var_map *V = SF->getVarMap();
 
     F.UpdateCalculatedGUIValues();
     F.UpdateInputValues();
     F.UpdateFieldPlotSelections();
     F.UpdateFluxPlotSelections();
-    //F.UpdateLayoutGrid();
     
 }
 

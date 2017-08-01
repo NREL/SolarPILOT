@@ -977,8 +977,8 @@ void SPFrame::BoundsExport(){
 	{
 		wxString info = filedlg.GetPath().c_str();
 		
-		FILE *file;
-		if(! (file = fopen(info.c_str(), "w")) )
+		FILE *file = fopen(info.c_str(), "w");
+		if(! file )
         {
 			PopMessage(wxT("The specified file could not be opened for writing. Please ensure that the file is not open or write-protected."), wxT("Error"), wxICON_ERROR|wxOK);
 			return;
