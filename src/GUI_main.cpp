@@ -1835,8 +1835,7 @@ void SPFrame::GridCount( wxSpinCtrl *sc, wxGrid *grid){
 	else{
 		sc->SetValue(1);
 	}
-    wxGridEvent nullevent;
-    OnBoundsEdit(nullevent);
+    
 }
 
 void SPFrame::SetGeomState(bool state){
