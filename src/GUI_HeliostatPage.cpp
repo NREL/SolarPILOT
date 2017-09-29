@@ -916,11 +916,6 @@ void SPFrame::UpdateHelioUITemplates()
         _heliostat_config->InsertItem(i, row);
         _heliostat_config->SetItem(i, 0, _variables.hels.at(i).helio_name.val );
         _heliostat_config->SetItem(i, 1, _variables.hels.at(i).is_enabled.val ? "Enabled" : "Disabled" );
-        /*if( _variables.hels.at(i).is_enabled.val )
-        {
-            _variables.sf.temp_which.combo_add_choice( _variables.hels.at(i).helio_name.val, my_to_string( i ) );
-        }*/
-
     }
 
     //Update the template selection combo
