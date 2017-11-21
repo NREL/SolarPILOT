@@ -12,101 +12,101 @@ void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &re
 	
 	try{
 
-    int empty_sim_results = -1234;
-	if(results.size() == 0) //goto empty_sim_results_flag;
-        throw empty_sim_results;  //empty sim results
+		int empty_sim_results = -1234;
+		if(results.size() == 0) //goto empty_sim_results_flag;
+			throw empty_sim_results;  //empty sim results
 
-	wxButton 
-		*export_button,
-		*copy_button;
+		wxButton 
+			*export_button,
+			*copy_button;
 	
-	int sim_type = results.at(0).sim_type;	//Use the first simulation to figure out what type of simulation it is
-	if(sim_type == 0){	//Layout
+		int sim_type = results.at(0).sim_type;	//Use the first simulation to figure out what type of simulation it is
+		if(sim_type == 0){	//Layout
 
-	}
-	else if(sim_type == 1){ //Optimization
-
-	}
-	else if(sim_type == 2){	//Flux simulation
-		export_button = new wxButton(parent, wxID_ANY, wxT("Export to CSV"));
-		export_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnSimulationResultsExport ), NULL, this);
-		copy_button = new wxButton(parent, wxID_ANY, wxT("Copy to clipboard"));
-		copy_button->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnSimulationResultsCopy ), NULL, this);
-
-		wxStaticBox *grid_sb = new wxStaticBox(parent, wxID_ANY, wxT("Flux simulation results summary"));
-		wxStaticBoxSizer *grid_sbs = new wxStaticBoxSizer(grid_sb, wxVERTICAL);
-		
-		sim_result *res = &results.at(0);
-
-		_results_grid = new wxGrid(parent, wxID_ANY, wxDefaultPosition, wxSize(350,600));
-		grid_emulator textgrid;
-		CreateResultsTable(*res, textgrid);
-		textgrid.MapToWXGrid(_results_grid);
-		_results_grid->SetRowLabelSize(200);
-
-		
-		int nrow=_results_grid->GetNumberRows(),
-			ncol=_results_grid->GetNumberCols();
-		for(int i=0; i<ncol; i++){
-			for(int j=0; j<nrow; j++){
-				_results_grid->SetReadOnly(j,i,true);
-				if(_results_grid->GetCellValue(j,i).empty())
-					_results_grid->SetCellBackgroundColour(j,i,wxColour(150,150,150,255));
-			}
 		}
+		else if(sim_type == 1){ //Optimization
 
-		wxBoxSizer *bsizer = new wxBoxSizer(wxHORIZONTAL);
-		bsizer->Add(export_button, 0, wxALL, 5);
-		bsizer->Add(copy_button, 0, wxALL, 5);
-		grid_sbs->Add(bsizer, 0, 0, 0);
-		grid_sbs->Add(_results_grid, 0, wxALL|wxEXPAND, 5);
-				
-		main_sizer->Add(grid_sbs, 1, wxALL|wxEXPAND, 5);
-	}
-	else if(sim_type == 3){	//Parametric
-		export_button = new wxButton(parent, wxID_ANY, wxT("Export to CSV"));
-		export_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnSimulationResultsExport ), NULL, this);
-		copy_button = new wxButton(parent, wxID_ANY, wxT("Copy to clipboard"));
-		copy_button->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnSimulationResultsCopy ), NULL, this);
-
-		wxStaticBox *grid_sb = new wxStaticBox(parent, wxID_ANY, wxT("Parametric simulation results summary"));
-		wxStaticBoxSizer *grid_sbs = new wxStaticBoxSizer(grid_sb, wxVERTICAL);
-		
-		_results_grid = new wxGrid(parent, wxID_ANY, wxDefaultPosition, wxSize(350,600));
-		grid_emulator textgrid;
-		CreateParametricsTable(_par_data, results, textgrid);
-		textgrid.MapToWXGrid(_results_grid);
-		
-		_results_grid->SetRowLabelSize(200);
-
-		
-		int nrow=_results_grid->GetNumberRows(),
-			ncol=_results_grid->GetNumberCols();
-		for(int i=0; i<ncol; i++){
-			for(int j=0; j<nrow; j++){
-				_results_grid->SetReadOnly(j,i,true);
-		//		if(_results_grid->GetCellValue(j,i).empty())
-		//			_results_grid->SetCellBackgroundColour(j,i,wxColour(150,150,150,255));
-			}
 		}
+		else if(sim_type == 2){	//Flux simulation
+			export_button = new wxButton(parent, wxID_ANY, wxT("Export to CSV"));
+			export_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnSimulationResultsExport ), NULL, this);
+			copy_button = new wxButton(parent, wxID_ANY, wxT("Copy to clipboard"));
+			copy_button->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnSimulationResultsCopy ), NULL, this);
 
-		wxBoxSizer *bsizer = new wxBoxSizer(wxHORIZONTAL);
-		bsizer->Add(export_button, 0, wxALL, 5);
-		bsizer->Add(copy_button, 0, wxALL, 5);
-		grid_sbs->Add(bsizer, 0, 0, 0);
-		grid_sbs->Add(_results_grid, 0, wxALL|wxEXPAND, 5);
+			wxStaticBox *grid_sb = new wxStaticBox(parent, wxID_ANY, wxT("Flux simulation results summary"));
+			wxStaticBoxSizer *grid_sbs = new wxStaticBoxSizer(grid_sb, wxVERTICAL);
+		
+			sim_result *res = &results.at(0);
+
+			_results_grid = new wxGrid(parent, wxID_ANY, wxDefaultPosition, wxSize(350,600));
+			grid_emulator textgrid;
+			CreateResultsTable(*res, textgrid);
+			textgrid.MapToWXGrid(_results_grid);
+			_results_grid->SetRowLabelSize(200);
+
+		
+			int nrow=_results_grid->GetNumberRows(),
+				ncol=_results_grid->GetNumberCols();
+			for(int i=0; i<ncol; i++){
+				for(int j=0; j<nrow; j++){
+					_results_grid->SetReadOnly(j,i,true);
+					if(_results_grid->GetCellValue(j,i).empty())
+						_results_grid->SetCellBackgroundColour(j,i,wxColour(150,150,150,255));
+				}
+			}
+
+			wxBoxSizer *bsizer = new wxBoxSizer(wxHORIZONTAL);
+			bsizer->Add(export_button, 0, wxALL, 5);
+			bsizer->Add(copy_button, 0, wxALL, 5);
+			grid_sbs->Add(bsizer, 0, 0, 0);
+			grid_sbs->Add(_results_grid, 0, wxALL|wxEXPAND, 5);
 				
-		main_sizer->Add(grid_sbs, 1, wxALL|wxEXPAND, 5);
-	}
-	else{
-        throw empty_sim_results;
-    }
+			main_sizer->Add(grid_sbs, 1, wxALL|wxEXPAND, 5);
+		}
+		else if(sim_type == 3){	//Parametric
+			export_button = new wxButton(parent, wxID_ANY, wxT("Export to CSV"));
+			export_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnSimulationResultsExport ), NULL, this);
+			copy_button = new wxButton(parent, wxID_ANY, wxT("Copy to clipboard"));
+			copy_button->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnSimulationResultsCopy ), NULL, this);
+
+			wxStaticBox *grid_sb = new wxStaticBox(parent, wxID_ANY, wxT("Parametric simulation results summary"));
+			wxStaticBoxSizer *grid_sbs = new wxStaticBoxSizer(grid_sb, wxVERTICAL);
+		
+			_results_grid = new wxGrid(parent, wxID_ANY, wxDefaultPosition, wxSize(350,600));
+			grid_emulator textgrid;
+			CreateParametricsTable(_par_data, results, textgrid);
+			textgrid.MapToWXGrid(_results_grid);
+		
+			_results_grid->SetRowLabelSize(200);
+
+		
+			int nrow=_results_grid->GetNumberRows(),
+				ncol=_results_grid->GetNumberCols();
+			for(int i=0; i<ncol; i++){
+				for(int j=0; j<nrow; j++){
+					_results_grid->SetReadOnly(j,i,true);
+			//		if(_results_grid->GetCellValue(j,i).empty())
+			//			_results_grid->SetCellBackgroundColour(j,i,wxColour(150,150,150,255));
+				}
+			}
+
+			wxBoxSizer *bsizer = new wxBoxSizer(wxHORIZONTAL);
+			bsizer->Add(export_button, 0, wxALL, 5);
+			bsizer->Add(copy_button, 0, wxALL, 5);
+			grid_sbs->Add(bsizer, 0, 0, 0);
+			grid_sbs->Add(_results_grid, 0, wxALL|wxEXPAND, 5);
+				
+			main_sizer->Add(grid_sbs, 1, wxALL|wxEXPAND, 5);
+		}
+		else{
+			throw empty_sim_results;
+		}
 
     }
     catch( int throwflag )
     {
         //do nothing
-        (void*)throwflag;
+		throwflag;
     }
 	
 	parent->SetSizer(main_sizer);

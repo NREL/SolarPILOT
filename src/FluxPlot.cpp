@@ -330,7 +330,7 @@ void FluxPlot::DoPaint(wxDC &_pdc){
 				sp_point *aim = _helios.at(i)->getAimPoint();
 				sp_point aimc(*aim);
 				aimc.Add(-offx, -offy, -tht);
-				double rh = _helios.at(i)->getRadialPos();
+				double radialpos = _helios.at(i)->getRadialPos();
 				
 				int binx, biny;
 				//is the receiver cylindrical? if so, adjust the aimpoint relative to the 'unwrapped' cylinder
@@ -355,11 +355,11 @@ void FluxPlot::DoPaint(wxDC &_pdc){
 
 				//Add data to array
 				bins.at(binx).at(biny) ++;
-				lens.at(binx).at(biny) += rh;
+				lens.at(binx).at(biny) += radialpos;
 				/*vector<double> dat;
 				dat.push_back(aimc.x);
 				dat.push_back(aimc.y);
-				dat.push_back(rh);
+				dat.push_back(radialpos);
 				fdata.push_back(dat);*/
 			}
 

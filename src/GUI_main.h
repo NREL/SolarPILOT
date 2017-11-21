@@ -462,7 +462,7 @@ private:
     int _field_left_mouse_start[2];
     
     sim_results
-		results;
+		_results;
 	wxGrid *_results_grid;
     ST_System *_STSim;
 

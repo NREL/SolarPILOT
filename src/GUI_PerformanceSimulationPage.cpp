@@ -565,14 +565,16 @@ void SPFrame::OnDoPerformanceSimulation( wxCommandEvent &event){
 		SetSimulationStatus(true, _in_flux_simulation, evt_button);
 		StartSimTimer();
 
-		Hvector helios;
 		bool simok = false;
-		if(GetSelectedHeliostats(helios, _flux_lc_check->GetValue()) ){
-			results.clear();
-			results.resize(1);
-			simok = DoPerformanceSimulation(_SF, _variables, helios);
+		{
+			Hvector helios;
+			if (GetSelectedHeliostats(helios, _flux_lc_check->GetValue())) {
+				_results.clear();
+				_results.resize(1);
+				simok = DoPerformanceSimulation(_SF, _variables, helios);
+			}
 		}
-		
+
 		StopSimTimer();
 		SetSimulationStatus(false, _in_flux_simulation, evt_button);
 
@@ -591,7 +593,7 @@ void SPFrame::OnDoPerformanceSimulation( wxCommandEvent &event){
             UpdateFieldPlotSelections();
             UpdateFluxPlotSelections();
 
-			DoResultsPage(results);
+			DoResultsPage(_results);
 			
 			UpdateLayoutGrid();	//update to show new aim points
 			//Go to the new flux plot

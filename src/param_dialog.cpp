@@ -384,7 +384,7 @@ bool par_values_dialog::ShowEditValuesDialog(const wxString &title, wxArrayStr &
 		{
 			// translate back to integer values
 			values.Clear();
-			for (int i=0;i<(int)cur_items.Count();i++)
+			for (i=0;i<(int)cur_items.Count();i++)
 				//values.Add( wxString::Format("%d", fixed_items.Index( cur_items[i] ) ) );
 				values.Add(cur_items[i]);
 
@@ -439,23 +439,23 @@ bool par_values_dialog::ShowSelectVariableDialog(const wxString &title, const wx
 
 	if (dlg.ShowModal() == wxID_OK)
 	{
-		wxArrayStr names = dlg.GetCheckedNames();
+		wxArrayStr getnames = dlg.GetCheckedNames();
 		
 		// remove any from list
 		int i=0;
 		while (i<(int)list.Count())
 		{
-			if (names.Index( list[i] ) < 0)
+			if (getnames.Index( list[i] ) < 0)
 				list.RemoveAt(i);
 			else
 				i++;
 		}
 
 		// append any new ones
-		for (i=0;i<(int)names.Count();i++)
+		for (i=0;i<(int)getnames.Count();i++)
 		{
-			if (list.Index( names[i] ) < 0)
-				list.Add( names[i] );
+			if (list.Index(getnames[i] ) < 0)
+				list.Add(getnames[i] );
 		}
 
 		//check layout selection

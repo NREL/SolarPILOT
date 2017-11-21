@@ -362,11 +362,11 @@ void SPFrame::OnDoLayout( wxCommandEvent &event){
 			if(! DoManagedLayout(_SF, _variables) ) goto sim_error_flag;
 			simtime = _sim_watch.Time();
 			//Process the simulation results
-			results.clear();
-			results.resize(1);
+			_results.clear();
+			_results.resize(1);
             double azzen[2];
             _SF.CalcDesignPtSunPosition(_variables.sf.sun_loc_des.mapval(), azzen[0], azzen[1]);
-            results.at(0).process_analytical_simulation(_SF, 0, azzen);
+			_results.at(0).process_analytical_simulation(_SF, 0, azzen);
 
 			//Load the results in the grid
 			UpdateLayoutGrid();
@@ -380,7 +380,7 @@ void SPFrame::OnDoLayout( wxCommandEvent &event){
             //update the receiver flux map selection combo
             UpdateFluxPlotSelections();
 	
-			DoResultsPage(results);
+			DoResultsPage(_results);
 			proctime = _sim_watch.Time() - simtime;
 		}
 		catch(int ierr)

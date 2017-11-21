@@ -37,7 +37,10 @@ void SPFrame::CreateFluxPlotPage(wxScrolledWindow *parent){
         *plot_zmin = new InputControl(parent, wxID_ANY, _variables.flux.plot_zmin, wxDefaultPosition, wxSize(50,21), 0L, "none", true),
         *plot_zmax = new InputControl(parent, wxID_ANY, _variables.flux.plot_zmax, wxDefaultPosition,  wxSize(50,21), 0L, "none", true);
 
-    {    wxWindow* dsibs[] = {plot_zmin, plot_zmax};    is_autoscale->setDisabledSiblings("true", 2, dsibs);    }
+    {
+    wxWindow* dsibs[] = {plot_zmin, plot_zmax};
+    is_autoscale->setDisabledSiblings("true", 2, dsibs);
+    }
 
     //add inputs
     _input_map[ is_autoscale->getVarObject() ] = is_autoscale;
@@ -322,8 +325,8 @@ void SPFrame::OnFluxPlotBinChange( int axis )
     _flux_frame->SetPlotData(_SF, helios, 0);
 
     //Process the results
-    double azzen[] = {results.back().solar_az, results.back().solar_zen};  //re-use last position
-	results.back().process_raytrace_simulation(_SF, 2, azzen, helios, _STSim->IntData.q_ray, _STSim->IntData.emap, _STSim->IntData.smap, 
+    double azzen[] = { _results.back().solar_az, _results.back().solar_zen};  //re-use last position
+	_results.back().process_raytrace_simulation(_SF, 2, azzen, helios, _STSim->IntData.q_ray, _STSim->IntData.emap, _STSim->IntData.smap,
         _STSim->IntData.rnum, _STSim->IntData.nint, _STSim->IntData.bounds);	
     return;
 }

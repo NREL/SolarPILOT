@@ -911,8 +911,8 @@ void SPFrame::BoundsImport(){
                 //break the file into inclusions and exclusions
 				vector<string> entries = split(file.ToStdString(), eol);
 				int nlines = entries.size();
-                string incs;
-                string excs;
+                string incstxt;
+                string excstxt;
                 bool is_incs=true;
                 for(int i=0; i<nlines; i++)
                 {
@@ -922,13 +922,13 @@ void SPFrame::BoundsImport(){
                         continue;
                     }
                     if( is_incs )
-                        incs.append( entries.at(i) );
+                        incstxt.append( entries.at(i) );
                     else
-                        excs.append( entries.at(i) );
+                        excstxt.append( entries.at(i) );
                 }
 
-                _variables.land.inclusions.set_from_string( incs.c_str() );
-                _variables.land.exclusions.set_from_string( excs.c_str() );
+                _variables.land.inclusions.set_from_string( incstxt.c_str() );
+                _variables.land.exclusions.set_from_string( excstxt.c_str() );
 
 			}
 

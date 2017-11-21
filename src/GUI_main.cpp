@@ -715,9 +715,9 @@ void SPFrame::CreateInputPages(wxWindow *parent, PagePanel *pagepanel){
     _page_panel->InsertPage( _page_panel->GetPagePosition( pageNames.results_layout )+1, fluxresults, pageNames.results_flux, ID_ICON_FLUX, 1, pageNames.results );
 
 	//Display a black results page
-	this->results.clear();
+	this->_results.clear();
     wxScrolledWindow *page = new wxScrolledWindow(this);
-	CreateResultsSummaryPage(page, this->results);
+	CreateResultsSummaryPage(page, this->_results);
     _page_panel->InsertPage( _page_panel->GetPagePosition( pageNames.results_flux )+1, page, pageNames.results_summary, ID_ICON_TABLE, 1, pageNames.results );
 
 	//Bind all of the input objects to handle changes in values
@@ -1443,7 +1443,7 @@ var_map *SPFrame::GetVariablesObject()
 
 sim_results *SPFrame::GetResultsObject()
 {
-    return &results;
+    return &_results;
 }
 
 void SPFrame::SetThreadCount(int nthread)
@@ -1733,14 +1733,14 @@ void SPFrame::UpdateCalculatedGUIValues(){
 
 	//Now apply the display status to each object
 	int ii=-1;
-	for(std::map<wxWindow*, bool>::iterator it=odisplay.begin(); it != odisplay.end(); it++){
+	for(std::map<wxWindow*, bool>::iterator ito=odisplay.begin(); ito != odisplay.end(); ito++){
 		ii++;
-		if(it->first->IsBeingDeleted()) continue;
-		if(it->second) {
-			it->first->Enable(); 
+		if(ito->first->IsBeingDeleted()) continue;
+		if(ito->second) {
+			ito->first->Enable(); 
 		}
 		else{
-			it->first->Disable(); 
+			ito->first->Disable(); 
 		}
 	}
 	for(int i=0; i<(int)overrides.size(); i++){
@@ -2413,7 +2413,7 @@ bool SPFrame::SolTraceFluxSimulation(SolarField &SF, var_map &vset, Hvector &hel
 
 		//Process the results
         double azzen[2] = {az, PI/2.-el};
-		results.back().process_raytrace_simulation(SF, 2, azzen, helios, _STSim->IntData.q_ray, _STSim->IntData.emap, _STSim->IntData.smap, _STSim->IntData.rnum, nint, bounds);	
+		_results.back().process_raytrace_simulation(SF, 2, azzen, helios, _STSim->IntData.q_ray, _STSim->IntData.emap, _STSim->IntData.smap, _STSim->IntData.rnum, nint, bounds);	
 	}
 
     //If the user wants to save stage0 ray data, do so here
@@ -2643,7 +2643,7 @@ bool SPFrame::HermiteFluxSimulationHandler(SolarField &SF, Hvector &helios){
     azzen[0] = D2R* SF.getVarMap()->flux.flux_solar_az.Val();
     azzen[1] = D2R* (90. - SF.getVarMap()->flux.flux_solar_el.Val() );
     
-	results.back().process_analytical_simulation(SF, 2, azzen, helios);
+	_results.back().process_analytical_simulation(SF, 2, azzen, helios);
 	
 	return true;
 }
@@ -2895,15 +2895,15 @@ void SPFrame::SAMInputParametric2(){
         }
 
 	
-	    results.clear();
-	    results.resize(nazen_tab);
+	    _results.clear();
+	    _results.resize(nazen_tab);
 	    string neff_tot_str = my_to_string(nazen_tab);
 	    k=0;
 	    for(int i=0; i<nazen_tab; i++){
 
             _SF.Simulate(azen_tab[i*2], azen_tab[i*2+1], P);
 
-		    results.at(k++).process_analytical_simulation(_SF, 2, &azen_tab[i*2]);	//TO DO: #2 is flux simulation. Add parametric-specific method
+		    _results.at(k++).process_analytical_simulation(_SF, 2, &azen_tab[i*2]);	//TO DO: #2 is flux simulation. Add parametric-specific method
 			
             string kstr = my_to_string(k+1);
 			
@@ -2943,7 +2943,7 @@ void SPFrame::SAMInputParametric2(){
 	    k=0;
 	    for(int i=0; i<neff_az; i++){
 		    for(int j=0; j<neff_zen; j++){
-			    eff_view.at(j, i) = results.at(k++).eff_total_sf.ave;
+			    eff_view.at(j, i) = _results.at(k++).eff_total_sf.ave;
 			    file.AddLine( wxString::Format("%.5f", eff_view.at(j, i) ) );
 		    }
 	    }
@@ -2953,7 +2953,7 @@ void SPFrame::SAMInputParametric2(){
 	    file.Write();
 	    file.Close();
 	    pdlg->Destroy();
-	    results.clear();
+	    _results.clear();
 
 	    //We also want to write the "array view" file which provides an easier way to view the efficiency matrix
 	    wxTextFile afile(filedir + "/array_view.csv");
@@ -3039,7 +3039,7 @@ void SPFrame::SAMInputParametric2(){
 		all_zen;
 
     
-	results.resize(nflux_sim);
+	_results.resize(nflux_sim);
 	//From the day and time array, produce an azimuth/zenith array
 	string nflux_tot_str = my_to_string(nflux_sim);
 	int k=0;
@@ -3060,10 +3060,10 @@ void SPFrame::SAMInputParametric2(){
 
 			_SF.Simulate(azzen[0]*R2D, azzen[1]*R2D, P);  //re-use P from above
 			_SF.HermiteFluxSimulation( *_SF.getHeliostats() );
-			results.at(k).process_analytical_simulation(_SF, 2, azzen);	//TO DO: #2
+			_results.at(k).process_analytical_simulation(_SF, 2, azzen);	//TO DO: #2
 			
 			//Collect flux results here
-			results.at(k).process_flux( &_SF, is_fluxmap_norm);
+			_results.at(k).process_flux( &_SF, is_fluxmap_norm);
 			
 			//
 			k++;
@@ -3092,7 +3092,7 @@ void SPFrame::SAMInputParametric2(){
 	//Write header lines
 	ffile.AddLine( wxString::Format("This file contains the receiver flux data. Generated with SolarPILOT v%s.\n",_software_version.c_str()) );
 	ffile.AddLine( wxString::Format("Plant lat.:, %.1f,deg\n", _variables.amb.latitude.val) );
-	int nall = results.size();
+	int nall = _results.size();
 	for(int i=0; i<nall; i++){
 		ffile.AddLine( wxString::Format("%5.1f,%5.1f,%5.1f,%5.1f,", (float)all_days.at(i), (float)all_hours.at(i), all_az.at(i), all_zen.at(i)));
 	}
@@ -3104,26 +3104,25 @@ void SPFrame::SAMInputParametric2(){
 	else{
 		annot = " Flux absorption [kWt/m2 delivered to the receiver]";
 	}
-
 	for(int i=0; i<nall; i++){	//For each result..
-		int nfs = results.at(i).flux_surfaces.size();	//Number of receivers
+		int nfs = _results.at(i).flux_surfaces.size();	//Number of receivers
 		for(int infs=0; infs<nfs; infs++){	//For each receiver..
-			int nmap = results.at(i).flux_surfaces.at(infs).size();		//Number of flux surfaces on this receiver
+			int nmap = _results.at(i).flux_surfaces.at(infs).size();		//Number of flux surfaces on this receiver
 			for(int inmap=0; inmap<nmap; inmap++){		//For each flux surface on this receiver..
 				wxString maplab;
-				maplab.Printf(wxT("Receiver name [%s] | Flux surface [%d]"), results.at(i).receiver_names.at(infs).c_str(), inmap+1 );
+				maplab.Printf(wxT("Receiver name [%s] | Flux surface [%d]"), _results.at(i).receiver_names.at(infs).c_str(), inmap+1 );
 				
 				ffile.AddLine( wxString::Format(" Azimuth,Zenith,%s\n%5.1f,%5.1f\n%s", maplab.c_str(), all_az.at(i), all_zen.at(i), annot.c_str()));
-				FluxSurface *fs = &results.at(i).flux_surfaces.at(infs).at(inmap);
+				FluxSurface *fs = &_results.at(i).flux_surfaces.at(infs).at(inmap);
 				int 
 					nflux_x = fs->getFluxNX(),
 					nflux_y = fs->getFluxNY();
-				FluxGrid *fmap = results.at(i).flux_surfaces.at(infs).at(inmap).getFluxMap(); 
-				for(int k=0; k<nflux_y; k++){
+				FluxGrid *fmap = _results.at(i).flux_surfaces.at(infs).at(inmap).getFluxMap(); 
+				for(int kk=0; kk<nflux_y; kk++){
 					wxString line;
 					line.Clear();
 					for(int j=0; j<nflux_x; j++){
-						line.Append( wxString::Format("%12.8f,", fmap->at(j).at(nflux_y-k-1).flux) );
+						line.Append( wxString::Format("%12.8f,", fmap->at(j).at(nflux_y-kk-1).flux) );
 					}
 					ffile.AddLine(line);
 				}
@@ -3170,13 +3169,13 @@ void SPFrame::SAMInputParametric2(){
         file.clear();
 
 	    for(int i=0; i<nflux_sim; i++)
-            file << all_az.at(i) << "," << all_zen.at(i) << "," << results.at(i).eff_total_sf.ave << "\n";
+            file << all_az.at(i) << "," << all_zen.at(i) << "," << _results.at(i).eff_total_sf.ave << "\n";
 
         file.close();
 	    
     }
 
-	results.clear();
+	_results.clear();
 	fdlg->Destroy();
 	//----------------------------------------------------------------------
 
@@ -3328,10 +3327,10 @@ void SPFrame::ParametricSimulate( parametric &P ){
 
 
 	//loop through all linked
-	results.clear();
+	_results.clear();
 	try
 	{
-		results.reserve(nsim_tot);
+		_results.reserve(nsim_tot);
 	}
 	catch(...)
 	{
@@ -3419,10 +3418,10 @@ void SPFrame::ParametricSimulate( parametric &P ){
 			if(varpar.flux.flux_solar_el.Val() < 0.){
 			
 				//push back an empty simulation result
-				results.push_back(sim_result());
+				_results.push_back(sim_result());
 		
 				//reset the sim type to parametric
-				results.back().sim_type = 3;
+				_results.back().sim_type = 3;
 			}
 			else{		
 				try{
@@ -3511,7 +3510,7 @@ void SPFrame::ParametricSimulate( parametric &P ){
 					throw spexception("Empty field layout - can't perform parametric performance simulation!");
 
 				try{
-					results.push_back(sim_result());
+					_results.push_back(sim_result());
 				}
 				catch(...){
 					throw spexception("Memory error creating results storage array");
@@ -3528,7 +3527,7 @@ void SPFrame::ParametricSimulate( parametric &P ){
 				}
 		
 				//reset the sim type to parametric
-				results.back().sim_type = 3;
+				_results.back().sim_type = 3;
 
 				//update the layout data stored in the variable map
 				try{
@@ -3554,7 +3553,7 @@ void SPFrame::ParametricSimulate( parametric &P ){
 					}
 					grid_emulator gridtable;
 					try{
-						CreateResultsTable(results.back(), gridtable);
+						CreateResultsTable(_results.back(), gridtable);
 
 						//Write the table
 						wxArrayStr textresults;
@@ -3636,8 +3635,8 @@ void SPFrame::ParametricSimulate( parametric &P ){
 				if(save_flux_dat && !sim_cancelled){
 					wxString fname;
 					fname.Printf("%s/param_flux-data_%d.csv", save_field_dir.c_str(), nsim+1);
-                    wxString delim = ",";
-					_flux_frame->SaveDataTable(fname, delim);
+                    wxString cdelim = ",";
+					_flux_frame->SaveDataTable(fname, cdelim);
 				}
 				if(_par_SF.CheckCancelStatus() || sim_cancelled) break; //break if the simulation has been cancelled
 			}

@@ -688,7 +688,7 @@ void SPFrame::OnParametricSimulate( wxCommandEvent &WXUNUSED(event)){
 
 		ParametricSimulate(_par_data);
 	
-		DoResultsPage(results);
+		DoResultsPage(_results);
 			
 		//Show the simulation results
         _page_panel->SetActivePage( pageNames.results_summary );
@@ -1093,7 +1093,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event)){
 		int  nsim = _user_sim_table.nsim();
 
         //clear previous results
-        results.clear();
+		_results.clear();
 
 		for(int i=0; i<nsim; i++){
 			UserParProgressUpdate(i, nsim);
@@ -1171,8 +1171,8 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event)){
 			Hvector helios;
 			if(perf_helios_filtered){
 				//Map by ID to new hvector
-				for(int i=0; i<(int)perf_helios.size(); i++){
-					helios.push_back( (*_par_SF.getHeliostatsByID())[ perf_helios.at(i)->getId() ] );
+				for(int ih=0; ih<(int)perf_helios.size(); ih++){
+					helios.push_back( (*_par_SF.getHeliostatsByID())[ perf_helios.at(ih)->getId() ] );
 				}
 			}
 			else
@@ -1180,7 +1180,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event)){
 				//Get all of the heliostats
 				helios = *_par_SF.getHeliostats();
 			}
-			results.push_back(sim_result());
+			_results.push_back(sim_result());
 			//if the simulation is SolTrace, we need to automatically generate new aim points according to the specified method
 			if( vset.flux.flux_model.mapval() == var_fluxsim::FLUX_MODEL::SOLTRACE ){
 				vset.flux.flux_model.combo_select_by_mapval( var_fluxsim::FLUX_MODEL::HERMITE_ANALYTICAL); //Delsol
@@ -1189,7 +1189,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event)){
 			}
 		
 			if(!sim_cancelled) sim_cancelled = sim_cancelled || !DoPerformanceSimulation(_par_SF, vset, helios);
-			results.back().sim_type = 3;
+			_results.back().sim_type = 3;
 
             //------------------------------------------------------------------
             //export performance data
@@ -1198,7 +1198,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event)){
 				wxString fname;
 				fname.Printf("%s/userparam_summary_%d.csv",_working_dir.GetPath().c_str(),i+1);
 				grid_emulator gridtable;
-				CreateResultsTable(results.back(), gridtable);
+				CreateResultsTable(_results.back(), gridtable);
 
 				//Write the table
 				wxArrayStr textresults;
@@ -1270,8 +1270,8 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event)){
 			if(save_flux_dat && !sim_cancelled){
 				wxString fname;
 				fname.Printf("%s/userparam_flux-data_%d.csv", save_field_dir.c_str(), i+1);
-                wxString delim = ",";
-				_flux_frame->SaveDataTable(fname, delim);
+                wxString cdelim = ",";
+				_flux_frame->SaveDataTable(fname, cdelim);
 			}
 			if(_par_SF.CheckCancelStatus() || sim_cancelled) break; //break if the simulation has been cancelled
 
@@ -1285,7 +1285,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event)){
 
 		StopSimTimer();
 		SetSimulationStatus(false, _in_user_param_simulation, _user_par_button);
-		DoResultsPage(results);
+		DoResultsPage(_results);
 
 		//Show the simulation results
         _page_panel->SetActivePage( pageNames.results_summary );
