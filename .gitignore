@@ -15,3 +15,8 @@ src/Custom/
 *.ilk
 *.res
 ~script
+build_vs2017/.vs/
+build_vs2017/x64/
+build_vs2017/win32/
+*.iobj
+*.ipdb
