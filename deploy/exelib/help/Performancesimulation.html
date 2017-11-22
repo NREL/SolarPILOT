@@ -188,7 +188,7 @@
 <p class="rvps9"><span class="rvts6"><br/></span></p>
 <p class="rvps9"><span class="rvts6">The probability shift aiming method incorporates random sampling from a statistical distribution that you specify to determine the vertical displacement of each heliostat image. Each image is offset vertically from the centerline of the receiver, and the extent to which the image is offset is determined by the image's primary vertical length, the positioning cutoff factor, and a factor that has been randomly sampled from a distribution that you define. The allowable range for vertical displacement is restricted according to the vertical length of the image. Each aim point must be offset from the upper or lower receiver edge by at least a distance equal to the image's vertical standard deviation times the positioning cutoff factor. Within the remaining span, the aim point vertical position is determined by sampling from a statistical distribution. </span></p>
 <p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">The following graphic illustrates the method. An image with standard deviation equal to </span><span class="rvts12">σ</span><span class="rvts50">y</span><span class="rvts6"> can be positioned within a window of </span><span class="rvts28">H</span><span class="rvts58">rec</span><span class="rvts28">/2 - 2</span><span class="rvts12">σ</span><span class="rvts50">y</span><span class="rvts6"> away from the receiver centerline. The final position within that window is determined by random sampling from a normal distribution (in this case). The positioning cutoff factor is equal to 2.0.</span></p>
+<p class="rvps9"><span class="rvts6">The following graphic illustrates the method. An image with standard deviation equal to </span><span class="rvts12">σ</span><span class="rvts50">y</span><span class="rvts6"> can be positioned within a window of </span><span class="rvts28">H</span><span class="rvts51">rec</span><span class="rvts28">/2 - 2</span><span class="rvts12">σ</span><span class="rvts50">y</span><span class="rvts6"> away from the receiver centerline. The final position within that window is determined by random sampling from a normal distribution (in this case). The positioning cutoff factor is equal to 2.0.</span></p>
 <p class="rvps9"><span class="rvts6"><br/></span></p>
 <p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem194.png"></p>
 <p class="rvps9"><span class="rvts6"><br/></span></p>
@@ -201,13 +201,13 @@
 <h4 class="rvps10"><span class="rvts0"><span class="rvts25">Aim point distribution sampling</span></span></h4>
 <p class="rvps11"><span class="rvts6">The probability shift aiming method uses random sampling to assign heliostat vertical displacement. You can choose the shape of the distribution to be either triangular, normal, or uniform. &nbsp;</span></p>
 <p class="rvps11"><span class="rvts6"><br/></span></p>
-<p class="rvps24"><span class="rvts55">Triangular</span><span class="rvts6"> </span></p>
+<p class="rvps24"><span class="rvts56">Triangular</span><span class="rvts6"> </span></p>
 <p class="rvps24"><span class="rvts6">The triangular distribution has probability density equal to zero at the receiver centerline and a probability density of 1 at the maximum offset distance for each image. Images are therefore more likely to be placed close to the outer edges of the receiver.</span></p>
 <p class="rvps24"><span class="rvts6"><br/></span></p>
-<h4 class="rvps23"><span class="rvts0"><span class="rvts56">Normal</span></span><span class="rvts0"><span class="rvts25"> </span></span></h4>
+<h4 class="rvps23"><span class="rvts0"><span class="rvts57">Normal</span></span><span class="rvts0"><span class="rvts25"> </span></span></h4>
 <p class="rvps24"><span class="rvts6">The normal distribution is centered at half the maximum offset distance for each image and has a characteristic width (standard deviation) equal to the Aiming distribution standard deviation that you specify. </span></p>
 <p class="rvps24"><span class="rvts6"><br/></span></p>
-<h6 class="rvps32"><span class="rvts0"><span class="rvts57">Aiming distribution standard dev.</span></span></h6>
+<h6 class="rvps32"><span class="rvts0"><span class="rvts58">Aiming distribution standard dev.</span></span></h6>
 <p class="rvps31"><span class="rvts6">The standard deviation of the aiming random sampling distribution. The standard deviation magnitude is scaled relative to the size of the placement window.</span></p>
 <p class="rvps31"><span class="rvts6"><br/></span></p>
 <h5 class="rvps30"><span class="rvts0"><span class="rvts36">Uniform</span></span></h5>

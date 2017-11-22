@@ -268,27 +268,28 @@ span.rvts50
 }
 span.rvts51
 {
+ font-size: 7pt;
+ font-style: italic;
+ vertical-align: sub;
+}
+span.rvts52
+{
  font-size: 9pt;
  font-style: italic;
  color: #ff8000;
 }
-span.rvts52
+span.rvts53
 {
  font-weight: bold;
  color: #000000;
 }
-span.rvts53
+span.rvts54
 {
  color: #000000;
 }
-span.rvts54
-{
- text-decoration: underline;
-}
 span.rvts55
 {
- font-size: 11pt;
- color: #243f60;
+ text-decoration: underline;
 }
 span.rvts56
 {
@@ -298,14 +299,13 @@ span.rvts56
 span.rvts57
 {
  font-size: 11pt;
- font-style: italic;
  color: #243f60;
 }
 span.rvts58
 {
- font-size: 7pt;
+ font-size: 11pt;
  font-style: italic;
- vertical-align: sub;
+ color: #243f60;
 }
 span.rvts59
 {
