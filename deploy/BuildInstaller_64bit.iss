@@ -7,8 +7,8 @@ AppId={{67C0F37C-E0F4-4D6A-9A20-5BA8FB27308E}}
 AppName=SolarPILOT
 
 ; Update these to match the version
-AppVersion=2017.11.21
-DefaultDirName={pf}\SolarPILOT\2017.11.21
+AppVersion=2017.11.22
+DefaultDirName={pf}\SolarPILOT\2017.11.22
 OutputBaseFilename=solarpilot-install-x64
 ; --------
 

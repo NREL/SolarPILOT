@@ -227,7 +227,7 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
 	//this->Freeze();
 
 	//Set the version tag
-	_software_version = "2017.11.21-dev";
+	_software_version = "2017.11.22-dev";
 	_contact_info = "solarpilot.support@nrel.gov";
 
 	//set demo limits if needed

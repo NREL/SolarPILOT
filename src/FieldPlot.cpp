@@ -809,7 +809,7 @@ void FieldPlot::DoPaint(wxDC &_pdc){
 				//create a sample label
 				wxSize ext = _dc.GetTextExtent(maxlab);
 				//font scaling factor
-				double label_scale = H->getCollisionRadius()*ppm / ext.GetWidth() * 1.41;
+				double label_scale = heliostats->front()->getCollisionRadius()*ppm / ext.GetWidth() * 1.41;
 				int fontsize_scaled = max( (int)(label_scale * _fontsize), 4 );
 
 				//check a sample label size
