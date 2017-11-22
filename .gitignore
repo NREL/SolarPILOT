@@ -20,3 +20,4 @@ build_vs2017/x64/
 build_vs2017/win32/
 *.iobj
 *.ipdb
+deploy/exelib/help/*.pdf
