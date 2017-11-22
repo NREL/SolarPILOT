@@ -91,9 +91,10 @@ void SPFrame::CreateFluxPlotPage(wxScrolledWindow *parent){
 
 	//Selection for the receiver
 	wxArrayStr receivers;
-	for(unsigned int i=0; i<_variables.recs.size(); i++){
-		receivers.push_back( _variables.recs.at(i).rec_name.val );
-	}
+	std::vector<Receiver*> *active_recs = _SF.getReceivers();
+	for(unsigned int i=0; i<active_recs->size(); i++)
+		receivers.push_back( active_recs->at(i)->getVarMap()->rec_name.val );
+	
 	_rec_select = new wxComboBox(parent, wxID_ANY, receivers[0], wxDefaultPosition, wxSize(wxDefaultSize.GetWidth(), _default_input_size.GetHeight()), receivers, wxCB_DROPDOWN|wxCB_READONLY);
 	_rec_select->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( SPFrame::OnReceiverFluxSelect ), NULL, this);
 
@@ -251,7 +252,8 @@ void SPFrame::OnFluxTableSave( wxCommandEvent &WXUNUSED(event)){
 
 void SPFrame::OnReceiverFluxSelect( wxCommandEvent &WXUNUSED(event) ){
 	//A new receiver has been selected, redraw the flux map
-	_flux_frame->SetWhichReceiver( _rec_select->GetSelection() );
+	int rselect = _rec_select->GetSelection();
+	_flux_frame->SetWhichReceiver( rselect );
 	this->Update(); 
 	this->Refresh();
 }

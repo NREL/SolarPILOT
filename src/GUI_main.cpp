@@ -227,7 +227,7 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
 	//this->Freeze();
 
 	//Set the version tag
-	_software_version = "2017.9.29-dev";
+	_software_version = "2017.11.21-dev";
 	_contact_info = "solarpilot.support@nrel.gov";
 
 	//set demo limits if needed
@@ -1812,9 +1812,9 @@ void SPFrame::UpdateFieldPlotSelections()
 void SPFrame::UpdateFluxPlotSelections()
 {
     _rec_select->Clear();
-
-    for( int i=0; i<_SF.getVarMap()->recs.size(); i++)
-        _rec_select->Append( _SF.getVarMap()->recs.at(i).rec_name.val );
+	std::vector<Receiver*> *active_recs = _SF.getReceivers();
+	for (int i = 0; i < active_recs->size(); i++)
+		_rec_select->Append(active_recs->at(i)->getVarMap()->rec_name.val);
 
 }
 
