@@ -72,43 +72,35 @@ void PlotBase::ColorGradientHotCold(wxColour &col, double index){
 
 	Returns value indicating RRRGGGBBB on a scale of 0-255 for each integer triplet
 	*/
-	double dind = index;
-	if(index<0.) dind = 0.;
-	if(index>1.) dind = 1.;
-	
-	col.Set(int(dind*255.), 0, int((1.-dind)*255.));
+	double index_use = index < 1. ? (index < 0. ? 0. : index) : (index > 1. ? 1. : index);
+	col.Set(int(index_use*255.), 0, int((1.- index_use)*255.));
 }
 
 void PlotBase::ColorGradientJet(wxColour &col, double index){
-	double dind = index;
-	if(index<0.) dind = 0.;
-	if(index>1.) dind = 1.;
+	double index_use = index < 1. ? (index < 0. ? 0. : index) : (index > 1. ? 1. : index);
 
-	if(dind > .75){
-		col.Set(255, 255-int((dind-.75)/.25*255), 0);
+	if(index_use > .75){
+		col.Set(255, 255-int((index_use -.75)/.25*255), 0);
 		return;
 	}
-	if(dind > 0.5){
-		col.Set(int((dind-.5)/.25*255) , 255, 0);
+	if(index_use > 0.5){
+		col.Set(int((index_use -.5)/.25*255) , 255, 0);
 		return;
 	}
-	if(dind > 0.25){
-		col.Set(0, 255, 255 - int( (dind-.25)/.25 * 255));
+	if(index_use > 0.25){
+		col.Set(0, 255, 255 - int( (index_use -.25)/.25 * 255));
 		return;
 	}
 
-	col.Set(0, int(dind/.25*255), 255);
+	col.Set(0, int(index_use /.25*255), 255);
 	return;	
 }
 
 void PlotBase::ColorGradientGrayscale(wxColour &col, double index){
 
-	double dind = 1.-index;
-	if(index<0.) dind = 0.;
-	if(index>1.) dind = 1.;
-	col.Set(255.*(1.-dind), 255.*(1.-dind), 255.*(1.-dind) );
+	double index_use = index < 1. ? (index < 0. ? 0. : index) : (index > 1. ? 1. : index);
+	col.Set(255.*index_use, 255.*index_use, 255.*index_use);
 	return;
-
 }
 
 void PlotBase::ColorGradientParula(wxColour &col, double index)
@@ -216,15 +208,15 @@ void PlotBase::ColorGradientParula(wxColour &col, double index)
       248.9565,  250.6905,   13.7190
       };
 
-
+	double index_use = index < 1. ? (index < 0. ? 0. : index) : (index > 1. ? 1. : index);
     int nc = sizeof(parula)/sizeof(double)/3;
 
-    int hi = (int)(index*nc)+1;
+    int hi = (int)(index_use*nc)+1;
     hi = hi < 1 ? 1 : hi;
     hi = hi > nc-1 ? nc-1 : hi;
 
     int lo = hi-1 < 0 ? 0 : hi-1;
-    double f = index*nc - lo;
+    double f = index_use*nc - lo;
 
     double 
         rh = parula[hi*3],

@@ -127,7 +127,7 @@ void MyToggleButton::OnButtonEvent( wxCommandEvent &evt){
 
 int gui_util::CalcBestSigFigs(double val){
 	//Calculate and return the best number of decimal sig figs for the given value. Always show all integer values.
-	return max( 3 - int(ceil( log10( val ) ) ), 0);
+	return max( 4 - int(ceil( log10( val ) ) ), 0);
 }
 
 string gui_util::FormatWithCommas(int val){

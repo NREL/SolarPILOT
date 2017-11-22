@@ -320,13 +320,24 @@ void FieldPlot::DoPaint(wxDC &_pdc){
 			_dc.DrawEllipse(o[0]-radvals[0]*ppm, o[1]-radvals[0]*ppm, radvals[0]*ppm*2., radvals[0]*ppm*2.);
 		}
 
+		//-----draw axis items that are to be clipped
+		//x axis
+		int x_axis_loc = top_buffer + plotsize[1];
+		_dc.SetPen(wxPen(black, 1 * ppimult, wxPENSTYLE_SOLID));
+		_dc.DrawLine(o[0], x_axis_loc, o[0], x_axis_loc + 10 * ppimult);
+		//y axis
+		_dc.DrawLine(left_buffer - 10 * ppimult, o[1], left_buffer, o[1]);
+		//Draw the origin
+		_dc.SetPen(wxPen(wxT("black"), 1 * ppimult, wxPENSTYLE_SOLID));
+		_dc.SetBrush(*wxRED_BRUSH);
+		_dc.DrawCircle(o[0], o[1], 5 * ppimult);
 
         //Draw the clipping rectangles
         _dc.SetPen( wxPen( white, 1, wxPENSTYLE_TRANSPARENT ) );
         _dc.SetBrush( *wxWHITE_BRUSH );
 
         _dc.DrawRectangle(0, 0, left_buffer, canvsize[1]);
-        _dc.DrawRectangle(0, plotsize[1], canvsize[0]-left_buffer, bottom_buffer);
+        _dc.DrawRectangle(0, plotsize[1], canvsize[0], bottom_buffer);
         _dc.DrawRectangle(canvsize[0]-right_buffer, 0, right_buffer, canvsize[1]);
         _dc.DrawRectangle(0, 0, canvsize[0], 1);
 
@@ -336,9 +347,7 @@ void FieldPlot::DoPaint(wxDC &_pdc){
 		_dc.DrawRectangle( left_buffer, 1*ppimult+top_buffer, plotsize[0], plotsize[1]);
 		
 		//Draw the x axis
-		int x_axis_loc = top_buffer+plotsize[1];
-		_dc.SetPen( wxPen( black, 1*ppimult, wxPENSTYLE_SOLID) );
-		_dc.DrawLine(o[0], x_axis_loc, o[0], x_axis_loc + 10*ppimult);
+		_dc.SetPen(wxPen(black, 1 * ppimult, wxPENSTYLE_SOLID));
 		ets = "0";
 		etss = _dc.GetTextExtent( ets );
 		_dc.DrawText(ets, o[0]-etss.GetWidth()/2, x_axis_loc + 9*ppimult);
@@ -370,7 +379,6 @@ void FieldPlot::DoPaint(wxDC &_pdc){
 		}
 		
 		//Draw the y axis
-		_dc.DrawLine(left_buffer-10*ppimult, o[1], left_buffer, o[1]);
 		string etsy = "0"; wxSize etssy = _dc.GetTextExtent( etsy );
 		_dc.DrawText(etsy, left_buffer-(etssy.GetWidth()+10), o[1]-etssy.GetHeight()/2);
 		
@@ -413,10 +421,7 @@ void FieldPlot::DoPaint(wxDC &_pdc){
 		_dc.DrawLine(o[0], top_buffer, o[0], x_axis_loc);	//y line
 
 
-		//Draw the origin
-		_dc.SetPen( wxPen( wxT("black"), 1*ppimult, wxPENSTYLE_SOLID) );
-		_dc.SetBrush( *wxRED_BRUSH );
-		_dc.DrawCircle( o[0], o[1], 5*ppimult);
+		
 		
 	}
 	else if(_option == FIELD_PLOT::MESH){
@@ -471,88 +476,10 @@ void FieldPlot::DoPaint(wxDC &_pdc){
 		double radvals[2];	//[min, max]
         Land::getRadialExtents(*V, radvals, V->sf.tht.val);
 		
-        //Draw the clipping rectangles
-        _dc.SetPen( wxPen( white, 1, wxPENSTYLE_TRANSPARENT ) );
-        _dc.SetBrush( *wxWHITE_BRUSH );
-
-        _dc.DrawRectangle(0, 0, left_buffer, canvsize[1]);
-        _dc.DrawRectangle(0, plotsize[1], canvsize[0]-left_buffer, bottom_buffer);
-        _dc.DrawRectangle(canvsize[0]-right_buffer, 0, right_buffer, canvsize[1]);
-        _dc.DrawRectangle(0, 0, canvsize[0], 1);
-
+        
 		//Draw the plot boundary
 		_dc.SetPen( wxPen( black, 1*ppimult, wxPENSTYLE_SOLID) );
 		_dc.DrawRectangle( left_buffer, 1*ppimult+top_buffer, plotsize[0], plotsize[1]);
-		
-		//Draw the x axis
-		int x_axis_loc = top_buffer+plotsize[1];
-		_dc.SetPen( wxPen( black, 1*ppimult, wxPENSTYLE_SOLID) );
-		_dc.DrawLine(o[0], x_axis_loc, o[0], x_axis_loc + 10*ppimult);
-		ets = "0";
-		etss = _dc.GetTextExtent( ets );
-		_dc.DrawText(ets, o[0]-etss.GetWidth()/2, x_axis_loc + 9*ppimult);
-		ets = "Field position (East+) [m]";
-		etss = _dc.GetTextExtent( ets );
-		_dc.DrawText(ets, o[0] - etss.GetWidth()/2, x_axis_loc + (15*ppimult+etss.GetHeight()));
-		
-		//estimate the number of divisions
-		ets = my_to_string( int(-fieldsize[0]/2.));
-		etss = _dc.GetTextExtent( ets );
-		int ndiv = min(int(plotsize[0]*_zoom_fact/ (etss.GetWidth()*1.5 )), (int)(_zoom_fact*20));
-		double xscale = calcScale(fieldsize[0], ndiv);
-		double 
-			xtickloc = xscale,
-			xtickloc_ppm = xscale*ppm;
-		while(xtickloc < fieldsize[0]/2.){
-			//To the right
-			_dc.DrawLine(o[0]+xtickloc_ppm, x_axis_loc, o[0]+xtickloc_ppm, x_axis_loc+7*ppimult);
-			string xts = my_to_string(int(xtickloc+.000001));
-			wxSize xte = _dc.GetTextExtent(xts);
-			_dc.DrawText( xts , o[0]+xtickloc_ppm-xte.GetWidth()/2, x_axis_loc+9*ppimult);
-			//To the left
-			_dc.DrawLine(o[0]-xtickloc_ppm, x_axis_loc, o[0]-xtickloc_ppm, x_axis_loc+7*ppimult);
-			xts = my_to_string(int(-xtickloc-.000001));
-			xte = _dc.GetTextExtent( xts );
-			_dc.DrawText( xts , o[0]-xtickloc_ppm-xte.GetWidth()/2, x_axis_loc+9*ppimult);
-			xtickloc += xscale;
-			xtickloc_ppm += xscale*ppm;
-		}
-		
-		//Draw the y axis
-		_dc.DrawLine(left_buffer-10*ppimult, o[1], left_buffer, o[1]);
-		string etsy = "0"; wxSize etssy = _dc.GetTextExtent( etsy );
-		_dc.DrawText(etsy, left_buffer-(etssy.GetWidth()+10*ppimult), o[1]-etssy.GetHeight()/2);
-		
-		//Label
-		etsy = "Field position (North+) [m]";
-		etssy = _dc.GetTextExtent(etsy);
-		_dc.DrawRotatedText(etsy, 2, (plotsize[1]+etssy.GetWidth())/2., 90.);
-		
-		//estimate the number of divisions
-		etsy = my_to_string( int(-fieldsize[1]/2.));
-		etssy = _dc.GetTextExtent( etsy );
-		int ndivy = min(int(plotsize[0]*_zoom_fact/ (etssy.GetHeight()*2. )), (int)(_zoom_fact*20));
-		double yscale = calcScale(fieldsize[1], ndivy);
-		
-		double
-			ytickloc = yscale,
-			ytickloc_ppm = yscale*ppm;
-		while(ytickloc < fieldsize[1]/2. ){
-			//To the bottom
-			_dc.DrawLine(left_buffer-7*ppimult, o[1]+ytickloc_ppm, left_buffer, o[1]+ytickloc_ppm);
-			string yts =my_to_string(int(-ytickloc-.00001));
-			wxSize yte = _dc.GetTextExtent(yts);
-			_dc.DrawText( yts , left_buffer-10*ppimult-yte.GetWidth(), o[1]+ytickloc_ppm-yte.GetHeight()/2);
-			
-			//To the top
-			_dc.DrawLine(left_buffer-7*ppimult, o[1]-ytickloc_ppm, left_buffer, o[1]-ytickloc_ppm);
-			yts = my_to_string(int(ytickloc+.000001));
-			yte = _dc.GetTextExtent(yts);
-			_dc.DrawText( yts , left_buffer-10*ppimult-yte.GetWidth(), o[1]-ytickloc_ppm-yte.GetHeight()/2);
-			
-			ytickloc += yscale;
-			ytickloc_ppm += yscale*ppm;
-		}
 		
 		//Draw the elements
 		_dc.SetPen( wxPen( black, 1*ppimult, wxPENSTYLE_SOLID ) );
@@ -586,30 +513,96 @@ void FieldPlot::DoPaint(wxDC &_pdc){
 			_dc.DrawArc(x10,y10,x11,y11,o[0],o[1]);
 			_dc.DrawLine(x00,y00,x10,y10);
 			_dc.DrawLine(x01,y01,x11,y11);
-
-			/*gt = wxString::Format("%d",mesh.at(i)->get_array()->size());
-			wxSize gte = _dc.GetTextExtent( gt );
-			double rave = (rr[0]+rr[1])*.5;
-			double tx = rave*sin((azr1+azr0)*.5)*ppm + o[0] - gte.GetWidth()/2;
-			double ty = -rave*cos((azr1+azr0)*.5)*ppm + o[1] - gte.GetHeight()/2;
-			_dc.DrawText(gt, tx, ty);*/
 		}
-		//_dc.SetFont( wxFont(_fontsize, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL) );
-		
+
+		//Draw the clipping rectangles
+		_dc.SetPen(wxPen(white, 1, wxPENSTYLE_TRANSPARENT));
+		_dc.SetBrush(*wxWHITE_BRUSH);
+
+		_dc.DrawRectangle(0, 0, left_buffer, canvsize[1]);
+		_dc.DrawRectangle(0, plotsize[1]+top_buffer+1*ppimult, canvsize[0], bottom_buffer);
+		_dc.DrawRectangle(canvsize[0] - right_buffer, 0, right_buffer, canvsize[1]);
+		_dc.DrawRectangle(0, 0, canvsize[0], 1);
+
+		//Draw the x axis
+		int x_axis_loc = top_buffer + plotsize[1];
+		_dc.SetPen(wxPen(black, 1 * ppimult, wxPENSTYLE_SOLID));
+		_dc.DrawLine(o[0], x_axis_loc, o[0], x_axis_loc + 10 * ppimult);
+		ets = "0";
+		etss = _dc.GetTextExtent(ets);
+		_dc.DrawText(ets, o[0] - etss.GetWidth() / 2, x_axis_loc + 9 * ppimult);
+		ets = "Field position (East+) [m]";
+		etss = _dc.GetTextExtent(ets);
+		_dc.DrawText(ets, o[0] - etss.GetWidth() / 2, x_axis_loc + (15 * ppimult + etss.GetHeight()));
+
+		//estimate the number of divisions
+		ets = my_to_string(int(-fieldsize[0] / 2.));
+		etss = _dc.GetTextExtent(ets);
+		int ndiv = min(int(plotsize[0] * _zoom_fact / (etss.GetWidth()*1.5)), (int)(_zoom_fact * 20));
+		double xscale = calcScale(fieldsize[0], ndiv);
+		double
+			xtickloc = xscale,
+			xtickloc_ppm = xscale*ppm;
+		while (xtickloc < fieldsize[0] / 2.) {
+			//To the right
+			_dc.DrawLine(o[0] + xtickloc_ppm, x_axis_loc, o[0] + xtickloc_ppm, x_axis_loc + 7 * ppimult);
+			string xts = my_to_string(int(xtickloc + .000001));
+			wxSize xte = _dc.GetTextExtent(xts);
+			_dc.DrawText(xts, o[0] + xtickloc_ppm - xte.GetWidth() / 2, x_axis_loc + 9 * ppimult);
+			//To the left
+			_dc.DrawLine(o[0] - xtickloc_ppm, x_axis_loc, o[0] - xtickloc_ppm, x_axis_loc + 7 * ppimult);
+			xts = my_to_string(int(-xtickloc - .000001));
+			xte = _dc.GetTextExtent(xts);
+			_dc.DrawText(xts, o[0] - xtickloc_ppm - xte.GetWidth() / 2, x_axis_loc + 9 * ppimult);
+			xtickloc += xscale;
+			xtickloc_ppm += xscale*ppm;
+		}
+
+		//Draw the y axis
+		_dc.DrawLine(left_buffer - 10 * ppimult, o[1], left_buffer, o[1]);
+		string etsy = "0"; wxSize etssy = _dc.GetTextExtent(etsy);
+		_dc.DrawText(etsy, left_buffer - (etssy.GetWidth() + 10 * ppimult), o[1] - etssy.GetHeight() / 2);
+
+		//Label
+		etsy = "Field position (North+) [m]";
+		etssy = _dc.GetTextExtent(etsy);
+		_dc.DrawRotatedText(etsy, 2, (plotsize[1] + etssy.GetWidth()) / 2., 90.);
+
+		//estimate the number of divisions
+		etsy = my_to_string(int(-fieldsize[1] / 2.));
+		etssy = _dc.GetTextExtent(etsy);
+		int ndivy = min(int(plotsize[0] * _zoom_fact / (etssy.GetHeight()*2.)), (int)(_zoom_fact * 20));
+		double yscale = calcScale(fieldsize[1], ndivy);
+
+		double
+			ytickloc = yscale,
+			ytickloc_ppm = yscale*ppm;
+		while (ytickloc < fieldsize[1] / 2.) {
+			//To the bottom
+			_dc.DrawLine(left_buffer - 7 * ppimult, o[1] + ytickloc_ppm, left_buffer, o[1] + ytickloc_ppm);
+			string yts = my_to_string(int(-ytickloc - .00001));
+			wxSize yte = _dc.GetTextExtent(yts);
+			_dc.DrawText(yts, left_buffer - 10 * ppimult - yte.GetWidth(), o[1] + ytickloc_ppm - yte.GetHeight() / 2);
+
+			//To the top
+			_dc.DrawLine(left_buffer - 7 * ppimult, o[1] - ytickloc_ppm, left_buffer, o[1] - ytickloc_ppm);
+			yts = my_to_string(int(ytickloc + .000001));
+			yte = _dc.GetTextExtent(yts);
+			_dc.DrawText(yts, left_buffer - 10 * ppimult - yte.GetWidth(), o[1] - ytickloc_ppm - yte.GetHeight() / 2);
+
+			ytickloc += yscale;
+			ytickloc_ppm += yscale*ppm;
+		}
 		
 		//Draw the x and y axis lines
 		_dc.SetPen( wxPen( black, 1*ppimult, wxPENSTYLE_DOT ) );
 		_dc.DrawLine(left_buffer, o[1], canvsize[0]-right_buffer, o[1]);	//x line
 		_dc.DrawLine(o[0], top_buffer, o[0], x_axis_loc);	//y line
 
-
 		//Draw the origin
 		_dc.SetPen( wxPen( wxT("black"), 1, wxPENSTYLE_SOLID) );
 		_dc.SetBrush( *wxRED_BRUSH );
 		_dc.DrawCircle( o[0], o[1], 5*ppimult);
-
-
-
 
 	}
 	else if(_option != FIELD_PLOT::LAND && _option != FIELD_PLOT::MESH){	//Field layout geometry
@@ -659,7 +652,7 @@ void FieldPlot::DoPaint(wxDC &_pdc){
                     plot_vals[i] = H->getTotalReflectivity();
                 }
 				else if(_option == FIELD_PLOT::POWER){	// Delivered power
-					plot_vals[i] = H->getPowerToReceiver();
+					plot_vals[i] = H->getPowerToReceiver()/1000.;
 				}
 				else if(_option == FIELD_PLOT::RANK){  //Color by layout ranking metric
 					plot_vals[i] = H->getRankingMetricValue();
@@ -682,7 +675,9 @@ void FieldPlot::DoPaint(wxDC &_pdc){
 		}
 
 		//Specify the plot region size
-		_dc.SetFont( wxFont(_fontsize, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL) );
+		const wxFont base_font = wxFont(_fontsize, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
+		_dc.SetFont( base_font );
+
 		string ets = my_to_string(-int(xsize));	//create a string that is approximately the largest extent on the plot
 		wxSize etss = _dc.GetTextExtent( ets );
 		string maxlab, avelab, minlab;	//Create the gradient bar labels
@@ -807,6 +802,21 @@ void FieldPlot::DoPaint(wxDC &_pdc){
 		}
 		else{	//rectangular
             //int iexc =0;
+
+			//if showing data and we're zoomed in, scale the label font size
+			if (_is_data_visible)
+			{
+				//create a sample label
+				wxSize ext = _dc.GetTextExtent(maxlab);
+				//font scaling factor
+				double label_scale = H->getCollisionRadius()*ppm / ext.GetWidth() * 1.41;
+				int fontsize_scaled = max( (int)(label_scale * _fontsize), 4 );
+
+				//check a sample label size
+				_dc.SetFont(wxFont(fontsize_scaled, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
+				
+			}
+
 			for(int i=0; i<npos; i++){
 				H = heliostats->at(i);
                 double rcoll = H->getCollisionRadius()*ppm;
@@ -846,7 +856,7 @@ void FieldPlot::DoPaint(wxDC &_pdc){
                 //if data is visible and sizes are okay, show text
                 if( _is_data_visible && rcoll > 7. && _option != FIELD_PLOT::LAYOUT)
                 {
-                    wxString labval = to_string(100.*plot_vals[i], labfmt.c_str());
+                    wxString labval = to_string(vmult*plot_vals[i], labfmt.c_str());
                     wxSize ext = _dc.GetTextExtent(labval);
 
                     _dc.SetTextForeground( *wxLIGHT_GREY );
@@ -857,13 +867,14 @@ void FieldPlot::DoPaint(wxDC &_pdc){
 				delete [] yc;
 			}
 		}
+		_dc.SetFont( base_font );
         _dc.SetTextForeground( *wxBLACK );
         //Draw the clipping rectangles
         _dc.SetPen( wxPen( white, 1, wxPENSTYLE_TRANSPARENT) );
         _dc.SetBrush( *wxWHITE_BRUSH );
 
         _dc.DrawRectangle(0, 0, left_buffer, canvsize[1]);
-        _dc.DrawRectangle(0, plotsize[1], canvsize[0]-left_buffer, bottom_buffer);
+        _dc.DrawRectangle(0, plotsize[1], canvsize[0], bottom_buffer);
         _dc.DrawRectangle(canvsize[0]-right_buffer, 0, right_buffer, canvsize[1]);
         _dc.DrawRectangle(0, 0, canvsize[0], 1);
 
