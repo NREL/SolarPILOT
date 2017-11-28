@@ -11,7 +11,7 @@ sam_license = \
 *  Copyright 2017 Alliance for Sustainable Energy, LLC
 *
 *  NOTICE: This software was developed at least in part by Alliance for Sustainable Energy, LLC
-*  (“Alliance”) under Contract No. DE-AC36-08GO28308 with the U.S. Department of Energy and the U.S.
+*  ("Alliance") under Contract No. DE-AC36-08GO28308 with the U.S. Department of Energy and the U.S.
 *  The Government retains for itself and others acting on its behalf a nonexclusive, paid-up,
 *  irrevocable worldwide license in the software to reproduce, prepare derivative works, distribute
 *  copies to the public, perform publicly and display publicly, and to permit others to do so.
@@ -35,8 +35,8 @@ sam_license = \
 *  4. Redistribution of this software, without modification, must refer to the software by the same
 *  designation. Redistribution of a modified version of this software (i) may not refer to the modified
 *  version by the same designation, or by any confusingly similar designation, and (ii) must refer to
-*  the underlying software originally provided by Alliance as “System Advisor Model” or “SAM”. Except
-*  to comply with the foregoing, the terms “System Advisor Model”, “SAM”, or any confusingly similar
+*  the underlying software originally provided by Alliance as "System Advisor Model" or "SAM". Except
+*  to comply with the foregoing, the terms "System Advisor Model", "SAM", or any confusingly similar
 *  designation may not be used to refer to any modified version of this software or any modified
 *  version of the underlying software originally provided by Alliance without the prior written consent
 *  of Alliance.
@@ -252,6 +252,23 @@ var_map::var_map( var_map &vc )
 
 void var_map::copy( var_map &vc )
 {
+    //to copy, we need to make sure the template structures for heliostats and receivers are
+    //parallel between both varmaps first. Then copy by iterating over the list of strings in
+    //the varmap and set the corresponding object values in each map.
+
+    //receiver templates
+    for( size_t i=0; i<recs.size(); i++ )
+        drop_receiver(i);
+    for( size_t i=0; i<vc.recs.size(); i++ )
+        add_receiver( vc.recs.at(i).id.val );
+
+    //heliostat templates
+    for( size_t i=0; i<hels.size(); i++ )
+        drop_heliostat(i);
+    for( size_t i=0; i<vc.hels.size(); i++ )
+        add_heliostat( vc.hels.at(i).id.val );
+
+    //now add by string->obj
     for( unordered_map< std::string, spbase* >::iterator var=_varptrs.begin(); var!=_varptrs.end(); var++ )
         var->second->set_from_string( vc._varptrs.at( var->first )->as_string().c_str() );
     
@@ -412,7 +429,7 @@ void var_map::drop_receiver(int id)
 {
     //find the receiver in the list
     int id_ind=-1;
-    for( int i=0; i<recs.size(); i++)
+    for( int i=0; i<(int)recs.size(); i++)
     {
         if( recs.at(i).id.val == id )
         {
@@ -443,7 +460,7 @@ void var_map::drop_receiver(int id)
     recs.erase( recs.begin() + id_ind );
 
     //add back all receiver pointers
-    for(int i=0; i<recs.size(); i++)
+    for(int i=0; i<(int)recs.size(); i++)
     {
         recs.at(i).addptrs(_varptrs);
     }    
@@ -453,7 +470,7 @@ void var_map::drop_heliostat(int id)
 {
     //find the heliostat in the list
     int id_ind=-1;
-    for( int i=0; i<hels.size(); i++)
+    for( int i=0; i<(int)hels.size(); i++)
     {
         if( hels.at(i).id.val == id )
         {
@@ -484,7 +501,7 @@ void var_map::drop_heliostat(int id)
     hels.erase( hels.begin() + id_ind );
 
     //add back all heliostat pointers
-    for(int i=0; i<hels.size(); i++)
+    for(int i=0; i<(int)hels.size(); i++)
     {
         hels.at(i).addptrs(_varptrs);
     }

@@ -234,7 +234,7 @@ heliostat	cant_radius	OUT	DOUBLE	1000	m	FALSE				Canting radius	Radius for canti
 heliostat	cant_sun_az	OUT	DOUBLE	0	deg	FALSE				Sun azimuth at canting	Sun azimuth angle at the moment the cant panels are focused on the receiver
 heliostat	cant_sun_el	OUT	DOUBLE	0	deg	FALSE				Sun elevation at canting	Sun elevation angle at the moment the cant panels are focused on the receiver
 heliostat	err_total	OUT	DOUBLE	0	rad	FALSE				Total reflected image error	Total convolved optical error in the reflected beam from the above sources
-heliostat	r_collision	OUT	DOUBLE	0	m	FALSE				Heliostat footprint diameter	Heliostat reflector maximum footprint diameter
+heliostat	r_collision	OUT	DOUBLE	0	m	FALSE				Heliostat collision radius	Distance between heliostat center and maximum radial extent of structure
 heliostat	ref_total	OUT	DOUBLE	0	none	FALSE				Total optical reflectance	Effective reflectance - product of the mirror reflectance and soiling
 land	class_name	IN	STRING	Land	none	FALSE				Class name	Class name
 land	exclusions	IN	DVEC_POINT			FALSE				exclusions	Vector of arrays that specify the regions of land to exclude in the heliostat layout
