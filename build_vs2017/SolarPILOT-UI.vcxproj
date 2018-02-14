@@ -56,7 +56,6 @@
     <ClCompile Include="..\src\GUI_OptimizationPage.cpp" />
     <ClCompile Include="..\src\GUI_ParametricSimulationPage.cpp" />
     <ClCompile Include="..\src\GUI_PerformanceSimulationPage.cpp" />
-    <ClCompile Include="..\src\GUI_PlantPage.cpp" />
     <ClCompile Include="..\src\GUI_PlotFieldPage.cpp" />
     <ClCompile Include="..\src\GUI_PlotFluxPage.cpp" />
     <ClCompile Include="..\src\GUI_ReceiverPage.cpp" />

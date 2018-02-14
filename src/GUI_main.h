@@ -135,7 +135,6 @@ enum{
 	ID_ICON_HELIOSTAT,
 	ID_ICON_RECEIVER_FOLDER,
 	ID_ICON_RECEIVER,
-	ID_ICON_PLANT,
 	ID_ICON_RESULTS,
 	ID_ICON_SOLTRACE,
 	ID_ICON_FLUX,
@@ -182,7 +181,6 @@ struct PageNames
 		layout_control,
 		heliostat_master,
 		receiver_master,
-		plant,
 		simulations,
 		simulations_layout,
 		simulations_performance,
@@ -481,7 +479,6 @@ private:
 	void CreateMarketPage(wxScrolledWindow *parent);
 	void CreateCostPage(wxScrolledWindow *parent);
 	void CreateLayoutPage(wxScrolledWindow *parent);
-	void CreatePlantPage(wxScrolledWindow *parent);
 	void CreateFieldPlotPage(wxScrolledWindow *parent, wxArrayStr &choices, int selection = 0);
 	void CreateFluxPlotPage(wxScrolledWindow *parent);
 	void CreateSimulationsPage(wxScrolledWindow *parent);

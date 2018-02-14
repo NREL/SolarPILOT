@@ -26,7 +26,6 @@ financial	fixed_cost	IN	DOUBLE	0	$	FALSE				Fixed cost	Cost that does not scale 
 financial	heliostat_spec_cost	IN	DOUBLE	145	$/m2	TRUE				Heliostat field	Cost per square meter of heliostat aperture area of the heliostat field
 financial	is_pmt_factors	IN	BOOL	FALSE		FALSE	checkbox			Enable payment weighting factors	Enable or disable the use of weighting factors in determining field layout
 financial	land_spec_cost	IN	DOUBLE	10000	$/acre	TRUE				Land cost per acre	Cost of land per acre including the footprint of the land occupied by the entire plant.
-financial	plant_spec_cost	IN	DOUBLE	1440	$/kWe	TRUE				Power block and plant 	Cost of the power block and balance of plant equipment per kilowatt (electric) gross design power
 financial	pmt_factors	IN	VEC_DOUBLE	2.064,1.2,1,1.1,0.8,0.7,1,1,1	none	FALSE				Payment allocation factors	Relative value of electricity produced during this period compared to the average
 financial	rec_cost_exp	IN	DOUBLE	0.7	none	TRUE				Receiver cost scaling exponent	Exponent in the equation (total cost) = (ref. cost) * ( (area) / (ref. area) ) ^ X
 financial	rec_ref_area	IN	DOUBLE	1571	m2	TRUE				Receiver reference area	Receiver surface area corresponding to the receiver reference cost
@@ -34,23 +33,19 @@ financial	rec_ref_cost	IN	DOUBLE	103000000	$	TRUE				Receiver reference cost	Cos
 financial	sales_tax_frac	IN	DOUBLE	80	%	TRUE				Sales tax rate portion	Fraction of the direct capital costs for which sales tax applies
 financial	sales_tax_rate	IN	DOUBLE	5	%	TRUE				Sales tax rate	Sales tax rate applid to the total direct capital cost
 financial	site_spec_cost	IN	DOUBLE	16	$/m2	TRUE				Site improvements	Cost per square meter of heliostat aperture area of site improvements
-financial	tes_spec_cost	IN	DOUBLE	24	$/kWht	TRUE				Thermal storage	Cost of thermal storage per kilowatt hour (thermal) capacity
 financial	tower_exp	IN	DOUBLE	0.0113	none	TRUE				Tower cost scaling exponent	Exponent in the equation (total cost) = (fixed cost) * exp( X * (tower height) )
 financial	tower_fixed_cost	IN	DOUBLE	3.00E+06	$	TRUE				Fixed tower cost	Fixed tower cost - used as the basis for scaling tower cost as a function of height
 financial	weekday_sched	IN	STRING	666666554444444444444555666666554444444444444555666666554444444444444555666666554444444444444555666666554444444444444555333333332222111111222333333333332222111111222333333333332222111111222333333333332222111111222333666666554444444444444555666666554444444444444555666666554444444444444555		FALSE				Weekday dispatch period schedule	Weekday dispatch period schedule
 financial	weekend_sched	IN	STRING	666666555555555555555555666666555555555555555555666666555555555555555555666666555555555555555555666666555555555555555555333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333666666555555555555555555666666555555555555555555666666555555555555555555		FALSE				Weekend dispatch period schedule	Weekend dispatch period schedule
 financial	wiring_user_spec	IN	DOUBLE	0	$/m2	TRUE				Wiring specific cost	Cost of wiring per square meter of heliostat aperture area
 financial	contingency_cost	OUT	DOUBLE	0	$	FALSE				Contingency cost	Contingency cost
-financial	cost_per_capacity	OUT	DOUBLE	0	$/kWe	FALSE				Estimated cost per capacity (net)	Estimated capital cost per capacity (net)
 financial	heliostat_cost	OUT	DOUBLE	0	$	FALSE				Heliostat field cost	Heliostat field cost
 financial	land_cost	OUT	DOUBLE	0	$	FALSE				Land cost	Land cost
-financial	plant_cost	OUT	DOUBLE	0	$	FALSE				Power block and plant cost	Cost of the power block and balance of plant equipment
 financial	pricing_array	OUT	VEC_DOUBLE	0	none	FALSE				Time series schedule of price multipliers	Yearly time series schedule of price multipliers to incentivize electricity sales at particular times
 financial	rec_cost	OUT	DOUBLE	0	$	FALSE				Receiver cost	Receiver cost
 financial	sales_tax_cost	OUT	DOUBLE	0	$	TRUE				Sales tax cost	Sales tax cost
 financial	schedule_array	OUT	VEC_INTEGER	0	none	FALSE				Time series schedule of TOU periods	Yearly time series schedule of TOU periods
 financial	site_cost	OUT	DOUBLE	0	$	FALSE				Site improvements cost	Site improvements cost
-financial	tes_cost	OUT	DOUBLE	0	$	FALSE				Thermal storage cost	Thermal storage cost
 financial	total_direct_cost	OUT	DOUBLE	0	$	FALSE				Total direct cost	Sum of all direct costs
 financial	total_indirect_cost	OUT	DOUBLE	0	$	FALSE				Total indirect cost	Sum of all indirect costs
 financial	total_installed_cost	OUT	DOUBLE	0	$	FALSE				Total installed cost	Sum of direct and indirect costs
@@ -215,13 +210,6 @@ parametric	upar_save_summary	IN	BOOL	FALSE	none	FALSE	checkbox			Save performanc
 parametric	sam_out_dir	IN	STRING			FALSE				Output directory	Output directory
 parametric	user_par_values	IN	STRING		none	FALSE				User parametric values	User parametric values
 parametric	sam_grid_format	IN	STRING	0	none	FALSE	combo	Auto spacing=0;Even grid=1		SAM data grid format	SAM data grid format
-plant	class_name	IN	STRING	Power Cycle and BOP	none	FALSE				Class name	Class name
-plant	eta_cycle	IN	DOUBLE	0.412	none	TRUE				Rated cycle conversion efficiency	Thermodynamic efficiency of the power cycle, including feedwater pumps and cooling equipment parasitics
-plant	hours_tes	IN	DOUBLE	10	hr	TRUE				Hours of full-load thermal storage	Capacity of Hours of thermal storage operation at full cycle output
-plant	par_factor	IN	DOUBLE	0.87	none	TRUE				Estimated gross to net conversion factor	Estimated ratio of net power output to gross power output at design
-plant	solar_mult	IN	DOUBLE	2.4	none	TRUE				Solar multiple	Ratio of thermal power output from the solar field to power cycle thermal input at design
-plant	power_gross	OUT	DOUBLE	115	MWe	FALSE				Design turbine gross output	Rated nameplate design gross turbine electric output, not accounting for parasitic losses
-plant	power_net	OUT	DOUBLE	100	MWe	FALSE				Estimated net output at design	Estimated net electric power at design, accounting for all parasitic losses
 receiver	absorptance	IN	DOUBLE	0.94	none	TRUE				Receiver thermal absorptance	Energy absorbed by the receiver surface before accounting for radiation/convection losses
 receiver	accept_ang_type	IN	STRING	0	none	TRUE	combo	Rectangular=0;Elliptical=1		Receiver acceptance angles shape	Receiver angular acceptance window defines angles about the aperture normal, can be rectangular or elliptical shape
 receiver	accept_ang_x	IN	DOUBLE	180	deg	TRUE				Receiver horizontal acceptance angle	Acceptance angle of the receiver in the horizontal direction (in aperture coordinates)

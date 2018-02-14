@@ -429,7 +429,6 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
 	_imageList->Add( wxIcon((string)(impath+"Heliostat-32x32.ico"), wxBITMAP_TYPE_ICO) );
 	_imageList->Add( wxIcon((string)(impath+"ReceiverFolder.ico"), wxBITMAP_TYPE_ICO) );
 	_imageList->Add( wxIcon((string)(impath+"Receiver.ico"), wxBITMAP_TYPE_ICO) );
-	_imageList->Add( wxIcon((string)(impath+"Plant.ico"), wxBITMAP_TYPE_ICO) );
 	_imageList->Add( wxIcon((string)(impath+"Results.png"), wxBITMAP_TYPE_PNG) );
 	_imageList->Add( wxIcon((string)(impath+"soltrace.ico"), wxBITMAP_TYPE_ICO) );
 	_imageList->Add( wxIcon((string)(impath+"flux.ico"), wxBITMAP_TYPE_ICO) );
@@ -477,7 +476,6 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
 	pageNames.climate = "Climate";
 	pageNames.markets = "Markets";
 	pageNames.costs = "Costs";
-	pageNames.plant = "Plant";
 	pageNames.layout_control = "Layout Setup";
 	pageNames.heliostat_master = "Heliostats";
 	pageNames.receiver_master =  "Receivers";
@@ -634,10 +632,6 @@ void SPFrame::CreateInputPages(wxWindow *parent, PagePanel *pagepanel){
 	wxScrolledWindow *costs_page = new wxScrolledWindow(parent);
 	CreateCostPage( costs_page );
 	pagepanel->AddPage( costs_page, pageNames.costs, ID_ICON_COST );
-	//Plant page
-	wxScrolledWindow *plant_page = new wxScrolledWindow(parent);
-	CreatePlantPage( plant_page );
-	pagepanel->AddPage( plant_page, pageNames.plant, ID_ICON_PLANT );
 	//Solar field layout page
 	wxScrolledWindow *layout_page = new wxScrolledWindow(parent);
 	CreateLayoutPage( layout_page );
@@ -1301,9 +1295,6 @@ void SPFrame::ShowContextHelp(){
 	}
 	else if(page == pageNames.costs){
 		topic_map = "Costs";
-	}
-	else if(page == pageNames.plant){
-		topic_map = "Plant";
 	}
 	else if(page == pageNames.layout_control){
 		topic_map = "LayoutSetup";

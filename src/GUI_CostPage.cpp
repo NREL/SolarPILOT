@@ -21,8 +21,6 @@ void SPFrame::CreateCostPage(wxScrolledWindow *parent){
 		*heliostat_spec_cost = new InputControl(parent, wxID_ANY,  _variables.fin.heliostat_spec_cost);
 	InputControl
 		*wiring_user_spec = new InputControl(parent, wxID_ANY,  _variables.fin.wiring_user_spec),
-		*plant_spec_cost = new InputControl(parent, wxID_ANY,  _variables.fin.plant_spec_cost),
-		*tes_spec_cost = new InputControl(parent, wxID_ANY,  _variables.fin.tes_spec_cost),
 		*fixed_cost = new InputControl(parent, wxID_ANY,  _variables.fin.fixed_cost);
 	
 	OutputControl
@@ -32,8 +30,6 @@ void SPFrame::CreateCostPage(wxScrolledWindow *parent){
         *heliostat_area = new OutputControl(parent, wxID_ANY, _variables.sf.sf_area),
 		*heliostat_cost = new OutputControl(parent, wxID_ANY, _variables.fin.heliostat_cost),
 		*wiring_cost = new OutputControl(parent, wxID_ANY, _variables.fin.wiring_cost),
-		*plant_cost = new OutputControl(parent, wxID_ANY, _variables.fin.plant_cost),
-		*tes_cost = new OutputControl(parent, wxID_ANY, _variables.fin.tes_cost),
 		*total_direct_cost = new OutputControl(parent, wxID_ANY, _variables.fin.total_direct_cost);
 
 	wxFlexGridSizer *sbs0gs = new wxFlexGridSizer(2,0,0);
@@ -55,10 +51,6 @@ void SPFrame::CreateCostPage(wxScrolledWindow *parent){
 	sbs0gs->Add(heliostat_cost);
 	sbs0gs->Add(wiring_user_spec);
 	sbs0gs->Add(wiring_cost, 0, wxALIGN_BOTTOM, 0);
-	sbs0gs->Add(plant_spec_cost);
-	sbs0gs->Add(plant_cost);
-	sbs0gs->Add(tes_spec_cost);
-	sbs0gs->Add(tes_cost);
 	sbs0gs->Add((1,1),0,0,0);
 	sbs0gs->Add(fixed_cost);
 	sbs0->Add(sbs0gs);
@@ -107,17 +99,13 @@ void SPFrame::CreateCostPage(wxScrolledWindow *parent){
 	wxStaticBox *sb2 = new wxStaticBox(parent, wxID_ANY, "Total Installed Costs" );
 	wxStaticBoxSizer *sbs2 = new wxStaticBoxSizer(sb2, wxVERTICAL);
 
-	OutputControl
-		*total_installed_cost = new OutputControl(parent, wxID_ANY, _variables.fin.total_installed_cost),
-		*cost_per_capacity = new OutputControl(parent, wxID_ANY, _variables.fin.cost_per_capacity );
+	OutputControl *total_installed_cost = new OutputControl(parent, wxID_ANY, _variables.fin.total_installed_cost);
 	string msg = "The total installed cost does not include financing or OM costs.";
 	wxStaticText *st = new wxStaticText(parent, wxID_ANY, msg, wxDefaultPosition, _default_input_size);
 	st->SetForegroundColour(_helptext_colour);
 	wxFlexGridSizer *sbs2gs = new wxFlexGridSizer(2, 0, 0);
 	sbs2gs->Add(st);
 	sbs2gs->Add(total_installed_cost);
-	sbs2gs->Add((1,1), 0, 0, 0);
-	sbs2gs->Add(cost_per_capacity);
 	sbs2->Add(sbs2gs);
 
 	//Layout
@@ -130,14 +118,14 @@ void SPFrame::CreateCostPage(wxScrolledWindow *parent){
 
 	//Add to input and output maps
 	InputControl *inputs[] = {tower_fixed_cost, tower_exp, rec_ref_cost, rec_ref_area, rec_cost_exp, site_spec_cost,
-							  heliostat_spec_cost, wiring_user_spec, plant_spec_cost, tes_spec_cost, fixed_cost, 
+							  heliostat_spec_cost, wiring_user_spec, fixed_cost, 
 							  land_mult, land_const, land_spec_cost, contingency_rate, sales_tax_rate, sales_tax_frac, NULL};
 	int i=0;
 	while(inputs[i] != NULL){ _input_map[ inputs[i]->getVarObject() ] = inputs[i]; i++; }
 	i=0;
-	OutputControl *outputs[] = {tower_cost, rec_cost, site_cost, heliostat_cost, wiring_cost, plant_cost, tes_cost, bound_area, 
+	OutputControl *outputs[] = {tower_cost, rec_cost, site_cost, heliostat_cost, wiring_cost, bound_area, 
 								land_area_tot, land_cost, contingency_cost, sales_tax_cost, total_direct_cost, total_indirect_cost, 
-								total_installed_cost, cost_per_capacity, heliostat_area, NULL};
+								total_installed_cost, heliostat_area, NULL};
 	while(outputs[i] != NULL){ _output_map[ outputs[i]->getVarObject() ] = outputs[i]; i++; }
 
 	//Set properties

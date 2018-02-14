@@ -120,7 +120,6 @@ void par_variables_dialog::SetItems(var_map *V, int type_filter){
     class_map["land"] = V->land.class_name.val;
     class_map["optimize"] = V->opt.class_name.val;
     class_map["parametric"] = V->par.class_name.val;
-    class_map["plant"] = V->plt.class_name.val;
     class_map["receiver"] = V->recs[0].class_name.val;
     class_map["solarfield"] = V->sf.class_name.val;
 
