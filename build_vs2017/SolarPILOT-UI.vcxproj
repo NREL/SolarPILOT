@@ -43,7 +43,6 @@
     <ClInclude Include="..\src\settings_dialog.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\Custom\CustomReceiverWindow.cpp" />
     <ClCompile Include="..\src\FieldPlot.cpp" />
     <ClCompile Include="..\src\FluxPlot.cpp" />
     <ClCompile Include="..\src\gui_about_dialog.cpp" />

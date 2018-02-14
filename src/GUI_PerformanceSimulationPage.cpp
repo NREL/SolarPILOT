@@ -444,11 +444,6 @@ void SPFrame::SolTraceFileExport(string fname){
     Vect sun = Ambient::calcSunVectorFromAzZen( _variables.flux.flux_solar_az.Val() * D2R, (90. - _variables.flux.flux_solar_el.Val())*D2R );
 	STSim.CreateSTSystem(_SF, helios, sun);
 	
-#if _CUSTOM_REC == 1
-	if(_variables["custom_rec"][0]["enable_custom"].value_bool())
-		CreateNBBGeometry(_SF, _variables["custom_rec"][0], STSim);		//Add receiver geometry to exported system
-#endif
-
 	FILE *fout = fopen(fname.c_str(), "w");
 	if(! fout )
     {

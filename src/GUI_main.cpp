@@ -304,23 +304,12 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
 	_spin_ctrl_size = wxSize(50,25);
 	_grid_but_size = wxSize(100,25);
 	
-	//Connect on close event
-	//Connect(ID_SPFRAME_WINDOW, wxEVT_CLOSE_WINDOW, wxCloseEventHandler( SPFrame::OnClose ));
-
-	//First: open, parse, and use the variable definitions file to set up variable structure
-	//ioutil::parseDefinitionFile((string)(_install_dir+"exelib\\var\\variable_definitions.dat"), _definitions);
-//#if _CUSTOM_REC == 0
-//	ioutil::parseDefinitionArray(_definitions, "custom_rec");
-//#else
-//	ioutil::parseDefinitionArray(_definitions);
-//#endif
     _variables.reset();
 
 	//Set the No. of CPU's. This should carry through each time the solar field is created
 	//_definitions["solarfield"][0]["n_cpu"].value = _gui_settings["ncpu"].value;
 	//_variables = _definitions;	//Keep a copy of the default variable definitions around for data copying.
 	//InitializeHelioTemplates();     //load _heliotemp_info structure from var_set
-
 	
 
 	//Create the simulation progress timer and connect it to a timer event
@@ -574,11 +563,6 @@ SPFrame &SPFrame::Instance()
 SPFrame::~SPFrame()
 {
     g_mainWindow = 0;
-#if _CUSTOM_REC == 1
-    for(int i=0; i<(int)_all_panels.size(); i++)
-        delete _all_panels[i];
-
-#endif
 }
 
 bool SPFrame::CheckLicense(){
@@ -670,11 +654,6 @@ void SPFrame::CreateInputPages(wxWindow *parent, PagePanel *pagepanel){
 	pagepanel->AddPage( m_receiver_page, pageNames.receiver_master, ID_ICON_RECEIVER_FOLDER );
     UpdateReceiverUITemplates();
 
-#if _CUSTOM_REC == 1
-	wxScrolledWindow *custom_receiver_page = new wxScrolledWindow(parent);
-	CreateCustomReceiverPage(custom_receiver_page);
-	pagepanel->AddPage( custom_receiver_page, "Custom Receiver", ID_ICON_RECEIVER);
-#endif
 	//Simulations page
 	wxScrolledWindow *sim_page = new wxScrolledWindow(parent);
 	CreateSimulationsPage( sim_page );
@@ -1118,13 +1097,7 @@ void SPFrame::NewFile(){
 
 	SetCaseName( "New file" );	//Update the displayed case name 
 
-//	//Use the variable definitions file to set up variable structure
-//#if _CUSTOM_REC == 0
-//	ioutil::parseDefinitionArray(_variables, "custom_rec");
-//#else
-//	ioutil::parseDefinitionArray(_variables);
-//#endif
-//	InitializeHelioTemplates();     //load _heliotemp_info structure from var_set
+	//Use the variable definitions file to set up variable structure
     _variables.reset();
     _par_data.clear();
     _opt_data.clear();
@@ -1132,7 +1105,6 @@ void SPFrame::NewFile(){
 	//Initialize the solar field geometry objects
 	_SF.Create(_variables);
 	
-    //Freeze();
 	//Destroy the notebook and recreate
 	_page_panel->DestroyPages();
     CreateInputPages(this, _page_panel);
@@ -1637,9 +1609,6 @@ void SPFrame::UpdateCalculatedGUIValues(){
 	
 	//First update the map values that are used in setting the GUI values
 	//interop::UpdateCalculatedMapValues(_variables);
-//#if _CUSTOM_REC == 1
-	//CustomRec_UpdateCalculatedMapValues(_variables);
-//#endif
     _SF.updateAllCalculatedParameters(_variables);
 
 	//Anything that triggers this subroutine would also prompt for saved changes
@@ -2195,11 +2164,6 @@ bool SPFrame::SolTraceFluxSimulation(SolarField &SF, var_map &vset, Hvector &hel
 	_STSim = new ST_System;
 	//wxLogMessage((wxString)("Creating STSim object"));
 	_STSim->CreateSTSystem(SF, helios, sun);
-#if _CUSTOM_REC == 1
-	//wxLogMessage((wxString)("Creating custom geometry"));
-	if(vset.custom_rec.enable_custom.val)
-		CreateNBBGeometry(SF, vset["custom_rec"][0], STSim);
-#endif
 
 	minrays = _STSim->sim_raycount;
 	maxrays = _STSim->sim_raymax;
@@ -2389,18 +2353,6 @@ bool SPFrame::SolTraceFluxSimulation(SolarField &SF, var_map &vset, Hvector &hel
 	
 
 	bool skip_receiver = false;
-#if _CUSTOM_REC == 1
-	if(vset.custom_rec.enable_custom.val){
-		CustomProcessRayData(STSim, vset, hitx, hity, hitz, emap, smap, rnum, nint, dqray);
-		//hold on to the flux result
-		stat_object ftemp = results.back().flux_density;
-		//Process the results
-		bounds[4] = (float)nsunrays;
-		results.back().process_raytrace_simulation(SF, 2, helios, dqray, emap, smap, rnum, nint, bounds);	
-		results.back().flux_density = ftemp;
-		skip_receiver=true;
-	}
-#endif
 
 	if(! skip_receiver){
 
@@ -3402,9 +3354,6 @@ void SPFrame::ParametricSimulate( parametric &P ){
 		//wxLogMessage((wxString)("Variable setup complete "+my_to_string(nsim)));
 		//Update the calculated values in the variable map
 //		interop::UpdateCalculatedMapValues(vset);
-//#if _CUSTOM_REC == 1
-//		CustomRec_UpdateCalculatedMapValues(vset);
-//#endif
         //_par_SF.updateAllCalculatedParameters(vset);
 
 		//void (SPFrame::*pt2update)(simulation_info* siminfo) = &SPFrame::SimProgressUpdate;

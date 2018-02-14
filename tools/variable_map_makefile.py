@@ -106,8 +106,6 @@ fdh.write( \
 //Enumeration of data columns in the variable map file
 
 
-//Custom module settings
-#define _CUSTOM_REC %d		//If using custom geometry functions in the CustomReceiverWindow, define 1
 //Sandbox mode
 #define _SANDBOX 0
 //demo only

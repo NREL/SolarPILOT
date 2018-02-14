@@ -490,34 +490,6 @@ private:
 	void CreateSimulationsParametricsTab(wxScrolledWindow *parent);
 	void CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &results);
 	void CreateOptimizationPage(wxScrolledWindow *parent);
-#if _CUSTOM_REC == 1
-	enum TUBE_MATERIAL {HAYNES_230, STAINLESS_316};
-	enum CIRC_PROFILE {SINUSOIDAL, SQUARE};
-	enum DESIGN_LOCATION {PEAK_FLUX, CIRC_DELTA};
-	enum QUALITY_METHOD {GLOBAL, LOCAL_PANEL, LOCAL_HEADER};
-	enum QUALITY_BASIS {AVERAGE, MEDIAN, PEAK, TUBE_DESIGN, SPECIFIED};
-	enum HEADER_DOMAIN {HALF_ADJACENT, FULL_ADJACENT, UNIT_SURFACE};
-	void CreateCustomReceiverPage(wxScrolledWindow *parent);
-	void CustomRec_UpdateCalculatedMapValues(var_set &vset);
-	void CreateNBBGeometry(SolarField &SF, var_map &varmap, ST_System &ST);
-	void CustomProcessRayData(ST_System &ST, var_set &vset, double *xhits, double *yhits, double *zhits, int *emap, int *smap, int *rnum, int nrays, double qray);	
-	void UpdateProcessResults(int nout, int ntot, wxString msg);
-	void CalculateFluxStatistics(vector<ST_FluxObj> &fmaps, stat_object &flux_density);
-	struct panel_pair;
-	struct panel_set;
-    struct flow_path;
-    vector<panel_set*> _all_panels;
-    //void CalculateFlowPathProfiles(var_set &vset, vector<panel_set> &panels, vector<flow_path> &fpaths );
-    void CalculateFluxProfiles(vector<panel_set*> &panels);
-	void CalculateFluxQuality(var_set &vset, vector<panel_set*> &panels, wxString result_dir);
-	void CalculatePanelLinkages(vector<ST_FluxObj> &fmaps, var_set &vset, vector<panel_set*> &panels);
-	double SpecheatCO2(double T /*deg K*/);
-	void LocateTubeDesignPoint(int design_location, vector<panel_set*> &panels, int &ipanel, int &inode);
-	bool AbsorberDesign(var_set &vset, vector<panel_set*> &panels, wxString result_dir);
-	void SimulateTubePerformanceEES(var_set &vset, vector<panel_set*> &panels, wxString result_dir);
-	void CreateFluxResultsWindow(var_set &vset, wxString result_dir);
-	void OnTubeResView( wxCommandEvent &event );
-#endif
 #if _SANDBOX == 1
 	bool Sandbox();
 #endif

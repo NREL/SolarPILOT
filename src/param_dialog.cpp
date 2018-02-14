@@ -114,9 +114,6 @@ void par_variables_dialog::SetItems(var_map *V, int type_filter){
 
     unordered_map<string, string> class_map;
     class_map["ambient"] = V->amb.class_name.val;
-#if _CUSTOM_REC
-    class_map["custom_rec"] = V->crec.class_name.val;
-#endif
     class_map["financial"] = V->fin.class_name.val;
     class_map["fluxsim"] = V->flux.class_name.val;
     class_map["heliostat"] = V->hels[0].class_name.val;
