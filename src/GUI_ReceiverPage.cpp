@@ -103,11 +103,6 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     sbs0->Add(is_polygon);
     sbs0->Add(n_panels);
     sbs0->Add(panel_rotation);
-    
-    
-
-    /*wxStaticLine *sl1 = new wxStaticLine(parent, wxID_ANY, wxDefaultPosition, wxSize(1,1), wxHORIZONTAL);
-    sbs0->Add(sl1, 0, wxEXPAND|wxALL, 5);*/
 
     //receiver diameter 
     InputControl 
@@ -167,13 +162,13 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     sbs0->Add(rec_aspect);
     sbs0->Add(absorber_area);
     {
-    wxWindow* dsibs[] = {rec_cav_rad, rec_cav_cdepth, is_polygon, n_panels, span_min, span_max};
-    rec_type->setDisabledSiblings("Flat plate", 6, dsibs);
+		wxWindow* dsibs[] = {rec_cav_rad, rec_cav_cdepth, is_polygon, n_panels, span_min, span_max};
+		rec_type->setDisabledSiblings("Flat plate", 6, dsibs);
     }
 
     {
-    wxWindow* dsibs[] = {span_min, span_max};
-    rec_type->setDisabledSiblings("External cylindrical", 2, dsibs);
+		wxWindow* dsibs[] = {span_min, span_max};
+		rec_type->setDisabledSiblings("External cylindrical", 2, dsibs);
     }
 
     rec_type->updateInputDisplay();
@@ -191,8 +186,6 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
         
     OutputControl
         *optical_height = new OutputControl(parent, wxID_ANY, _variables.recs[id].optical_height); 
-    //is_open_geom->setDisabledSiblings("false",to_varpath("receiver",id,"span_min")+";"+to_varpath("receiver",id,"span_max"));  //removed because this is forcing cavity receivers to block out span limits
-
 
     //informational text
     msg = "Receiver position offset is relative to the tower location {x=0 + x_offset,\n"
@@ -225,8 +218,8 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
 
     wxStaticText *hll_lab = new wxStaticText(parent, wxID_ANY, _variables.recs[id].therm_loss_load.short_desc );
     wxFlexGridSizer *hll_gs = new wxFlexGridSizer(3,1,5);
-    //vector<string> hlt_coef_defs = split(_variables.recs[id].therm_loss_load.val, ",");
-    //set the variable map value equal to the first set
+    
+	//set the variable map value equal to the first set
     int ncoefs = _variables.recs[id].therm_loss_load.val.ncells();
     wxString nsuf = wxT("thstndrdththththththththth");
     vector<wxStaticText*> hlt_coef_labs(ncoefs);
@@ -557,7 +550,6 @@ void SPFrame::OnReceiverDel( wxCommandEvent &WXUNUSED(event))
                             inswap_map[ thisname ] = it->second;
                         }
                         //remove all heliostat entries from input map
-                        //it = _input_map.erase( it );
                         _input_map.erase(it++);
                     }
                     else
@@ -685,7 +677,6 @@ void SPFrame::OnReceiverRename( wxCommandEvent &WXUNUSED(event))
 {
     /* Rename the selected receiver */
 
-    //int nitems = _rec_config->GetItemCount();
     int sel=-1;
 
     sel = _rec_config->GetNextItem(sel, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);

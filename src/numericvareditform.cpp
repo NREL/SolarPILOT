@@ -1,8 +1,5 @@
 #include "numericvareditform.h"
 
-/*user.global.start*/
-//#include "sammdi.h"
-/*user.global.end*/
 enum {
   ID_GroupBox1=6108,
   ID_GroupBox2=6109,
@@ -22,10 +19,10 @@ enum {
   ID_Label1=6123,
   ID_numIncr=6124,
   ID_numEnd=6125,
-  ID_numStart=6126 };
+  ID_numStart=6126 
+};
 
 BEGIN_EVENT_TABLE( NumericVarEditForm, wxPanel )
-    /*user.eventtable.start*/
     EVT_BUTTON( ID_cmdAddAfter, NumericVarEditForm::OnCommand)
     EVT_BUTTON( ID_cmdAddBefore, NumericVarEditForm::OnCommand)
     EVT_BUTTON( ID_cmdMoveUp, NumericVarEditForm::OnCommand)
@@ -36,7 +33,6 @@ BEGIN_EVENT_TABLE( NumericVarEditForm, wxPanel )
     EVT_TEXT_ENTER( ID_numEnd, NumericVarEditForm::OnCommand)
     EVT_TEXT_ENTER( ID_numIncr, NumericVarEditForm::OnCommand)
     EVT_LISTBOX_DCLICK( ID_lstValues, NumericVarEditForm::OnCommand)
-    /*user.eventtable.end*/
 END_EVENT_TABLE()
 
 wxString IntToStr(int val)
@@ -52,8 +48,6 @@ wxString FloatToStr(double val)
 NumericVarEditForm::NumericVarEditForm(wxWindow *parent, int id)
      : wxPanel( parent, id )
 {
-/*user.klsinit.start*/
-/*user.klsinit.end*/
     SetClientSize( 486, 323 );
     GroupBox1 = new wxStaticBox(this, ID_GroupBox1, "Define Range", wxPoint(246,9), wxSize(230,167));
     GroupBox2 = new wxStaticBox(this, ID_GroupBox2, "Variable Values", wxPoint(9,9), wxSize(224,272));
@@ -75,7 +69,6 @@ NumericVarEditForm::NumericVarEditForm(wxWindow *parent, int id)
     cmdMoveDown = new wxButton(this, ID_cmdMoveDown, "Down", wxPoint(81,246), wxSize(56,21));
     cmdUpdateValues = new wxButton(this, ID_cmdUpdateValues, "Update", wxPoint(372,123), wxSize(89,21));
     cmdOk = new wxButton(this, ID_cmdOk, "OK", wxPoint(315,294), wxSize(80,21));
-    //btnHelp = new wxButton(this, ID_btnHelp, "Help...", wxPoint(9,294), wxSize(80,21));
     cmdCancel = new wxButton(this, ID_cmdCancel, "Cancel", wxPoint(399,294), wxSize(80,21));
     lblNotification = new AFLabel(this, ID_lblNotification, "", wxPoint(252,147), wxSize(218,21));
     lblNotification->SetColour(wxColour(255, 0, 0));
@@ -97,18 +90,13 @@ NumericVarEditForm::NumericVarEditForm(wxWindow *parent, int id)
     val_choices.Add(wxT("Regenerate field layout"));
     layoutCombo = new wxComboBox(this, wxID_ANY, val_choices[0], wxPoint(246, 190), wxSize(230,22), val_choices, wxCB_DROPDOWN|wxCB_READONLY);
         
-/*user.constructor.start*/
-
     bIntOnly = false;
     cmdOk->SetDefault();
-/*user.constructor.end*/
 }
 NumericVarEditForm::~NumericVarEditForm()
 {
-/*user.destructor.start*/
-/*user.destructor.end*/
 }
-/*user.class.start*/
+
 void NumericVarEditForm::SetVarOptimizationType(int index){
     if(layoutCombo) layoutCombo->SetSelection(index);
 }
@@ -331,16 +319,10 @@ int NumericVarEditForm::GetVarOptimizationType(){
 }
 
 
-/*user.class.end*/
 BEGIN_EVENT_TABLE( NumericVarEditFormDialog, wxDialog )
-/*user.dialogevents.start*/
-
 EVT_BUTTON(ID_cmdOk, NumericVarEditFormDialog::OnCommand)
 EVT_BUTTON(ID_cmdCancel, NumericVarEditFormDialog::OnCommand)
-//EVT_BUTTON(ID_btnHelp, NumericVarEditFormDialog::OnCommand)
-/*user.dialogevents.end*/
 EVT_CLOSE(NumericVarEditFormDialog::OnClose)
-
 END_EVENT_TABLE()
 
 NumericVarEditFormDialog::NumericVarEditFormDialog(wxWindow *parent, const wxString &title, void *data)

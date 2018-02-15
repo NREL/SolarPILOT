@@ -11,7 +11,8 @@ using namespace rapidxml;
 
 kml_select_dialog::kml_select_dialog()
 {};
-    kml_select_dialog::kml_select_dialog(
+    
+kml_select_dialog::kml_select_dialog(
     wxWindow *parent, wxWindowID winid, wxString label, wxPoint pos, wxSize size, long style)
 {
     Create(parent, winid, label, pos, size, style);
@@ -175,7 +176,6 @@ bool kml_select_dialog::isInclusion()
 void kml_select_dialog::OnApply(wxCommandEvent &WXUNUSED(event))
 {
     //Convert all to double and set values
-
     this->EndModal(wxID_OK);
 }
 

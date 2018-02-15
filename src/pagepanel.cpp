@@ -11,7 +11,7 @@ PagePanel::PagePanel(wxWindow *parent, wxWindowID id, const wxPoint pos, const w
     This doesn't draw the controls on the canvas, that's handled in OnDraw()
     */
 
-    m_pageheight = 34; //size.GetHeight();
+    m_pageheight = 34;
     m_active_page = 0;
     m_leveloffset = 20;
     m_parent = parent;
@@ -24,7 +24,6 @@ PagePanel::PagePanel(wxWindow *parent, wxWindowID id, const wxPoint pos, const w
 
 void PagePanel::OnClick(wxMouseEvent &evt)
 {
-    //int xpos = evt.GetPosition().x;
     int ypos = evt.GetPosition().y;
     int px, py;
     this->GetScrollPixelsPerUnit(&px,&py);
@@ -45,8 +44,6 @@ void PagePanel::OnClick(wxMouseEvent &evt)
 
 void PagePanel::SetActivePage(int pagenum)
 {
-    //m_parent->Freeze();
-
     m_active_page = pagenum;
     for(int i=0; i<m_pages.size(); i++)
     {
@@ -55,13 +52,11 @@ void PagePanel::SetActivePage(int pagenum)
     }
     this->Update();
     this->Refresh();
-    //m_parent->Thaw();
 }
 
 
 void PagePanel::SetActivePage(wxString pagename)
 {
-    //m_parent->Freeze();
     for(int i=0; i<m_pages.size(); i++)
     {
         bool comptest = m_pages.at(i).label == pagename;
@@ -74,7 +69,6 @@ void PagePanel::SetActivePage(wxString pagename)
     }
     this->Update();
     this->Refresh();
-    //m_parent->Thaw();
 }
 
 void PagePanel::RenamePage(wxString page_old, wxString page_new )

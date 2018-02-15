@@ -16,7 +16,7 @@ private:
     wxTextCtrl *_dlg_text;
 
 public:
-    rename_dlg() {/*Init();*/};
+    rename_dlg() {};
     rename_dlg(
         wxWindow *parent,
         wxWindowID winid,
@@ -26,10 +26,8 @@ public:
         wxSize size,
         long style=wxCLOSE_BOX|wxSTAY_ON_TOP)
     {
-        /*Init();*/
         Create(parent, winid, label, pos, size, style);
 
-        //wxDialog *dlg = new wxDialog(NULL, wxID_ANY, wxT("Rename Heliostat Template"), wxDefaultPosition, wxSize(200,150), wxCLOSE_BOX|wxSTAY_ON_TOP);
         wxBoxSizer *dlg_sizer = new wxBoxSizer(wxVERTICAL);
         _dlg_text = new wxTextCtrl(this, wxID_ANY, defvalue, wxDefaultPosition, wxSize(150,21),wxTE_PROCESS_ENTER);
         wxStaticText *dlg_lab = new wxStaticText(this, wxID_ANY, label);

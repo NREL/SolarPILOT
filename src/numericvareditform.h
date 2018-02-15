@@ -2,23 +2,17 @@
 #define __NumericVarEditForm_h 1
 
 #include <wx/wx.h>
-//#include "formalizer.h"
 #include "par_edit_ctrls.h"
-
-/*user.global.start*/
-/*user.global.end*/
 
 class NumericVarEditForm : public wxPanel
 {
 public:
     NumericVarEditForm(wxWindow *parent, int id=-1);
     virtual ~NumericVarEditForm();
-    /* class members */
 
     wxStaticBox *GroupBox1;
     wxStaticBox *GroupBox2;
     wxButton *cmdCancel;
-    //wxButton *btnHelp;
     wxButton *cmdOk;
     wxButton *cmdUpdateValues;
     AFLabel *lblNotification;
@@ -36,7 +30,6 @@ public:
     AFNumeric *numStart;
     wxComboBox *layoutCombo;
 
-/*user.class.start*/
     void SetValues(const wxArrayStr &values, bool int_only=false);
     void OnCommand(wxCommandEvent &evt);
     void GenerateValues();
@@ -45,7 +38,6 @@ public:
     void SetVarOptimizationType(int index);
     bool bIntOnly;
 
-/*user.class.end*/
     DECLARE_EVENT_TABLE()
 };
 
@@ -57,8 +49,7 @@ public:
     NumericVarEditForm *GetPanel();
     void OnCommand(wxCommandEvent &evt);
     void OnClose(wxCloseEvent &evt);
-/*user.dialog.start*/
-/*user.dialog.end*/
+
 private:
     NumericVarEditForm *mPanel;
     DECLARE_EVENT_TABLE()

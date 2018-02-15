@@ -7,7 +7,6 @@ code.google.com/p/libkml/
 https://developers.google.com/kml/documentation/kmlreference
 */
 
-//#include <kml\dom.h>
 #include <wx/string.h>
 #include <rapidxml.hpp>
 #include "gui_util.h"
@@ -55,9 +54,8 @@ static void ParseKML(wxString &file, double &tower_lat, double &tower_lon, std::
 
         //Construct the polygon
         vector<string> pp = split(coords.ToStdString(), " ");
-        //poly.Append(wxT("[POLY]"));
-        //poly.push_back( sp_point() );
-        for(unsigned int i=0; i<pp.size(); i++)
+        
+		for(unsigned int i=0; i<pp.size(); i++)
         {
             
             //Convert point values into doubles
@@ -73,13 +71,7 @@ static void ParseKML(wxString &file, double &tower_lat, double &tower_lon, std::
             double dy = (plat < tlatr ? -1. : 1.)*r_earth*acos( sin(tlatr)*sin(plat) + cos(tlatr)*cos(plat) );
             double dx = (plon < tlonr ? -1. : 1.)*sqrt( pow(dist, 2) - pow(dy, 2) );
 
-            //wxString ptstr;
-            //ptstr.Printf(wxT("[P]%.13f,%.13f,0."), dx, dy);
-            //Translate into some reasonable coordinate system. How to determine where tower will be?
-
-            //poly.Append(ptstr);
             poly.push_back(sp_point(dx, dy, 0.));
-            //poly.back().Set(dx, dy, 0.);
         }
         
         //Update to the new sibling node

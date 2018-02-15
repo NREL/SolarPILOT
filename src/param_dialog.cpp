@@ -41,7 +41,6 @@ par_variables_dialog::par_variables_dialog(wxWindow *parent, wxWindowID winid, w
         val_choices.Add(wxT("Keep existing layout"));
         val_choices.Add(wxT("Regenerate field layout"));
         layout_lab = new wxStaticText(this, wxID_ANY, wxT("Field layout requirement:"));
-        //layout_lab->SetForegroundColour(wxColor(255, 0, 0));
         _layout_combo = new wxComboBox(this, wxID_ANY, val_choices[0], wxDefaultPosition, wxDefaultSize, val_choices, wxCB_DROPDOWN|wxCB_READONLY);
     }
     
@@ -71,7 +70,6 @@ void par_variables_dialog::SetVarOptimizationType(int index)
     
 void par_variables_dialog::UpdateTree()
 {
-    //tree->Freeze();
     tree->DeleteAllItems();
 
     m_root = tree->AddRoot("Available Variables",
@@ -111,7 +109,6 @@ void par_variables_dialog::UpdateTree()
 
     tree->Expand(m_root);
     tree->UnselectAll();
-    //tree->Thaw();
 
 }
 
@@ -173,7 +170,6 @@ void par_variables_dialog::SetItems(var_map *V, int type_filter)
         for( int j=0; j<class_list_vars[class_names[i]].size(); j++)
             all_names.push_back(class_list_vars[class_names[i]][j]);
 
-    //for( unordered_map<string, spbase*>::iterator var=V->_varptrs.begin(); var != V->_varptrs.end(); var++)
     for( int i=0; i<all_names.size(); i++)
     {
         spbase* var = V->_varptrs[all_names[i]];
@@ -253,21 +249,17 @@ void par_variables_dialog::OnSearch( wxCommandEvent & WXUNUSED(evt))
 
     if ( !filter.IsEmpty() )
     {
-        //tree->Freeze();
         tree->ExpandAll();
         tree->EnsureVisible( m_root );
-        //tree->Thaw();
     }
     else
     {
-        //tree->Freeze();
         for (int i=0;i<(int)m_items.size();i++)
         {
             if ( m_items.at(i).tree_id.IsOk() && m_items.at(i).checked )
                 tree->Expand( tree->GetItemParent( m_items.at(i).tree_id ));
         }
         tree->EnsureVisible( m_root );
-        //tree->Thaw();
     }
 }
 
@@ -332,7 +324,6 @@ void par_variables_dialog::OnUncheckAll(wxCommandEvent &WXUNUSED(evt))
 
 //*************** parametric values dialog *****************
 par_values_dialog::par_values_dialog(wxWindow *parent, wxWindowID winid, wxString imagedir, wxString label, wxPoint pos, wxSize size, long style)
-    //: wxDialog(parent, winid, label, pos, size, style)
 {
     _image_dir = imagedir;
     _parent = parent;
@@ -364,13 +355,11 @@ bool par_values_dialog::ShowEditValuesDialog(const wxString &title, wxArrayStr &
         || vtype == "location")
     {
         // fixed domain selection (combo box, list, checkbox, location)
-        wxArrayStr fixed_items = v->choices; //Split(v->GetExpression(), ",");
+        wxArrayStr fixed_items = v->choices; 
         wxArrayStr cur_items, contexts;
         for (i=0;i<(int)values.Count();i++)
         {
-            //int item_i = atoi( values[i].c_str() );
-            //if (item_i >= 0 && item_i < (int) fixed_items.Count())
-            cur_items.Add( values[i]); //fixed_items[i] );
+            cur_items.Add( values[i]); 
         }
         for(i=0; i<(int)fixed_items.Count(); i++)
         {
@@ -382,7 +371,6 @@ bool par_values_dialog::ShowEditValuesDialog(const wxString &title, wxArrayStr &
             // translate back to integer values
             values.Clear();
             for (i=0;i<(int)cur_items.Count();i++)
-                //values.Add( wxString::Format("%d", fixed_items.Index( cur_items[i] ) ) );
                 values.Add(cur_items[i]);
 
             return true;
@@ -430,8 +418,8 @@ bool par_values_dialog::ShowSelectVariableDialog(const wxString &title, const wx
     dlg.SetItems( names, labels, contexts );
     dlg.SetCheckedNames( list );
     dlg.SetVarOptimizationType( _layout_required ? 1 : 0 );
-    //dlg.SetCheckedNames( list );
-    if (expand_all)
+    
+	if (expand_all)
         dlg.ShowAllItems();
 
     if (dlg.ShowModal() == wxID_OK)

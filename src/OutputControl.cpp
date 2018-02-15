@@ -118,7 +118,6 @@ void OutputControl::Build()
         tip = new wxToolTip( _varobj->long_desc );
         tc->SetToolTip( tip );
         tc->GetToolTip()->Enable(true);
-        //tc->GetToolTip()->SetDelay(1500);
     }
         
     wxBoxSizer *bs = new wxBoxSizer(wxHORIZONTAL);

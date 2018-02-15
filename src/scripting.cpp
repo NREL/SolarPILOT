@@ -140,10 +140,6 @@ static void _add_heliostat_template( lk::invoke_t &cxt )
     //Re-create the solar field object
     F.GetSolarFieldObject()->Create(*V);
 
-    //F.UpdateHelioUITemplates();
-    //update the input display
-    //F.UpdateCalculatedGUIValues();
-
     cxt.result().assign( (double)SPFrame::Instance().GetVariablesObject()->hels.back().id.val );
 
 }
@@ -473,7 +469,6 @@ static void _simulate( lk::invoke_t &cxt )
     int simtype = V->flux.flux_model.mapval();    //0=Delsol, 1=Soltrace
     
     //Set up field, update aimpoints, and simulate at the performance sun position
-    //SolarField::PrepareFieldLayout(*SF, 0, true);    
 
     Hvector *helios = SF->getHeliostats();
 
@@ -1608,8 +1603,6 @@ static lk::fcall_t *solarpilot_functions()
         
         _add_receiver,
         _drop_receiver,
-        //_add_heliostat,
-        //_drop_heliostat,
 
         _sp_var,
         _simulate,
@@ -1636,9 +1629,6 @@ static lk::fcall_t *solarpilot_functions()
 
 
 //--------------------- scripting --------------------------------------
-//BEGIN_EVENT_TABLE( SolarPILOTScriptWindow, wxLKScriptWindow )
-//END_EVENT_TABLE()
-
 SolarPILOTScriptWindow::SolarPILOTScriptWindow( wxWindow *parent, int id )
     : wxLKScriptWindow( parent, id )
 {
@@ -1648,25 +1638,14 @@ SolarPILOTScriptWindow::SolarPILOTScriptWindow( wxWindow *parent, int id )
 
 void SolarPILOTScriptWindow::OnHelp( )
 {
-    //MainWindow::ShowHelpTopic( "macros" );
 }
 
 void SolarPILOTScriptWindow::OnScriptStarted()
 {
-    // let the SAM window be the parent for plots
-    // rather than the current toplevel window so that they
-    // hang around after a script window is closed
-    //wxLKSetToplevelParentForPlots( &MainWindow::Instance() );
-
-    // make sure there's no current plot active
-    //wxLKSetPlotTarget( NULL );
-
-
 }
 
 void SolarPILOTScriptWindow::OnScriptStopped()
 {
-    //MainWindow::Instance().GetTrace()->CancelTrace();
 }
 
 SolarPILOTScriptWindowFactory::SolarPILOTScriptWindowFactory()

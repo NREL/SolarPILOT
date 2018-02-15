@@ -4,8 +4,6 @@ layout_export_dialog::layout_export_dialog(
     wxWindow *parent, wxWindowID winid, wxString label,wxPoint pos, wxSize size, long style)
     : wxDialog(parent, winid, label, pos, size, style)
 {
-    //Init();
-        
     //Create objects and do layout
     wxStaticText *msgbox = new wxStaticText(this, wxID_ANY, 
         wxT("Please select the data you would like to export:"));

@@ -2,10 +2,6 @@
 #define _OUTPUTCONTROL_ 
 
 #include "wx/wx.h"
-//#include "wx/textctrl.h"
-//#include "wx/stattext.h"
-//#include "wx/panel.h"
-//#include "wx/tooltip.h"
 #include "gui_util.h"
 
 

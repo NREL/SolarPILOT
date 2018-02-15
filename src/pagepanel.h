@@ -4,15 +4,9 @@
 #include <wx/wx.h>
 #include <wx/imaglist.h>
 #include <vector>
-
-//#ifdef _MSC_VER
 #include <unordered_map>
+
 using std::unordered_map;
-/*#else
-#include <tr1/unordered_map>
-using std::tr1::unordered_map;
-#endif
-*/
 
 class PagePanel : public wxScrolledWindow
 {

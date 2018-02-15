@@ -95,8 +95,6 @@ void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &re
                 for(int j=0; j<nrow; j++)
                 {
                     _results_grid->SetReadOnly(j,i,true);
-            //        if(_results_grid->GetCellValue(j,i).empty())
-            //            _results_grid->SetCellBackgroundColour(j,i,wxColour(150,150,150,255));
                 }
             }
 
@@ -194,9 +192,6 @@ void SPFrame::OnSimulationResultsExport( wxCommandEvent &WXUNUSED(event))
     fout.Write();
 
     fout.Close();
-
-    //if( PopMessage("The file was created successfully. Would you like to view the file?", "Success", wxYES|wxNO|wxICON_INFORMATION) == wxYES)
-    //    wxShell( file_use );
 
 }
 

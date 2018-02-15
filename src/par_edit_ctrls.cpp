@@ -1,8 +1,6 @@
 #include "par_edit_ctrls.h"
 #include <wx/imaglist.h>
 
-//#include <wx/treectrl.h>
-
 BEGIN_EVENT_TABLE(AFNumeric,wxTextCtrl)
     EVT_TEXT_ENTER(-1, AFNumeric::OnTextEnter)
     EVT_KILL_FOCUS(AFNumeric::OnLoseFocus)
@@ -49,12 +47,10 @@ void AFNumeric::OnSetFocus(wxFocusEvent &evt)
     mFocusVal = GetValue();
     this->SetSelection(0,mFocusVal.Len());
     evt.Skip();
-    //WXUNUSED(evt);
 }
 
 void AFNumeric::OnLoseFocus(wxFocusEvent &evt)
 {
-    //WXUNUSED(evt);
     if (mFocusVal != GetValue())
     {
         wxCommandEvent enterpress(wxEVT_COMMAND_TEXT_ENTER, this->GetId() );
@@ -119,22 +115,10 @@ void AFNumeric::Translate()
 
 void AFNumeric::DoFormat()
 {
-    //if (bUseStdlibFormat)
-    //{
-        if (bIntegersOnly)
-            SetValue( wxString::Format(mFormat.c_str(), mIVal) );
-        else
-            SetValue( wxString::Format(mFormat.c_str(), mDVal) );
-    //}
-    //else
-    //{
-    //    char buf[64];
-    //    if (bIntegersOnly)
-    //        CommaFormat(buf,64, mFormat.c_str(), mIVal);
-    //    else
-    //        CommaFormat(buf,64, mFormat.c_str(), mDVal);
-    //    SetValue( buf );
-    //}
+    if (bIntegersOnly)
+        SetValue( wxString::Format(mFormat.c_str(), mIVal) );
+    else
+        SetValue( wxString::Format(mFormat.c_str(), mDVal) );
 }
 
 void AFNumeric::UseStdlibFormat(bool b)
@@ -164,7 +148,6 @@ double AFNumeric::GetDouble()
     return mDVal;
 }
 
-
 void AFNumeric::SetIntegersOnly(bool b)
 {
     bIntegersOnly = b;
@@ -187,8 +170,6 @@ wxString AFNumeric::GetFormat()
 }
 
 
-
-
 BEGIN_EVENT_TABLE(AFLabel,wxWindow)
     EVT_PAINT( AFLabel::OnPaint )
     EVT_SIZE( AFLabel::OnResize )
@@ -197,7 +178,6 @@ END_EVENT_TABLE()
 AFLabel::AFLabel( wxWindow *parent, int id, const wxString &caption, const wxPoint &pos, const wxSize &size)
     : wxWindow(parent, id, pos, size )
 {
-    //SetMinSize(wxSize(30,21));
     mColour = *wxBLACK;
     mCaption = caption;
     bTop = false;
@@ -324,8 +304,6 @@ void AFLabel::OnResize(wxSizeEvent &WXUNUSED(event))
     Refresh();
     Update();
 }
-
-
 
 
 //******* AFTreeView control *************
@@ -492,15 +470,12 @@ void AFSearchListBox::SetSelection( int i )
             UpdateView();
         }
     
-        //wxLogStatus("SLB: set_selection(%d => '%s')", i, (const char*)m_items.at(i).str.c_str());
-    
         m_list->SetStringSelection( m_items.at(i).str );
     }
 }
 
 void AFSearchListBox::SetStringSelection(const wxString &s)
 {
-    //wxLogStatus("SLB: set_string_selection('%s')", (const char*)s.c_str());
     for (int i=0;i<(int)m_items.size();i++)
     {
         if (m_items.at(i).str == s)
@@ -595,7 +570,6 @@ AFTextCtrl::AFTextCtrl( wxWindow *parent, int id, const wxPoint &pos, const wxSi
 
 void AFTextCtrl::OnLoseFocus(wxFocusEvent &evt)
 {
-    //WXUNUSED(evt);
     if (bSendOnFocus && m_origVal != GetValue())
     {
         wxCommandEvent enterpress(wxEVT_COMMAND_TEXT_ENTER, this->GetId() );
@@ -608,7 +582,6 @@ void AFTextCtrl::OnLoseFocus(wxFocusEvent &evt)
 
 void AFTextCtrl::OnSetFocus(wxFocusEvent &evt)
 {
-    //WXUNUSED(evt);
     m_origVal = GetValue();
     evt.Skip();
 }
@@ -676,17 +649,17 @@ void Painter::DrawRaisedPanel(wxDC &dc, int x, int y, int width, int height)
     wxPen savedPen = dc.GetPen();
     dc.SetPen(*wxWHITE_PEN);
 
-    dc.DrawLine(x,                 y+1,                 x+width-1,         y+1);
-    dc.DrawLine(x,                 y+1,                     x,                 y+height-1);
-    dc.DrawLine(x+1,                 y+1,                 x+width-2,         y+1);
-    
-    dc.SetPen(*wxLIGHT_GREY_PEN);
-    dc.DrawLine(x+1,             y+height-2,            x+width-2,         y+height-2);
-    dc.DrawLine(x+width-2,     y+2,                 x+width-2,         y+height-2);
-    
-    dc.SetPen(*wxBLACK_PEN);
-    dc.DrawLine(x,                 y+height-1,     x+width-1,         y+height-1);
-    dc.DrawLine(x+width-1,         y,                 x+width-1,         y+height);    
+	dc.DrawLine(x, y+1, x+width-1, y+1);
+	dc.DrawLine(x, y+1, x, y+height-1);
+	dc.DrawLine(x+1, y+1, x+width-2, y+1);
+
+	dc.SetPen(*wxLIGHT_GREY_PEN);
+	dc.DrawLine(x+1, y+height-2, x+width-2, y+height-2);
+	dc.DrawLine(x+width-2, y+2, x+width-2, y+height-2);
+
+	dc.SetPen(*wxBLACK_PEN);
+	dc.DrawLine(x, y+height-1, x+width-1, y+height-1);
+	dc.DrawLine(x+width-1, y, x+width-1, y+height);
     
     dc.SetPen(savedPen);
 }

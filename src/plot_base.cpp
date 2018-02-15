@@ -304,14 +304,6 @@ double PlotBase::bilinearInterp(double xf, double yf, double *Z)
     {f(0,0), f(1,0), f(0,1), f(1,1)}
     */
 
-    /*double
-        b[] = {Z[0],
-               Z[1] - Z[0],
-               Z[2] - Z[0],
-               Z[0] - Z[1] - Z[2] + Z[3]
-              };
-    return ( b[0] + b[1]*xf + b[2]*yf + b[3]*yf*xf );*/
-
     return ( Z[0] + (Z[1] - Z[0])*xf + (Z[2] - Z[0])*yf + (Z[0] - Z[1] - Z[2] + Z[3])*yf*xf );
 }
     
@@ -404,7 +396,6 @@ void PlotBase::AxesSetup(wxMemoryDC &dc, double minval, double maxval)
     dc.SetBrush( *wxWHITE_BRUSH );
     wxRect windowRect(wxPoint(0,0), _plotsize);
     dc.DrawRectangle( windowRect );
-    //dc.SetAxisOrientation(true, true);
     
     //The pixel size of the drawing canvas
     double canvsize[2];
@@ -413,8 +404,6 @@ void PlotBase::AxesSetup(wxMemoryDC &dc, double minval, double maxval)
     
     double plot_scale = 0.95;
         
-    //double xaxcent = (_xaxmax + _xaxmin)/2.;
-    
     //The total span of each axis in their respective units
     double
         xaxspan = _xaxmax - _xaxmin,
@@ -438,7 +427,6 @@ void PlotBase::AxesSetup(wxMemoryDC &dc, double minval, double maxval)
     _left_buffer = 15+etss.GetWidth()+etss.GetHeight();
     _top_buffer = 0;
     _bottom_buffer = etss.GetHeight()*2+15;
-    //wxString zfmt;
     int nzdec = gui_util::CalcBestSigFigs( max(fabs(maxval),fabs(minval)) );
     _zfmt.sprintf("%s%df %s", "%.", nzdec, _units.c_str());
     ets = to_string(max(fabs(maxval),fabs(minval)), _zfmt.c_str());
@@ -460,7 +448,7 @@ void PlotBase::AxesSetup(wxMemoryDC &dc, double minval, double maxval)
     //Draw the plot boundary
     dc.SetPen( wxPen( _black, 1, wxPENSTYLE_SOLID) );
     dc.SetBrush( *wxBLACK_BRUSH );
-    dc.DrawRectangle( _left_buffer, _top_buffer/*-1-_drawsize[1]*/, _drawsize[0], _drawsize[1]);
+    dc.DrawRectangle( _left_buffer, _top_buffer, _drawsize[0], _drawsize[1]);
     
     dc.SetBrush( *wxWHITE_BRUSH);
     //Draw the x axis
@@ -563,7 +551,7 @@ void PlotBase::DrawText(wxMemoryDC &dc, std::string message, double x, double y)
     dx = _plotsize.GetWidth();
     dy = _plotsize.GetHeight();
 
-    dc.DrawText(message,(int)(x*dx), (int)(y*dy)); // tlab , canvsize[0]-_right_buffer+5, gtop - dc.GetTextExtent( tlab).GetHeight()-2);
+    dc.DrawText(message,(int)(x*dx), (int)(y*dy)); 
     dc.SetPen(oldpen);
 
 }

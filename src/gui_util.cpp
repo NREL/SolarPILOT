@@ -387,8 +387,6 @@ bool gui_util::list_files( std::string &directory, ArrayString &files, std::stri
         cont = dir.GetNext(&filename);
     }
     
-
-
     return true;
 
 }
@@ -430,5 +428,4 @@ bool gui_util::writeSettingsFile(string &fname, gui_settings &gs)
     bool writeok = fobj.Write();
     fobj.Close();
     return writeok;
-
 }

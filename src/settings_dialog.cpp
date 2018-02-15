@@ -8,7 +8,6 @@ settings_dialog::settings_dialog( wxWindow *parent, wxWindowID winID, wxString l
     //The tools->settings menu has been selected. Construct and display a settings dialog
     int n_settings = gs.data_size();
 
-    //wxPanel *set_dlg = new wxPanel(this, wxID_ANY);
     wxFlexGridSizer *grids = new wxFlexGridSizer(2, 5, 10);
 
     setting *sets = gs.getFirst();

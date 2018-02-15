@@ -66,10 +66,6 @@ bool PlotScatter::Plot(PlotBase &base, vector<vector<double> > &data)
     double zvalave = zvaltot / (double)data.size();
     //---- Draw the intensity ----
     
-    /*double
-        xaxspan = base._xaxmax - base._xaxmin,
-        yaxspan = base._yaxmax - base._yaxmin;*/
-    
     //if no data is provided, return here
     if(minval == maxval && maxval==0) has_data = false;
     

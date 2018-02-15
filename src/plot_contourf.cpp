@@ -185,7 +185,6 @@ bool PlotContourf::Plot(PlotBase &base, vector<vector<double> > &data)
                             break;
                         }
                         
-                        //base.ColorGradientGrayscale(fcolor, z);
                         _dc.SetPen( wxPen(fcolor, 1, wxPENSTYLE_SOLID) );
                         _dc.SetBrush( wxBrush(fcolor, wxBRUSHSTYLE_SOLID) );
 

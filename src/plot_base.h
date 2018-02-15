@@ -3,8 +3,6 @@
 
 #include <wx/wx.h>
 #include <wx/dc.h>
-//#include <wx/dcbuffer.h>
-//#include <wx/dcgraph.h>
 #include <vector>
 
 using namespace std;

@@ -460,13 +460,9 @@ class FieldPlotSavePanelCtrls : public wxPanel
 	int _dpi;
 public:
 
-	
-
-
 	FieldPlotSavePanelCtrls( wxWindow *parent )
 		: wxPanel(parent)
 	{
-		//wxPanel *dpi_panel = new wxPanel(parent);
 		_dpi = 96;
 		dpi_input = new wxTextCtrl(this, wxID_ANY, "96", wxDefaultPosition, wxSize(80,21));
 		dpi_input->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( FieldPlotSavePanelCtrls::OnDPIText ), NULL, this);
@@ -514,7 +510,6 @@ void SPFrame::OnBitmapSave( wxCommandEvent &WXUNUSED(event))
 		wxT("Image files (*.jpg;*.png;*.bmp;*.tif)|*.jpg;*.png;*.bmp;*.tif"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
 
 	//custom control window for DPI setting
-	
 
 	dlg.SetExtraControlCreator(&createFieldPlotSavePanelCtrls);
 
@@ -529,14 +524,11 @@ void SPFrame::OnBitmapSave( wxCommandEvent &WXUNUSED(event))
 		_plot_frame->ResetPPIOnPaintEvent(oldppi);
 		wxClientDC pdc(this);
 		_plot_frame->DoPaint(pdc);
-		//wxPaintEvent evt(_plot_frame->GetId());
-		//ProcessEvent( evt );
 		
 		wxBitmap *bitmap = _plot_frame->GetBitmap();
 		wxImage image = bitmap->ConvertToImage();
 
 		wxString fpath = dlg.GetPath();
-		//int ftype = dlg->GetFilterIndex();
 		vector<string> seps = split(fpath.ToStdString(), ".");
 		string ftype = lower_case(seps.at(seps.size()-1));
 		
@@ -545,17 +537,14 @@ void SPFrame::OnBitmapSave( wxCommandEvent &WXUNUSED(event))
 		{ // jpeg
 		    image.SaveFile( fpath, wxBITMAP_TYPE_JPEG );
 		}
-
 		else if(ftype == "png")
 		{ //png
 		    image.SaveFile( fpath, wxBITMAP_TYPE_PNG );
 		}
-
 		else if(ftype == "bmp")
 		{ //bmp
 		    image.SaveFile( fpath, wxBITMAP_TYPE_BMP );
 		}
-
 		else if(ftype == "tif")
 		{
 		    image.SaveFile( fpath, wxBITMAP_TYPE_TIF );
@@ -565,11 +554,8 @@ void SPFrame::OnBitmapSave( wxCommandEvent &WXUNUSED(event))
 		    PopMessage("Invalid image file type! Please choose from JPG, PNG, BMP, or TIFF.");
 			return;
 		}
-		
 
 	}
-	
-
 }
 
 /* 
@@ -580,7 +566,6 @@ void SPFrame::OnFieldPlotZoomIn( wxCommandEvent &WXUNUSED(evt))
 {
     double zoom = _plot_frame->GetPlotZoomFact();
     _plot_frame->SetPlotZoomFact( zoom * 1.6 );
-
 
 	_plot_frame->Refresh();
 	_plot_frame->Update();
@@ -593,7 +578,6 @@ void SPFrame::OnFieldPlotZoomOut( wxCommandEvent &WXUNUSED(evt))
 
 	_plot_frame->Refresh();
 	_plot_frame->Update();
-
 }
 
 void SPFrame::OnFieldPlotZoomRect( wxCommandEvent &WXUNUSED(evt))
@@ -645,13 +629,11 @@ void SPFrame::OnFieldPlotMouseLeftUp( wxMouseEvent &evt)
 
     if(_zoom_rect->GetState() )
     {
-        //wxMessageBox( to_string(_field_left_mouse_start[0],"%d")+","+to_string(_field_left_mouse_start[1],"%d")+"\t"+to_string(evt.GetPosition().x,"%d")+","+to_string(evt.GetPosition().y,"%d") );
         wxSize csize = _plot_frame->GetSize();
         int boxsizex = abs(_field_left_mouse_start[0] - evt.GetPosition().x);
         int boxsizey = abs(_field_left_mouse_start[1] - evt.GetPosition().y);
 
         double newscale = fmin( (double)csize.GetWidth()/(double)boxsizex, (double)csize.GetHeight()/(double)boxsizey);
-
 
         int boxorx = (_field_left_mouse_start[0] + evt.GetPosition().x)/2 - csize.GetWidth()/2;
         int boxory = csize.GetHeight()/2 - (_field_left_mouse_start[1] + evt.GetPosition().y)/2;
@@ -665,7 +647,6 @@ void SPFrame::OnFieldPlotMouseLeftUp( wxMouseEvent &evt)
 
     _plot_frame->Update();
     _plot_frame->Refresh();
-
 }
 
 void SPFrame::OnFieldPlotMouseWheel( wxMouseEvent &evt) 
@@ -722,8 +703,6 @@ void SPFrame::OnFieldPlotMotion( wxMouseEvent &evt )
     }
     if( evt.LeftIsDown() )
     {
-        //int *state0 = _plot_frame->GetOriginOffset();
-    
         int delta[2];
         delta[0] = evt.GetPosition().x - _field_left_mouse_start[0];
         delta[1] = evt.GetPosition().y - _field_left_mouse_start[1];

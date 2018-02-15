@@ -17,15 +17,6 @@
 #include "interop.h"
 #include "IOUtil.h"
 
-//struct layout_shell; // Heliostat;
-
-//template<typename T> static std::string my_to_string( T value )
-//{
-//    std::ostringstream os;
-//    os << value;
-//    return os.str();
-//};
-
 struct setting
 {
     string
@@ -80,8 +71,8 @@ public:
     bool SetCellValue(int row, int col, wxString value);
     bool SetCellValue(wxString value, int row, int col);
     void AddRow(int row, wxString label, wxString units, double value, int sigfigs=-1, double min=std::numeric_limits<double>::quiet_NaN(), double max=std::numeric_limits<double>::quiet_NaN(), double stdev=std::numeric_limits<double>::quiet_NaN());
-    //void AddRow(int row, wxString label, wxString units, vector<double> &values, int sigfigs=1);
-    int GetNumberRows()
+
+	int GetNumberRows()
     {
         return _nrow;
     }

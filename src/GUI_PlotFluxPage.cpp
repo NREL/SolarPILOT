@@ -83,13 +83,9 @@ void SPFrame::CreateFluxPlotPage(wxScrolledWindow *parent)
     save_table->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnFluxTableSave ), NULL, this);
     //Tool tips
     _scatter_btn->SetToolTip("Toggle view to/from aimpoint plot");
-    //_scatter_btn->GetToolTip()->SetDelay( _tool_tip_delay );
-    res_inc->SetToolTip( "Increase plot resolution" );
-    //res_inc->GetToolTip()->SetDelay( _tool_tip_delay );
+	res_inc->SetToolTip( "Increase plot resolution" );
     res_dec->SetToolTip( "Decrease plot resolution" );
-    //res_dec->GetToolTip()->SetDelay( _tool_tip_delay );
     res_orig->SetToolTip( "Display at data resolution" );
-    //res_orig->GetToolTip()->SetDelay( _tool_tip_delay );
 
     //Selection for the receiver
     wxArrayStr receivers;
@@ -146,9 +142,6 @@ void SPFrame::CreateFluxPlotPage(wxScrolledWindow *parent)
     scale_lower->Add(plot_zmax);
     scale_sizer->Add(is_autoscale);
     scale_sizer->Add(scale_lower);
-    /*top_sizer->Add(is_autoscale, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
-    top_sizer->Add(plot_zmin, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
-    top_sizer->Add(plot_zmax, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);*/
     top_sizer->Add(scale_sizer);
 
     main_sizer->Add(top_sizer, 0, wxALL, 5);
@@ -199,7 +192,6 @@ void SPFrame::OnFluxBitmapSave( wxCommandEvent &WXUNUSED(event))
             wxImage image = bitmap->ConvertToImage();
 
             wxString fpath = dlg->GetPath();
-            //int ftype = dlg->GetFilterIndex();
             vector<string> seps = split(fpath.ToStdString(), ".");
             string ftype = lower_case(seps.at(seps.size()-1));
         

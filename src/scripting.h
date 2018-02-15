@@ -24,7 +24,6 @@ protected:
     virtual void OnScriptStopped();
     virtual void OnHelp();
 
-    //DECLARE_EVENT_TABLE();
 };
 
 #endif

@@ -60,7 +60,7 @@ public:
     void SetCheckedNames(const wxArrayStr &list);
 };
 
-class par_values_dialog //: public wxDialog
+class par_values_dialog 
 {
     /* 
     Create the dialog where the user specifies the values of parameterized variables.

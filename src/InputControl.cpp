@@ -405,7 +405,6 @@ void InputControl::OnLeaving( wxFocusEvent &event)
         if( ! tc->GetValue().ToDouble(&val) )
         {
             /* This isn't a valid number. Reset to the stored value */
-            //tc->SetValue( (*_V)[_vargroup][_inst][_varname].value);
             string v; 
             _varobj->as_string(v);
             tc->SetValue( v );
@@ -506,7 +505,6 @@ void InputControl::Build()
             tip = new wxToolTip( _varobj->long_desc );
             chk->SetToolTip( tip );
             chk->GetToolTip()->Enable(true);
-            //chk->GetToolTip()->SetDelay(750);
         }
 
         //Set the default state
@@ -533,7 +531,6 @@ void InputControl::Build()
             tip = new wxToolTip( _varobj->long_desc );
             tc->SetToolTip( tip );
             tc->GetToolTip()->Enable(true);
-            //tc->GetToolTip()->SetDelay(750);
         }
 
         tc->Connect(wxEVT_KILL_FOCUS, wxFocusEventHandler(InputControl::OnLeaving), NULL, this );
@@ -572,7 +569,6 @@ void InputControl::Build()
             tip = new wxToolTip( _varobj->long_desc );
             tc->SetToolTip( tip );
             tc->GetToolTip()->Enable(true);
-            //tc->GetToolTip()->SetDelay(750);
         }
         
         //Bind the focus event directly to the textctrl
