@@ -7,29 +7,29 @@ using namespace std;
 class rec_select_dialog : public wxDialog
 {
 private:
-	unordered_map<wxWindow*, Receiver*> rmap;
-	vector<wxCheckBox*> checkboxes;
-	int nrec;
+    unordered_map<wxWindow*, Receiver*> rmap;
+    vector<wxCheckBox*> checkboxes;
+    int nrec;
 
 public:
 
-	rec_select_dialog();
-	rec_select_dialog(
-		wxWindow *parent, 
-		wxWindowID winid, 
-		wxString label,
-		SolarField &SF,
-		wxPoint pos = wxDefaultPosition,
-		wxSize size = wxDefaultSize,
-		long style=wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP|wxRESIZE_BORDER);
+    rec_select_dialog();
+    rec_select_dialog(
+        wxWindow *parent, 
+        wxWindowID winid, 
+        wxString label,
+        SolarField &SF,
+        wxPoint pos = wxDefaultPosition,
+        wxSize size = wxDefaultSize,
+        long style=wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP|wxRESIZE_BORDER);
 
-	void getSelectedReceivers(vector<Receiver*> &rec_ptrs);
+    void getSelectedReceivers(vector<Receiver*> &rec_ptrs);
 
-	void OnOkButton(wxCommandEvent &WXUNUSED(event));
+    void OnOkButton(wxCommandEvent &WXUNUSED(event));
 
-	void OnCancelButton(wxCommandEvent &WXUNUSED(event));
+    void OnCancelButton(wxCommandEvent &WXUNUSED(event));
 
-	void OnText( wxKeyEvent &event);
+    void OnText( wxKeyEvent &event);
 
 };
 

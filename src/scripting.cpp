@@ -9,8 +9,8 @@
 
 static bool LKInfoCallback(simulation_info *siminfo, void *data)
 {
-	SolarPILOTScriptWindow *frame = static_cast<SolarPILOTScriptWindow*>( data );
-	if(frame != NULL) 
+    SolarPILOTScriptWindow *frame = static_cast<SolarPILOTScriptWindow*>( data );
+    if(frame != NULL) 
     {
         int current = siminfo->getCurrentSimulation();
         int total = siminfo->getTotalSimulationCount();
@@ -34,7 +34,7 @@ static bool LKInfoCallback(simulation_info *siminfo, void *data)
             wxYieldIfNeeded();
         }
     }
-	return true;
+    return true;
 };
 
 
@@ -53,26 +53,26 @@ static void _add_receiver( lk::invoke_t &cxt )
     var_map *V = F.GetSolarFieldObject()->getVarMap();
 
 
-	string tname = cxt.arg(0).as_string();
-	// check to make sure this isn't a duplicate. Each item needs a unique name
-	bool dupe = false;
-	for(unsigned int i=0; i<V->recs.size(); i++)
+    string tname = cxt.arg(0).as_string();
+    // check to make sure this isn't a duplicate. Each item needs a unique name
+    bool dupe = false;
+    for(unsigned int i=0; i<V->recs.size(); i++)
     { 
         if(tname == V->recs.at(i).rec_name.val) 
             dupe = true; 
     }
-	if(dupe)
+    if(dupe)
     {
-		cxt.error("Please enter a unique name for this geometry.");
-		return;
-	}
+        cxt.error("Please enter a unique name for this geometry.");
+        return;
+    }
 
     //Add a receiver
     int ind = V->recs.size();
 
     V->add_receiver(ind);
-	V->recs[ind].rec_name.val = tname;
-			    
+    V->recs[ind].rec_name.val = tname;
+                
     //Re-create the solar field object
     F.GetSolarFieldObject()->Create(*V);
 
@@ -121,18 +121,18 @@ static void _add_heliostat_template( lk::invoke_t &cxt )
     SPFrame &F = SPFrame::Instance();
     var_map *V = F.GetSolarFieldObject()->getVarMap();
 
-	string tname = cxt.arg(0).as_string();
+    string tname = cxt.arg(0).as_string();
     bool dupe = false;
-	for(unsigned int i=0; i<V->hels.size(); i++)
+    for(unsigned int i=0; i<V->hels.size(); i++)
     { 
         if(tname == V->hels.at(i).helio_name.val) 
             dupe = true; 
     }
-	if(dupe)
+    if(dupe)
     {
-		cxt.error("Please enter a unique name for this heliostat template.");
-		return;
-	}
+        cxt.error("Please enter a unique name for this heliostat template.");
+        return;
+    }
 
     int ind = V->hels.size();
     V->add_heliostat(ind);
@@ -191,13 +191,13 @@ static void _drop_heliostat( lk::invoke_t &cxt )
 
 static void _sp_var( lk::invoke_t &cxt )
 {
-	LK_DOC2( "var", "Sets or gets a variable value in the SolarPILOT data set.", 
-		"Set a variable value.", "(string:name, variant:value):none", 
-		"Get a variable value", "(string:name):variant" );
-	
-	var_map *vmap = SPFrame::Instance().GetSolarFieldObject()->getVarMap();
+    LK_DOC2( "var", "Sets or gets a variable value in the SolarPILOT data set.", 
+        "Set a variable value.", "(string:name, variant:value):none", 
+        "Get a variable value", "(string:name):variant" );
     
-	wxString name = cxt.arg(0).as_string();
+    var_map *vmap = SPFrame::Instance().GetSolarFieldObject()->getVarMap();
+    
+    wxString name = cxt.arg(0).as_string();
     if (cxt.arg_count() == 1)  //Get a variable
     {
         if( vmap->_varptrs.find( name.ToStdString() ) == vmap->_varptrs.end() ) 
@@ -299,10 +299,10 @@ static void _sp_var( lk::invoke_t &cxt )
 
         }
      
-	}
-	else if (cxt.arg_count() == 2)      //set variable
-	{
-	
+    }
+    else if (cxt.arg_count() == 2)      //set variable
+    {
+    
         std::string arg = cxt.arg(1).as_string();
         std::string sname = (std::string)name;
             
@@ -340,7 +340,7 @@ static void _sp_var( lk::invoke_t &cxt )
             }
         }
 
-	}
+    }
 }
 
 
@@ -399,11 +399,11 @@ static void _generate_layout( lk::invoke_t &cxt )
     }
 
     wxString v=(wxString)V->amb.weather_file.val;
-	F.UpdateClimateFile(v, *V, true); 
-	F.UpdateDesignSelect( V->sf.des_sim_detail.mapval(), *V );
-	SF->Clean();
-	SF->Create(*V);
-	bool ok = F.DoManagedLayout(*SF, *V);		//Returns TRUE if successful
+    F.UpdateClimateFile(v, *V, true); 
+    F.UpdateDesignSelect( V->sf.des_sim_detail.mapval(), *V );
+    SF->Clean();
+    SF->Create(*V);
+    bool ok = F.DoManagedLayout(*SF, *V);        //Returns TRUE if successful
 
     cxt.result().assign( ok );
 
@@ -470,47 +470,47 @@ static void _simulate( lk::invoke_t &cxt )
     }
 
     //Which type of simulation is this?
-	int simtype = V->flux.flux_model.mapval();	//0=Delsol, 1=Soltrace
-	
-	//Set up field, update aimpoints, and simulate at the performance sun position
-	//SolarField::PrepareFieldLayout(*SF, 0, true);	
+    int simtype = V->flux.flux_model.mapval();    //0=Delsol, 1=Soltrace
+    
+    //Set up field, update aimpoints, and simulate at the performance sun position
+    //SolarField::PrepareFieldLayout(*SF, 0, true);    
 
     Hvector *helios = SF->getHeliostats();
 
-	if(! interop::PerformanceSimulationPrep(*SF, *helios, simtype) ) 
+    if(! interop::PerformanceSimulationPrep(*SF, *helios, simtype) ) 
     {
         cxt.result().assign( 0. );
         return;
     }
     
     Vect sun = Ambient::calcSunVectorFromAzZen( SF->getVarMap()->flux.flux_solar_az.Val() * D2R, (90. - SF->getVarMap()->flux.flux_solar_el.Val())*D2R );
-	
-    SF->calcHeliostatShadows(sun);	
+    
+    SF->calcHeliostatShadows(sun);    
     if(SF->ErrCheck())
     {
         cxt.result().assign( 0. );
         return;
     }
-	
+    
     F.GetResultsObject()->clear();
     F.GetResultsObject()->resize(1);
 
     F.StartSimTimer();
 
-	//Which type of simulation?
+    //Which type of simulation?
     bool ok;
     switch(simtype)
     {
     case var_fluxsim::FLUX_MODEL::HERMITE_ANALYTICAL:
-		ok = F.HermiteFluxSimulationHandler(*SF, *helios);
+        ok = F.HermiteFluxSimulationHandler(*SF, *helios);
         break;
     case var_fluxsim::FLUX_MODEL::SOLTRACE:
-		ok = F.SolTraceFluxSimulation(*SF, *V, *helios);
+        ok = F.SolTraceFluxSimulation(*SF, *V, *helios);
         break;
     default:
-		ok = false;
+        ok = false;
         break;
-	}
+    }
 
     F.StopSimTimer();
     SF->getSimInfoObject()->Reset();
@@ -540,7 +540,7 @@ static void _summary_results( lk::invoke_t &cxt )
 
     F.CreateResultsTable(results->front(), table);
 
-	lk::vardata_t &r = cxt.result();
+    lk::vardata_t &r = cxt.result();
     r.empty_hash();
 
     for(int i=0; i<table.GetNumberRows(); i++)
@@ -810,57 +810,62 @@ static void _optimize( lk::invoke_t &cxt )
 
     if(n_threads > 1)
     {
-		AutoPilot_MT *SFopt_MT = new AutoPilot_MT();
-			
-		SFopt_MT->SetSummaryCallback( LKInfoCallback, SF->getSimInfoObject()->getCallbackData());
-			
-		//set up the weather data for simulation
-		vector<string> wdata;
-		for(int i=0; i<local_wfdat->size(); i++)
-			wdata.push_back( local_wfdat->at(i) );
-		SFopt_MT->GenerateDesignPointSimulations( *V, wdata );
-			
-		//Do the expert setup
-		SFopt_MT->Setup(*V, true);
-			
-		//run the optimization
+        AutoPilot_MT *SFopt_MT = new AutoPilot_MT();
+            
+        SFopt_MT->SetSummaryCallback( LKInfoCallback, SF->getSimInfoObject()->getCallbackData());
+            
+        //set up the weather data for simulation
+        vector<string> wdata;
+        for(int i=0; i<local_wfdat->size(); i++)
+            wdata.push_back( local_wfdat->at(i) );
+        SFopt_MT->GenerateDesignPointSimulations( *V, wdata );
+            
+        //Do the expert setup
+        SFopt_MT->Setup(*V, true);
+            
+        //run the optimization
         SFopt_MT->Optimize(V->opt.algorithm.mapval(), optvars, upper, lower, stepsize, &names);
 
-		//get resulting info
+        //get resulting info
         SFopt_MT->GetOptimizationObject()->getOptimizationSimulationHistory( eval_points, obj_vals, flux_vals );
 
-        try{
-			delete SFopt_MT;
-		}
-		catch(...){}
-	}
-	else{
+        try
+        {
+            delete SFopt_MT;
+        }
+        catch(...)
+        {}
+    }
+    else
+    {
 
-		AutoPilot_S *SFopt_S = new AutoPilot_S();
-		SFopt_S->SetSummaryCallback( LKInfoCallback, SF->getSimInfoObject()->getCallbackData());
+        AutoPilot_S *SFopt_S = new AutoPilot_S();
+        SFopt_S->SetSummaryCallback( LKInfoCallback, SF->getSimInfoObject()->getCallbackData());
 
-		//set up the weather data for simulation
-		vector<string> wdata;
-		for(int i=0; i<local_wfdat->size(); i++)
-			wdata.push_back( local_wfdat->at(i) );
-		SFopt_S->GenerateDesignPointSimulations( *V, wdata );
-			
-		//Do the expert setup
-		SFopt_S->Setup(*V, true);
-			
-		//run the optimization
+        //set up the weather data for simulation
+        vector<string> wdata;
+        for(int i=0; i<local_wfdat->size(); i++)
+            wdata.push_back( local_wfdat->at(i) );
+        SFopt_S->GenerateDesignPointSimulations( *V, wdata );
+            
+        //Do the expert setup
+        SFopt_S->Setup(*V, true);
+            
+        //run the optimization
         SFopt_S->Optimize(V->opt.algorithm.mapval(), optvars, upper, lower, stepsize, &names);
 
         //get resulting info
         SFopt_S->GetOptimizationObject()->getOptimizationSimulationHistory( eval_points, obj_vals, flux_vals );
 
 
-		try{
-			delete SFopt_S;
-		}
-		catch(...){}
-	}
-		
+        try
+        {
+            delete SFopt_S;
+        }
+        catch(...)
+        {}
+            }
+        
 
     //set up return structure
     //result/objective/flux/iterations
@@ -1200,18 +1205,18 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
 
             //load the svg file and parse it as an xml document
             using namespace rapidxml;
-	        //Read in the file to a string
-	        string file;		//contents of the file
-	        string eol;
-	        ioutil::read_file(fname, file, eol);
-	
-	        char *fstr = new char[file.size()+1];
-	        strncpy(fstr, (const char*)file.c_str(), file.size());
-	        fstr[file.size()] = 0;	//Null terminator
+            //Read in the file to a string
+            string file;        //contents of the file
+            string eol;
+            ioutil::read_file(fname, file, eol);
+    
+            char *fstr = new char[file.size()+1];
+            strncpy(fstr, (const char*)file.c_str(), file.size());
+            fstr[file.size()] = 0;    //Null terminator
 
             xml_document<> doc;
-	        doc.parse<0>(fstr);
-	        xml_node<> *top_node = doc.first_node();	//<data>
+            doc.parse<0>(fstr);
+            xml_node<> *top_node = doc.first_node();    //<data>
 
             xml_node<> *node = top_node->first_node("g");
             xml_node<> *tnode = node->first_node("g");
@@ -1334,8 +1339,9 @@ static void _modify_heliostats( lk::invoke_t &cxt )
         {
             helios.push_back( hmap->at( hids.at(i) ) );
         }
-        catch(...){}
-    }
+        catch(...)
+        {}
+            }
     
     //get the variable table
     lk::varhash_t *vars = cxt.arg(1).hash();
@@ -1597,7 +1603,7 @@ static void _update_interface( lk::invoke_t &cxt )
 
 static lk::fcall_t *solarpilot_functions()
 {
-	static lk::fcall_t st[] = {
+    static lk::fcall_t st[] = {
         _generate_layout,
         
         _add_receiver,
@@ -1623,9 +1629,9 @@ static lk::fcall_t *solarpilot_functions()
         _update_interface,
         _add_land,
         _clear_land,
-		0 };
+        0 };
 
-	return (lk::fcall_t*)st;
+    return (lk::fcall_t*)st;
 }
 
 
@@ -1634,50 +1640,50 @@ static lk::fcall_t *solarpilot_functions()
 //END_EVENT_TABLE()
 
 SolarPILOTScriptWindow::SolarPILOTScriptWindow( wxWindow *parent, int id )
-	: wxLKScriptWindow( parent, id )
+    : wxLKScriptWindow( parent, id )
 {
-	GetEditor()->RegisterLibrary( solarpilot_functions(), "SolarPILOT Functions");
+    GetEditor()->RegisterLibrary( solarpilot_functions(), "SolarPILOT Functions");
     SPFrame::Instance().GetSolarFieldObject()->getSimInfoObject()->setCallbackFunction(LKInfoCallback, (void*)this);
 }
 
 void SolarPILOTScriptWindow::OnHelp( )
 {
-	//MainWindow::ShowHelpTopic( "macros" );
+    //MainWindow::ShowHelpTopic( "macros" );
 }
 
 void SolarPILOTScriptWindow::OnScriptStarted()
 {
-	// let the SAM window be the parent for plots
-	// rather than the current toplevel window so that they
-	// hang around after a script window is closed
-	//wxLKSetToplevelParentForPlots( &MainWindow::Instance() );
+    // let the SAM window be the parent for plots
+    // rather than the current toplevel window so that they
+    // hang around after a script window is closed
+    //wxLKSetToplevelParentForPlots( &MainWindow::Instance() );
 
-	// make sure there's no current plot active
-	//wxLKSetPlotTarget( NULL );
+    // make sure there's no current plot active
+    //wxLKSetPlotTarget( NULL );
 
 
 }
 
 void SolarPILOTScriptWindow::OnScriptStopped()
 {
-	//MainWindow::Instance().GetTrace()->CancelTrace();
+    //MainWindow::Instance().GetTrace()->CancelTrace();
 }
 
 SolarPILOTScriptWindowFactory::SolarPILOTScriptWindowFactory()
 {
-	// nothing to do
+    // nothing to do
 }
 
 SolarPILOTScriptWindowFactory::~SolarPILOTScriptWindowFactory()
 {
-	// nothing to do
+    // nothing to do
 }
 
 wxLKScriptWindow *SolarPILOTScriptWindowFactory::Create()
 {
-	wxLKScriptWindow *sw = new SolarPILOTScriptWindow( &SPFrame::Instance(), wxID_ANY );
+    wxLKScriptWindow *sw = new SolarPILOTScriptWindow( &SPFrame::Instance(), wxID_ANY );
 #ifdef __WXMSW__
-	sw->SetIcon( wxICON( appicon ) );
-#endif	
-	return sw;
+    sw->SetIcon( wxICON( appicon ) );
+#endif    
+    return sw;
 }

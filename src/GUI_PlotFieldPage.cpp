@@ -1,8 +1,10 @@
 #include "GUI_main.h"
 
 
-void SPFrame::CreateFieldPlotPage(wxScrolledWindow *parent, wxArrayStr &choices, int selection){
-	/* 
+
+void SPFrame::CreateFieldPlotPage(wxScrolledWindow *parent, wxArrayStr &choices, int selection)
+{
+    /* 
 	Create the master receiver page and return a pointer
 	
 	Options for values to plot are:
@@ -129,10 +131,14 @@ void SPFrame::CreateFieldPlotPage(wxScrolledWindow *parent, wxArrayStr &choices,
 	return;
 }
 
-void SPFrame::LayoutSimulationExport(SolarField &SF, wxString &fname, vector<bool> &options, wxString &header, wxString &delim, bool quiet){
-	wxTextFile fobj(fname);
-	if(! (fobj.Exists() ? fobj.Open() : fobj.Create() ) ){
-		if(! quiet)
+
+void SPFrame::LayoutSimulationExport(SolarField &SF, wxString &fname, vector<bool> &options, wxString &header, wxString &delim, bool quiet)
+{
+    wxTextFile fobj(fname);
+
+	if(! (fobj.Exists() ? fobj.Open() : fobj.Create() ) )
+	{
+	    if(! quiet)
 			PopMessage(wxT("The file could not be opened. Please ensure that the file is not open or write-protected."), wxEmptyString, wxOK);
 		
 		return;
@@ -172,9 +178,12 @@ void SPFrame::LayoutSimulationExport(SolarField &SF, wxString &fname, vector<boo
 	hdat.Append( options.at(ind++) ? wxT("Power [kW],") : wxEmptyString );		//12 | Heliostat delivered power
 	hdat.Append( options.at(ind++) ? wxT("Ranking metric,") : wxEmptyString );		//13 | Heliostat ranking metric
 	hdat.Append( options.at(ind++) ? wxT("Shadow coords-") : wxEmptyString );		//14  | Heliostat shadow coordinates
-	if(options.at(14)){
-		for(unsigned int i=0; i<SF.getHeliostats()->at(0)->getCornerCoords()->size(); i++){
-			wxString s;
+
+	if(options.at(14))
+	{
+	    for(unsigned int i=0; i<SF.getHeliostats()->at(0)->getCornerCoords()->size(); i++)
+	    {
+	        wxString s;
 			s.Printf(wxT("x%d,y%d,z%d,"), i, i, i);
 			hdat.Append(s);
 		}
@@ -202,8 +211,10 @@ void SPFrame::LayoutSimulationExport(SolarField &SF, wxString &fname, vector<boo
 	fmt.push_back( options.at(ind++) ? wxT("%.2f,") : wxEmptyString );		//12 | Heliostat delivered power
 	fmt.push_back( options.at(ind++) ? wxT("%f,") : wxEmptyString );		//13 | Heliostat ranking metric
 	fmt.push_back( options.at(ind++) ? wxT("%.2f,%.2f,%.2f,") : wxEmptyString );	//14  | Heliostat shadow coordinates
-	for(unsigned int i=0; i<fmt.size(); i++){
-		fmt[i].Replace(wxT(","), delim, true);
+
+	for(unsigned int i=0; i<fmt.size(); i++)
+	{
+	    fmt[i].Replace(wxT(","), delim, true);
 	}
 	fmt.push_back( options.at(ind++) ? wxT("%.4f,") : wxEmptyString );	//15 | Cloudiness
 		
@@ -217,8 +228,10 @@ void SPFrame::LayoutSimulationExport(SolarField &SF, wxString &fname, vector<boo
 	vector<double> stats;
 	vector<sp_point>* corners;
 
-	for(int i=0; i<npos; i++){
-		H = SF.getHeliostats()->at(i);
+
+	for(int i=0; i<npos; i++)
+	{
+	    H = SF.getHeliostats()->at(i);
 		corners = H->getCornerCoords();
 		loc = H->getLocation();
 		aim = H->getAimPoint();
@@ -228,85 +241,118 @@ void SPFrame::LayoutSimulationExport(SolarField &SF, wxString &fname, vector<boo
 		line.Clear();
 		wxString s;
 		//0  | Heliostat ID Number
-		if( options.at(0) ){
-			s.Printf(fmt.at(0), H->getId());
+
+		if( options.at(0) )
+		{
+		    s.Printf(fmt.at(0), H->getId());
 			line.Append(s);
 		}
 		//1  | Heliostat location (x,y,z)
-		if( options.at(1) ){
-			s.Printf(fmt.at(1), loc->x, loc->y, loc->z);
+
+		if( options.at(1) )
+		{
+		    s.Printf(fmt.at(1), loc->x, loc->y, loc->z);
 			line.Append(s);
 		}
 		//2  | Heliostat aim point on the receiver (x,y,z)
-		if( options.at(2) ){
-			s.Printf(fmt.at(2), aim->x, aim->y, aim->z);
+
+		if( options.at(2) )
+		{
+		    s.Printf(fmt.at(2), aim->x, aim->y, aim->z);
 			line.Append(s);
 		}
 		//3  | Tracking vector (i,j,k)
-		if( options.at(3) ){
-			s.Printf(fmt.at(3), track->i, track->j, track->k);
+
+		if( options.at(3) )
+		{
+		    s.Printf(fmt.at(3), track->i, track->j, track->k);
 			line.Append(s);
 		}
 		//4  | Heliostat reflectivity
-		if( options.at(4) ){
-			s.Printf(fmt.at(4), stats.at(helio_perf_data::PERF_VALUES::REFLECTIVITY));
+
+		if( options.at(4) )
+		{
+		    s.Printf(fmt.at(4), stats.at(helio_perf_data::PERF_VALUES::REFLECTIVITY));
 			line.Append(s);
 		}
 		//5  | Heliostat soiling factor
-		if( options.at(5) ){
-			s.Printf(fmt.at(5), stats.at(helio_perf_data::PERF_VALUES::SOILING));
+
+		if( options.at(5) )
+		{
+		    s.Printf(fmt.at(5), stats.at(helio_perf_data::PERF_VALUES::SOILING));
 			line.Append(s);
 		}
 		//6  | Total heliostat efficiency
-		if( options.at(6) ){
-			s.Printf(fmt.at(6), stats.at(helio_perf_data::PERF_VALUES::ETA_TOT));
+
+		if( options.at(6) )
+		{
+		    s.Printf(fmt.at(6), stats.at(helio_perf_data::PERF_VALUES::ETA_TOT));
 			line.Append(s);
 		}
 		//7  | Heliostat cosine efficiency
-		if( options.at(7) ){
-			s.Printf(fmt.at(7), stats.at(helio_perf_data::PERF_VALUES::ETA_COS));
+
+		if( options.at(7) )
+		{
+		    s.Printf(fmt.at(7), stats.at(helio_perf_data::PERF_VALUES::ETA_COS));
 			line.Append(s);
 		}
 		//8  | Heliostat attenuation efficiency
-		if( options.at(8) ){
-			s.Printf(fmt.at(8), stats.at(helio_perf_data::PERF_VALUES::ETA_ATT));
+
+		if( options.at(8) )
+		{
+		    s.Printf(fmt.at(8), stats.at(helio_perf_data::PERF_VALUES::ETA_ATT));
 			line.Append(s);
 		}
 		//9 | Heliostat blocking efficiency
-		if( options.at(9) ){
-			s.Printf(fmt.at(9), stats.at(helio_perf_data::PERF_VALUES::ETA_BLOCK));
+
+		if( options.at(9) )
+		{
+		    s.Printf(fmt.at(9), stats.at(helio_perf_data::PERF_VALUES::ETA_BLOCK));
 			line.Append(s);
 		}
 		//10 | Heliostat shadowing efficiency
-		if( options.at(10) ){
-			s.Printf(fmt.at(10), stats.at(helio_perf_data::PERF_VALUES::ETA_SHADOW));
+
+		if( options.at(10) )
+		{
+		    s.Printf(fmt.at(10), stats.at(helio_perf_data::PERF_VALUES::ETA_SHADOW));
 			line.Append(s);
 		}
 		//11 | Heliostat intercept efficiency
-		if( options.at(11) ){
-			s.Printf(fmt.at(11), stats.at(helio_perf_data::PERF_VALUES::ETA_INT));
+
+		if( options.at(11) )
+		{
+		    s.Printf(fmt.at(11), stats.at(helio_perf_data::PERF_VALUES::ETA_INT));
 			line.Append(s);
 		}
 		//12 | Heliostat delivered power
-		if( options.at(12) ){
-			s.Printf(fmt.at(12), stats.at(helio_perf_data::PERF_VALUES::POWER_TO_REC));
+
+		if( options.at(12) )
+		{
+		    s.Printf(fmt.at(12), stats.at(helio_perf_data::PERF_VALUES::POWER_TO_REC));
 			line.Append(s);
 		}
 		//13 | Heliostat ranking metric
-		if( options.at(13) ){
-			s.Printf(fmt.at(13), stats.at(helio_perf_data::PERF_VALUES::RANK_METRIC));
+
+		if( options.at(13) )
+		{
+		    s.Printf(fmt.at(13), stats.at(helio_perf_data::PERF_VALUES::RANK_METRIC));
 			line.Append(s);
 		}
 		//14  | Heliostat shadow coordinates
-		if( options.at(14) ){
-			for(unsigned int j=0; j<corners->size(); j++){
-				s.Printf(fmt.at(14), corners->at(j).x, corners->at(j).y, corners->at(j).z);
+
+		if( options.at(14) )
+		{
+		    for(unsigned int j=0; j<corners->size(); j++)
+		    {
+		        s.Printf(fmt.at(14), corners->at(j).x, corners->at(j).y, corners->at(j).z);
 				line.Append(s);
 			}
 		}
 		//15  | Cloudiness
-		if( options.at(15) ){
-			s.Printf(fmt.at(15), stats.at(helio_perf_data::PERF_VALUES::ETA_CLOUD));
+
+		if( options.at(15) )
+		{
+		    s.Printf(fmt.at(15), stats.at(helio_perf_data::PERF_VALUES::ETA_CLOUD));
 			line.Append(s);
 		}
 			
@@ -320,13 +366,17 @@ void SPFrame::LayoutSimulationExport(SolarField &SF, wxString &fname, vector<boo
 	if(!quiet) PopMessage(wxT("File successfully created."));
 }
 
-void SPFrame::OnLayoutSimulationExport( wxCommandEvent &WXUNUSED(event)){
-	if(! CheckLicense() ) return;
+
+void SPFrame::OnLayoutSimulationExport( wxCommandEvent &WXUNUSED(event))
+{
+    if(! CheckLicense() ) return;
 	//Save the simulation results to a text file
 	
 	//Check to see whether we have any useful data to export
-	if(_SF.getHeliostats()->size() == 0){
-		PopMessage(wxT("No simulation data to export! Please run a simulation first."), wxEmptyString, wxOK);
+
+	if(_SF.getHeliostats()->size() == 0)
+	{
+	    PopMessage(wxT("No simulation data to export! Please run a simulation first."), wxEmptyString, wxOK);
 		return;
 	}
 	
@@ -334,8 +384,10 @@ void SPFrame::OnLayoutSimulationExport( wxCommandEvent &WXUNUSED(event)){
 	layout_export_dialog *ld = new layout_export_dialog(this, wxID_ANY, wxT("Data export options"));
 	vector<bool> options;
 	wxString delim;
-	if( ld->ShowModal() == wxID_OK ){
-		/*
+
+	if( ld->ShowModal() == wxID_OK )
+	{
+	    /*
 		get the setting options. by index, these are:
 		0  | Heliostat ID Number
 		1  | Heliostat location (x,y,z)
@@ -359,16 +411,19 @@ void SPFrame::OnLayoutSimulationExport( wxCommandEvent &WXUNUSED(event)){
 		delim = ld->getDelimiter();
 		ld->Destroy();
 	}
-	else{	
-		ld->Destroy();
+	else
+	{	
+	    ld->Destroy();
 		return;
 	}
 
 
 	wxFileDialog *dlg = new wxFileDialog(this, wxT("Export data to a file"), wxEmptyString, wxT("simulation_results.csv"),
 		wxT("Data file (*.csv)|*.csv"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
-	if(dlg->ShowModal()==wxID_OK){
 
+	if(dlg->ShowModal()==wxID_OK)
+	{
+	    
 		//Set up the text file
 		wxString fname = dlg->GetPath();
 		wxString hdr = wxEmptyString;
@@ -379,8 +434,10 @@ void SPFrame::OnLayoutSimulationExport( wxCommandEvent &WXUNUSED(event)){
 
 }
 
-void SPFrame::OnPlotSelectCombo( wxCommandEvent &event){
-	/* The selection for the plot to display on the field plot page has been changed */
+
+void SPFrame::OnPlotSelectCombo( wxCommandEvent &event)
+{
+    /* The selection for the plot to display on the field plot page has been changed */
 	wxString tsel = ( (wxComboBox*)event.GetEventObject() )->GetStringSelection();
 
     std::vector< std::string > choices = _plot_frame->GetPlotChoices();
@@ -420,13 +477,18 @@ public:
 		dpi_sizer->Add(dpi_input, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
 		this->SetSizerAndFit(dpi_sizer);
 	};
-	int GetPPI(){ 
-		return _dpi; 
+
+	int GetPPI()
+	{ 
+	    return _dpi; 
 	}
 	
-	void OnDPIText( wxCommandEvent &WXUNUSED(evt)){
-		try{
-			string val = (string)dpi_input->GetValue();
+
+	void OnDPIText( wxCommandEvent &WXUNUSED(evt))
+	{
+	    try
+	    {
+	        string val = (string)dpi_input->GetValue();
 			int newdpi;
 			to_integer(val, &newdpi);
 			_dpi = newdpi;
@@ -445,8 +507,10 @@ static wxWindow* createFieldPlotSavePanelCtrls(wxWindow *parent)
 ---------------------------------------------------------------------
 */
 
-void SPFrame::OnBitmapSave( wxCommandEvent &WXUNUSED(event)){
-	wxFileDialog dlg(this, wxT("Export to a file"), wxEmptyString, "plot.png", 
+
+void SPFrame::OnBitmapSave( wxCommandEvent &WXUNUSED(event))
+{
+    wxFileDialog dlg(this, wxT("Export to a file"), wxEmptyString, "plot.png", 
 		wxT("Image files (*.jpg;*.png;*.bmp;*.tif)|*.jpg;*.png;*.bmp;*.tif"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
 
 	//custom control window for DPI setting
@@ -454,8 +518,10 @@ void SPFrame::OnBitmapSave( wxCommandEvent &WXUNUSED(event)){
 
 	dlg.SetExtraControlCreator(&createFieldPlotSavePanelCtrls);
 
-	if(dlg.ShowModal()==wxID_OK){
-		//Save the bitmap plot to a file.
+
+	if(dlg.ShowModal()==wxID_OK)
+	{
+	    //Save the bitmap plot to a file.
 		int oldppi = _plot_frame->GetPPI();
 		wxWindow * const extra = dlg.GetExtraControl();
 		int ppi = static_cast<FieldPlotSavePanelCtrls*>(extra)->GetPPI();
@@ -474,20 +540,29 @@ void SPFrame::OnBitmapSave( wxCommandEvent &WXUNUSED(event)){
 		vector<string> seps = split(fpath.ToStdString(), ".");
 		string ftype = lower_case(seps.at(seps.size()-1));
 		
-		if(ftype == "jpg" || ftype == "jpeg"){ // jpeg
-			image.SaveFile( fpath, wxBITMAP_TYPE_JPEG );
+
+		if(ftype == "jpg" || ftype == "jpeg")
+		{ // jpeg
+		    image.SaveFile( fpath, wxBITMAP_TYPE_JPEG );
 		}
-		else if(ftype == "png"){ //png
-			image.SaveFile( fpath, wxBITMAP_TYPE_PNG );
+
+		else if(ftype == "png")
+		{ //png
+		    image.SaveFile( fpath, wxBITMAP_TYPE_PNG );
 		}
-		else if(ftype == "bmp"){ //bmp
-			image.SaveFile( fpath, wxBITMAP_TYPE_BMP );
+
+		else if(ftype == "bmp")
+		{ //bmp
+		    image.SaveFile( fpath, wxBITMAP_TYPE_BMP );
 		}
-		else if(ftype == "tif"){
-			image.SaveFile( fpath, wxBITMAP_TYPE_TIF );
+
+		else if(ftype == "tif")
+		{
+		    image.SaveFile( fpath, wxBITMAP_TYPE_TIF );
 		}
-		else{
-			PopMessage("Invalid image file type! Please choose from JPG, PNG, BMP, or TIFF.");
+		else
+		{
+		    PopMessage("Invalid image file type! Please choose from JPG, PNG, BMP, or TIFF.");
 			return;
 		}
 		

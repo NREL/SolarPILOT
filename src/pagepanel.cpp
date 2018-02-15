@@ -181,7 +181,7 @@ void PagePanel::InsertPage(int pagepos, wxWindow *input_page, wxString pagename,
     int dwidth,dheight;
     GetPageDrawingSize(dheight, dwidth);
 
-	SetScrollbars(10, 10, dwidth/10, dheight/10);
+    SetScrollbars(10, 10, dwidth/10, dheight/10);
 
 }
 
@@ -249,8 +249,8 @@ std::string PagePanel::GetPageName( int order_index )
 void PagePanel::OnPaint( wxPaintEvent &WXUNUSED(event) )
 {
     wxPaintDC dc( this );
-	PrepareDC( dc );
-	
+    PrepareDC( dc );
+    
     //draw the background
     dc.SetPen( wxPen( wxColour(0,0,100,0), 1, wxPENSTYLE_SOLID ) );
     dc.SetBrush( wxBrush( wxColour(255,255,255,1), wxBRUSHSTYLE_SOLID ) );

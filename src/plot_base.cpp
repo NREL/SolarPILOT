@@ -4,103 +4,122 @@
 #include <wx/dcbuffer.h>
 #include <wx/dcgraph.h>
 
-PlotBase::PlotBase(){
-	Create();
+PlotBase::PlotBase()
+{
+    Create();
 }
 
-int PlotBase::GetFontSize(){return _hfont;}
-int PlotBase::GetResolutionMultiplier(){return _resmult;}
-int PlotBase::GetColormap(){return _color_map;}
-	
-void PlotBase::Create(){
-	//Set default values
-	_xaxmax = 1.;
-	_xaxmin = 0.;
-	_yaxmax = 1.;
-	_yaxmin = 0.;
-	_zaxmin = 0.;
-	_zaxmax = 0.;
+int PlotBase::GetFontSize()
+{
+    return _hfont;
+}
+int PlotBase::GetResolutionMultiplier()
+{
+    return _resmult;
+}
+int PlotBase::GetColormap()
+{
+    return _color_map;
+}
+    
+void PlotBase::Create()
+{
+    //Set default values
+    _xaxmax = 1.;
+    _xaxmin = 0.;
+    _yaxmax = 1.;
+    _yaxmin = 0.;
+    _zaxmin = 0.;
+    _zaxmax = 0.;
     _z_autoscale = true;
-	_hfont = 9;
-	_resmult = 5;
-	_color_map = COLORMAP::PARULA;
-	_xlab = "";
-	_ylab = "";
-	_units = "";
-	_wrap_values = false;
-	_x_reversed = false;
-	//Define colors
-	_gray.Set("#d4d4d4");
-	_white.Set("#ffffff");
-	_black.Set("#000000");
-	_grad_high.Set("#FF0000");
-	_grad_low.Set("#0040FF");	
+    _hfont = 9;
+    _resmult = 5;
+    _color_map = COLORMAP::PARULA;
+    _xlab = "";
+    _ylab = "";
+    _units = "";
+    _wrap_values = false;
+    _x_reversed = false;
+    //Define colors
+    _gray.Set("#d4d4d4");
+    _white.Set("#ffffff");
+    _black.Set("#000000");
+    _grad_high.Set("#FF0000");
+    _grad_low.Set("#0040FF");    
 }
 
-void PlotBase::DrawScaledPolygon( wxDC &dc, double ppx, double ppy, double origin[2], double x[], double y[], int n_points){
-	/*
-	Take a polygon with n_points values (not closed) and indices of x[] and y[] of length n_points,
-	and draw the polygon on the device. The X,Y coordinates will be scaled according to the maximum 
-	extents w and h.
+void PlotBase::DrawScaledPolygon( wxDC &dc, double ppx, double ppy, double origin[2], double x[], double y[], int n_points)
+{
+    /*
+    Take a polygon with n_points values (not closed) and indices of x[] and y[] of length n_points,
+    and draw the polygon on the device. The X,Y coordinates will be scaled according to the maximum 
+    extents w and h.
 
-	ppx			Pixels per unit on the X axis
-	ppy			Pixels per unit on the Y axis
-	origin[] {x-pos, y-pos} Location in pixels of the plot origin
+    ppx            Pixels per unit on the X axis
+    ppy            Pixels per unit on the Y axis
+    origin[] {x-pos, y-pos} Location in pixels of the plot origin
 
-	Note that the DC coordinates are (0,0) at the upper left corner, positive X to the right, 
-	and negative Y downward.
-	
-	*/
-	
-	//Create an array of points of the items
-	wxPoint *points;
-	points = new wxPoint[n_points];
+    Note that the DC coordinates are (0,0) at the upper left corner, positive X to the right, 
+    and negative Y downward.
+    
+    */
+    
+    //Create an array of points of the items
+    wxPoint *points;
+    points = new wxPoint[n_points];
 
-	for(int i=0; i<n_points; i++){
-		points[i].x = origin[0] - x[i]*ppx;
-		points[i].y = origin[1] - y[i]*ppy;
-	}
+    for(int i=0; i<n_points; i++)
+    {
+        points[i].x = origin[0] - x[i]*ppx;
+        points[i].y = origin[1] - y[i]*ppy;
+    }
 
-	dc.DrawPolygon(n_points, points);
+    dc.DrawPolygon(n_points, points);
 
-	delete [] points;
+    delete [] points;
 }
 
-void PlotBase::ColorGradientHotCold(wxColour &col, double index){
-	/* 
-	Index from 0-1 indicating the position on the scale from COLD to HOT
+void PlotBase::ColorGradientHotCold(wxColour &col, double index)
+{
+    /* 
+    Index from 0-1 indicating the position on the scale from COLD to HOT
 
-	Returns value indicating RRRGGGBBB on a scale of 0-255 for each integer triplet
-	*/
-	double index_use = index < 1. ? (index < 0. ? 0. : index) : (index > 1. ? 1. : index);
-	col.Set(int(index_use*255.), 0, int((1.- index_use)*255.));
+    Returns value indicating RRRGGGBBB on a scale of 0-255 for each integer triplet
+    */
+    double index_use = index < 1. ? (index < 0. ? 0. : index) : (index > 1. ? 1. : index);
+    col.Set(int(index_use*255.), 0, int((1.- index_use)*255.));
 }
 
-void PlotBase::ColorGradientJet(wxColour &col, double index){
-	double index_use = index < 1. ? (index < 0. ? 0. : index) : (index > 1. ? 1. : index);
+void PlotBase::ColorGradientJet(wxColour &col, double index)
+{
+    double index_use = index < 1. ? (index < 0. ? 0. : index) : (index > 1. ? 1. : index);
 
-	if(index_use > .75){
-		col.Set(255, 255-int((index_use -.75)/.25*255), 0);
-		return;
-	}
-	if(index_use > 0.5){
-		col.Set(int((index_use -.5)/.25*255) , 255, 0);
-		return;
-	}
-	if(index_use > 0.25){
-		col.Set(0, 255, 255 - int( (index_use -.25)/.25 * 255));
-		return;
-	}
+    if(index_use > .75)
+    {
+        col.Set(255, 255-int((index_use -.75)/.25*255), 0);
+        return;
+    }
+    if(index_use > 0.5)
+    {
+        col.Set(int((index_use -.5)/.25*255) , 255, 0);
+        return;
+    }
+    if(index_use > 0.25)
+    {
+        col.Set(0, 255, 255 - int( (index_use -.25)/.25 * 255));
+        return;
+    }
 
-	col.Set(0, int(index_use /.25*255), 255);
-	return;	
+    col.Set(0, int(index_use /.25*255), 255);
+    return;    
 }
 
-void PlotBase::ColorGradientGrayscale(wxColour &col, double index){
-
-	double index_use = index < 1. ? (index < 0. ? 0. : index) : (index > 1. ? 1. : index);
-	col.Set(255.*index_use, 255.*index_use, 255.*index_use);
-	return;
+void PlotBase::ColorGradientGrayscale(wxColour &col, double index)
+{
+    
+    double index_use = index < 1. ? (index < 0. ? 0. : index) : (index > 1. ? 1. : index);
+    col.Set(255.*index_use, 255.*index_use, 255.*index_use);
+    return;
 }
 
 void PlotBase::ColorGradientParula(wxColour &col, double index)
@@ -208,7 +227,7 @@ void PlotBase::ColorGradientParula(wxColour &col, double index)
       248.9565,  250.6905,   13.7190
       };
 
-	double index_use = index < 1. ? (index < 0. ? 0. : index) : (index > 1. ? 1. : index);
+    double index_use = index < 1. ? (index < 0. ? 0. : index) : (index > 1. ? 1. : index);
     int nc = sizeof(parula)/sizeof(double)/3;
 
     int hi = (int)(index_use*nc)+1;
@@ -237,337 +256,390 @@ void PlotBase::ColorGradientParula(wxColour &col, double index)
 }
 
 
-double PlotBase::calcScale(double span, int segments){
-	/* 
-	Given a total scale span and a desired number of segments, return a 
-	convenient scale segment length.
-	*/
+double PlotBase::calcScale(double span, int segments)
+{
+    /* 
+    Given a total scale span and a desired number of segments, return a 
+    convenient scale segment length.
+    */
 
-	double
-		f = span/double(segments),
-		flog = log10(f),
-		pflog = pow(10,floor(flog)),
-		basis = f/pflog,
-		tdiff = ceil(basis)-basis,
-		bdiff = basis - floor(basis),
-		mdiff = fabs(basis - (ceil(basis)+floor(basis))/2.);
-	double diffmin = tdiff;
-	int id=0;
-	if(bdiff<diffmin) {diffmin = bdiff; id = 2;}
-	if(mdiff<diffmin) {diffmin = mdiff; id = 1;}
-	
-	if(id==0){
-		//round up
-		return ceil(basis)*pflog;
-	}
-	else if(id==1){
-		//round to the middle
-		return (floor(basis)+.5)*pflog;
-	}
-	else{
-		//round down
-		return floor(basis)*pflog;
-	}
+    double
+        f = span/double(segments),
+        flog = log10(f),
+        pflog = pow(10,floor(flog)),
+        basis = f/pflog,
+        tdiff = ceil(basis)-basis,
+        bdiff = basis - floor(basis),
+        mdiff = fabs(basis - (ceil(basis)+floor(basis))/2.);
+    double diffmin = tdiff;
+    int id=0;
+    if(bdiff<diffmin) {diffmin = bdiff; id = 2;}
+    if(mdiff<diffmin) {diffmin = mdiff; id = 1;}
+    
+    if(id==0)
+    {
+        //round up
+        return ceil(basis)*pflog;
+    }
+    else if(id==1)
+    {
+        //round to the middle
+        return (floor(basis)+.5)*pflog;
+    }
+    else
+    {
+        //round down
+        return floor(basis)*pflog;
+    }
 }
 
-double PlotBase::bilinearInterp(double xf, double yf, double *Z){
-	/*
-	Take two fractional distances "xf" and "yf" that represent the fractional distance between the 
-	bounds of the square (with lower left -> 0,0 and upper right -> 1,1), and take the array of
-	corner point magnitudes "Z" of size 4 and calculate the bilinearly interpolated z value. 
+double PlotBase::bilinearInterp(double xf, double yf, double *Z)
+{
+    /*
+    Take two fractional distances "xf" and "yf" that represent the fractional distance between the 
+    bounds of the square (with lower left -> 0,0 and upper right -> 1,1), and take the array of
+    corner point magnitudes "Z" of size 4 and calculate the bilinearly interpolated z value. 
 
-	Z is:
-	{f(0,0), f(1,0), f(0,1), f(1,1)}
-	*/
+    Z is:
+    {f(0,0), f(1,0), f(0,1), f(1,1)}
+    */
 
-	/*double
-		b[] = {Z[0],
-			   Z[1] - Z[0],
-			   Z[2] - Z[0],
-			   Z[0] - Z[1] - Z[2] + Z[3]
-			  };
-	return ( b[0] + b[1]*xf + b[2]*yf + b[3]*yf*xf );*/
+    /*double
+        b[] = {Z[0],
+               Z[1] - Z[0],
+               Z[2] - Z[0],
+               Z[0] - Z[1] - Z[2] + Z[3]
+              };
+    return ( b[0] + b[1]*xf + b[2]*yf + b[3]*yf*xf );*/
 
-	return ( Z[0] + (Z[1] - Z[0])*xf + (Z[2] - Z[0])*yf + (Z[0] - Z[1] - Z[2] + Z[3])*yf*xf );
+    return ( Z[0] + (Z[1] - Z[0])*xf + (Z[2] - Z[0])*yf + (Z[0] - Z[1] - Z[2] + Z[3])*yf*xf );
 }
-	
-void PlotBase::SetFontSize(int hfont){_hfont = hfont;}
-
-void PlotBase::SetXAxisRange(double xmin, double xmax){
-	_xaxmin = xmin;
-	_xaxmax = xmax;
-}
-
-void PlotBase::SetYAxisRange(double ymin, double ymax){
-	_yaxmin = ymin;
-	_yaxmax = ymax;
+    
+void PlotBase::SetFontSize(int hfont)
+{_hfont = hfont;}
+    
+void PlotBase::SetXAxisRange(double xmin, double xmax)
+{
+    _xaxmin = xmin;
+    _xaxmax = xmax;
 }
 
-void PlotBase::SetZRange(double zmin, double zmax, bool is_autoscale){
+void PlotBase::SetYAxisRange(double ymin, double ymax)
+{
+    _yaxmin = ymin;
+    _yaxmax = ymax;
+}
+
+void PlotBase::SetZRange(double zmin, double zmax, bool is_autoscale)
+{
     _z_autoscale = is_autoscale;
-	_zaxmin = zmin;
-	_zaxmax = zmax;
+    _zaxmin = zmin;
+    _zaxmax = zmax;
 }
 
-void PlotBase::SetXLabel(wxString &xlab){_xlab = xlab;}
-
-void PlotBase::SetXLabel(const char *xlab){_xlab = (wxString)xlab;}
-
-void PlotBase::SetYLabel(wxString &ylab){_ylab = ylab;}
-
-void PlotBase::SetYLabel(const char *ylab){_ylab = (wxString)ylab;}
-
-void PlotBase::SetUnits(wxString &units){_units = units;}
-
-void PlotBase::SetUnits(const char *units){_units = (wxString)units;}
-
-void PlotBase::SetPlotSize(wxSize &psize){_plotsize = psize;}
-
-void PlotBase::SetResolutionMultiplier(int resmult){_resmult = resmult;}
-
-void PlotBase::SetColormap(int cmap){_color_map = cmap;}
-
-void PlotBase::SetDataWrapping(bool do_wrap){_wrap_values = do_wrap;}
-
-void PlotBase::SetXAxisReversed(bool do_reversed){_x_reversed = do_reversed;}
-
-wxBitmap *PlotBase::GetBitmap(){return &_bitmap;}
-
-void PlotBase::AxesSetup(wxMemoryDC &dc, double minval, double maxval){
-	//Draw the bounding box
-	dc.SetPen( *wxWHITE_PEN );
-	dc.SetBrush( *wxWHITE_BRUSH );
-	wxRect windowRect(wxPoint(0,0), _plotsize);
-	dc.DrawRectangle( windowRect );
-	//dc.SetAxisOrientation(true, true);
-	
-	//The pixel size of the drawing canvas
-	double canvsize[2];
-	canvsize[0] = _plotsize.GetWidth();
-	canvsize[1] = _plotsize.GetHeight();
-	
-	double plot_scale = 0.95;
-		
-	//double xaxcent = (_xaxmax + _xaxmin)/2.;
-	
-	//The total span of each axis in their respective units
-	double
-		xaxspan = _xaxmax - _xaxmin,
-		yaxspan = _yaxmax - _yaxmin;
-
-	//Set buffer areas for the axes
-	dc.SetFont( wxFont(_hfont, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL) );
-	
-	//determine the best number formatting for the x axis labels
-	wxString xfmt;
-	int nxdec = gui_util::CalcBestSigFigs( max(fabs(_xaxmax),fabs(_xaxmin)) );
-	xfmt.sprintf("%s%df", "%.", max(nxdec,0));
-	
-	//determine the best number formatting for the y axis labels
-	wxString yfmt;
-	int nydec = gui_util::CalcBestSigFigs( max(fabs(_yaxmax),fabs(_yaxmin)) );
-	yfmt.sprintf("%s%df", "%.", nydec);
-	
-	string ets = to_string(-yaxspan, yfmt.c_str());	//create a string that is approximately the largest extent on the plot
-	wxSize etss = dc.GetTextExtent( ets );
-	_left_buffer = 15+etss.GetWidth()+etss.GetHeight();
-	_top_buffer = 0;
-	_bottom_buffer = etss.GetHeight()*2+15;
-	//wxString zfmt;
-	int nzdec = gui_util::CalcBestSigFigs( max(fabs(maxval),fabs(minval)) );
-	_zfmt.sprintf("%s%df %s", "%.", nzdec, _units.c_str());
-	ets = to_string(max(fabs(maxval),fabs(minval)), _zfmt.c_str());
-	etss = dc.GetTextExtent( ets);
-	_right_buffer = 40+etss.GetWidth();
-
-	//Plot area (excluding area for axes) in pixels
-	_drawsize[0] = canvsize[0] - (_left_buffer+_right_buffer);
-	_drawsize[1] = canvsize[1] - (_top_buffer+_bottom_buffer);
-	
-	//Determine the pixels per unit in each axis
-	_ppx = _drawsize[0]/xaxspan*plot_scale;
-	_ppy = _drawsize[1]/yaxspan*plot_scale;
-
-	//Origin location - relative to the canvas
-	_origin[0] = _left_buffer + _drawsize[0]/2. - (xaxspan/2. + _xaxmin)*_ppx;
-	_origin[1] = _top_buffer + _drawsize[1]/2. + (yaxspan/2. + _yaxmin)*_ppy;
-
-	//Draw the plot boundary
-	dc.SetPen( wxPen( _black, 1, wxPENSTYLE_SOLID) );
-	dc.SetBrush( *wxBLACK_BRUSH );
-	dc.DrawRectangle( _left_buffer, _top_buffer/*-1-_drawsize[1]*/, _drawsize[0], _drawsize[1]);
-    
-	dc.SetBrush( *wxWHITE_BRUSH);
-	//Draw the x axis
-	dc.SetPen( wxPen( _black, 1, wxPENSTYLE_SOLID) );
-	dc.SetBrush( *wxWHITE_BRUSH );
-	dc.DrawLine(_origin[0], _drawsize[1], _origin[0], _drawsize[1]+10);
-	ets = "0";
-	etss = dc.GetTextExtent( ets );
-	dc.DrawText(ets, _origin[0]-etss.GetWidth()/2, _drawsize[1]+9);
-	
-	ets = (string)_xlab;
-	
-	etss = dc.GetTextExtent( ets );
-	dc.DrawText(ets, _left_buffer+_drawsize[0]/2-etss.GetWidth()/2, _drawsize[1]+(15+etss.GetHeight()));
-	//estimate the number of divisions
-	ets = to_string( -xaxspan/2., xfmt.c_str());	//approximation of the xaxis text size
-	etss = dc.GetTextExtent( ets );
-	int ndiv = min(int(_drawsize[0]/ (etss.GetWidth()*1.35 )), 20);
-	double xscale = calcScale(xaxspan, ndiv);
-	double 
-		xtickloc = xscale,
-		xtickloc_ppm = xscale*_ppx;
-	wxString xts;
-	double xx = fmax(fabs(_xaxmin), fabs(_xaxmax));
-	while(xtickloc < xx){
-		//To the right
-		wxSize xte;
-		if(xtickloc <= _xaxmax){
-			dc.DrawLine(_origin[0]+xtickloc_ppm, _drawsize[1], _origin[0]+xtickloc_ppm, _drawsize[1]+7);
-			xts.Printf(xfmt, (_x_reversed ? -1. : 1)*(xtickloc+1.e-6));
-			xte = dc.GetTextExtent(xts);
-			dc.DrawText( xts , _origin[0]+xtickloc_ppm-xte.GetWidth()/2, _drawsize[1]+9);
-		}
-		//To the left
-		if(-xtickloc >= _xaxmin){
-			dc.DrawLine(_origin[0]-xtickloc_ppm, _drawsize[1], _origin[0]-xtickloc_ppm, _drawsize[1]+7);
-			xts.Printf(xfmt, (_x_reversed ? 1. : -1)*(xtickloc+1.e-6));
-			xte = dc.GetTextExtent( xts );
-			dc.DrawText( xts , _origin[0]-xtickloc_ppm-xte.GetWidth()/2, _drawsize[1]+9);
-		}
-		xtickloc += xscale;
-		xtickloc_ppm += xscale*_ppx;
-	}
-    
-	//Draw the y axis
-	dc.DrawLine(_left_buffer-10, _origin[1], _left_buffer, _origin[1]);
-	string etsy = "0"; wxSize etssy = dc.GetTextExtent( etsy );
-	dc.DrawText(etsy, _left_buffer-(etssy.GetWidth()+8), _origin[1]-etssy.GetHeight()/2);
-	//Label
-	etsy = (string)_ylab;
-	etssy = dc.GetTextExtent(etsy);
-	dc.DrawRotatedText(etsy, 2, (_drawsize[1]-etssy.GetWidth())/2., 270.);
-	//estimate the number of divisions
-	etsy = my_to_string( int(-yaxspan/2.));
-	etssy = dc.GetTextExtent( etsy );
-	int ndivy = min(int(_drawsize[0]/ (etssy.GetHeight() )), 20);
-	double yscale = calcScale(yaxspan, ndivy);
-		
-	double
-		ytickloc = yscale,
-		ytickloc_ppm = yscale*_ppy;
-	wxString yts;
-	while(ytickloc < fmax(fabs(_yaxmax), fabs(_yaxmin)) ){
-		//To the top
-		if(ytickloc < fabs(_yaxmax)){
-			dc.DrawLine(_left_buffer-7, _origin[1]-ytickloc_ppm, _left_buffer, _origin[1]-ytickloc_ppm);
-			yts.Printf(yfmt, ytickloc);
-			wxSize yte = dc.GetTextExtent(yts);
-			dc.DrawText( yts , _left_buffer-10-yte.GetWidth(), _origin[1]-ytickloc_ppm-yte.GetHeight()/2);
-		}
-		//To the bottom
-		if(ytickloc < fabs(_yaxmin)){
-			dc.DrawLine(_left_buffer-7, _origin[1]+ytickloc_ppm, _left_buffer, _origin[1]+ytickloc_ppm);
-			yts.Printf(yfmt, -ytickloc);
-			wxSize yte = dc.GetTextExtent(yts);
-			dc.DrawText( yts , _left_buffer-10-yte.GetWidth(), _origin[1]+ytickloc_ppm-yte.GetHeight()/2);
-		}
-		
-		ytickloc += yscale;
-		ytickloc_ppm += yscale*_ppy;
-	}
-	
+void PlotBase::SetXLabel(wxString &xlab)
+{
+    _xlab = xlab;
 }
 
-void PlotBase::DrawText(wxMemoryDC &dc, std::string message, double x, double y){
+void PlotBase::SetXLabel(const char *xlab)
+{
+    _xlab = (wxString)xlab;
+}
 
-	dc.SelectObject( _bitmap );
+void PlotBase::SetYLabel(wxString &ylab)
+{
+    _ylab = ylab;
+}
+
+void PlotBase::SetYLabel(const char *ylab)
+{
+    _ylab = (wxString)ylab;
+}
+
+void PlotBase::SetUnits(wxString &units)
+{
+    _units = units;
+}
+
+void PlotBase::SetUnits(const char *units)
+{
+    _units = (wxString)units;
+}
+
+void PlotBase::SetPlotSize(wxSize &psize)
+{
+    _plotsize = psize;
+}
+
+void PlotBase::SetResolutionMultiplier(int resmult)
+{
+    _resmult = resmult;
+}
+
+void PlotBase::SetColormap(int cmap)
+{
+    _color_map = cmap;
+}
+
+void PlotBase::SetDataWrapping(bool do_wrap)
+{
+    _wrap_values = do_wrap;
+}
+
+void PlotBase::SetXAxisReversed(bool do_reversed)
+{
+    _x_reversed = do_reversed;
+}
+
+wxBitmap *PlotBase::GetBitmap()
+{
+    return &_bitmap;
+}
+
+void PlotBase::AxesSetup(wxMemoryDC &dc, double minval, double maxval)
+{
+    //Draw the bounding box
+    dc.SetPen( *wxWHITE_PEN );
+    dc.SetBrush( *wxWHITE_BRUSH );
+    wxRect windowRect(wxPoint(0,0), _plotsize);
+    dc.DrawRectangle( windowRect );
+    //dc.SetAxisOrientation(true, true);
+    
+    //The pixel size of the drawing canvas
+    double canvsize[2];
+    canvsize[0] = _plotsize.GetWidth();
+    canvsize[1] = _plotsize.GetHeight();
+    
+    double plot_scale = 0.95;
+        
+    //double xaxcent = (_xaxmax + _xaxmin)/2.;
+    
+    //The total span of each axis in their respective units
+    double
+        xaxspan = _xaxmax - _xaxmin,
+        yaxspan = _yaxmax - _yaxmin;
+
+    //Set buffer areas for the axes
+    dc.SetFont( wxFont(_hfont, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL) );
+    
+    //determine the best number formatting for the x axis labels
+    wxString xfmt;
+    int nxdec = gui_util::CalcBestSigFigs( max(fabs(_xaxmax),fabs(_xaxmin)) );
+    xfmt.sprintf("%s%df", "%.", max(nxdec,0));
+    
+    //determine the best number formatting for the y axis labels
+    wxString yfmt;
+    int nydec = gui_util::CalcBestSigFigs( max(fabs(_yaxmax),fabs(_yaxmin)) );
+    yfmt.sprintf("%s%df", "%.", nydec);
+    
+    string ets = to_string(-yaxspan, yfmt.c_str());    //create a string that is approximately the largest extent on the plot
+    wxSize etss = dc.GetTextExtent( ets );
+    _left_buffer = 15+etss.GetWidth()+etss.GetHeight();
+    _top_buffer = 0;
+    _bottom_buffer = etss.GetHeight()*2+15;
+    //wxString zfmt;
+    int nzdec = gui_util::CalcBestSigFigs( max(fabs(maxval),fabs(minval)) );
+    _zfmt.sprintf("%s%df %s", "%.", nzdec, _units.c_str());
+    ets = to_string(max(fabs(maxval),fabs(minval)), _zfmt.c_str());
+    etss = dc.GetTextExtent( ets);
+    _right_buffer = 40+etss.GetWidth();
+
+    //Plot area (excluding area for axes) in pixels
+    _drawsize[0] = canvsize[0] - (_left_buffer+_right_buffer);
+    _drawsize[1] = canvsize[1] - (_top_buffer+_bottom_buffer);
+    
+    //Determine the pixels per unit in each axis
+    _ppx = _drawsize[0]/xaxspan*plot_scale;
+    _ppy = _drawsize[1]/yaxspan*plot_scale;
+
+    //Origin location - relative to the canvas
+    _origin[0] = _left_buffer + _drawsize[0]/2. - (xaxspan/2. + _xaxmin)*_ppx;
+    _origin[1] = _top_buffer + _drawsize[1]/2. + (yaxspan/2. + _yaxmin)*_ppy;
+
+    //Draw the plot boundary
+    dc.SetPen( wxPen( _black, 1, wxPENSTYLE_SOLID) );
+    dc.SetBrush( *wxBLACK_BRUSH );
+    dc.DrawRectangle( _left_buffer, _top_buffer/*-1-_drawsize[1]*/, _drawsize[0], _drawsize[1]);
+    
+    dc.SetBrush( *wxWHITE_BRUSH);
+    //Draw the x axis
+    dc.SetPen( wxPen( _black, 1, wxPENSTYLE_SOLID) );
+    dc.SetBrush( *wxWHITE_BRUSH );
+    dc.DrawLine(_origin[0], _drawsize[1], _origin[0], _drawsize[1]+10);
+    ets = "0";
+    etss = dc.GetTextExtent( ets );
+    dc.DrawText(ets, _origin[0]-etss.GetWidth()/2, _drawsize[1]+9);
+    
+    ets = (string)_xlab;
+    
+    etss = dc.GetTextExtent( ets );
+    dc.DrawText(ets, _left_buffer+_drawsize[0]/2-etss.GetWidth()/2, _drawsize[1]+(15+etss.GetHeight()));
+    //estimate the number of divisions
+    ets = to_string( -xaxspan/2., xfmt.c_str());    //approximation of the xaxis text size
+    etss = dc.GetTextExtent( ets );
+    int ndiv = min(int(_drawsize[0]/ (etss.GetWidth()*1.35 )), 20);
+    double xscale = calcScale(xaxspan, ndiv);
+    double 
+        xtickloc = xscale,
+        xtickloc_ppm = xscale*_ppx;
+    wxString xts;
+    double xx = fmax(fabs(_xaxmin), fabs(_xaxmax));
+    while(xtickloc < xx)
+    {
+        //To the right
+        wxSize xte;
+        if(xtickloc <= _xaxmax)
+        {
+            dc.DrawLine(_origin[0]+xtickloc_ppm, _drawsize[1], _origin[0]+xtickloc_ppm, _drawsize[1]+7);
+            xts.Printf(xfmt, (_x_reversed ? -1. : 1)*(xtickloc+1.e-6));
+            xte = dc.GetTextExtent(xts);
+            dc.DrawText( xts , _origin[0]+xtickloc_ppm-xte.GetWidth()/2, _drawsize[1]+9);
+        }
+        //To the left
+        if(-xtickloc >= _xaxmin)
+        {
+            dc.DrawLine(_origin[0]-xtickloc_ppm, _drawsize[1], _origin[0]-xtickloc_ppm, _drawsize[1]+7);
+            xts.Printf(xfmt, (_x_reversed ? 1. : -1)*(xtickloc+1.e-6));
+            xte = dc.GetTextExtent( xts );
+            dc.DrawText( xts , _origin[0]-xtickloc_ppm-xte.GetWidth()/2, _drawsize[1]+9);
+        }
+        xtickloc += xscale;
+        xtickloc_ppm += xscale*_ppx;
+    }
+    
+    //Draw the y axis
+    dc.DrawLine(_left_buffer-10, _origin[1], _left_buffer, _origin[1]);
+    string etsy = "0"; wxSize etssy = dc.GetTextExtent( etsy );
+    dc.DrawText(etsy, _left_buffer-(etssy.GetWidth()+8), _origin[1]-etssy.GetHeight()/2);
+    //Label
+    etsy = (string)_ylab;
+    etssy = dc.GetTextExtent(etsy);
+    dc.DrawRotatedText(etsy, 2, (_drawsize[1]-etssy.GetWidth())/2., 270.);
+    //estimate the number of divisions
+    etsy = my_to_string( int(-yaxspan/2.));
+    etssy = dc.GetTextExtent( etsy );
+    int ndivy = min(int(_drawsize[0]/ (etssy.GetHeight() )), 20);
+    double yscale = calcScale(yaxspan, ndivy);
+        
+    double
+        ytickloc = yscale,
+        ytickloc_ppm = yscale*_ppy;
+    wxString yts;
+    while(ytickloc < fmax(fabs(_yaxmax), fabs(_yaxmin)) )
+    {
+        //To the top
+        if(ytickloc < fabs(_yaxmax))
+        {
+            dc.DrawLine(_left_buffer-7, _origin[1]-ytickloc_ppm, _left_buffer, _origin[1]-ytickloc_ppm);
+            yts.Printf(yfmt, ytickloc);
+            wxSize yte = dc.GetTextExtent(yts);
+            dc.DrawText( yts , _left_buffer-10-yte.GetWidth(), _origin[1]-ytickloc_ppm-yte.GetHeight()/2);
+        }
+        //To the bottom
+        if(ytickloc < fabs(_yaxmin))
+        {
+            dc.DrawLine(_left_buffer-7, _origin[1]+ytickloc_ppm, _left_buffer, _origin[1]+ytickloc_ppm);
+            yts.Printf(yfmt, -ytickloc);
+            wxSize yte = dc.GetTextExtent(yts);
+            dc.DrawText( yts , _left_buffer-10-yte.GetWidth(), _origin[1]+ytickloc_ppm-yte.GetHeight()/2);
+        }
+        
+        ytickloc += yscale;
+        ytickloc_ppm += yscale*_ppy;
+    }
+    
+}
+
+void PlotBase::DrawText(wxMemoryDC &dc, std::string message, double x, double y)
+{
+    
+    dc.SelectObject( _bitmap );
 
     wxPen oldpen = dc.GetPen();
     dc.SetTextForeground(wxColour("orange"));
     dc.SetFont(wxFont(15,wxFONTFAMILY_DEFAULT, wxFONTSTYLE_ITALIC, wxFONTWEIGHT_NORMAL) );
     double dx,dy;
-	dx = _plotsize.GetWidth();
-	dy = _plotsize.GetHeight();
+    dx = _plotsize.GetWidth();
+    dy = _plotsize.GetHeight();
 
-	dc.DrawText(message,(int)(x*dx), (int)(y*dy)); // tlab , canvsize[0]-_right_buffer+5, gtop - dc.GetTextExtent( tlab).GetHeight()-2);
+    dc.DrawText(message,(int)(x*dx), (int)(y*dy)); // tlab , canvsize[0]-_right_buffer+5, gtop - dc.GetTextExtent( tlab).GetHeight()-2);
     dc.SetPen(oldpen);
 
 }
 
 void PlotBase::DrawColorbar(wxMemoryDC &dc, double minval, double maxval, double aveval)
 {
-	//Draw the gradient bar, in 4 sections
-	double canvsize[2];
-	canvsize[0] = _plotsize.GetWidth();
-	canvsize[1] = _plotsize.GetHeight();
-	int
-		gtop = 50,
-		gbot = _drawsize[1]-50,
-		gvspan = -gtop + gbot,
-		gleft = canvsize[0]-_right_buffer+5,
-		gright = canvsize[0]-_right_buffer+25,
-		ghspan = gright-gleft;
-	wxColour col1, col2, col3, col4, col5;
+    //Draw the gradient bar, in 4 sections
+    double canvsize[2];
+    canvsize[0] = _plotsize.GetWidth();
+    canvsize[1] = _plotsize.GetHeight();
+    int
+        gtop = 50,
+        gbot = _drawsize[1]-50,
+        gvspan = -gtop + gbot,
+        gleft = canvsize[0]-_right_buffer+5,
+        gright = canvsize[0]-_right_buffer+25,
+        ghspan = gright-gleft;
+    wxColour col1, col2, col3, col4, col5;
 
-	switch (_color_map)
-	{
-	case COLORMAP::JET:
-		ColorGradientJet(col1, 1.);
-		ColorGradientJet(col2, 0.75);
-		ColorGradientJet(col3, 0.5);
-		ColorGradientJet(col4, 0.25);
-		ColorGradientJet(col5, 0.);
-		break;
-	case COLORMAP::GRAYSCALE:
-		ColorGradientGrayscale(col1, 1.);
-		ColorGradientGrayscale(col2, 0.75);
-		ColorGradientGrayscale(col3, 0.5);
-		ColorGradientGrayscale(col4, 0.25);
-		ColorGradientGrayscale(col5, 0.);
-		break;
-	case COLORMAP::HOTCOLD:
-		ColorGradientHotCold(col1, 1.);
-		ColorGradientHotCold(col2, 0.75);
-		ColorGradientHotCold(col3, 0.5);
-		ColorGradientHotCold(col4, 0.25);
-		ColorGradientHotCold(col5, 0.);
-		break;
+    switch (_color_map)
+    {
+    case COLORMAP::JET:
+        ColorGradientJet(col1, 1.);
+        ColorGradientJet(col2, 0.75);
+        ColorGradientJet(col3, 0.5);
+        ColorGradientJet(col4, 0.25);
+        ColorGradientJet(col5, 0.);
+        break;
+    case COLORMAP::GRAYSCALE:
+        ColorGradientGrayscale(col1, 1.);
+        ColorGradientGrayscale(col2, 0.75);
+        ColorGradientGrayscale(col3, 0.5);
+        ColorGradientGrayscale(col4, 0.25);
+        ColorGradientGrayscale(col5, 0.);
+        break;
+    case COLORMAP::HOTCOLD:
+        ColorGradientHotCold(col1, 1.);
+        ColorGradientHotCold(col2, 0.75);
+        ColorGradientHotCold(col3, 0.5);
+        ColorGradientHotCold(col4, 0.25);
+        ColorGradientHotCold(col5, 0.);
+        break;
     case COLORMAP::PARULA:
         ColorGradientParula(col1, 1.);
-		ColorGradientParula(col2, 0.75);
-		ColorGradientParula(col3, 0.5);
-		ColorGradientParula(col4, 0.25);
-		ColorGradientParula(col5, 0.);
+        ColorGradientParula(col2, 0.75);
+        ColorGradientParula(col3, 0.5);
+        ColorGradientParula(col4, 0.25);
+        ColorGradientParula(col5, 0.);
         break;
-	default:
-		break;
-	}
+    default:
+        break;
+    }
 
 
-	dc.GradientFillLinear( wxRect(wxPoint(gleft, gtop+gvspan*0.00), wxPoint(gright, gtop+gvspan*0.25)), col1, col2, wxSOUTH);
-	dc.GradientFillLinear( wxRect(wxPoint(gleft, gtop+gvspan*0.25), wxPoint(gright, gtop+gvspan*0.50)), col2, col3, wxSOUTH);
-	dc.GradientFillLinear( wxRect(wxPoint(gleft, gtop+gvspan*0.50), wxPoint(gright, gtop+gvspan*0.75)), col3, col4, wxSOUTH);
-	dc.GradientFillLinear( wxRect(wxPoint(gleft, gtop+gvspan*0.75), wxPoint(gright, gtop+gvspan*1.00)), col4, col5, wxSOUTH);
+    dc.GradientFillLinear( wxRect(wxPoint(gleft, gtop+gvspan*0.00), wxPoint(gright, gtop+gvspan*0.25)), col1, col2, wxSOUTH);
+    dc.GradientFillLinear( wxRect(wxPoint(gleft, gtop+gvspan*0.25), wxPoint(gright, gtop+gvspan*0.50)), col2, col3, wxSOUTH);
+    dc.GradientFillLinear( wxRect(wxPoint(gleft, gtop+gvspan*0.50), wxPoint(gright, gtop+gvspan*0.75)), col3, col4, wxSOUTH);
+    dc.GradientFillLinear( wxRect(wxPoint(gleft, gtop+gvspan*0.75), wxPoint(gright, gtop+gvspan*1.00)), col4, col5, wxSOUTH);
 
-	dc.SetPen(*wxBLACK_PEN);
-	dc.SetBrush(*wxTRANSPARENT_BRUSH);
-	dc.DrawRectangle(gleft, gtop, ghspan+2, gvspan+2);
+    dc.SetPen(*wxBLACK_PEN);
+    dc.SetBrush(*wxTRANSPARENT_BRUSH);
+    dc.DrawRectangle(gleft, gtop, ghspan+2, gvspan+2);
 
-	double lineave = 50+(_drawsize[1]-100.)*(1.-(aveval-minval)/(maxval-minval));	//where should the average line indicator be in Y?
-	//Draw the average line
-	dc.SetPen( wxPen( _white, 1, wxPENSTYLE_SOLID) );
-	dc.DrawLine(canvsize[0]-_right_buffer+5, lineave, canvsize[0]-_right_buffer+25, lineave);
-	//Label the gradient bar
-	wxString tlab, blab, alab;
-	tlab.sprintf(_zfmt, maxval);
-	blab.sprintf(_zfmt, minval);
-	alab.sprintf(_zfmt, aveval);
-		
-	dc.DrawText( tlab , canvsize[0]-_right_buffer+5, gtop - dc.GetTextExtent( tlab).GetHeight()-2);
-	dc.DrawText( blab , canvsize[0]-_right_buffer+5, gbot + 2);
-	dc.DrawText( alab , canvsize[0]-_right_buffer+28, lineave-dc.GetTextExtent( alab).GetHeight()/2);
-	
+    double lineave = 50+(_drawsize[1]-100.)*(1.-(aveval-minval)/(maxval-minval));    //where should the average line indicator be in Y?
+    //Draw the average line
+    dc.SetPen( wxPen( _white, 1, wxPENSTYLE_SOLID) );
+    dc.DrawLine(canvsize[0]-_right_buffer+5, lineave, canvsize[0]-_right_buffer+25, lineave);
+    //Label the gradient bar
+    wxString tlab, blab, alab;
+    tlab.sprintf(_zfmt, maxval);
+    blab.sprintf(_zfmt, minval);
+    alab.sprintf(_zfmt, aveval);
+        
+    dc.DrawText( tlab , canvsize[0]-_right_buffer+5, gtop - dc.GetTextExtent( tlab).GetHeight()-2);
+    dc.DrawText( blab , canvsize[0]-_right_buffer+5, gbot + 2);
+    dc.DrawText( alab , canvsize[0]-_right_buffer+28, lineave-dc.GetTextExtent( alab).GetHeight()/2);
+    
 
 }

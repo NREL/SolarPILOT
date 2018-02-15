@@ -6,15 +6,15 @@
 
 class settings_dialog : public wxDialog
 {
-	vector<wxTextCtrl*> tcs;
-	unordered_map<wxTextCtrl*, setting*> set_map;
+    vector<wxTextCtrl*> tcs;
+    unordered_map<wxTextCtrl*, setting*> set_map;
 public:
-	settings_dialog( wxWindow *parent, wxWindowID winID, wxString label, gui_settings &gs, wxSize size);
+    settings_dialog( wxWindow *parent, wxWindowID winID, wxString label, gui_settings &gs, wxSize size);
 
 protected:
-	void OnOkButton(wxCommandEvent &event);
+    void OnOkButton(wxCommandEvent &event);
 
-	void OnCancelButton(wxCommandEvent &event);
+    void OnCancelButton(wxCommandEvent &event);
 
 };
 
