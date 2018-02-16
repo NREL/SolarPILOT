@@ -10,6 +10,9 @@
 #include <algorithm>
 #include <sstream>
 
+using namespace std;
+
+
 wxString InputControl::getUnits()
 {
     return _varobj->units;

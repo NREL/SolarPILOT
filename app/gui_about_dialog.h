@@ -13,12 +13,12 @@ class gui_about : public wxFrame
 {
     wxBitmap _bitmap;
     wxStaticBitmap *_sbit;
-    string _version;
+    std::string _version;
     wxPanel *_panel;
 
 public:
     gui_about();
-    gui_about(wxWindow *parent, wxWindowID id, string &bg_name, string &version, wxIcon icon );
+    gui_about(wxWindow *parent, wxWindowID id, std::string &bg_name, std::string &version, wxIcon icon );
     
 protected:
     void OnPaint(wxPaintEvent &event);

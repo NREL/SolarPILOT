@@ -3,6 +3,8 @@
 #include <shared/lib_weatherfile.h>
 #include "GUI_main.h"
 
+using namespace std;
+
 void SPFrame::CreateClimatePage(wxScrolledWindow *parent)
 {
     //Create the master heliostat page

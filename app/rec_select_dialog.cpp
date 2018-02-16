@@ -1,4 +1,5 @@
 #include "rec_select_dialog.h"
+using namespace std;
 
 rec_select_dialog::rec_select_dialog()
 {};

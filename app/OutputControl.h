@@ -71,7 +71,7 @@ public:
     wxString getValue();
     spbase *getVarObject();
     void setVarObject(spbase* varobj);
-    void setValue(string value);
+    void setValue(std::string value);
     void setValue(wxString value);
     void setValue(double value); 
     void setValue(int value);

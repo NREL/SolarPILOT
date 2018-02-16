@@ -1,5 +1,6 @@
 #include "GUI_main.h"
 
+using namespace std;
 
 
 void SPFrame::CreateFieldPlotPage(wxScrolledWindow *parent, wxArrayStr &choices, int selection)

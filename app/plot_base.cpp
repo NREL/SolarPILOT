@@ -4,6 +4,8 @@
 #include <wx/dcbuffer.h>
 #include <wx/dcgraph.h>
 
+using namespace std;
+
 PlotBase::PlotBase()
 {
     Create();

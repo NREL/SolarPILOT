@@ -3,6 +3,7 @@
 #include "OpticalMesh.h"
 #include "SolarField.h"
 #include <algorithm>
+using namespace std;
 
 void FieldPlot::SetPlotOption(int option)
 { 

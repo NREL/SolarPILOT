@@ -6,9 +6,9 @@
 class layout_export_dialog : public wxDialog
 {
 private:
-    vector<wxCheckBox*> checkboxes;
+    std::vector<wxCheckBox*> checkboxes;
     wxComboBox *sep_combo;
-    vector<bool> states;
+    std::vector<bool> states;
     int nchecks;
     wxArrayStr sep_options;
     wxArrayStr sep_actuals;
@@ -23,7 +23,7 @@ public:
         wxSize size = wxDefaultSize,
         long style=wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP|wxRESIZE_BORDER);
 
-    void getSelections(vector<bool> &States);
+    void getSelections(std::vector<bool> &States);
 
     wxString getDelimiter();
 

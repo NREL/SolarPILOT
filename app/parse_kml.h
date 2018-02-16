@@ -42,7 +42,7 @@ static void ParseKML(wxString &file, double &tower_lat, double &tower_lon, std::
 
     while(node != 0)
     {
-        wxString coords = (string)node->
+        wxString coords = (std::string)node->
             first_node("Polygon")->
             first_node("outerBoundaryIs")->
             first_node("LinearRing")->

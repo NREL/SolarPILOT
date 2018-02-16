@@ -1,5 +1,6 @@
 #include "GUI_main.h"
 
+using namespace std;
 
 void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &results)
 {

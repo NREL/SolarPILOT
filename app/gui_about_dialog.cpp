@@ -1,6 +1,8 @@
 #include "gui_about_dialog.h"
 #include <wx/clipbrd.h>
 
+using namespace std;
+
 gui_about::gui_about()
 {}
     

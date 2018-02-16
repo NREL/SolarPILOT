@@ -17,6 +17,8 @@
 #include <sys/stat.h>
 #endif
 
+using namespace std;
+
 // ----------------- gui settings ----------------
 gui_settings::gui_settings()
 {

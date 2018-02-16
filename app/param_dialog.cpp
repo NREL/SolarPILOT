@@ -2,6 +2,8 @@
 #include "numericvareditform.h"
 #include <wx/treectrl.h>
 
+using namespace std;
+
 enum {
   ID_txtSearch,
   ID_tree,

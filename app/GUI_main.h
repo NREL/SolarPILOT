@@ -49,7 +49,7 @@
 
 #include <wex/lkscript.h>
 
-#pragma warning( disable : 4267 )
+//#pragma warning( disable : 4267 )
 
 //menu id's
 enum{
@@ -122,12 +122,12 @@ struct ST_System;
 typedef std::map<spbase*, InputControl*> input_map;
 typedef std::map<spbase*, OutputControl*> output_map;
 
-string to_string(wxString &wxs);
-string to_varpath(string &group, int &ID, string &name);
-string to_varpath(string &group, string &ID, string &name);
-string to_varpath(char group[], int &ID, char name[]);
-string to_varpath(char group[], char ID[], char name[]);
-string to_varpath(char group[], string &ID, char name[]);
+std::string to_string(wxString &wxs);
+std::string to_varpath(std::string &group, int &ID, std::string &name);
+std::string to_varpath(std::string &group, std::string &ID, std::string &name);
+std::string to_varpath(char group[], int &ID, char name[]);
+std::string to_varpath(char group[], char ID[], char name[]);
+std::string to_varpath(char group[], std::string &ID, char name[]);
 
 
 struct PageNames
@@ -181,7 +181,7 @@ private:
         _in_user_param_simulation, //Flag indicating whether a user-parametric simulation is currently running
         _is_mt_simulation,    //Is the current simulation multithreaded?
         _cancel_simulation; //Flag indicating whether the user wants to cancel the simulation
-    string 
+    std::string 
         _software_version,    //Software version tag
         _contact_info;    //String containing contact info for bugs, etc. Used in crash messages.
         
@@ -198,7 +198,7 @@ private:
         _backup_file, //name of the backup file
         _sim_log_file;    //Log file with notices, errors, etc
 
-    vector<string> _sim_log_data;    //All data to be written to the log file at the end of the simulation
+    std::vector<std::string> _sim_log_data;    //All data to be written to the log file at the end of the simulation
 
     PagePanel *_page_panel;
 
@@ -241,7 +241,7 @@ private:
                         //"[P]day,hour,month,DNI,Tdb,Pamb,Vwind[P]..."
     wxSpinCtrl *_user_sun_ct;
     wxGrid *_user_sun_grid;
-    vector<wxTextCtrl*> _atm_coefs;
+    std::vector<wxTextCtrl*> _atm_coefs;
     wxPanel *_atm_panel;
 
     //Objects for the master heliostat page
@@ -259,9 +259,9 @@ private:
         *_rec_state,
         *_rec_rename;
     wxListCtrl *_rec_config;
-    vector<wxPanel*> _rec_pages;    //pointers to all of the receiver pages
+    std::vector<wxPanel*> _rec_pages;    //pointers to all of the receiver pages
     InputControl *_rec_which;    //Combo list of available receivers
-    std::map<string, vector<wxTextCtrl*> > _hll_coefs, _hlw_coefs;
+    std::map<std::string, std::vector<wxTextCtrl*> > _hll_coefs, _hlw_coefs;
 
     //Objects for Layout page
     wxGrid *_design_grid;
@@ -628,7 +628,7 @@ public:
     bool ModCheckPrompt();
     
     void UpdateLayoutGrid();
-    void UpdateLayoutLog(string msg, bool clear = false);
+    void UpdateLayoutLog(std::string msg, bool clear = false);
     
     void PlotFontIncrease( wxString type);
     void PlotFontDecrease( wxString type);
@@ -653,7 +653,7 @@ public:
     void DoResultsPage(sim_results &results);
     void SAMInputParametric();
     void SAMInputParametric2();
-    void LayoutSimulationExport(SolarField &SF, wxString &fname, vector<bool> &options, wxString &header, wxString &delim, bool quiet = false);
+    void LayoutSimulationExport(SolarField &SF, wxString &fname, std::vector<bool> &options, wxString &header, wxString &delim, bool quiet = false);
     void CreateResultsTable(sim_result &result, grid_emulator &table);
     void CreateParametricsTable(parametric &par, sim_results &results, grid_emulator &table);
     
@@ -661,7 +661,7 @@ public:
     void StopSimTimer();
     void SimProgressUpdate(simulation_info* siminfo);
     void SimProgressUpdateMT(int n_complete, int n_tot);
-    void SimProgressBase(int n_complete, int n_tot, string *notices, wxGauge *active_gauge, wxStaticText *active_label, wxString label_text = "Simulation");
+    void SimProgressBase(int n_complete, int n_tot, std::string *notices, wxGauge *active_gauge, wxStaticText *active_label, wxString label_text = "Simulation");
     void SimErrorHandler(simulation_error *simerror);
     void OptimizeProgressSummaryUpdate(simulation_info *siminfo);
     void OptimizeProgressDetailUpdate(simulation_info *siminfo);
@@ -675,7 +675,7 @@ public:
     bool HermiteFluxSimulationHandler(SolarField &SF, Hvector &helios);
     void UpdateFluxLC(int sortkey=0);
     int SolTraceProgressUpdate(st_uint_t ntracedtotal, st_uint_t ntraced, st_uint_t ntotrace, st_uint_t curstage, st_uint_t nstages, void *data);
-    void SolTraceFileExport(string fname);
+    void SolTraceFileExport(std::string fname);
     void FluxProgressBase(int n_complete, int n_tot, wxGauge *active_gauge, wxStaticText *active_label, wxString label_text = "Calculation");
     bool GetSelectedHeliostats(Hvector &helios, bool select_enabled);
 

@@ -19,7 +19,7 @@
 
 struct setting
 {
-    string
+    std::string
         label,
         value,
         varname;
@@ -27,19 +27,19 @@ struct setting
 
 class gui_settings
 {
-    unordered_map<string, setting>
+    unordered_map<std::string, setting>
         data;
-    vector<string>
+    std::vector<std::string>
         order;
     int i_next;
 public:
     gui_settings();
 
     void clear();
-    void add( vector<string> &line );
-    void add( string &varname, string &value, string &label);
-    setting &operator[](string varname);
-    setting &get(string varname);
+    void add( std::vector<std::string> &line );
+    void add( std::string &varname, std::string &value, std::string &label);
+    setting &operator[](std::string varname);
+    setting &get(std::string varname);
     setting *getFirst();
     setting *getNext();
     int data_size();
@@ -57,9 +57,9 @@ public:
 
 class grid_emulator
 {
-    vector<vector<wxString> > data;
-    vector<wxString> rowlabs;
-    vector<wxString> collabs;
+    std::vector<std::vector<wxString> > data;
+    std::vector<wxString> rowlabs;
+    std::vector<wxString> collabs;
 
     int _nrow;
     int _ncol;
@@ -117,14 +117,14 @@ public:
 
 namespace gui_util
 {
-    void parseSettingsFile(string fname, gui_settings &gs); 
-    bool writeSettingsFile(string &fname, gui_settings &gs);
+    void parseSettingsFile(std::string fname, gui_settings &gs); 
+    bool writeSettingsFile(std::string &fname, gui_settings &gs);
     bool list_files( std::string &dir,ArrayString &files, std::string filters = "" );
     
     int CalcBestSigFigs(double val);
-    string FormatWithCommas(int val);
-    string FormatWithCommas(double val, string fmt = "%.2f");
-    string FormatAsCurrency(double val);
+    std::string FormatWithCommas(int val);
+    std::string FormatWithCommas(double val, std::string fmt = "%.2f");
+    std::string FormatAsCurrency(double val);
 
     wxDateTime::Month intTowxMonth(int month);
 };

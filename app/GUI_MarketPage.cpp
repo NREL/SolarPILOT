@@ -1,5 +1,7 @@
 #include "GUI_main.h"
 
+using namespace std;
+
 
 void SPFrame::CreateMarketPage(wxScrolledWindow *parent)
 {

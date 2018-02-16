@@ -1,5 +1,7 @@
 #include "layout_sim_export_dialog.h"
 
+using namespace std;
+
 layout_export_dialog::layout_export_dialog(
     wxWindow *parent, wxWindowID winid, wxString label,wxPoint pos, wxSize size, long style)
     : wxDialog(parent, winid, label, pos, size, style)

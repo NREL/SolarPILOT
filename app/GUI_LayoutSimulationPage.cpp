@@ -2,6 +2,8 @@
 #include "LayoutSimulateThread.h"
 #include <algorithm>
 
+using namespace std;
+
 void SPFrame::CreateSimulationsLayoutTab( wxScrolledWindow *layout)
 {
     //-----------------Layout page----------------------------

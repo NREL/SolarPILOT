@@ -4,6 +4,8 @@
 
 #include <algorithm>
 
+using namespace std;
+
 FluxPlot::FluxPlot(wxPanel *parent, SolarField &SF, Hvector helios, int receiver, const wxWindowID id, 
                    const wxPoint pos, const wxSize size, long style)
         : wxScrolledWindow(parent, id, pos, size, style)

@@ -1,6 +1,8 @@
 #include "GUI_main.h"
 #include "AutoPilot_API.h"
 
+using namespace std;
+
 void SPFrame::CreateOptimizationPage(wxScrolledWindow *parent)
 {
     try

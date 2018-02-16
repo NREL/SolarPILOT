@@ -32,7 +32,7 @@ private:
     bool _text_only;
     bool _disabled;
     wxColour _hcolor;    //highlight color
-    vector<wxWindow*> 
+    std::vector<wxWindow*> 
         _all_dis_objs;    //a list of all associated disabled objects
     //Objects
     wxTextCtrl *tc;
@@ -45,13 +45,13 @@ private:
     {
         wxPanel *panel;
         bool has_panel;
-        vector<wxWindow*> dis_sibs;
+        std::vector<wxWindow*> dis_sibs;
     };
 
 public:
     bool is_binding_set;    //flag to track whether this control has already had its bindings set
 
-    unordered_map<string, choice_helper> choicedat;    //vector panel information corresponding to each combo choice in _varobj, if applicable
+    unordered_map<std::string, choice_helper> choicedat;    //vector panel information corresponding to each combo choice in _varobj, if applicable
 
      InputControl(wxWindow *parent,
                  wxWindowID winid,
@@ -68,12 +68,12 @@ public:
     wxString getUnits();
     wxString getVarname();
     wxString getValue();
-    string getVarPath();
-    string getSelectedText();
+    std::string getVarPath();
+    std::string getSelectedText();
     int getSelection();
     bool needUpdate();
     void setPanelObject(std::string choice, wxPanel &panel);
-    vector<string> getComboChoices();
+    std::vector<std::string> getComboChoices();
     spbase *getVarObject();
     bool isCombo();
     bool isCheckbox();
@@ -89,18 +89,18 @@ public:
     setDisabledSiblings()        Track the var_set name path to the corresponding object
     */
     void updateInputDisplay();
-    void addDisabledSiblings(string sel, int n, wxWindow *p[]);
-    void addDisabledSiblings(string sel, wxWindow *p);
-    void setDisabledSiblings(string sel, int n, wxWindow* p[]);
-    void setDisabledSiblings(string sel, wxWindow* p);
-    vector<wxWindow*> *getDisabledSiblings(string &choice);
-    vector<wxWindow*> *getAllDisabledSiblings();
+    void addDisabledSiblings(std::string sel, int n, wxWindow *p[]);
+    void addDisabledSiblings(std::string sel, wxWindow *p);
+    void setDisabledSiblings(std::string sel, int n, wxWindow* p[]);
+    void setDisabledSiblings(std::string sel, wxWindow* p);
+    std::vector<wxWindow*> *getDisabledSiblings(std::string &choice);
+    std::vector<wxWindow*> *getAllDisabledSiblings();
     
     void setColour(wxColour c=wxColour(255,255,255));
     void setValue(bool val);
     void setValue(int val);
-    void setValue(string &val);
-    void setValue(double &val, string fmt = "%.1f");
+    void setValue(std::string &val);
+    void setValue(double &val, std::string fmt = "%.1f");
     void selectAllText();
     void setVarObject(spbase* varobj);
     void setTextOnlyMode(bool mode);

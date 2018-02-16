@@ -6,7 +6,7 @@
 
 class settings_dialog : public wxDialog
 {
-    vector<wxTextCtrl*> tcs;
+    std::vector<wxTextCtrl*> tcs;
     unordered_map<wxTextCtrl*, setting*> set_map;
 public:
     settings_dialog( wxWindow *parent, wxWindowID winID, wxString label, gui_settings &gs, wxSize size);

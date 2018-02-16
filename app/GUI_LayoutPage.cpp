@@ -1,4 +1,5 @@
 #include "GUI_main.h"
+using namespace std;
 
 
 void SPFrame::CreateLayoutPage(wxScrolledWindow *parent)

@@ -7,6 +7,8 @@
 #include "scripting.h"
 #include "GUI_main.h"
 
+using namespace std;
+
 static bool LKInfoCallback(simulation_info *siminfo, void *data)
 {
     SolarPILOTScriptWindow *frame = static_cast<SolarPILOTScriptWindow*>( data );

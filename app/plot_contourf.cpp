@@ -8,6 +8,8 @@
 #include <wx/dcgraph.h>
 #include "plot_base.h"
 
+using namespace std;
+
 bool PlotContourf::Plot(PlotBase &base, vector<vector<double> > &data)
 {
     

@@ -5,6 +5,8 @@
 #include "wx/tooltip.h"
 #include <algorithm>
 
+using namespace std;
+
 bool OutputControl::isOverride()
 {
     return _varobj->is_disabled;
