@@ -939,21 +939,29 @@ void SPFrame::BoundsImport()
                     return;
                 }
 
-                /*wxString poly;*/
                 vector<sp_point> poly;
                 ParseKML(file, tlat, tlon, poly);
                 
                 if(tdlg->isInclusion())
                 {
                     //Inclusion
-                    if(! tdlg->isAppend()) incs->clear();
+					if (!tdlg->isAppend())
+					{
+						incs->clear();
+						excs->clear();
+					}
 
                     incs->push_back(poly);
                 }
                 else
                 {
                     //Exclusion
-                    if(! tdlg->isAppend()) excs->clear();
+					if (!tdlg->isAppend())
+					{
+						incs->clear();
+						excs->clear();
+					}
+
                     excs->push_back(poly);
                 }
                 //otherwise, it was cancelled

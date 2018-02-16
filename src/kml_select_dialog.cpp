@@ -17,7 +17,6 @@ kml_select_dialog::kml_select_dialog(
 {
     Create(parent, winid, label, pos, size, style);
 
-
     wxStaticText *msg = new wxStaticText(this, wxID_ANY, wxT("Specify the tower location:"));
 
     wxButton *fromfile = new wxButton(this, wxID_ANY, "From File...");
