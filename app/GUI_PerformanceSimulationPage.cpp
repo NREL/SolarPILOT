@@ -1,4 +1,6 @@
 #include "GUI_main.h"
+#include "STSimulateThread.h"
+#include "STObject.h"
 
 
 void SPFrame::CreateSimulationsFluxTab( wxScrolledWindow *flux)

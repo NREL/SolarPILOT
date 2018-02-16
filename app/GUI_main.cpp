@@ -16,15 +16,21 @@ wxWidgets
 #include <ctime>
 #include <math.h>
 #include <map>
-#include <wx/dir.h>
 #include <algorithm>
 #include <thread>
 #include <chrono>
 #include <fstream>
 #include <sstream>
 
+#include <wx/dir.h>
+#include <wx/progdlg.h>
 #include <wx/webview.h>
+
 #include <lk/env.h>
+
+#include "LayoutSimulateThread.h"
+#include "STSimulateThread.h"
+#include "STObject.h"
 
 using namespace std;
 

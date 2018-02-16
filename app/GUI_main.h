@@ -11,21 +11,15 @@
 #include <wx/spinctrl.h>
 #include <wx/grid.h>
 #include <wx/defs.h>
-#include <wx/filedlg.h>
 #include <wx/notebook.h>
 #include <wx/listctrl.h>
-#include <wx/treectrl.h>
-#include <wx/statline.h>
 #include <wx/bitmap.h>
 #include <wx/splash.h>
 #include <wx/gauge.h>
 #include <wx/stdpaths.h>
-#include <wx/timer.h>
-#include <wx/progdlg.h>
 #include <wx/clipbrd.h>
 #include <wx/filepicker.h>
 #include <wx/textfile.h>
-#include <wx/tglbtn.h>
 #include <wx/filename.h>
 
 #include "string_util.h"
@@ -52,19 +46,7 @@
 #include <wex/diurnal.h>
 
 #include "definitions.h"
-#include "SolarField.h"
-#include "Heliostat.h"
-#include "Flux.h"
-#include "Receiver.h"
-#include "Land.h"
-#include "Financial.h"
-#include "Ambient.h"
-#include "LayoutSimulateThread.h"
-#include "STSimulateThread.h"
-#include "STObject.h"
 
-#include "stapi.h"    //Soltrace
-#include <shared/lib_weatherfile.h>
 #include <wex/lkscript.h>
 
 #pragma warning( disable : 4267 )
@@ -132,6 +114,9 @@ class InputControl;
 class OutputControl;
 class AutoPilot_S;
 class AutoPilot_MT;
+class LayoutSimThread;
+class STSimThread;
+
 typedef std::map<spbase*, InputControl*> input_map;
 typedef std::map<spbase*, OutputControl*> output_map;
 
@@ -219,7 +204,6 @@ private:
 
     vector<string> _sim_log_data;    //All data to be written to the log file at the end of the simulation
 
-    //wxTreebook *_nb_main;
     PagePanel *_page_panel;
 
     /*var_set 

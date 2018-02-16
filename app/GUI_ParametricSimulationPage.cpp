@@ -1,4 +1,5 @@
 #include "GUI_main.h"
+#include "LayoutSimulateThread.h"
 
 
 void SPFrame::CreateSimulationsParametricsTab( wxScrolledWindow *param)

@@ -1,5 +1,6 @@
 #include <fstream>
 #include <ostream>
+#include <shared/lib_weatherfile.h>
 #include "GUI_main.h"
 
 void SPFrame::CreateClimatePage(wxScrolledWindow *parent)

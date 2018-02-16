@@ -1,5 +1,6 @@
 #include "GUI_main.h"
 #include "wx/tglbtn.h"
+#include "STObject.h"
 
 void SPFrame::CreateFluxPlotPage(wxScrolledWindow *parent)
 {
