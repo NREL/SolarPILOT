@@ -21,3 +21,5 @@ build_vs2017/win32/
 *.iobj
 *.ipdb
 deploy/exelib/help/*.pdf
+app/Custom/
+app/Custom/*
