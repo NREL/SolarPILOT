@@ -19,67 +19,66 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\FieldPlot.h" />
-    <ClInclude Include="..\src\FluxPlot.h" />
-    <ClInclude Include="..\src\gui_about_dialog.h" />
-    <ClInclude Include="..\src\GUI_main.h" />
-    <ClInclude Include="..\src\gui_util.h" />
-    <ClInclude Include="..\src\ImageCanvas.h" />
-    <ClInclude Include="..\src\InputControl.h" />
-    <ClInclude Include="..\src\kml_select_dialog.h" />
-    <ClInclude Include="..\src\layout_sim_export_dialog.h" />
-    <ClInclude Include="..\src\numericvareditform.h" />
-    <ClInclude Include="..\src\OutputControl.h" />
-    <ClInclude Include="..\src\pagepanel.h" />
-    <ClInclude Include="..\src\param_dialog.h" />
-    <ClInclude Include="..\src\parse_kml.h" />
-    <ClInclude Include="..\src\par_edit_ctrls.h" />
-    <ClInclude Include="..\src\plot_base.h" />
-    <ClInclude Include="..\src\plot_contourf.h" />
-    <ClInclude Include="..\src\plot_scatter.h" />
-    <ClInclude Include="..\src\rec_select_dialog.h" />
-    <ClInclude Include="..\src\rename_dialog.h" />
-    <ClInclude Include="..\src\scripting.h" />
-    <ClInclude Include="..\src\settings_dialog.h" />
+    <ClInclude Include="..\app\FieldPlot.h" />
+    <ClInclude Include="..\app\FluxPlot.h" />
+    <ClInclude Include="..\app\gui_about_dialog.h" />
+    <ClInclude Include="..\app\GUI_main.h" />
+    <ClInclude Include="..\app\gui_util.h" />
+    <ClInclude Include="..\app\ImageCanvas.h" />
+    <ClInclude Include="..\app\InputControl.h" />
+    <ClInclude Include="..\app\kml_select_dialog.h" />
+    <ClInclude Include="..\app\layout_sim_export_dialog.h" />
+    <ClInclude Include="..\app\numericvareditform.h" />
+    <ClInclude Include="..\app\OutputControl.h" />
+    <ClInclude Include="..\app\pagepanel.h" />
+    <ClInclude Include="..\app\param_dialog.h" />
+    <ClInclude Include="..\app\parse_kml.h" />
+    <ClInclude Include="..\app\par_edit_ctrls.h" />
+    <ClInclude Include="..\app\plot_base.h" />
+    <ClInclude Include="..\app\plot_contourf.h" />
+    <ClInclude Include="..\app\plot_scatter.h" />
+    <ClInclude Include="..\app\rec_select_dialog.h" />
+    <ClInclude Include="..\app\rename_dialog.h" />
+    <ClInclude Include="..\app\scripting.h" />
+    <ClInclude Include="..\app\settings_dialog.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\Custom\CustomReceiverWindow.cpp" />
-    <ClCompile Include="..\src\FieldPlot.cpp" />
-    <ClCompile Include="..\src\FluxPlot.cpp" />
-    <ClCompile Include="..\src\gui_about_dialog.cpp" />
-    <ClCompile Include="..\src\GUI_ClimatePage.cpp" />
-    <ClCompile Include="..\src\GUI_CostPage.cpp" />
-    <ClCompile Include="..\src\GUI_HeliostatPage.cpp" />
-    <ClCompile Include="..\src\GUI_LayoutPage.cpp" />
-    <ClCompile Include="..\src\GUI_LayoutSimulationPage.cpp" />
-    <ClCompile Include="..\src\GUI_main.cpp" />
-    <ClCompile Include="..\src\GUI_MarketPage.cpp" />
-    <ClCompile Include="..\src\GUI_OptimizationPage.cpp" />
-    <ClCompile Include="..\src\GUI_ParametricSimulationPage.cpp" />
-    <ClCompile Include="..\src\GUI_PerformanceSimulationPage.cpp" />
-    <ClCompile Include="..\src\GUI_PlantPage.cpp" />
-    <ClCompile Include="..\src\GUI_PlotFieldPage.cpp" />
-    <ClCompile Include="..\src\GUI_PlotFluxPage.cpp" />
-    <ClCompile Include="..\src\GUI_ReceiverPage.cpp" />
-    <ClCompile Include="..\src\GUI_ResultsPage.cpp" />
-    <ClCompile Include="..\src\GUI_SimulationsPage.cpp" />
-    <ClCompile Include="..\src\gui_util.cpp" />
-    <ClCompile Include="..\src\ImageCanvas.cpp" />
-    <ClCompile Include="..\src\InputControl.cpp" />
-    <ClCompile Include="..\src\kml_select_dialog.cpp" />
-    <ClCompile Include="..\src\layout_sim_export_dialog.cpp" />
-    <ClCompile Include="..\src\numericvareditform.cpp" />
-    <ClCompile Include="..\src\OutputControl.cpp" />
-    <ClCompile Include="..\src\pagepanel.cpp" />
-    <ClCompile Include="..\src\param_dialog.cpp" />
-    <ClCompile Include="..\src\par_edit_ctrls.cpp" />
-    <ClCompile Include="..\src\plot_base.cpp" />
-    <ClCompile Include="..\src\plot_contourf.cpp" />
-    <ClCompile Include="..\src\plot_scatter.cpp" />
-    <ClCompile Include="..\src\rec_select_dialog.cpp" />
-    <ClCompile Include="..\src\sandbox.cpp" />
-    <ClCompile Include="..\src\scripting.cpp" />
-    <ClCompile Include="..\src\settings_dialog.cpp" />
+    <ClCompile Include="..\app\FieldPlot.cpp" />
+    <ClCompile Include="..\app\FluxPlot.cpp" />
+    <ClCompile Include="..\app\gui_about_dialog.cpp" />
+    <ClCompile Include="..\app\GUI_ClimatePage.cpp" />
+    <ClCompile Include="..\app\GUI_CostPage.cpp" />
+    <ClCompile Include="..\app\GUI_HeliostatPage.cpp" />
+    <ClCompile Include="..\app\GUI_LayoutPage.cpp" />
+    <ClCompile Include="..\app\GUI_LayoutSimulationPage.cpp" />
+    <ClCompile Include="..\app\GUI_main.cpp" />
+    <ClCompile Include="..\app\GUI_MarketPage.cpp" />
+    <ClCompile Include="..\app\GUI_OptimizationPage.cpp" />
+    <ClCompile Include="..\app\GUI_ParametricSimulationPage.cpp" />
+    <ClCompile Include="..\app\GUI_PerformanceSimulationPage.cpp" />
+    <ClCompile Include="..\app\GUI_PlantPage.cpp" />
+    <ClCompile Include="..\app\GUI_PlotFieldPage.cpp" />
+    <ClCompile Include="..\app\GUI_PlotFluxPage.cpp" />
+    <ClCompile Include="..\app\GUI_ReceiverPage.cpp" />
+    <ClCompile Include="..\app\GUI_ResultsPage.cpp" />
+    <ClCompile Include="..\app\GUI_SimulationsPage.cpp" />
+    <ClCompile Include="..\app\gui_util.cpp" />
+    <ClCompile Include="..\app\ImageCanvas.cpp" />
+    <ClCompile Include="..\app\InputControl.cpp" />
+    <ClCompile Include="..\app\kml_select_dialog.cpp" />
+    <ClCompile Include="..\app\layout_sim_export_dialog.cpp" />
+    <ClCompile Include="..\app\numericvareditform.cpp" />
+    <ClCompile Include="..\app\OutputControl.cpp" />
+    <ClCompile Include="..\app\pagepanel.cpp" />
+    <ClCompile Include="..\app\param_dialog.cpp" />
+    <ClCompile Include="..\app\par_edit_ctrls.cpp" />
+    <ClCompile Include="..\app\plot_base.cpp" />
+    <ClCompile Include="..\app\plot_contourf.cpp" />
+    <ClCompile Include="..\app\plot_scatter.cpp" />
+    <ClCompile Include="..\app\rec_select_dialog.cpp" />
+    <ClCompile Include="..\app\sandbox.cpp" />
+    <ClCompile Include="..\app\scripting.cpp" />
+    <ClCompile Include="..\app\settings_dialog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SolarPILOT_vc2013.rc" />
@@ -171,7 +170,7 @@
     <ClCompile>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(LKDIR);$(LKDIR)\include;$(SSCDIR);$(SSCDIR)\tcs;$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(SolutionDir)\..\src;$(SolutionDir)\..\src\custom;$(CORETRACEDIR);$(WXMSW3)\lib\vc_lib\mswud;$(WXMSW3)\include;$(WEXDIR);$(WEXDIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(LKDIR);$(LKDIR)\include;$(SSCDIR);$(SSCDIR)\tcs;$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(SolutionDir)\..\src;$(CORETRACEDIR);$(WXMSW3)\lib\vc_lib\mswud;$(WXMSW3)\include;$(WEXDIR);$(WEXDIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SP_STANDALONE;LK_USE_WXWIDGETS;WIN32;_DEBUG;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;_WINDOWS;NOPCH;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Sync</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -213,7 +212,7 @@
     <ClCompile>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(LKDIR);$(LKDIR)\include;$(SSCDIR);$(SSCDIR)\tcs;$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(SolutionDir)\..\src;$(SolutionDir)\..\src\custom;$(CORETRACEDIR);$(WXMSW3)\lib\vc_x64_lib\mswud;$(WXMSW3)\include;$(WEXDIR);$(WEXDIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(LKDIR);$(LKDIR)\include;$(SSCDIR);$(SSCDIR)\tcs;$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(SolutionDir)\..\src;$(CORETRACEDIR);$(WXMSW3)\lib\vc_x64_lib\mswud;$(WXMSW3)\include;$(WEXDIR);$(WEXDIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SP_STANDALONE;LK_USE_WXWIDGETS;_DEBUG;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;_WINDOWS;NOPCH;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Sync</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -254,7 +253,7 @@
     <ClCompile>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>$(LKDIR);$(LKDIR)\include;$(SSCDIR);$(SSCDIR)\tcs;$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(SolutionDir)\..\src;$(SolutionDir)\..\src\custom;$(CORETRACEDIR);$(WXMSW3)\lib\vc_lib\mswu;$(WXMSW3)\include;$(WEXDIR);$(WEXDIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(LKDIR);$(LKDIR)\include;$(SSCDIR);$(SSCDIR)\tcs;$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(SolutionDir)\..\src;$(CORETRACEDIR);$(WXMSW3)\lib\vc_lib\mswu;$(WXMSW3)\include;$(WEXDIR);$(WEXDIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SP_STANDALONE;_WINDLL;LK_USE_WXWIDGETS;WIN32;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;NDEBUG;_UNICODE;_WINDOWS;NOPCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -297,7 +296,7 @@
     <ClCompile>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>$(LKDIR);$(LKDIR)\include;$(SSCDIR);$(SSCDIR)\tcs;$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(SolutionDir)\..\src;$(SolutionDir)\..\src\custom;$(CORETRACEDIR);$(WXMSW3)\lib\vc_x64_lib\mswu;$(WXMSW3)\include;$(WEXDIR);$(WEXDIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(LKDIR);$(LKDIR)\include;$(SSCDIR);$(SSCDIR)\tcs;$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(SolutionDir)\..\src;$(CORETRACEDIR);$(WXMSW3)\lib\vc_x64_lib\mswu;$(WXMSW3)\include;$(WEXDIR);$(WEXDIR)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SP_STANDALONE;_WINDLL;LK_USE_WXWIDGETS;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;NDEBUG;_UNICODE;_WINDOWS;NOPCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
