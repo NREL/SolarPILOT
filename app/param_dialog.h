@@ -6,7 +6,6 @@
 #include "par_edit_ctrls.h"
 #include "gui_util.h"
 #include <vector>
-using namespace std;
 
 class AFTreeView;
 class AFSearchListBox;
@@ -35,7 +34,7 @@ class par_variables_dialog : public wxDialog
         bool checked;
     };
 
-    vector<item_info> m_items;
+    std::vector<item_info> m_items;
     
     void OnUncheckAll(wxCommandEvent &evt);
     void OnExpandAll(wxCommandEvent &evt);

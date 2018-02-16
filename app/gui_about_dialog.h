@@ -2,7 +2,6 @@
 #define _GUI_ABOUT_ 1
 
 #include "GUI_main.h"
-using namespace std;
 
 
 /* 

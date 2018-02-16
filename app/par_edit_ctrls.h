@@ -5,7 +5,6 @@
 #include <wx/treectrl.h>
 #include <vector>
 #include "gui_util.h"
-using namespace std;
 
 
 #define EVT_NUMERIC(id, func) EVT_TEXT_ENTER(id, func)
@@ -138,7 +137,7 @@ private:
         wxString str;
         bool shown;
     };
-    vector<item> m_items;
+	std::vector<item> m_items;
     
     void UpdateView();
     void SendEvent();

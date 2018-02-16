@@ -2,7 +2,6 @@
 #define _HDIALOG_ 1
 
 #include "GUI_main.h"
-using namespace std;
 
 /* 
 This control is a simple popup window for naming/renaming a heliostat template item.

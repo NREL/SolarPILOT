@@ -3,9 +3,6 @@
 
 #include <wx/wx.h>
 #include <wx/dc.h>
-#include <vector>
-
-using namespace std;
 
 struct COLORMAP { enum A {JET, GRAYSCALE, HOTCOLD, PARULA}; };
 

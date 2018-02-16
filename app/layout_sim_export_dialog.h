@@ -2,7 +2,6 @@
 #define _LSDIALOG_ 1
 
 #include "GUI_main.h"
-using namespace std;
 
 class layout_export_dialog : public wxDialog
 {

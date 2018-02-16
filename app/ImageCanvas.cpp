@@ -1,6 +1,6 @@
 #include "ImageCanvas.h"
 
-ImageCanvas::ImageCanvas(wxWindow *parent, wxWindowID id, string imagepath, wxBitmapType imagetype, const wxPoint pos, const wxSize size)
+ImageCanvas::ImageCanvas(wxWindow *parent, wxWindowID id, std::string imagepath, wxBitmapType imagetype, const wxPoint pos, const wxSize size)
     : wxScrolledWindow( parent, id, pos, size, wxNO_BORDER)
 {
     image_path = imagepath;

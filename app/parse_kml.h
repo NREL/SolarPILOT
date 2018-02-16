@@ -11,7 +11,6 @@ https://developers.google.com/kml/documentation/kmlreference
 #include <rapidxml.hpp>
 #include "gui_util.h"
 
-using namespace std;
 using namespace rapidxml;
 
 static void ParseKML(wxString &file, double &tower_lat, double &tower_lon, std::vector<sp_point> &poly)
@@ -53,13 +52,13 @@ static void ParseKML(wxString &file, double &tower_lat, double &tower_lon, std::
         coords.Trim();    //Remove trailing junk
 
         //Construct the polygon
-        vector<string> pp = split(coords.ToStdString(), " ");
+        std::vector<std::string> pp = split(coords.ToStdString(), " ");
         
 		for(unsigned int i=0; i<pp.size(); i++)
         {
             
             //Convert point values into doubles
-            vector<string> ps = split(pp.at(i),",");
+            std::vector<std::string> ps = split(pp.at(i),",");
             double
                 plat, plon;
             to_double(ps.at(1), &plat);

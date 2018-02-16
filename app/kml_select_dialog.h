@@ -4,11 +4,10 @@
 #include <wx/wx.h>
 #include <wx/dialog.h>
 #include <vector>
-using namespace std;
 
 class kml_select_dialog : public wxDialog
 {
-    vector<wxTextCtrl*> latctrls, lonctrls;
+    std::vector<wxTextCtrl*> latctrls, lonctrls;
     wxComboBox *inex_combo, *append_combo, *EW_combo, *NS_combo;
 public:
 

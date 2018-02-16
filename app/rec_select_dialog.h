@@ -2,13 +2,12 @@
 #define _RSDIALOG_ 1
 
 #include "GUI_main.h"
-using namespace std;
 
 class rec_select_dialog : public wxDialog
 {
 private:
     unordered_map<wxWindow*, Receiver*> rmap;
-    vector<wxCheckBox*> checkboxes;
+    std::vector<wxCheckBox*> checkboxes;
     int nrec;
 
 public:
@@ -23,7 +22,7 @@ public:
         wxSize size = wxDefaultSize,
         long style=wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP|wxRESIZE_BORDER);
 
-    void getSelectedReceivers(vector<Receiver*> &rec_ptrs);
+    void getSelectedReceivers(std::vector<Receiver*> &rec_ptrs);
 
     void OnOkButton(wxCommandEvent &WXUNUSED(event));
 
