@@ -3,6 +3,9 @@
 #include "OpticalMesh.h"
 #include "SolarField.h"
 #include <algorithm>
+#include <wx/dc.h>
+#include <wx/dcgraph.h>
+#include <wx/dcbuffer.h>
 using namespace std;
 
 void FieldPlot::SetPlotOption(int option)
@@ -91,13 +94,13 @@ void FieldPlot::SetPlotZoomFact(double fact)
     _zoom_fact = fact;
 }
 
-void FieldPlot::SetOriginOffset(int *xy)
+void FieldPlot::SetOriginOffset(int xy[2])
 {
     _origin_offset[0] = xy[0];
     _origin_offset[1] = xy[1];
 }
 
-void FieldPlot::AddToOriginOffset(int *xy)
+void FieldPlot::AddToOriginOffset(int xy[2])
 {
     _origin_offset[0] += xy[0];
     _origin_offset[1] += xy[1];
@@ -108,7 +111,7 @@ void FieldPlot::SetDataVisible(bool is_visible)
     _is_data_visible = is_visible;
 }
 
-void FieldPlot::SetZoomRectangle(int *xyxy)
+void FieldPlot::SetZoomRectangle(int xyxy[4])
 {
     for(int i=0; i<4; i++)
         _zoom_rectangle[i] = xyxy[i];

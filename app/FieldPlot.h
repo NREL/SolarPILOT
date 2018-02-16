@@ -2,10 +2,11 @@
 #define _FIELDPLOT_ 1
 
 #include <wx/wx.h>
-#include <wx/dc.h>
-#include <wx/dcgraph.h>
-#include <wx/dcbuffer.h>
-#include "SolarField.h"
+//#include <wx/dc.h>
+//#include <wx/dcgraph.h>
+//#include <wx/dcbuffer.h>
+
+class SolarField;
 
     /* 
     Options for values to plot are:
