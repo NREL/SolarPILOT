@@ -8,6 +8,7 @@
 #include <wx/dcgraph.h>
 #include "plot_base.h"
 
+using namespace std;
 
 void PlotScatter::SetZAxisScale(PlotBase &base, bool is_autoscale, double zax_min, double zax_max)
 {
