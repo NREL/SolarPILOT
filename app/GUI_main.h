@@ -110,12 +110,14 @@ enum{
     ID_ICON_ERROR
 };
 
-class InputControl;
-class OutputControl;
 class AutoPilot_S;
 class AutoPilot_MT;
 class LayoutSimThread;
 class STSimThread;
+class STSimThread;
+
+struct ST_FluxObj;
+struct ST_System;
 
 typedef std::map<spbase*, InputControl*> input_map;
 typedef std::map<spbase*, OutputControl*> output_map;
@@ -126,12 +128,6 @@ string to_varpath(string &group, string &ID, string &name);
 string to_varpath(char group[], int &ID, char name[]);
 string to_varpath(char group[], char ID[], char name[]);
 string to_varpath(char group[], string &ID, char name[]);
-
-class SPFrame;
-struct ST_FluxObj;
-class STSimThread;
-struct ST_System;
-
 
 
 struct PageNames
@@ -206,11 +202,7 @@ private:
 
     PagePanel *_page_panel;
 
-    /*var_set 
-        _variables,
-        _definitions;*/
-    var_map 
-        _variables;
+    var_map _variables;
     input_map _input_map;
     output_map _output_map;
     SolarField _SF;
@@ -480,9 +472,6 @@ protected:
     void OnBoundsExport( wxCommandEvent &event);
     void OnBoundsCount( wxCommandEvent &event);
     void OnBoundsEdit( wxGridEvent &event);
-    void OnDesignImport( wxCommandEvent &event);
-    void OnDesignExport( wxCommandEvent &event);
-    void OnDesignCount( wxCommandEvent &event);
     void OnDesignEdit( wxGridEvent &event);
     void OnDesignSelect( wxCommandEvent &event);
     void OnDesignSimhrsChanged( wxCommandEvent &event);
@@ -506,7 +495,6 @@ protected:
     void OnHeliotempRename( wxCommandEvent &event);
     void OnHeliotempSelect( wxListEvent &event);
     void OnHeliotempDeselect( wxListEvent &event);
-    void OnHeliotempItemEdit( wxListEvent &event);
     void OnTempBoundsEdit( wxCommandEvent &event);
     void OnHeliotempOrderUp( wxCommandEvent &event);
     void OnHeliotempOrderDown( wxCommandEvent &event);
@@ -524,8 +512,6 @@ protected:
     void OnDoLayout( wxCommandEvent &event);            
     void OnLayoutImport( wxCommandEvent &event);            
     void OnLayoutExport( wxCommandEvent &event);            
-    void OnLayoutDelete( wxCommandEvent &event);
-    void OnLayoutInsert( wxCommandEvent &event);
     void OnLayoutCount( wxCommandEvent &event);
     void OnLayoutEdit( wxGridEvent &event);
     void OnLayoutRefresh( wxCommandEvent &event);
@@ -602,10 +588,7 @@ public:
     ~SPFrame();
     static SPFrame &Instance();
     
-    wxSize getDefaultInputSize()
-    {
-        return _default_input_size;
-    };
+	wxSize getDefaultInputSize();
 
     bool CloseProject();
     void ShowContextHelp();
@@ -641,10 +624,7 @@ public:
     void NewFile();
     void UpdateRecents();
     void AddRecentFile(wxFileName &fname);
-    bool GetInputModState()
-    {
-        return _inputs_modified;
-    };
+	bool GetInputModState();
     bool ModCheckPrompt();
     
     void UpdateLayoutGrid();
@@ -653,8 +633,6 @@ public:
     void PlotFontIncrease( wxString type);
     void PlotFontDecrease( wxString type);
     
-    void ExportGrid( wxGrid *grid );
-    void ImportGrid( wxGrid *grid );
     void GridCount( wxSpinCtrl *sc, wxGrid *grid );
     
     void UpdateUserSunGrid();

@@ -838,6 +838,11 @@ void SPFrame::OnFileNew( wxCommandEvent &WXUNUSED(event))
     }
 }
 
+wxSize SPFrame::getDefaultInputSize()
+{
+	return _default_input_size;
+};
+
 bool SPFrame::CloseProject()
 {    
     if(! ModCheckPrompt() ) 
@@ -1215,6 +1220,11 @@ void SPFrame::AddRecentFile(wxFileName &fname)
     fobj.Close();
     
 }
+
+bool SPFrame::GetInputModState()
+{
+	return _inputs_modified;
+};
 
 bool SPFrame::ModCheckPrompt()
 {
