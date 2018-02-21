@@ -1,8 +1,6 @@
 from math import pi
 import datetime
 
-is_custom_rec = False
-
 td = datetime.date.today()
 
 sam_license = \
@@ -106,8 +104,6 @@ fdh.write( \
 //Enumeration of data columns in the variable map file
 
 
-//Custom module settings
-#define _CUSTOM_REC %d		//If using custom geometry functions in the CustomReceiverWindow, define 1
 //Sandbox mode
 #define _SANDBOX 0
 //demo only
@@ -130,7 +126,7 @@ const int _demo_date[] = {2014,8,1};
     #define D2R %.20f
 #endif
 
-"""%(1 if is_custom_rec else 0, pi, 180./pi, pi/180.)
+"""%(pi, 180./pi, pi/180.)
 )
 
 domains = dmap.keys()
@@ -138,8 +134,6 @@ domains.sort()
 
 for domain in domains:
     fdh.write("\n\n")
-    if domain == "custom_rec":
-        fdh.write("#if _CUSTOM_REC\n")
     
     fdh.write("struct var_"+domain + "\n{\n")
     
@@ -172,10 +166,7 @@ for domain in domains:
     
     fdh.write("};\n") 
     
-    if domain == "custom_rec":
-        fdh.write("#endif\n")
-
-
+    
 fdh.write(\
 """
 
@@ -187,11 +178,7 @@ struct var_map
     var_land land;
     var_optimize opt;
     var_parametric par;
-    var_plant plt;
     var_solarfield sf;
-#if _CUSTOM_REC    
-    var_custom_rec crec;    
-#endif
     
     std::vector< var_heliostat > hels;
     std::vector< var_receiver > recs;
@@ -217,14 +204,12 @@ fdh.close()
 #---------------------------------------------------------------------
 imap = {\
     "ambient":"amb",
-    "custom_rec":"crec",
     "financial":"fin",
     "fluxsim":"flux",
     "heliostat":"hels.back()",
     "land":"land",
     "optimize":"opt",
     "parametric":"par",
-    "plant":"plt",
     "receiver":"recs.back()",
     "solarfield":"sf"
 }
@@ -366,20 +351,13 @@ def wrtvar(domain, var, sep):
 
 
 for domain in dmain:
-    if domain == "custom_rec":
-        fdc.write("#if _CUSTOM_REC\n")
+    
     for var in dmap[domain]:
         wrtvar(domain, var, "0")
-    if domain == "custom_rec":
-        fdc.write("#endif\n")
     fdc.write("\n")
 
 for domain in dmain:
-    if domain == "custom_rec":
-        fdc.write("#if _CUSTOM_REC\n")
     fdc.write("\t"+imap[domain]+".addptrs( _varptrs );\n")
-    if domain == "custom_rec":
-        fdc.write("#endif\n")
     
 fdc.write(\
     """
@@ -402,8 +380,6 @@ for domain in ['heliostat','receiver']:
 
 
 for domain in domains:
-    if domain == "custom_rec":
-        fdc.write("#if _CUSTOM_REC\n")
     
     fdc.write("void var_{}::addptrs(unordered_map<std::string, spbase*> &pmap)\n{}\n".format(domain,"{"))
     if domain in ['heliostat','receiver']:
@@ -417,9 +393,6 @@ for domain in domains:
         fdc.write("\tpmap[\"{}{}{}\"] = &{};\n".format(var[0], sep, var[1], var[1] ))
     
     fdc.write("}\n")
-    
-    if domain == "custom_rec":
-        fdc.write("#endif\n")
         
     fdc.write("\n")
 

@@ -1,5 +1,5 @@
 import os
-dirs = [os.getcwd()+ "\\custom", os.getcwd() + "\\UI", os.getcwd() + "..\\..\\..\\ssc\\solarpilot"]
+dirs = [os.getcwd() + "\\..\\app", os.getcwd() + "..\\..\\..\\ssc\\solarpilot"]
 topdir = os.getcwd()
 count = 0
 for dr in dirs:
