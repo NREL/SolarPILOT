@@ -387,7 +387,7 @@ void SPFrame::OnDoLayout( wxCommandEvent &event)
         }
         catch(int ierr)
         {
-            PopMessage(error_list(ierr));
+            PopMessage(gui_util::error_list(ierr));
         }
     
         //Show the layout results

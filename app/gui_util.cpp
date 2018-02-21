@@ -431,3 +431,21 @@ bool gui_util::writeSettingsFile(string &fname, gui_settings &gs)
     fobj.Close();
     return writeok;
 }
+
+wxString gui_util::error_list(int err_ind)
+{
+	/*
+	Return an error message according to the specified error index.
+	*/
+	switch (err_ind)
+	{
+	case 0:
+		return "Invalid settings error. One or more simulation settings are not currently supported.";
+	case 1:
+		return "Range error: Index out of range!";
+	case 2:
+		return "File error: Requested file could not be opened.";
+	default:
+		return "Unhandled SolarPILOT error. Please contact mike.wagner@nrel.gov for debugging help.";
+	};
+}

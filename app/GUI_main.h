@@ -49,8 +49,6 @@
 
 #include <wex/lkscript.h>
 
-//#pragma warning( disable : 4267 )
-
 //menu id's
 enum{
     ID_FILE_NEW=5000,
