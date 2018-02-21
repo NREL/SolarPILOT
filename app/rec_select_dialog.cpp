@@ -1,4 +1,6 @@
 #include "rec_select_dialog.h"
+#include "SolarField.h"
+
 using namespace std;
 
 rec_select_dialog::rec_select_dialog()
@@ -8,7 +10,7 @@ rec_select_dialog::rec_select_dialog(
     wxWindow *parent, 
     wxWindowID winid, 
     wxString label,
-    SolarField &SF,
+    SolarField *SF,
     wxPoint pos,
     wxSize size,
     long style)
@@ -16,7 +18,7 @@ rec_select_dialog::rec_select_dialog(
     Create(parent, winid, label, pos, size, style);
 
     //Create objects and do layout
-    nrec = SF.getReceivers()->size();
+    nrec = SF->getReceivers()->size();
         
     wxStaticText *msgbox = new wxStaticText(this, wxID_ANY, 
         "Multiple receivers are enabled. Please select the receiver(s)\n"
@@ -24,7 +26,7 @@ rec_select_dialog::rec_select_dialog(
 
     wxGridSizer *check_sizer = new wxGridSizer(1, 5, 0);
 
-    vector<Receiver*> *Recs = SF.getReceivers();
+    vector<Receiver*> *Recs = SF->getReceivers();
 
     checkboxes.clear();
     rmap.clear();

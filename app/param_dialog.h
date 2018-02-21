@@ -1,11 +1,14 @@
 #ifndef _PARAM_DIALOG_
 #define _PARAM_DIALOG_ 1
+
+#include <vector>
+
 #include <wx/wx.h>
-#include "mod_base.h"
 #include "wx/treectrl.h"
+
+#include "mod_base.h"
 #include "par_edit_ctrls.h"
 #include "gui_util.h"
-#include <vector>
 
 class AFTreeView;
 class AFSearchListBox;

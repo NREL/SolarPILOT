@@ -1,9 +1,8 @@
 #ifndef _RSDIALOG_
 #define _RSDIALOG_ 1
 
-#include "GUI_main.h"
-
-class Receiver;
+#include <wx/wx.h>	
+#include "Receiver.h"
 
 class rec_select_dialog : public wxDialog
 {
@@ -19,7 +18,7 @@ public:
         wxWindow *parent, 
         wxWindowID winid, 
         wxString label,
-        SolarField &SF,
+        SolarField *SF,
         wxPoint pos = wxDefaultPosition,
         wxSize size = wxDefaultSize,
         long style=wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP|wxRESIZE_BORDER);

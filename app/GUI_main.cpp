@@ -2925,7 +2925,7 @@ void SPFrame::SAMInputParametric2()
     vector<Receiver*> rec_to_sim;
     if(_SF.getActiveReceiverCount() > 1)
     {
-        rec_select_dialog *rdlg = new rec_select_dialog(this, wxID_ANY, wxT("Select receivers"), _SF);
+        rec_select_dialog *rdlg = new rec_select_dialog(this, wxID_ANY, wxT("Select receivers"), &_SF);
         int id = rdlg->ShowModal();
         if(id == wxID_OK)
         {
