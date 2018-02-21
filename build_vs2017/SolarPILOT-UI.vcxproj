@@ -70,6 +70,7 @@
     <ClCompile Include="..\app\OutputControl.cpp" />
     <ClCompile Include="..\app\pagepanel.cpp" />
     <ClCompile Include="..\app\param_dialog.cpp" />
+    <ClCompile Include="..\app\parse_kml.cpp" />
     <ClCompile Include="..\app\par_edit_ctrls.cpp" />
     <ClCompile Include="..\app\plot_base.cpp" />
     <ClCompile Include="..\app\plot_contourf.cpp" />
