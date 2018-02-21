@@ -5,7 +5,6 @@
 #include <vector>
 
 #include <wx/wx.h>
-#include <wx/defs.h>
 #include <wx/grid.h>
 
 #include "interop.h"
