@@ -76,6 +76,7 @@
     <ClCompile Include="..\app\plot_contourf.cpp" />
     <ClCompile Include="..\app\plot_scatter.cpp" />
     <ClCompile Include="..\app\rec_select_dialog.cpp" />
+    <ClCompile Include="..\app\rename_dialog.cpp" />
     <ClCompile Include="..\app\sandbox.cpp" />
     <ClCompile Include="..\app\scripting.cpp" />
     <ClCompile Include="..\app\settings_dialog.cpp" />
