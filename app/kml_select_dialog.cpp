@@ -3,6 +3,7 @@
 #include <wx/filedlg.h>
 #include <wx/dialog.h>
 #include "gui_util.h"
+#include "IOUtil.h"
 #include <rapidxml.hpp>
 
 using namespace std;

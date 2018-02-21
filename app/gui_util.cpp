@@ -1,6 +1,7 @@
 
 #include "gui_util.h"
 #include "mod_base.h"    //from the PILOT code
+#include "IOUtil.h"
 #include <string>
 #include <cstdio>
 #include <wx/dir.h>
@@ -91,11 +92,7 @@ wxArrayStr &wxArrayStr::operator=(const wxArrayString &rhs)
 };
 
 
-
-
-
-
-
+MyToggleButton::MyToggleButton() {};
 
 
 MyToggleButton::MyToggleButton(wxWindow* parent, wxWindowID id, const wxBitmap &biton, const wxBitmap &bitoff, const wxPoint &pos, const wxSize &size, long style) :
@@ -346,6 +343,27 @@ void grid_emulator::AddRow(int row, wxString label, wxString units, double value
     SetCellValue(row, 3, (max == max ? to_string(max, infmt.c_str()) : ""));
     SetCellValue(row, 4, (stdev == stdev ? to_string(stdev, stfmt.c_str()) : ""));
 
+}
+
+int grid_emulator::GetNumberRows()
+{
+	return _nrow;
+}
+int grid_emulator::GetNumberCols()
+{
+	return _ncol;
+}
+wxString grid_emulator::GetRowLabelValue(int row)
+{
+	return rowlabs.at(row);
+}
+wxString grid_emulator::GetColLabelValue(int col)
+{
+	return collabs.at(col);
+}
+wxString grid_emulator::GetCellValue(int row, int col)
+{
+	return data.at(row).at(col);
 }
 
 

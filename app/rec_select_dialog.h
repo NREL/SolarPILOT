@@ -3,6 +3,8 @@
 
 #include "GUI_main.h"
 
+class Receiver;
+
 class rec_select_dialog : public wxDialog
 {
 private:

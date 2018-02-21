@@ -1,6 +1,7 @@
 #include "param_dialog.h"
 #include "numericvareditform.h"
 #include <wx/treectrl.h>
+#include "sort_method.h"
 
 using namespace std;
 

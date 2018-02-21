@@ -31,6 +31,7 @@ wxWidgets
 #include "LayoutSimulateThread.h"
 #include "STSimulateThread.h"
 #include "STObject.h"
+#include "IOUtil.h"
 
 using namespace std;
 

@@ -1,21 +1,14 @@
 #ifndef _GUI_UTIL_
 #define _GUI_UTIL_ 1
 
-#include "string_util.h"
-#include "mod_base.h"
-#include "SolarField.h"
-#include "sort_method.h"
-#include <cstdio>
 #include <string>
 #include <vector>
-#include <sstream>
 
-#include "wx/wx.h"
-#include "wx/string.h"
-#include "wx/grid.h"
+#include <wx/wx.h>
+#include <wx/defs.h>
+#include <wx/grid.h>
 
 #include "interop.h"
-#include "IOUtil.h"
 
 struct setting
 {
@@ -27,10 +20,8 @@ struct setting
 
 class gui_settings
 {
-    unordered_map<std::string, setting>
-        data;
-    std::vector<std::string>
-        order;
+    unordered_map<std::string, setting> data;
+    std::vector<std::string> order;
     int i_next;
 public:
     gui_settings();
@@ -70,28 +61,16 @@ public:
     bool SetRowLabelValue(int row, wxString value);
     bool SetCellValue(int row, int col, wxString value);
     bool SetCellValue(wxString value, int row, int col);
-    void AddRow(int row, wxString label, wxString units, double value, int sigfigs=-1, double min=std::numeric_limits<double>::quiet_NaN(), double max=std::numeric_limits<double>::quiet_NaN(), double stdev=std::numeric_limits<double>::quiet_NaN());
+    void AddRow(int row, wxString label, wxString units, double value, int sigfigs=-1, 
+		double min=std::numeric_limits<double>::quiet_NaN(), 
+		double max=std::numeric_limits<double>::quiet_NaN(), 
+		double stdev=std::numeric_limits<double>::quiet_NaN());
 
-	int GetNumberRows()
-    {
-        return _nrow;
-    }
-    int GetNumberCols()
-    {
-        return _ncol;
-    }
-    wxString GetRowLabelValue(int row)
-    {
-        return rowlabs.at(row);
-    }
-    wxString GetColLabelValue(int col)
-    {
-        return collabs.at(col);
-    }
-    wxString GetCellValue(int row, int col)
-    {
-        return data.at(row).at(col);
-    }
+	int GetNumberRows();
+	int GetNumberCols();
+	wxString GetRowLabelValue(int row);
+	wxString GetColLabelValue(int col);
+	wxString GetCellValue(int row, int col);
 
     void GetPrintableTable(wxArrayStr &printable, wxString eol = "\n");
     void MapToWXGrid(wxGrid *wxgrid);
@@ -106,8 +85,7 @@ class MyToggleButton : public wxBitmapButton
     bool _state;
 
 public:
-    MyToggleButton()
-    {};
+	MyToggleButton();
     MyToggleButton(wxWindow* parent, wxWindowID id, const wxBitmap &biton, const wxBitmap &bitoff, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxBU_AUTODRAW);
     bool Toggle();
     bool SetState(bool state);

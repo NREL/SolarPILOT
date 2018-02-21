@@ -6,6 +6,7 @@
 #include "AutoPilot_API.h"
 #include "scripting.h"
 #include "GUI_main.h"
+#include "IOUtil.h"
 
 using namespace std;
 

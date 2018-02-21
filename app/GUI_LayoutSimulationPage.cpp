@@ -1,5 +1,6 @@
 #include "GUI_main.h"
 #include "LayoutSimulateThread.h"
+#include "IOUtil.h"
 #include <algorithm>
 
 using namespace std;

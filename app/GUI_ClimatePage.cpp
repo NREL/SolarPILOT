@@ -2,6 +2,7 @@
 #include <ostream>
 #include <shared/lib_weatherfile.h>
 #include "GUI_main.h"
+#include "IOUtil.h"
 
 using namespace std;
 
