@@ -3,12 +3,8 @@
 
 #include <wx/wx.h>
 #include <wx/dc.h>
-#include <wx/dcgraph.h>
-#include <wx/dcbuffer.h>
 #include "SolarField.h"
 #include "plot_base.h"
-#include "plot_contourf.h"
-#include "plot_scatter.h"
 
 
 class FluxPlot : public wxScrolledWindow 
@@ -39,45 +35,20 @@ public:
 
     void SetPlotData(SolarField &SF, Hvector heliostats, int receiver);
     void DoPaint(wxDC &_pdc);
-    void SetFontSize(int hpixel)
-    {
-        _plotobj.SetFontSize(hpixel);
-    }
-    void SetResolutionMultiplier(int resmult)
-    {
-        _plotobj.SetResolutionMultiplier(resmult);
-    }
-    int GetFontSize()
-    {
-        return _plotobj.GetFontSize();
-    }
-    wxBitmap *GetBitmap()
-    {
-        return _plotobj.GetBitmap();
-    }
+	void SetFontSize(int hpixel);
+	void SetResolutionMultiplier(int resmult);
+	int GetFontSize();
+	wxBitmap *GetBitmap();
     bool SaveDataTable(wxString &path, wxString &delim);
-    int GetResolution()
-    {
-        return _plotobj.GetResolutionMultiplier();
-    }
-    void SetWhichReceiver(int rec)
-    {
-        _receiver = rec;
-    }
-    void SetPlotType(int type)
-    {
-        _plot_type = type;
-    }
-    void SetColormap(int cmap)
-    {
-        _plotobj.SetColormap(cmap);
-    };
+	int GetResolution();
+	void SetWhichReceiver(int rec);
+	void SetPlotType(int type);
+	void SetColormap(int cmap);
     void SetZRange(double zmin, double zmax, bool is_autoscale); 
 
 protected:
     void OnPaint(wxPaintEvent &event);
-    void OnEraseBackground( wxEraseEvent &WXUNUSED(event))
-    {}
+	void OnEraseBackground(wxEraseEvent &WXUNUSED(event));
         
 };
 

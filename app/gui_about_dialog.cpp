@@ -1,5 +1,6 @@
 #include "gui_about_dialog.h"
 #include <wx/clipbrd.h>
+#include <wx/dcbuffer.h>
 
 using namespace std;
 

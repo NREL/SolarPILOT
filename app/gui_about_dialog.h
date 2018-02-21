@@ -1,8 +1,7 @@
 #ifndef _GUI_ABOUT_
 #define _GUI_ABOUT_ 1
 
-#include "GUI_main.h"
-
+#include <wx/wx.h>
 
 /* 
 Create an about dialog

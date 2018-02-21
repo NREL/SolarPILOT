@@ -1,11 +1,13 @@
-#include "FieldPlot.h"
-#include "gui_util.h"
-#include "OpticalMesh.h"
-#include "SolarField.h"
 #include <algorithm>
 #include <wx/dc.h>
 #include <wx/dcgraph.h>
 #include <wx/dcbuffer.h>
+
+#include "FieldPlot.h"
+#include "gui_util.h"
+#include "OpticalMesh.h"
+#include "SolarField.h"
+
 using namespace std;
 
 void FieldPlot::SetPlotOption(int option)

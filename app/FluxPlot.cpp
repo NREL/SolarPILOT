@@ -1,8 +1,13 @@
+#include <algorithm>
+
 #include "FluxPlot.h"
 #include "gui_util.h"
 #include "SolarField.h"
+#include "plot_contourf.h"
+#include "plot_scatter.h"
 
-#include <algorithm>
+#include <wx/dcgraph.h>
+#include <wx/dcbuffer.h>
 
 using namespace std;
 
@@ -66,6 +71,8 @@ void FluxPlot::OnPaint(wxPaintEvent &event)
     DoPaint(_pdc);
     event.Skip();
 }
+
+void FluxPlot::OnEraseBackground(wxEraseEvent &WXUNUSED(event)) {}
 
 void FluxPlot::DoPaint(wxDC &_pdc)
 {
@@ -451,6 +458,46 @@ void FluxPlot::DoPaint(wxDC &_pdc)
     _pdc.DrawBitmap( *_plotobj.GetBitmap(), 0, 0);
 
 }
+
+void FluxPlot::SetFontSize(int hpixel)
+{
+	_plotobj.SetFontSize(hpixel);
+}
+
+void FluxPlot::SetResolutionMultiplier(int resmult)
+{
+	_plotobj.SetResolutionMultiplier(resmult);
+}
+
+int FluxPlot::GetFontSize()
+{
+	return _plotobj.GetFontSize();
+}
+
+wxBitmap *FluxPlot::GetBitmap()
+{
+	return _plotobj.GetBitmap();
+}
+
+int FluxPlot::GetResolution()
+{
+	return _plotobj.GetResolutionMultiplier();
+}
+
+void FluxPlot::SetWhichReceiver(int rec)
+{
+	_receiver = rec;
+}
+
+void FluxPlot::SetPlotType(int type)
+{
+	_plot_type = type;
+}
+
+void FluxPlot::SetColormap(int cmap)
+{
+	_plotobj.SetColormap(cmap);
+};
 
 //**********EVENTS***********************
 BEGIN_EVENT_TABLE(FluxPlot, wxScrolledWindow)
