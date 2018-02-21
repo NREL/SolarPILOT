@@ -1,4 +1,5 @@
 #include "ImageCanvas.h"
+#include <wx/dc.h>
 
 ImageCanvas::ImageCanvas(wxWindow *parent, wxWindowID id, std::string imagepath, wxBitmapType imagetype, const wxPoint pos, const wxSize size)
     : wxScrolledWindow( parent, id, pos, size, wxNO_BORDER)

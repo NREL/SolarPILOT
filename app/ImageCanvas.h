@@ -1,10 +1,8 @@
 #ifndef _IMAGE_CANVAS_
 #define _IMAGE_CANVAS_ 1
 
-//#include "GUI_main.h"
 #include <wx/wx.h>
 #include <wx/bitmap.h>
-#include <wx/dc.h>
 
 /* 
 This class creates a simple canvas for displaying an image
