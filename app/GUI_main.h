@@ -696,38 +696,14 @@ public:
 };
 
 //--------------- Callback methods for the simulation engines --------------------------
-static int STCallback(st_uint_t ntracedtotal, st_uint_t ntraced, st_uint_t ntotrace, st_uint_t curstage, st_uint_t nstages, void *data)
-{
-    SPFrame *frame = static_cast<SPFrame*>( data );
-    if(frame != NULL) return frame->SolTraceProgressUpdate(ntracedtotal, ntraced, ntotrace, curstage, nstages, data);
-    else return 0;
-};
+extern int STCallback(st_uint_t ntracedtotal, st_uint_t ntraced, st_uint_t ntotrace, st_uint_t curstage, st_uint_t nstages, void *data);
 
-static bool SolarFieldInfoCallback(simulation_info *siminfo, void *data)
-{
-    SPFrame *frame = static_cast<SPFrame*>( data );
-    if(frame != NULL) frame->SimProgressUpdate(siminfo);
-    return true;
-};
+extern bool SolarFieldInfoCallback(simulation_info *siminfo, void *data);
 
-static void SolarFieldErrorCallback(simulation_error *simerror, void *data)
-{
-    SPFrame *frame = static_cast<SPFrame*>( data );
-    if(frame != NULL) frame->SimErrorHandler(simerror);
-};
+extern void SolarFieldErrorCallback(simulation_error *simerror, void *data);
 
-static bool SolarFieldOptimizeSummaryCallback(simulation_info *siminfo, void *data)
-{
-    SPFrame *frame = static_cast<SPFrame*>( data );
-    if(frame != NULL) frame->OptimizeProgressSummaryUpdate(siminfo);
-    return true;
-};
+extern bool SolarFieldOptimizeSummaryCallback(simulation_info *siminfo, void *data);
 
-static bool SolarFieldOptimizeDetailCallback(simulation_info *siminfo, void *data)
-{
-    SPFrame *frame = static_cast<SPFrame*>( data );
-    if(frame != NULL) frame->OptimizeProgressDetailUpdate(siminfo);
-    return true;
-};
+extern bool SolarFieldOptimizeDetailCallback(simulation_info *siminfo, void *data);
 
 #endif

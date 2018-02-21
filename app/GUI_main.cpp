@@ -4268,3 +4268,43 @@ void SPFrame::WriteVariablesToFile(wxTextFile &tfile, var_map &vset)
         tfile.AddLine( wxString::Format("%s,%s,%s,%s", var->first.c_str(), var->second->short_desc.c_str(), var->second->units.c_str(), svar.c_str()) );
     }
 }
+
+/* ----------------------------------
+
+Callbacks
+
+-------------------------------------*/
+
+int STCallback(st_uint_t ntracedtotal, st_uint_t ntraced, st_uint_t ntotrace, st_uint_t curstage, st_uint_t nstages, void *data)
+{
+	SPFrame *frame = static_cast<SPFrame*>(data);
+	if (frame != NULL) return frame->SolTraceProgressUpdate(ntracedtotal, ntraced, ntotrace, curstage, nstages, data);
+	else return 0;
+};
+
+bool SolarFieldInfoCallback(simulation_info *siminfo, void *data)
+{
+	SPFrame *frame = static_cast<SPFrame*>(data);
+	if (frame != NULL) frame->SimProgressUpdate(siminfo);
+	return true;
+};
+
+void SolarFieldErrorCallback(simulation_error *simerror, void *data)
+{
+	SPFrame *frame = static_cast<SPFrame*>(data);
+	if (frame != NULL) frame->SimErrorHandler(simerror);
+};
+
+bool SolarFieldOptimizeSummaryCallback(simulation_info *siminfo, void *data)
+{
+	SPFrame *frame = static_cast<SPFrame*>(data);
+	if (frame != NULL) frame->OptimizeProgressSummaryUpdate(siminfo);
+	return true;
+};
+
+bool SolarFieldOptimizeDetailCallback(simulation_info *siminfo, void *data)
+{
+	SPFrame *frame = static_cast<SPFrame*>(data);
+	if (frame != NULL) frame->OptimizeProgressDetailUpdate(siminfo);
+	return true;
+};

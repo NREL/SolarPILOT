@@ -172,19 +172,19 @@ static void _drop_heliostat_template( lk::invoke_t &cxt )
 
 }
 
-static void _add_heliostat( lk::invoke_t &cxt )
-{
-    LK_DOC("add_heliostat", "Add a new heliostat, returning the unique index", "(string:name[, boolean:make selection]):integer");   
-
-};
-
-
-static void _drop_heliostat( lk::invoke_t &cxt )
-{
-    LK_DOC("drop_heliostat", "Drop a heliostat from the current layout", "(integer:index)");
-
-    return;
-}
+//static void _add_heliostat( lk::invoke_t &cxt )
+//{
+//    LK_DOC("add_heliostat", "Add a new heliostat, returning the unique index", "(string:name[, boolean:make selection]):integer");   
+//
+//};
+//
+//
+//static void _drop_heliostat( lk::invoke_t &cxt )
+//{
+//    LK_DOC("drop_heliostat", "Drop a heliostat from the current layout", "(integer:index)");
+//
+//    return;
+//}
 
 
 static void _sp_var( lk::invoke_t &cxt )
