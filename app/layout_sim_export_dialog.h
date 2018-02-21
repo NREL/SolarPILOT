@@ -1,7 +1,8 @@
 #ifndef _LSDIALOG_
 #define _LSDIALOG_ 1
 
-#include "GUI_main.h"
+#include <wx/wx.h>
+#include "gui_util.h"
 
 class layout_export_dialog : public wxDialog
 {
