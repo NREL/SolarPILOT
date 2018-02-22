@@ -1,4 +1,4 @@
-VPATH = ../src/UI
+VPATH = ../app
 
 #<<<<<<< update for local machine
 HOMEDIR = ../..
@@ -8,7 +8,7 @@ WEXDIR = $(HOMEDIR)/wex
 WEXLIB = $(WEXDIR)/wexuxwx3.a
 LKDIR = $(HOMEDIR)/lk
 LKLIB = $(LKDIR)/lkuxwx3.a
-STDIR = $(HOMEDIR)/SolTraceWX/coretrace
+STDIR = $(HOMEDIR)/SolTrace/coretrace
 STLIB = $(STDIR)/build_linux/coretrace.a
 SHAREDIR = $(SSCDIR)/build_linux
 SHAREDLIB = $(SHAREDIR)/shared.a
@@ -19,10 +19,10 @@ NLOPTLIB = $(SHAREDIR)/nlopt.a
 CC = g++ #gcc
 CXX = g++
 #CFLAGS = -I. -I$(WEXDIR)/include -I$(LKDIR) -I$(SSCDIR) -I../rapidxml -I$(FCDIR) -I$(STDIR) -D__64BIT__ -g -O2 -std=c++0x -DLK_USE_WXWIDGETS -DSP_STANDALONE -D_GLIBCXX_USE_NANOSLEEP `wx-config-3 --cflags` 
-CFLAGS = -I. -I$(WEXDIR)/include -I$(LKDIR) -I$(SSCDIR) -I../rapidxml -I$(FCDIR) -I$(STDIR) -D__64BIT__ -g -std=c++0x -DLK_USE_WXWIDGETS -DSP_STANDALONE -D_GLIBCXX_USE_NANOSLEEP `wx-config-3 --cflags` 
+CFLAGS = -I. -I$(WEXDIR)/include -I$(LKDIR)/include -I$(SSCDIR) -I../rapidxml -I$(FCDIR) -I$(STDIR) -D__64BIT__ -g -std=c++0x -DLK_USE_WXWIDGETS -DSP_STANDALONE -D_GLIBCXX_USE_NANOSLEEP `wx-config-3 --cflags` 
 
 CXXFLAGS = $(CFLAGS)
-LDFLAGS =  $(WEXLIB) $(LKLIB) $(STLIB) $(FCLIB) $(NLOPTLIB) $(SHAREDLIB)  `wx-config-3 --libs stc` `wx-config-3 --libs aui` `wx-config-3 --libs` -lm  -lfontconfig -ldl 
+LDFLAGS =  $(WEXLIB) $(LKLIB) $(STLIB) $(FCLIB) $(NLOPTLIB) $(SHAREDLIB)  `wx-config-3 --libs stc` `wx-config-3 --libs aui` `wx-config-3 --libs` -lm  -lfontconfig -ldl -lcurl
 
 
 OBJECTS  = \
@@ -39,7 +39,6 @@ OBJECTS  = \
 	GUI_OptimizationPage.o \
 	GUI_ParametricSimulationPage.o \
 	GUI_PerformanceSimulationPage.o \
-	GUI_PlantPage.o \
 	GUI_PlotFieldPage.o \
 	GUI_PlotFluxPage.o \
 	GUI_ReceiverPage.o \
@@ -60,7 +59,11 @@ OBJECTS  = \
 	plot_scatter.o \
 	rec_select_dialog.o \
 	sandbox.o \
-	settings_dialog.o 
+	settings_dialog.o\
+	rename_dialog.o\
+	kml_select_dialog.o\
+	parse_kml.o\
+	scripting.o
 
 TARGET = solarpilot
 

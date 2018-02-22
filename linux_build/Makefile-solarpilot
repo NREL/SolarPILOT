@@ -2,7 +2,7 @@ SSCDIR = ../../ssc
 
 VPATH = $(SSCDIR)/solarpilot
 
-STDIR = ../../SolTraceWX/coretrace
+STDIR = ../../SolTrace/coretrace
 STLIB = $(STDIR)/build_linux/coretrace.a
 SHARELIB = $(SSCDIR)/build_linux/shared.a
 NLOPTDIR = $(SSCDIR)/nlopt
@@ -30,7 +30,6 @@ LayoutSimulateThread.o \
 mod_base.o \
 OpticalMesh.o \
 optimize.o \
-Plant.o \
 Receiver.o \
 Ambient.o \
 SolarField.o \
