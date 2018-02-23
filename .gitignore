@@ -20,10 +20,10 @@ src/Custom/
 build_vs2017/.vs/
 build_vs2017/x64/
 build_vs2017/win32/
+build_linux/solarpilot
 *.iobj
 *.ipdb
 deploy/exelib/help/*.pdf
 app/Custom/
 app/Custom/*
 deploy/linux/solarpilot
-linux_build/solarpilot
