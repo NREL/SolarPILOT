@@ -1,8 +1,8 @@
 # Contributing to SolarPILOT
 
-To get started contributing to SolarPILOT, please read the contributing guidelines in the SAM repo: [SAM Contributing](https://github.com/NREL/SAM/blob/develop/CONTRIBUTING.md). SolarPILOT is governed by the agreement developed for SAM. 
+To get started contributing to SolarPILOT, please read the contributing guidelines in the SolarPILOT repo: [SAM Contributing](https://github.com/NREL/SAM/blob/develop/CONTRIBUTING.md).
 
-Please note, to get started, you'll need to agree to the terms in: [SAM Contributing Policy](https://github.com/NREL/SAM/wiki/Contribution-Policy).  
+Please note, to get started, you'll need to agree to the terms in: [SolarPILOT Contributing Policy](https://github.com/NREL/SolarPILOT/wiki/Contribution-Policy).  
 
 Specifically, you'll need to send an email of consent to [solarpilot.support@nrel.gov](mailto:solarpilot.support@nrel.gov) with the following:  
 
