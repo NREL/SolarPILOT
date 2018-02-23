@@ -1,4 +1,4 @@
-# SolarPILOT - **Solar** **P**ower tower **I**ntegrated **L**ayout and **O**ptimization **T**ool
+# SolarPILOT - Solar Power tower Integrated Layout and Optimization Tool
 
 The SolarPILOT Open Source Project repository contains the source code, tools, and instructions to build a desktop version of the National Renewable Energy Laboratory's SolarPILOT. SolarPILOT is a design, characterization, and optimization tool for concentrating solar power (CSP) tower plants. It is available through this repository as a standalone application with full functionality, and it is also included in several CSP tower models within NREL's System Advisor Model (SAM) in limited form. For more details about SolarPILOT's capabilities, see the SolarPILOT website at [https://www.nrel.gov/csp/solarpilot.html](https://www.nrel.gov/csp/solarpilot.html). For details on integration with SAM, see the SAM website at [sam.nrel.gov](https://sam.nrel.gov).
 
@@ -46,7 +46,7 @@ These are the general quick steps you need to follow to set up your computer for
 <tr><td>WEX</td><td>https://github.com/NREL/wex</td><td>WEXDIR</td></tr>
 <tr><td>Google Test</td><td>https://github.com/google/googletest</td><td>GTEST</td></tr>
 <tr><td>SSC</td><td>https://github.com/NREL/ssc</td><td>SSCDIR</td></tr>
-<tr><td>SolTrace</td>https://github.com/NREL/SolTrace</td><td>CORETRACEDIR</td></tr>
+<tr><td>SolTrace</td><td>https://github.com/NREL/SolTrace</td><td>CORETRACEDIR</td></tr>
 <tr><td>SolarPILOT</td><td>https://github.com/NREL/SolarPILOT</td><td></td></tr>
 </table>
 
