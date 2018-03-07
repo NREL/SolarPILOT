@@ -106,9 +106,6 @@ fdh.write( \
 
 //Sandbox mode
 #define _SANDBOX 0
-//demo only
-#define _DEMO 0	//Is this a demo version?
-const int _demo_date[] = {2014,8,1};
 //Include Coretrace (relevant to fieldcore only! Disabling this option will cause SolarPILOT compilation to fail.).
 #ifdef SP_STANDALONE
 	#define SP_USE_SOLTRACE

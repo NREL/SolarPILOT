@@ -312,8 +312,8 @@ void SPFrame::OnDoLayout( wxCommandEvent &event)
     and reset the error object.
     
     */
-    if(! CheckLicense() ) return;
-    wxBitmapButton* bb = (wxBitmapButton*)event.GetEventObject();
+    
+	wxBitmapButton* bb = (wxBitmapButton*)event.GetEventObject();
     try
     {
         //check whether a flux simulation is currently running. Both simulations cannot occur at the same time.
@@ -477,7 +477,6 @@ void SPFrame::OnLayoutCount( wxCommandEvent &WXUNUSED(event))
 
 void SPFrame::OnLayoutImport( wxCommandEvent &WXUNUSED(event))
 {
-    if(! CheckLicense() ) return;
     /* The import button has been clicked for the layout grid */
     try
     {
@@ -614,7 +613,6 @@ void SPFrame::OnLayoutImport( wxCommandEvent &WXUNUSED(event))
 
 void SPFrame::OnLayoutExport( wxCommandEvent &WXUNUSED(event))
 {
-    if(! CheckLicense() ) return;
     /* The export button has been clicked for the layout grid */
     try
     {

@@ -216,18 +216,6 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
     _software_version = my_to_string(_version_major) + "." + my_to_string(_version_minor) + "." + my_to_string(_version_patch);
     _contact_info = "solarpilot.support@nrel.gov";
 
-    //set demo limits if needed
-#if _DEMO == 1
-    _trial_days = 60;
-    _trial_start = wxDateTime::Now();
-    _trial_start.ResetTime();
-    _trial_start.SetDay(_demo_date[2]);
-    _trial_start.SetMonth( gui_util::intTowxMonth(_demo_date[1]) );
-    _trial_start.SetYear(_demo_date[0]);
-    _software_version.append(" DEMO");
-
-    CheckLicense();        //just display the message here
-#endif
     Connect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler( SPFrame::OnClose ), NULL, this );
 
     //Set up directories
@@ -538,31 +526,6 @@ SPFrame &SPFrame::Instance()
 SPFrame::~SPFrame()
 {
     g_mainWindow = 0;
-}
-
-bool SPFrame::CheckLicense()
-{
-#if _DEMO == 1
-    
-    wxDateTime today = wxDateTime::Today();
-    wxTimeSpan diff = today - _trial_start;
-    bool expired = (int)floor(diff.GetHours()/24.) > _trial_days;
-
-
-    if(expired)
-    {
-        wxDateTime trial_end = _trial_start;
-        wxTimeSpan tdiff(_trial_days*24, 0, 0, 0);
-        trial_end.Add(tdiff);
-
-        PopMessage(
-            wxString::Format("This version of SolarPILOT expired on %d/%d/%d and has limited functionality. Please contact %s to renew your license!", 
-            (int)trial_end.GetMonth()+1, trial_end.GetDay(), trial_end.GetYear(), _contact_info), "Software Expired", wxICON_ERROR);
-    }
-    return !expired;
-#else
-    return true;
-#endif    
 }
 
 bool SPFrame::CreateRestorePoint()

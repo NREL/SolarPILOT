@@ -183,7 +183,6 @@ _flux_frame->SetResolutionMultiplier(1);
 
 void SPFrame::OnFluxBitmapSave( wxCommandEvent &WXUNUSED(event))
 {
-    if(! CheckLicense() ) return;
     try
     {
         
@@ -233,7 +232,6 @@ void SPFrame::OnFluxTableSave( wxCommandEvent &WXUNUSED(event))
     /* 
     Save a file containing the flux map data for the currently plotted flux map
     */
-    if(! CheckLicense() ) return;
     try
     {
 

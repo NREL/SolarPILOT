@@ -126,7 +126,6 @@ void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &re
 
 void SPFrame::OnSimulationResultsExport( wxCommandEvent &WXUNUSED(event))
 {
-    if(! CheckLicense() ) return;
     /* Export the simulation results summary table to a CSV file. Prompt for file location. */
     wxFileDialog filedlg(this, wxT("Export results..."), wxEmptyString, wxEmptyString, wxT("Comma-separated files (*.csv)|*.csv"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT );
     filedlg.CentreOnParent();
@@ -198,7 +197,6 @@ void SPFrame::OnSimulationResultsExport( wxCommandEvent &WXUNUSED(event))
 
 void SPFrame::OnSimulationResultsCopy( wxCommandEvent &WXUNUSED(event))
 {
-    if(! CheckLicense() ) return;
     /* The "copy to clipboard" button has been clicked for the simulation results. */
 
     //Open the clipboard 

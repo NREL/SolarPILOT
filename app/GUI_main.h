@@ -417,8 +417,6 @@ private:
     wxGrid *_results_grid;
     ST_System *_STSim;
 
-    bool CheckLicense();
-
     void CreateInputPages(wxWindow *parent, PagePanel *pagepanel);
     void SetCaseName(wxString case_name = _T("New Case"));
     void bindControls();
