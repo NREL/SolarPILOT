@@ -547,7 +547,6 @@ bool SPFrame::GetSelectedHeliostats(Hvector &helios, bool select_enabled)
 
 void SPFrame::OnDoPerformanceSimulation( wxCommandEvent &event)
 {
-    if(! CheckLicense() ) return;
     /* 
     The flux simulation button has been clicked. 
 
@@ -669,7 +668,6 @@ void SPFrame::OnFluxLCSort( wxCommandEvent &event )
 
 void SPFrame::OnStinputExport( wxCommandEvent &WXUNUSED(event))
 {
-    if(! CheckLicense() ) return;
     /* The button for exporting a SolTrace input file has been clicked */
     try
     {

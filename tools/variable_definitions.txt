@@ -16,7 +16,7 @@ ambient	sun_rad_limit	IN	DOUBLE	4.65	mrad	TRUE				Sunshape angular extent	Half-a
 ambient	sun_type	IN	STRING	2	none	TRUE	combo	Pillbox sun=2;Gaussian sun=4;Limb-darkened sun=1;Point sun=0;Buie CSR=5;User sun=3;		Sunshape model	Sunshape model - {0=point sun, 1=limb darkened sun, 2=square wave sun, 3=user sun}
 ambient	time_zone	IN	DOUBLE	-8	hr	FALSE				Time zone	Time zone
 ambient	user_sun	IN	MATRIX_T		[deg,deg]	FALSE				user_sun	Array of intensity at various angles from the centroid of the sun
-ambient	weather_file	IN	STRING	CA Daggett.tm2	none	TRUE				Weather file	Weather file to use for analysis
+ambient	weather_file	IN	STRING	USA CA Daggett (TMY2).csv	none	TRUE				Weather file	Weather file to use for analysis
 ambient	wf_data	IN	WEATHERDATA		none	FALSE				wf_data	Data entries in the weather file
 ambient	atm_atten_est	OUT	DOUBLE	0	%	FALSE				Average attenuation	Average solar field attenuation due to atmospheric scattering
 ambient	sim_time_step	OUT	DOUBLE	0	sec	FALSE				Simulation weather data time step	Simulation weather data time step

@@ -97,18 +97,11 @@ fdh.write( \
 #include "mod_base.h"
 #include "Toolbox.h"
 
-#ifdef _MSC_VER
-#pragma warning(disable : 4267)
-#endif
-
 //Enumeration of data columns in the variable map file
 
 
 //Sandbox mode
 #define _SANDBOX 0
-//demo only
-#define _DEMO 0	//Is this a demo version?
-const int _demo_date[] = {2014,8,1};
 //Include Coretrace (relevant to fieldcore only! Disabling this option will cause SolarPILOT compilation to fail.).
 #ifdef SP_STANDALONE
 	#define SP_USE_SOLTRACE
@@ -243,13 +236,13 @@ void var_map::copy( var_map &vc )
 
     //receiver templates
     for( size_t i=0; i<recs.size(); i++ )
-        drop_receiver(i);
+        drop_receiver((int)i);
     for( size_t i=0; i<vc.recs.size(); i++ )
         add_receiver( vc.recs.at(i).id.val );
 
     //heliostat templates
     for( size_t i=0; i<hels.size(); i++ )
-        drop_heliostat(i);
+        drop_heliostat((int)i);
     for( size_t i=0; i<vc.hels.size(); i++ )
         add_heliostat( vc.hels.at(i).id.val );
 

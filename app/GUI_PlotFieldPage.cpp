@@ -370,7 +370,6 @@ void SPFrame::LayoutSimulationExport(SolarField &SF, wxString &fname, vector<boo
 
 void SPFrame::OnLayoutSimulationExport( wxCommandEvent &WXUNUSED(event))
 {
-    if(! CheckLicense() ) return;
 	//Save the simulation results to a text file
 	
 	//Check to see whether we have any useful data to export

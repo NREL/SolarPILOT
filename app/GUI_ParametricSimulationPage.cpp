@@ -675,7 +675,6 @@ void SPFrame::OnParEditLinkages( wxCommandEvent &WXUNUSED(event))
 
 void SPFrame::OnParametricSimulate( wxCommandEvent &WXUNUSED(event))
 {
-    if(! CheckLicense() ) return;
     /* The parametric simulate button has been pressed */
     try
     {    
@@ -862,7 +861,6 @@ void SPFrame::OnUserParImport( wxCommandEvent &WXUNUSED(event) )
 
 void SPFrame::OnUserParExport( wxCommandEvent &WXUNUSED(event))
 {
-    if(! CheckLicense() ) return;
     //Export the contents of the parametric to a text file
     try
     {
@@ -997,7 +995,6 @@ void SPFrame::OnUserParVariables( wxCommandEvent &WXUNUSED(event))
 
 void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
 {
-    if(! CheckLicense() ) return;
     /* 
     Run a parametric simulation based on a table of variable values provided by the user on the
     parametrics page.

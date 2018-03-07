@@ -166,7 +166,6 @@ void SPFrame::CreateOptimizationPage(wxScrolledWindow *parent)
 
 void SPFrame::OnDoOptimizationSimulation( wxCommandEvent &event )
 {
-    if(! CheckLicense() ) return;
 
     try
     {
@@ -411,7 +410,6 @@ void SPFrame::OnClearOptimizationLog( wxCommandEvent &WXUNUSED(evt))
 
 void SPFrame::OnSaveOptimizationLog( wxCommandEvent &WXUNUSED(evt))
 {
-    if(! CheckLicense() ) return;
     //Export the contents of the optimize log to a text file
     try
     {
