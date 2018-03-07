@@ -10,7 +10,7 @@ The desktop version of SolarPILOT for Windows or Linux builds from the following
 
 * [LK](https://github.com/nrel/lk) is a scripting language that is integrated into SAM and allows users to add functionality to the program.
 
-* [wxWidgets](https://www.wxwidgets.org/) is a cross-platform graphical user interface platform used for SAM's user interface, and for the development tools included with SSC (SDKtool) and LK (LKscript). The current version of SAM uses wxWidgets 3.1.0.
+* [wxWidgets](https://www.wxwidgets.org/) is a cross-platform graphical user interface platform used for SAM's user interface, and for the development tools included with SSC (SDKtool) and LK (LKscript). The current version of SAM uses wxWidgets 3.1.1.
 
 * [WEX](https://github.com/nrel/wex) is a set of extensions to wxWidgets for custom user-interface elements used by SAM, and by LKscript and DView, which are integrated into SAM.
 
@@ -32,7 +32,7 @@ These are the general quick steps you need to follow to set up your computer for
     * Windows: Visual Studio 2017 Community or other editions available at https://www.visualstudio.com/.
     * Linux: g++ compiler available at http://www.cprogramming.com/g++.html or as part of the Linux distribution.
 
-2. Download the wxWidgets 3.1.0 source code for your operating system from https://www.wxwidgets.org/downloads/.
+2. Download the wxWidgets 3.1.1 source code for your operating system from https://www.wxwidgets.org/downloads/.
 
 3. Build wxWidgets.
 
@@ -42,6 +42,7 @@ These are the general quick steps you need to follow to set up your computer for
 
 <table>
 <tr><th>Project</th><th>Repository URL</th><th>Windows Environment Variable</th></tr>
+<tr><td>wxWidgets</td><td>https://www.wxwidgets.org/downloads</td><td>WXMSW3</td></tr>
 <tr><td>LK</td><td>https://github.com/NREL/lk</td><td>LKDIR</td></tr>
 <tr><td>WEX</td><td>https://github.com/NREL/wex</td><td>WEXDIR</td></tr>
 <tr><td>Google Test</td><td>https://github.com/google/googletest</td><td>GTEST</td></tr>
