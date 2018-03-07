@@ -160,6 +160,13 @@ private:
     int _tool_tip_delay, _n_threads, _n_threads_active, _nrecent_max, _trial_days;
     wxDateTime _trial_start;
 
+	int 
+		_version_major,
+		_version_minor,
+		_version_patch;
+	std::string
+		_software_version;
+
     wxColour
         _helptext_colour,
         _background_colour,
@@ -180,7 +187,6 @@ private:
         _is_mt_simulation,    //Is the current simulation multithreaded?
         _cancel_simulation; //Flag indicating whether the user wants to cancel the simulation
     std::string 
-        _software_version,    //Software version tag
         _contact_info;    //String containing contact info for bugs, etc. Used in crash messages.
         
     wxFileName
