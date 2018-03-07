@@ -22,17 +22,43 @@ _I agree to contribute to SolarPILOT. I agree to the following terms and conditi
 
 ### Instructions
 
-Here are the steps we would like you to follow when you contribute code to SAM:
+Here are the steps that will prepare you to contribute code to SolarPILOT:
 
 1. Install GitHub on your computer.
 1. Follow the instructions on the [SolarPILOT wiki](https://github.com/NREL/SolarPILOT/wiki) to clone the SolarPILOT repositories and build SolarPILOT.
 1. Create a fork on GitHub.com for the repository (SolarPILOT, SolTrace, SSC, LK, or WEX) you are contributing to.
 1. Clone your fork to create a local copy on your computer.
-1. Create a branch for your changes.
-1. Make your changes to the code.
-1. Build SolarPILOT and test it to make sure your code works as expected (see [below](#test-protocol)).
-1. Commit and push the changes to the branch.
-1. Create a pull request for us to review the branch. If the changes meet our requirements, we will merge the branch into the main repository.
+1. Follow the best practices steps to contribute your code.
+
+### Best practices
+
+The Git VCS is most effective when new development occurs in a branch and the proposed code changes are submitted via a _pull request_ into one of the main branches. The repository is configured to require special steps to be taken when contributing to one of the protected branches. This helps maintain stable releases and ensure new content conforms with the goals of the project. 
+
+The repository is organized into several branches, and some have special importance. 
+
+<table>
+<tr><th>Branch</th><th>Access</th><th>Description</th></tr>
+<tr><td>master</td><td>admin</td><td>Current stable version. This branch can only be modified by admins.</td></tr>
+<tr><td>develop</td><td>SolarPILOT-RW</td><td>Development version. Submit new features or non-patch fixes here via pull request.</td></tr>
+<tr><td>version-x.y</td><td>SolarPILOT-RW</td><td>Historical release version. This branch can only be modified by admins.</td></tr>
+<tr><td>_other_</td><td>Contributors</td><td>All new development occurs in named branches. These will be merged into other topic-specific branches or into develop.</td></tr>
+</table>
+
+The following steps should be taken when contributing code. 
+1. Determine the branch to which your code should apply. 
+    * Bug fixes for the existing release should start from the _version-x.y_ branch. 
+    * Bug fixes that don't affect the current release should start from _develop_.
+    * New features should start from _develop_ or a sub-branch. 
+2. If you have a bug fix, create an Issue on the issue tracker. If you are fixing a bug on the _develop_ branch and want it applied to prior stable releases as a patch, label the issue with ```needs-patch```.
+3. ```checkout``` the appropriate branch. Pull to the Head. 
+4. Create and checkout a new branch for your changes. ```git checkout -b <new branch name>```.
+5. Make your changes and commit them to your branch with frequent, descriptive commits. 
+6. Build SolarPILOT and test it to make sure your code works as expected (see [below](#test-protocol)).
+7. ```git push origin <new branch name>``` to publish your branch. 
+8. On the [repository](https://github.com/NREL/SolarPILOT) web page, create a pull request for your new branch. 
+    * Specify the target branch according to the selection from step (1) above. 
+    * Make sure to fully comment your pull request. 
+    * The project admins will review your pull request and solicit discussion if any issues arise. If your pull request is accepted, the branch will be deleted, and you can delete your local copy of the branch. If the request is not accepted, please review the discussion to determine and resolve any issues. 
 
 ### Resources for Learning GitHub
 
