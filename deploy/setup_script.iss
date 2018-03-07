@@ -53,10 +53,6 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "samples/*"; DestDir: "{app}/samples"; Excludes: ".svn,*.map"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "exelib/*"; DestDir: "{app}/exelib"; Excludes: ".svn,\custom"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "climate_files/*"; DestDir: "{app}/climate_files"; Excludes: ".svn"; Flags: ignoreversion recursesubdirs createallsubdirs
-;Source: "climate_files/CA Daggett.tm2"; DestDir: "{app}\climate_files";
-;Source: "climate_files/ESP_Sevilla_SWEC.epw"; DestDir: "{app}\climate_files";
-;Source: "climate_files/NV Tonopah.tm2"; DestDir: "{app}\climate_files";
-
 
 Source: "win32/ssleay32.dll"; DestDir: "{app}/win32"; Excludes: ".svn,*.map"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "win32/msvcr120.dll"; DestDir: "{app}/win32"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
@@ -66,7 +62,7 @@ Source: "win32/libssh2.dll"; DestDir: "{app}/win32"; Excludes: ".svn,*.map";  Fl
 Source: "win32/libeay32.dll"; DestDir: "{app}/win32"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "win32/libcurl.dll"; DestDir: "{app}/win32"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "win32/solarpilot.exe"; DestDir: "{app}/win32"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "win32/solarpilot.pdb"; DestDir: "{app}/win32"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: "win32/solarpilot.pdb"; DestDir: "{app}/win32"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
 
 Source: "x64/ssleay32.dll"; DestDir: "{app}/x64"; Excludes: ".svn,*.map"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "x64/msvcr120.dll"; DestDir: "{app}/x64"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
@@ -76,7 +72,7 @@ Source: "x64/libssh2.dll"; DestDir: "{app}/x64"; Excludes: ".svn,*.map";  Flags:
 Source: "x64/libeay32.dll"; DestDir: "{app}/x64"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "x64/libcurl.dll"; DestDir: "{app}/x64"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "x64/solarpilot.exe"; DestDir: "{app}/x64"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "x64/solarpilot.pdb"; DestDir: "{app}/x64"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: "x64/solarpilot.pdb"; DestDir: "{app}/x64"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
 
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
