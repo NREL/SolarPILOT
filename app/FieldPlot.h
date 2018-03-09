@@ -110,6 +110,8 @@ private:
     wxBitmap _pbit; //bitmap containing the current plot
     double _zoom_fact;  //zoom factor
     int _origin_offset[2];  //offset in pixels for origin
+    int _origin_pixels[2]; //location of the origin in pixels. Set by DoPaint
+    double _meters_per_pixel; //real-life distance covered by single pixel
     int _zoom_rectangle[4]; //x0,y0,x1,y1
     bool _is_zoom_rectangle;
     std::vector< std::string > _plot_choices;
@@ -154,6 +156,16 @@ public:
         return _origin_offset;
     };
         
+    int *GetOriginPixels()
+    {
+        return _origin_pixels;
+    };
+
+    double GetMetersPerPixel()
+    {
+        return _meters_per_pixel;
+    };
+
     void SetPPI(int ppi);
     int GetPPI();
     void ResetPPIOnPaintEvent(int oldppi = -1);

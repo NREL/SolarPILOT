@@ -99,6 +99,9 @@ FieldPlot::FieldPlot(wxPanel *parent, SolarField &SF, const int plot_option,
     _origin_offset[1] = 0;
     _is_data_visible = false;
     _is_zoom_rectangle = false;
+    _meters_per_pixel = 0.;
+    _origin_pixels[0] = -999;
+    _origin_pixels[0] = -999;
 
     _plot_choices.clear();
     /* 
@@ -301,12 +304,17 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         o[0] += _origin_offset[0];
         o[1] += _origin_offset[1];
 
+        _origin_pixels[0] = o[0];
+        _origin_pixels[1] = o[1];    //copy to member
+
         double plotsize[2];
         plotsize[0] = canvsize[0] - (left_buffer+right_buffer); 
         plotsize[1] = canvsize[1] - (top_buffer+bottom_buffer);
 
         //Determine the pixels per meter 
         double ppm = fmin(plotsize[0]/fieldsize[0]*plot_scale, plotsize[1]/fieldsize[1]*plot_scale);
+
+        _meters_per_pixel = 1./ppm;
 
         //get the radial extents
         double radvals[2];    //[min, max]
@@ -544,12 +552,17 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         o[0] += _origin_offset[0];
         o[1] += _origin_offset[1];
 
+        _origin_pixels[0] = o[0];
+        _origin_pixels[1] = o[1];    //copy to member
+
         double plotsize[2];
         plotsize[0] = canvsize[0] - (left_buffer+right_buffer);
         plotsize[1] = canvsize[1] - (top_buffer+bottom_buffer);
 
         //Determine the pixels per meter 
         double ppm = min(plotsize[0]/fieldsize[0]*plot_scale, plotsize[1]/fieldsize[1]*plot_scale);
+
+        _meters_per_pixel = 1./ppm;
 
         //get the radial extents
         double radvals[2];    //[min, max]
@@ -834,6 +847,10 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             top_buffer + plotsize[1]/2. + (ysize/2. + extents[3])*ppm};
         o[0] += _origin_offset[0];
         o[1] += _origin_offset[1];
+
+        _origin_pixels[0] = o[0];
+        _origin_pixels[1] = o[1];    //copy to member
+        _meters_per_pixel = 1./ppm;
 
         //Draw the x axis
         int x_axis_loc = top_buffer+plotsize[1];

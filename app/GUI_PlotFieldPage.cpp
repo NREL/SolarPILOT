@@ -170,6 +170,7 @@ void SPFrame::CreateFieldPlotPage(wxScrolledWindow *parent, wxArrayStr &choices,
 
     _plot_frame->Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler( SPFrame::OnFieldPlotMouseLeftDown ), NULL, this);
     _plot_frame->Connect(wxEVT_LEFT_UP, wxMouseEventHandler( SPFrame::OnFieldPlotMouseLeftUp ), NULL, this);
+	_plot_frame->Connect(wxEVT_RIGHT_UP, wxMouseEventHandler( SPFrame::OnFieldPlotMouseRight ), NULL, this);
     _plot_frame->Connect(wxEVT_MOTION, wxMouseEventHandler( SPFrame::OnFieldPlotMotion ), NULL, this );
     _plot_frame->Connect(wxEVT_MOUSEWHEEL, wxMouseEventHandler( SPFrame::OnFieldPlotMouseWheel ), NULL, this);
     _plot_frame->Connect(wxEVT_MIDDLE_DOWN, wxMouseEventHandler( SPFrame::OnFieldPlotMouseCenterDown ), NULL, this);
@@ -699,6 +700,34 @@ void SPFrame::OnFieldPlotMouseLeftUp( wxMouseEvent &evt)
 
     _plot_frame->Update();
     _plot_frame->Refresh();
+}
+
+void SPFrame::OnFieldPlotMouseRight( wxMouseEvent &evt )
+{
+	/* 
+	Handle right mouse clicks on the field plot page. The goal is to provide additional
+	information via right click on selected heliostat (or other) plot elements.
+	*/
+
+	//Get the click position in pixels
+	long x,y;
+	evt.GetPosition( &x, &y );
+
+	//Get the current position of the solar field origin in pixels
+	int *origin = _plot_frame->GetOriginPixels();
+	double scale = _plot_frame->GetMetersPerPixel();
+	
+	//Translate into dimensional click location
+	double xcoord = (x-origin[0])*scale;
+	double ycoord = (origin[1]-y)*scale;
+
+	//Find the nearest heliostat
+	Hvector *helios = _SF.getHeliostats();
+	
+	//use the search tree method.. is this data stored after layout? Each heliostat should be tagged with it's tree address.
+
+
+	return;
 }
 
 void SPFrame::OnFieldPlotMouseWheel( wxMouseEvent &evt) 
