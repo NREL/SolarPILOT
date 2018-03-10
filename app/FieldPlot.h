@@ -57,6 +57,7 @@
 //#include <wx/dc.h>
 //#include <wx/dcgraph.h>
 //#include <wx/dcbuffer.h>
+#include "treemesh.h"
 
 class SolarField;
 
@@ -115,6 +116,8 @@ private:
     int _zoom_rectangle[4]; //x0,y0,x1,y1
     bool _is_zoom_rectangle;
     std::vector< std::string > _plot_choices;
+    st_hash_tree _helio_hash;
+
     DECLARE_EVENT_TABLE()
 
 
@@ -137,6 +140,7 @@ public:
     void SetDataVisible(bool is_visible);
     void SetZoomRectangle(int xy0_xy1[4]);
     void EnableZoomRectangle(bool is_enabled=true);
+    st_hash_tree *GetKDHashTree();
 
     std::vector< std::string > GetPlotChoices();
     bool IsDataReady();

@@ -51,6 +51,7 @@
 
 
 #include "GUI_main.h"
+#include "treemesh.h"
 
 using namespace std;
 
@@ -725,6 +726,61 @@ void SPFrame::OnFieldPlotMouseRight( wxMouseEvent &evt )
 	Hvector *helios = _SF.getHeliostats();
 	
 	//use the search tree method.. is this data stored after layout? Each heliostat should be tagged with it's tree address.
+	double extents[2];
+	_SF.getLandObject()->getExtents(*_SF.getVarMap(), extents);
+
+	KDLayoutData ld;
+	ld.xlim[0] = -extents[1];
+	ld.xlim[1] = extents[1];
+	ld.ylim[0] = -extents[1];
+	ld.ylim[1] = extents[1];
+	ld.min_unit_dx = ld.min_unit_dy = _SF.getHeliostatTemplates()->at(0)->getCollisionRadius()*2.;
+
+	st_hash_tree helio_hash;
+	helio_hash.create_mesh(&ld);
+	for(size_t i=0; i<helios->size(); i++)
+	{
+		sp_point *loc = helios->at(i)->getLocation();
+		helio_hash.add_object((void*)helios->at(i), loc->x, loc->y );
+	}
+
+	// helio_hash.add_neighborhood_data();
+	std::vector<void*> hitelements;
+	// bool has_elements = _plot_frame->GetKDHashTree()->get_all_data_at_loc( hitelements, xcoord, ycoord );
+	bool has_elements = helio_hash.get_all_data_at_loc( hitelements, xcoord, ycoord );
+
+	//brute search for closest
+	if(has_elements)
+	{
+		int imin=0;
+		double r0;
+		for(size_t i=0; i<hitelements.size(); i++)
+		{
+			sp_point *hloc = ((Heliostat*)(hitelements.at(i)))->getLocation();
+			double r = (hloc->x - xcoord)*(hloc->x - xcoord) + (hloc->y - ycoord)*(hloc->y - ycoord);
+			r = sqrtf(r);
+			
+			if( i==0 )
+			{
+				r0 = r;
+				continue;
+			}
+			if( r < r0 )
+			{
+				r0 = r;
+				imin = i;
+			}
+		}
+
+		//closest is heliostat 'imin'
+		Heliostat *H = (Heliostat*)hitelements.at(imin);
+		
+		//do some kind of pop message for now
+		PopMessage(
+			wxString::Format( "Heliostat ID:\t%d\nLocation:\t[%.1f,%.1f]\nEfficiency:\t%.3f\%\n", 
+							H->getId(), H->getLocation()->x, H->getLocation()->y, H->getEfficiencyTotal()*100.), "Heliostat Info");
+
+	}
 
 
 	return;
