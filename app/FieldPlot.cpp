@@ -198,6 +198,8 @@ void FieldPlot::SetPlotData(SolarField &SF, int plot_option)
     _SF = &SF;
     _option = plot_option;
     _is_data_ready = plot_option != 0;
+    _helios_select.clear();
+    _helios_annot.clear();
 
     //update the calculation of the heliostat KD tree for quick mouse interaction
 	Hvector *helios = _SF->getHeliostats();
@@ -1003,9 +1005,23 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                 }
                 else
                 {
+
+                    //if the heliostat is selected, use a different outline
                     wxColour gc;
                     ColorGradientHotCold( gc, (plot_vals[i]-valmin)/(valmax - valmin) );
-                    _dc.SetPen( wxPen( gc, 1, wxPENSTYLE_SOLID) );
+
+                    bool is_selected = std::find(_helios_select.begin(), _helios_select.end(), H ) != _helios_select.end();
+                    if( is_selected )
+                    {
+                        wxColour emph;
+                        emph.Set(255,255,0);
+                        _dc.SetPen( wxPen( emph, 4, wxPENSTYLE_SOLID) );
+                    }
+                    else
+                    {
+                        _dc.SetPen( wxPen( gc, 1, wxPENSTYLE_SOLID) );
+                    }
+                    
                     _dc.SetBrush( wxBrush( gc, wxBRUSHSTYLE_SOLID ) );
                 }
                 DrawScaledPolygon(_dc, ppm, o, xc, yc, nc);
@@ -1350,6 +1366,7 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
     _helios_annot.Clear();  //clear the annotation string
 
     //declare and init reporting values
+    double h_avg_tot = 0.;
     double h_avg_atten = 0.;
     double h_avg_cosine = 0.;
     double h_avg_blocking = 0.;
@@ -1367,6 +1384,7 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
     for(size_t i=0; i<nh; i++)
     {
         Heliostat *hi = _helios_select.at(i);
+        h_avg_tot += hi->getEfficiencyTotal();
         h_avg_atten += hi->getEfficiencyAtten();
         h_avg_cosine += hi->getEfficiencyCosine();
         h_avg_blocking += hi->getEfficiencyBlock();
@@ -1383,6 +1401,7 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
     if( nh > 1 )
     {
         h_avg_atten /= (double)nh;
+        h_avg_tot /= (double)nh;
         h_avg_cosine /= (double)nh;
         h_avg_blocking /= (double)nh;
         h_avg_shading /= (double)nh;
@@ -1393,6 +1412,7 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
 
     _helios_annot = wxString::Format(
         "%s\t\t%.2f%\n"
+        "%s\t\t%.2f%\n"
         "%s\t\t\t%.2f%\n"
         "%s\t\t\t%.2f%\n"
         "%s\t\t\t%.2f%\n"
@@ -1402,6 +1422,7 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
         "%s\t\t%.1f kW\n"
         "%s\t\t\t%.1f m2\n",
 
+        "Total efficiency", h_avg_tot*100.,
         "Attenuation", h_avg_atten*100.,
         "Cosine", h_avg_cosine*100.,
         "Blocking", h_avg_blocking*100.,
