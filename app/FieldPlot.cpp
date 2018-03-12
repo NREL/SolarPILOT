@@ -1058,7 +1058,10 @@ void FieldPlot::DoPaint(wxDC &_pdc)
 
             size_t abox_w = ats.GetWidth();
             size_t abox_h = ats.GetHeight();
+            wxPen cpen = _dc.GetPen();
+            _dc.SetPen( wxPen( wxColour(220,220,220), 2, wxPENSTYLE_SOLID ) );
             _dc.DrawRectangle(canvsize[0]-right_buffer-12-abox_w, top_buffer+2, abox_w+10, abox_h+10 );
+            _dc.SetPen( cpen );
             _dc.DrawText(_helios_annot, canvsize[0]-right_buffer-7-abox_w, top_buffer+7);
         }
 
