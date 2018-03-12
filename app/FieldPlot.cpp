@@ -27,8 +27,8 @@
 *  4. Redistribution of this software, without modification, must refer to the software by the same
 *  designation. Redistribution of a modified version of this software (i) may not refer to the modified
 *  version by the same designation, or by any confusingly similar designation, and (ii) must refer to
-*  the underlying software originally provided by Alliance as "Solar Power tower Integrated Layout and 
-*  Optimization Tool" or "SolarPILOT". Except to comply with the foregoing, the terms "Solar Power 
+*  the underlying software originally provided by Alliance as "Solar Power tower Integrated Layout and
+*  Optimization Tool" or "SolarPILOT". Except to comply with the foregoing, the terms "Solar Power
 *  tower Integrated Layout and Optimization Tool", "SolarPILOT", or any confusingly similar
 *  designation may not be used to refer to any modified version of this software or any modified
 *  version of the underlying software originally provided by Alliance without the prior written consent
@@ -63,8 +63,8 @@
 using namespace std;
 
 void FieldPlot::SetPlotOption(int option)
-{ 
-    _option = option; 
+{
+    _option = option;
 }
 
 void FieldPlot::SetFontSize(int hpixel)
@@ -82,8 +82,8 @@ wxBitmap *FieldPlot::GetBitmap()
     return &_pbit;
 }
 
-FieldPlot::FieldPlot(wxPanel *parent, SolarField &SF, const int plot_option, 
-                     const wxWindowID id, const wxPoint pos, const wxSize size, 
+FieldPlot::FieldPlot(wxPanel *parent, SolarField &SF, const int plot_option,
+                     const wxWindowID id, const wxPoint pos, const wxSize size,
                      long style)
         : wxScrolledWindow(parent, id, pos, size, style)
 {
@@ -103,9 +103,10 @@ FieldPlot::FieldPlot(wxPanel *parent, SolarField &SF, const int plot_option,
     _origin_pixels[0] = -999;
     _origin_pixels[0] = -999;
     _ctrl_down = false;
+    _helios_annot.Clear();
 
     _plot_choices.clear();
-    /* 
+    /*
     0 | Land boundaries
     1 | Field layout
     2 | Total efficiency
@@ -241,7 +242,7 @@ void FieldPlot::ResetPPIOnPaintEvent(int oldppi)
 void FieldPlot::OnPaint(wxPaintEvent &event)
 {
     //Use a memory DC with a bitmap, and catch the wxEraseBackground event to prevent flicker
-     
+
     wxPaintDC _pdc(this);
     DoPaint(_pdc);
     event.Skip();
@@ -249,10 +250,10 @@ void FieldPlot::OnPaint(wxPaintEvent &event)
 
 void FieldPlot::DoPaint(wxDC &_pdc)
 {
-    
+
     //set up the canvas
     wxMemoryDC _dc;
-    
+
     //scaling multipliers
     double ppimult = (double)_ppi/(double)_ppiold;
     int ssize_w = (int)this->GetSize().GetWidth()*ppimult;
@@ -265,7 +266,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
     //assign a bitmap to the DC
     _pbit.Create(ssize_w, ssize_h);
     _dc.SelectObject( _pbit );
-    
+
     wxGCDC gdc(_dc);
 
     //Draw the bounding box
@@ -273,8 +274,8 @@ void FieldPlot::DoPaint(wxDC &_pdc)
     _dc.SetBrush( *wxWHITE_BRUSH );
     wxRect windowRect(wxPoint(0,0), wxSize(ssize_w, ssize_h)); //GetClientSize());
     _dc.DrawRectangle( windowRect );
-    
-    /* 
+
+    /*
     Options for values to plot are:
     0 | Land boundaries
     1 | Field layout
@@ -300,39 +301,39 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         grad_high("#FF0000"),
         grad_low("#0040FF"),
         helio_region("#6B9CB5");
-    
+
     //The pixel size of the drawing canvas
     double canvsize[2];
-    canvsize[0] = ssize_w; 
+    canvsize[0] = ssize_w;
     canvsize[1] = ssize_h;
     double plot_scale = _zoom_fact;
-    
+
     var_map *V = _SF->getVarMap();
 
     if(_option == FIELD_PLOT::LAND || !_is_data_ready)
     {    //Land boundaries
-        
+
         //Create polygons of the land inclusions and exclusions
 
         double pbounds[2];
         Land::getExtents( *V, pbounds );
         double fieldsize[] = {pbounds[1]*2., pbounds[1]*2.};
-        
+
         //we need 40pix on each side for x label, y label, gradient bar
         _dc.SetFont( wxFont(_fontsize, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL) );
         string ets = my_to_string(-int(pbounds[1]));    //create a string that is approximately the largest extent on the plot
         wxSize etss = _dc.GetTextExtent( ets );
-        int 
+        int
             left_buffer = 15*ppimult+etss.GetWidth()+etss.GetHeight(),
             right_buffer = 40*ppimult+etss.GetWidth(),
             top_buffer = 0,
             bottom_buffer = etss.GetHeight()*2+15*ppimult;
-        
+
         //Origin location - relative to the canvas
-        double o[2]; 
+        double o[2];
         o[0] = left_buffer + (canvsize[0]-left_buffer-right_buffer)/2.;
         o[1] = top_buffer+(canvsize[1]-top_buffer-bottom_buffer)/2.;    //origin
-        
+
         o[0] += _origin_offset[0];
         o[1] += _origin_offset[1];
 
@@ -340,10 +341,10 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         _origin_pixels[1] = o[1];    //copy to member
 
         double plotsize[2];
-        plotsize[0] = canvsize[0] - (left_buffer+right_buffer); 
+        plotsize[0] = canvsize[0] - (left_buffer+right_buffer);
         plotsize[1] = canvsize[1] - (top_buffer+bottom_buffer);
 
-        //Determine the pixels per meter 
+        //Determine the pixels per meter
         double ppm = fmin(plotsize[0]/fieldsize[0]*plot_scale, plotsize[1]/fieldsize[1]*plot_scale);
 
         _meters_per_pixel = 1./ppm;
@@ -351,17 +352,17 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         //get the radial extents
         double radvals[2];    //[min, max]
         Land::getRadialExtents(*V, radvals, V->sf.tht.val);
-        
+
 
         //Get the solar field anglular limits
         double sfangles[2];
         sfangles[1] = V->sf.accept_max.val*D2R;
         sfangles[0] = V->sf.accept_min.val*D2R;
-                
+
         //Set the brush/pen for inclusions
         _dc.SetPen( wxPen( white, 0, wxPENSTYLE_TRANSPARENT) );
         _dc.SetBrush( wxBrush( gray ) );
-        
+
         //Draw the radial extents
         //draw the radial geometry
         if(radvals[0] > 0.)
@@ -382,7 +383,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                 _dc.DrawArc(x0,y0,x1,y1,o[0],o[1]);
             }
         }
-        
+
         //Get the inclusions
         //bounds_array *incs = _SF->getLandObject()->getInclusions();
         vector<vector<sp_point> > *incs = &_SF->getVarMap()->land.inclusions.val;
@@ -391,17 +392,17 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         vector<vector<sp_point> > *excs = &_SF->getVarMap()->land.exclusions.val;
 
         //Convert the point vectors into double arrays
-        int 
+        int
             ninc_polys = incs->size(),
             nexc_polys = excs->size();
-                
+
         //For each polygon region in the inclusions:
         _dc.SetBrush( wxBrush( gray ) );
         for(int i=0; i<ninc_polys; i++)
         {
             int ninc = incs->at(i).size();
 
-            double 
+            double
                 *xincs = new double[ninc],
                 *yincs = new double[ninc];
 
@@ -410,7 +411,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                 xincs[j] = incs->at(i).at(j).x - _SF->getVarMap()->land.tower_offset_x.val;
                 yincs[j] = incs->at(i).at(j).y - _SF->getVarMap()->land.tower_offset_y.val;
             }
-            
+
             DrawScaledPolygon(_dc, ppm, o, xincs, yincs, ninc);
 
             delete[] xincs;
@@ -468,7 +469,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         _dc.SetPen( wxPen( black, 1*ppimult, wxPENSTYLE_SOLID) );
         _dc.SetBrush( *wxTRANSPARENT_BRUSH );
         _dc.DrawRectangle( left_buffer, 1*ppimult+top_buffer, plotsize[0], plotsize[1]);
-        
+
         //Draw the x axis
         _dc.SetPen(wxPen(black, 1 * ppimult, wxPENSTYLE_SOLID));
         ets = "0";
@@ -477,13 +478,13 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         ets = "Field position (East+) [m]";
         etss = _dc.GetTextExtent( ets );
         _dc.DrawText(ets, o[0] - etss.GetWidth()/2, x_axis_loc + (15*ppimult+etss.GetHeight()));
-        
+
         //estimate the number of divisions
         ets = my_to_string( int(-fieldsize[0]/2.));
         etss = _dc.GetTextExtent( ets );
         int ndiv = fmin(int(plotsize[0]*_zoom_fact/ (etss.GetWidth()*1.5 )), (int)(_zoom_fact*20));
         double xscale = calcScale(fieldsize[0], ndiv);
-        double 
+        double
             xtickloc = xscale,
             xtickloc_ppm = xscale*ppm;
         while(xtickloc < fieldsize[0]/2.)
@@ -501,22 +502,22 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             xtickloc += xscale;
             xtickloc_ppm += xscale*ppm;
         }
-        
+
         //Draw the y axis
         string etsy = "0"; wxSize etssy = _dc.GetTextExtent( etsy );
         _dc.DrawText(etsy, left_buffer-(etssy.GetWidth()+10), o[1]-etssy.GetHeight()/2);
-        
+
         //Label
         etsy = "Field position (North+) [m]";
         etssy = _dc.GetTextExtent(etsy);
         _dc.DrawRotatedText(etsy, 2, (plotsize[1]+etssy.GetWidth())/2., 90.);
-        
+
         //estimate the number of divisions
         etsy = my_to_string( int(-fieldsize[1]/2.));
         etssy = _dc.GetTextExtent( etsy );
         int ndivy = min(int(plotsize[0]*_zoom_fact/ (etssy.GetHeight()*2. )), (int)(_zoom_fact*20));
         double yscale = calcScale(fieldsize[1], ndivy);
-        
+
         double
             ytickloc = yscale,
             ytickloc_ppm = yscale*ppm;
@@ -527,17 +528,17 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             string yts =my_to_string(int(-ytickloc-.00001));
             wxSize yte = _dc.GetTextExtent(yts);
             _dc.DrawText( yts , left_buffer-10*ppimult-yte.GetWidth(), o[1]+ytickloc_ppm-yte.GetHeight()/2);
-            
+
             //To the top
             _dc.DrawLine(left_buffer-7*ppimult, o[1]-ytickloc_ppm, left_buffer, o[1]-ytickloc_ppm);
             yts = my_to_string(int(ytickloc+.000001));
             yte = _dc.GetTextExtent(yts);
             _dc.DrawText( yts , left_buffer-10*ppimult-yte.GetWidth(), o[1]-ytickloc_ppm-yte.GetHeight()/2);
-            
+
             ytickloc += yscale;
             ytickloc_ppm += yscale*ppm;
         }
-        
+
         //Draw the x and y axis lines
         _dc.SetPen( wxPen( black, 1*ppimult, wxPENSTYLE_DOT ) );
         _dc.DrawLine(left_buffer, o[1], canvsize[0]-right_buffer, o[1]);    //x line
@@ -546,7 +547,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
     }
     else if(_option == FIELD_PLOT::MESH)
     {
-        
+
         vector<opt_element*> mesh = _SF->getOpticalHashTree()->get_terminal_nodes();
 
         //if the mesh has no data, quit here and just create a plot of the available land
@@ -559,28 +560,28 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         }
 
         //Plot the zones of the optical mesh
-        
+
         double pbounds[2];
         Land::getExtents( *V, pbounds );
         double fieldsize[2];
         fieldsize[0] = pbounds[1]*2.;
         fieldsize[1] = pbounds[1]*2.;
-        
+
         //we need 40pix on each side for x label, y label, gradient bar
         _dc.SetFont( wxFont(_fontsize, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL) );
         string ets = my_to_string(-int(pbounds[1]));    //create a string that is approximately the largest extent on the plot
         wxSize etss = _dc.GetTextExtent( ets );
-        int 
+        int
             left_buffer = 15+etss.GetWidth()+etss.GetHeight(),
             right_buffer = 40+etss.GetWidth(),
             top_buffer = 0,
             bottom_buffer = etss.GetHeight()*2+15*ppimult;
-        
+
         //Origin location - relative to the canvas
         double o[2];
         o[0] = left_buffer + (canvsize[0]-left_buffer-right_buffer)/2.;
         o[1] = top_buffer+(canvsize[1]-top_buffer-bottom_buffer)/2.;    //origin
-        
+
         o[0] += _origin_offset[0];
         o[1] += _origin_offset[1];
 
@@ -591,7 +592,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         plotsize[0] = canvsize[0] - (left_buffer+right_buffer);
         plotsize[1] = canvsize[1] - (top_buffer+bottom_buffer);
 
-        //Determine the pixels per meter 
+        //Determine the pixels per meter
         double ppm = min(plotsize[0]/fieldsize[0]*plot_scale, plotsize[1]/fieldsize[1]*plot_scale);
 
         _meters_per_pixel = 1./ppm;
@@ -599,16 +600,16 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         //get the radial extents
         double radvals[2];    //[min, max]
         Land::getRadialExtents(*V, radvals, V->sf.tht.val);
-        
-        
+
+
         //Draw the plot boundary
         _dc.SetPen( wxPen( black, 1*ppimult, wxPENSTYLE_SOLID) );
         _dc.DrawRectangle( left_buffer, 1*ppimult+top_buffer, plotsize[0], plotsize[1]);
-        
+
         //Draw the elements
         _dc.SetPen( wxPen( black, 1*ppimult, wxPENSTYLE_SOLID ) );
         _dc.SetBrush( wxBrush( white, wxBRUSHSTYLE_TRANSPARENT ));
-        
+
         for(int i=0; i<(int)mesh.size(); i++)
         {
             double *rr = mesh.at(i)->get_xr();
@@ -616,12 +617,12 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             double azr0 = azr[0];
             double azr1 = azr[1];
             //translate cylindrical into cartesian
-            double 
+            double
                 sina1 = sin(azr1),
                 sina0 = sin(azr0),
                 cosa1 = cos(azr1),
                 cosa0 = cos(azr0);
-            double 
+            double
                 x00 = floor(rr[0]*sina1*ppm + o[0]),
                 y00 = floor(-rr[0]*cosa1*ppm + o[1]),
                 x01 = floor(rr[0]*sina0*ppm + o[0]),
@@ -630,7 +631,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                 y10 = floor(-rr[1]*cosa1*ppm + o[1]),
                 x11 = floor(rr[1]*sina0*ppm + o[0]),
                 y11 = floor(-rr[1]*cosa0*ppm + o[1]);
-            
+
             _dc.DrawArc(x00,y00,x01,y01,o[0],o[1]);
             _dc.DrawArc(x10,y10,x11,y11,o[0],o[1]);
             _dc.DrawLine(x00,y00,x10,y10);
@@ -715,7 +716,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             ytickloc += yscale;
             ytickloc_ppm += yscale*ppm;
         }
-        
+
         //Draw the x and y axis lines
         _dc.SetPen( wxPen( black, 1*ppimult, wxPENSTYLE_DOT ) );
         _dc.DrawLine(left_buffer, o[1], canvsize[0]-right_buffer, o[1]);    //x line
@@ -730,20 +731,20 @@ void FieldPlot::DoPaint(wxDC &_pdc)
     else if(_option != FIELD_PLOT::LAND && _option != FIELD_PLOT::MESH)
     {    //Field layout geometry
         //Get the plot extents size = [4], {xmax, xmin, ymax, ymin}
-        double 
+        double
             *extents = _SF->getPlotBounds(),
             xsize = extents[0] - extents[1],    //Physical size of the plotted area in the X direction
             ysize = extents[2] - extents[3];    //Physical size of the plotted area in the Y direction
         double fieldsize[] = {xsize, ysize};
         if(xsize == 0 || ysize == 0) return;    //No data
-        
+
         //Get information about the heliostats
         Hvector *heliostats = _SF->getHeliostats();
         int npos = heliostats->size();
         Heliostat *H;
 
         //For each heliostat, get the plotted value of interest
-        double 
+        double
             valmin = 1.e23,
             valmax = 0.,
             valave = 0.;
@@ -862,7 +863,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         }
 
 
-        int 
+        int
             left_buffer = 15*ppimult+etss.GetWidth()+etss.GetHeight(),
             right_buffer = 25*ppimult+glab_x+2*ppimult,    //gradient bar width is 20
             top_buffer = 0,
@@ -870,7 +871,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
 
         double plotsize[] = {canvsize[0] - (left_buffer+right_buffer), canvsize[1] - (top_buffer+bottom_buffer)};
 
-        //Determine the pixels per meter 
+        //Determine the pixels per meter
         double ppm = min(plotsize[0]/fieldsize[0]*plot_scale, plotsize[1]/fieldsize[1]*plot_scale);
 
         //Determine the origin, center the plot on the canvas
@@ -892,7 +893,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         {
             for(int i=0; i<npos; i++)
             {
-                
+
                 //Get the shadow coordinates for each heliostat and plot
                 H = heliostats->at(i);
 
@@ -954,7 +955,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         }
         else
         {    //rectangular
-            
+
             //if showing data and we're zoomed in, scale the label font size
             if (_is_data_visible)
             {
@@ -966,7 +967,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
 
                 //check a sample label size
                 _dc.SetFont(wxFont(fontsize_scaled, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
-                
+
             }
 
             for(int i=0; i<npos; i++)
@@ -984,7 +985,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                 //get the corner coordinates for each heliostat and plot
                 vector<sp_point> *corners = H->getCornerCoords();
                 int nc = corners->size();
-                double 
+                double
                     *xc = new double[nc],
                     *yc = new double[nc];
 
@@ -1034,12 +1035,22 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         _dc.DrawRectangle(canvsize[0]-right_buffer, 0, right_buffer, canvsize[1]);
         _dc.DrawRectangle(0, 0, canvsize[0], 1);
 
-        
+        //if annotating, draw here
+        if( _helios_annot.size() > 0 )
+        {
+            wxSize ats = _dc.GetTextExtent( _helios_annot );
+
+            size_t abox_w = ats.GetWidth();
+            size_t abox_h = ats.GetHeight();
+            _dc.DrawRectangle(canvsize[0]-right_buffer-12-abox_w, top_buffer+2, abox_w+10, abox_h+10 );
+            _dc.DrawText(_helios_annot, canvsize[0]-right_buffer-7-abox_w, top_buffer+7);
+        }
+
         //Draw the gradient bar
         if(_option > 1)
             _dc.GradientFillLinear( wxRect(wxPoint(canvsize[0]-right_buffer+5*ppimult, 50*ppimult), wxPoint(canvsize[0]-right_buffer+25*ppimult, x_axis_loc-50*ppimult)), grad_low, grad_high, wxNORTH);
         double lineave;
-        if( fabs(valmax-valmin) > 1.e-6 )    
+        if( fabs(valmax-valmin) > 1.e-6 )
             lineave = 50*ppimult+(plotsize[1]-100.)*(1.-(valave-valmin)/(valmax-valmin));    //where should the average line indicator be in Y?
         else
             lineave = 50*ppimult+(plotsize[1]-100.)*.5;
@@ -1055,7 +1066,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         }
         delete [] plot_vals;
 
-        
+
         //Draw the plot boundary
         _dc.SetPen( wxPen( black, 1*ppimult, wxPENSTYLE_SOLID) );
         _dc.SetBrush( *wxTRANSPARENT_BRUSH );
@@ -1076,13 +1087,13 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         etss = _dc.GetTextExtent( ets );
         int ndiv = min(int(plotsize[0]*_zoom_fact/ (etss.GetWidth()*1.5 )), (int)(_zoom_fact*20));
         double xscale = calcScale(fieldsize[0], ndiv);
-        
+
         //to the right
         double xtickloc = xscale;
         double xtickloc_ppm = xscale*ppm;
-        
+
         while(true)
-        { 
+        {
             int xpos = o[0] + xtickloc_ppm;
 
             if(xpos > left_buffer + plotsize[0]) break;
@@ -1103,9 +1114,9 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         //to the left
         xtickloc = xscale;
         xtickloc_ppm = xscale*ppm;
-        
+
         while(true)
-        { 
+        {
             //To the left
             int xpos = o[0]-xtickloc_ppm;
 
@@ -1123,8 +1134,8 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             xtickloc += xscale;
             xtickloc_ppm += xscale*ppm;
         }
-        
-        
+
+
         //Draw the y axis
         _dc.DrawLine(left_buffer-10*ppimult, o[1], left_buffer, o[1]);
         string etsy = "0"; wxSize etssy = _dc.GetTextExtent( etsy );
@@ -1139,13 +1150,13 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         etssy = _dc.GetTextExtent( etsy );
         int ndivy = min(int(plotsize[0]*_zoom_fact/ (etssy.GetHeight() )), (int)(_zoom_fact*20));
         double yscale = calcScale(fieldsize[1], ndivy);
-        
+
         //To the top
         double ytickloc = yscale;
         double ytickloc_ppm = yscale*ppm;
 
         while(true)
-        {    
+        {
             int ypos = o[1] - ytickloc_ppm;
 
             if(ypos < top_buffer) break;
@@ -1158,7 +1169,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                 wxSize yte = _dc.GetTextExtent(yts);
                 _dc.DrawText( yts , left_buffer-10*ppimult-yte.GetWidth(), o[1]-(ytickloc_ppm+yte.GetHeight()/2));
             }
-            
+
             ytickloc += yscale;
             ytickloc_ppm += yscale*ppm;
         }
@@ -1167,7 +1178,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         ytickloc = yscale;
         ytickloc_ppm = yscale*ppm;
         while(true)
-        {    
+        {
             int ypos = o[1]+ytickloc_ppm;
 
             if(ypos > top_buffer + plotsize[1]) break;
@@ -1190,7 +1201,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         _dc.SetBrush( *wxRED_BRUSH );
         _dc.DrawCircle( o[0], o[1], 5*ppimult);
     }
-    
+
     //Draw the zoom rectangle
     if(_is_zoom_rectangle)
     {
@@ -1214,17 +1225,17 @@ void FieldPlot::DrawScaledPolygon( wxDC &dc, double ppm, double origin[2], doubl
 {
     /*
     Take a polygon with n_points values (not closed) and indices of x[] and y[] of length n_points,
-    and draw the polygon on the device. The X,Y coordinates will be scaled according to the maximum 
+    and draw the polygon on the device. The X,Y coordinates will be scaled according to the maximum
     extents w and h.
 
     ppm            Pixels per meter of drawing
     origin[] {x-pos, y-pos} Location in pixels of the plot origin
 
-    Note that the DC coordinates are (0,0) at the upper left corner, positive X to the right, 
+    Note that the DC coordinates are (0,0) at the upper left corner, positive X to the right,
     and negative Y downward.
-    
+
     */
-    
+
     //Create an array of points of the items
     wxPoint *points;
     points = new wxPoint[n_points];
@@ -1254,8 +1265,8 @@ void FieldPlot::DrawScaledEllipse( wxDC &dc, double ppm, double origin[2], doubl
 
 void FieldPlot::ColorGradientHotCold(wxColour &col, double index)
 {
-    
-    /* 
+
+    /*
     Index from 0-1 indicating the position on the scale from COLD to HOT
 
     Returns value indicating RRRGGGBBB on a scale of 0-255 for each integer triplet
@@ -1263,15 +1274,15 @@ void FieldPlot::ColorGradientHotCold(wxColour &col, double index)
     double dind = index;
     if(index<0.) dind = 0.;
     if(index>1.) dind = 1.;
-    
+
     col.Set(int(dind*255.), 0, int((1.-dind)*255.));
-    
+
 }
 
 double FieldPlot::calcScale(double span, int segments)
 {
-    /* 
-    Given a total scale span and a desired number of segments, return a 
+    /*
+    Given a total scale span and a desired number of segments, return a
     convenient scale segment length.
     */
 
@@ -1287,7 +1298,7 @@ double FieldPlot::calcScale(double span, int segments)
     int id=0;
     if(bdiff<diffmin) {diffmin = bdiff; id = 2;}
     if(mdiff<diffmin) {diffmin = mdiff; id = 1;}
-    
+
     if(id==0)
     {
         //round up
@@ -1303,10 +1314,10 @@ double FieldPlot::calcScale(double span, int segments)
         //round down
         return floor(basis)*pflog;
     }
-    
+
 }
 
-void FieldPlot::SetCtrlKeyDown(bool is_down)
+/* void FieldPlot::SetCtrlKeyDown(bool is_down)
 {
     _ctrl_down = is_down;
 }
@@ -1314,7 +1325,105 @@ void FieldPlot::SetCtrlKeyDown(bool is_down)
 bool FieldPlot::GetCtrlKeyDown()
 {
     return _ctrl_down;
+} */
+
+void FieldPlot::ClearSelectedHeliostats()
+{
+    _helios_select.clear();
+    _helios_annot.clear();
 }
+
+void FieldPlot::HeliostatAnnotation(Heliostat *H)
+{
+    /*
+    Produce an annotated text box that describes the selected heliostat(s)
+    */
+
+    //validation
+    if( ! H )
+        return;
+
+    //Add the heliostat only if it's not already in the stored vector
+    if( std::find(_helios_select.begin(), _helios_select.end(), H) == _helios_select.end() )
+        _helios_select.push_back(H);
+
+    _helios_annot.Clear();  //clear the annotation string
+
+    //declare and init reporting values
+    double h_avg_atten = 0.;
+    double h_avg_cosine = 0.;
+    double h_avg_blocking = 0.;
+    double h_avg_shading = 0.;
+    double h_avg_spillage = 0.;
+    double h_avg_cloud = 0.;
+    double h_avg_power = 0.;
+    double h_tot_power = 0.;
+    double h_tot_area = 0.;
+
+    wxArrayStr ids;
+
+    size_t nh = _helios_select.size();
+
+    for(size_t i=0; i<nh; i++)
+    {
+        Heliostat *hi = _helios_select.at(i);
+        h_avg_atten += hi->getEfficiencyAtten();
+        h_avg_cosine += hi->getEfficiencyCosine();
+        h_avg_blocking += hi->getEfficiencyBlock();
+        h_avg_shading += hi->getEfficiencyShading();
+        h_avg_spillage += hi->getEfficiencyIntercept();
+        h_avg_cloud += hi->getEfficiencyCloudiness();
+        h_avg_power += hi->getPowerToReceiver();
+        h_tot_power += hi->getPowerToReceiver();
+        h_tot_area += hi->getArea();
+
+        ids.push_back( my_to_string(hi->getId()) );
+    }
+
+    if( nh > 1 )
+    {
+        h_avg_atten /= (double)nh;
+        h_avg_cosine /= (double)nh;
+        h_avg_blocking /= (double)nh;
+        h_avg_shading /= (double)nh;
+        h_avg_spillage /= (double)nh;
+        h_avg_cloud /= (double)nh;
+        h_avg_power /= (double)nh;
+    }
+
+    _helios_annot = wxString::Format(
+        "%s\t\t%.2f%\n"
+        "%s\t\t\t%.2f%\n"
+        "%s\t\t\t%.2f%\n"
+        "%s\t\t\t%.2f%\n"
+        "%s\t\t\t%.2f%\n"
+        "%s\t\t%.2f%\n"
+        "%s\t\t%.1f kW\n"
+        "%s\t\t%.1f kW\n"
+        "%s\t\t\t%.1f m2\n",
+
+        "Attenuation", h_avg_atten*100.,
+        "Cosine", h_avg_cosine*100.,
+        "Blocking", h_avg_blocking*100.,
+        "Shading", h_avg_shading*100.,
+        "Spillage", h_avg_spillage*100.,
+        "Cloudiness", h_avg_cloud*100.,
+        "Average power", h_avg_power/1000.,
+        "Total power", h_tot_power/1000.,
+        "Total area", h_tot_area
+    );
+
+    _helios_annot.append("ID");
+    _helios_annot.append( (nh > 1 ? "'s" : " ") );
+    _helios_annot.append("\t\t\t\t");
+    for(size_t i=0; i<nh; i++)
+        _helios_annot.append( my_to_string(_helios_select.at(i)->getId()) 
+                              + (i < nh-1 ? ( (i==1 || (i>1 && (i-1)%5==0) ) ? ",\n\t" : ", ") : "") 
+                            );
+
+    return;
+}
+
 
 //**********EVENTS***********************
 BEGIN_EVENT_TABLE(FieldPlot, wxScrolledWindow)

@@ -60,6 +60,7 @@
 #include "treemesh.h"
 
 class SolarField;
+class Heliostat;
 
     /* 
     Options for values to plot are:
@@ -118,6 +119,8 @@ private:
     bool _ctrl_down;
     std::vector< std::string > _plot_choices;
     st_hash_tree _helio_hash;
+    wxString _helios_annot; //annotation for selected heliostats
+    std::vector< Heliostat *> _helios_select;   //currently selected heliostats
 
     DECLARE_EVENT_TABLE()
 
@@ -142,8 +145,8 @@ public:
     void SetZoomRectangle(int xy0_xy1[4]);
     void EnableZoomRectangle(bool is_enabled=true);
     st_hash_tree *GetKDHashTree();
-    void SetCtrlKeyDown(bool is_down=true);
-    bool GetCtrlKeyDown();
+    void HeliostatAnnotation(Heliostat *H);
+    void ClearSelectedHeliostats();
 
     std::vector< std::string > GetPlotChoices();
     bool IsDataReady();
