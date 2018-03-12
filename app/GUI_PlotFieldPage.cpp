@@ -176,6 +176,8 @@ void SPFrame::CreateFieldPlotPage(wxScrolledWindow *parent, wxArrayStr &choices,
     _plot_frame->Connect(wxEVT_MOUSEWHEEL, wxMouseEventHandler( SPFrame::OnFieldPlotMouseWheel ), NULL, this);
     _plot_frame->Connect(wxEVT_MIDDLE_DOWN, wxMouseEventHandler( SPFrame::OnFieldPlotMouseCenterDown ), NULL, this);
     _plot_frame->Connect(wxEVT_MIDDLE_UP, wxMouseEventHandler( SPFrame::OnFieldPlotMouseCenterUp ), NULL, this);
+	_plot_frame->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(SPFrame::OnFieldPlotCtrlDown ), NULL, this);
+	_plot_frame->Connect(wxEVT_KEY_UP, wxKeyEventHandler(SPFrame::OnFieldPlotCtrlUp ), NULL, this);
 
 	main_sizer->Add(top_sizer);
 
@@ -669,6 +671,18 @@ void SPFrame::OnFieldPlotMouseLeftDown( wxMouseEvent &evt)
     _field_left_mouse_start[1] = evt.GetPosition().y;
 }
 
+void SPFrame::OnFieldPlotCtrlDown( wxKeyEvent &event )
+{
+	if( event.GetKeyCode() == wxKeyCode::WXK_CONTROL )
+		_plot_frame->SetCtrlKeyDown( true );
+}
+
+void SPFrame::OnFieldPlotCtrlUp( wxKeyEvent &event )
+{
+	if( event.GetKeyCode() == wxKeyCode::WXK_CONTROL )
+		_plot_frame->SetCtrlKeyDown( false );
+}
+
 void SPFrame::OnFieldPlotMouseLeftUp( wxMouseEvent &evt)
 {
 
@@ -751,10 +765,13 @@ void SPFrame::OnFieldPlotMouseRight( wxMouseEvent &evt )
 		//closest is heliostat 'imin'
 		Heliostat *H = (Heliostat*)hitelements.at(imin);
 		
+
 		//do some kind of pop message for now
 		PopMessage(
-			wxString::Format( "Heliostat ID:\t%d\nLocation:\t[%.1f,%.1f]\nEfficiency:\t%.3f\%\n", 
-							H->getId(), H->getLocation()->x, H->getLocation()->y, H->getEfficiencyTotal()*100.), "Heliostat Info");
+			wxString::Format( "Heliostat ID:\t%d\nLocation:\t[%.1f,%.1f]\nEfficiency:\t%.3f\%\nCTRL down:\t%s", 
+							H->getId(), H->getLocation()->x, H->getLocation()->y, H->getEfficiencyTotal()*100., 
+							(_plot_frame->GetCtrlKeyDown() ? "Yes" : "No"))
+					, "Heliostat Info");
 
 	}
 

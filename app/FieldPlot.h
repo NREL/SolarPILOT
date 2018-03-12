@@ -115,6 +115,7 @@ private:
     double _meters_per_pixel; //real-life distance covered by single pixel
     int _zoom_rectangle[4]; //x0,y0,x1,y1
     bool _is_zoom_rectangle;
+    bool _ctrl_down;
     std::vector< std::string > _plot_choices;
     st_hash_tree _helio_hash;
 
@@ -141,6 +142,8 @@ public:
     void SetZoomRectangle(int xy0_xy1[4]);
     void EnableZoomRectangle(bool is_enabled=true);
     st_hash_tree *GetKDHashTree();
+    void SetCtrlKeyDown(bool is_down=true);
+    bool GetCtrlKeyDown();
 
     std::vector< std::string > GetPlotChoices();
     bool IsDataReady();

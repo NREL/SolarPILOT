@@ -582,6 +582,8 @@ protected:
     void OnFieldPlotMouseLeftDown( wxMouseEvent &event);
     void OnFieldPlotMouseLeftUp( wxMouseEvent &event);
     void OnFieldPlotMouseRight( wxMouseEvent &event );
+    void OnFieldPlotCtrlDown( wxKeyEvent &event );
+    void OnFieldPlotCtrlUp( wxKeyEvent &event );
     void OnFieldPlotMouseWheel( wxMouseEvent &event);
     void OnFieldPlotMouseCenterUp( wxMouseEvent &event);
     void OnFieldPlotMouseCenterDown( wxMouseEvent &event);

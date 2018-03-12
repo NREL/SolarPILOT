@@ -102,6 +102,7 @@ FieldPlot::FieldPlot(wxPanel *parent, SolarField &SF, const int plot_option,
     _meters_per_pixel = 0.;
     _origin_pixels[0] = -999;
     _origin_pixels[0] = -999;
+    _ctrl_down = false;
 
     _plot_choices.clear();
     /* 
@@ -1305,6 +1306,15 @@ double FieldPlot::calcScale(double span, int segments)
     
 }
 
+void FieldPlot::SetCtrlKeyDown(bool is_down)
+{
+    _ctrl_down = is_down;
+}
+
+bool FieldPlot::GetCtrlKeyDown()
+{
+    return _ctrl_down;
+}
 
 //**********EVENTS***********************
 BEGIN_EVENT_TABLE(FieldPlot, wxScrolledWindow)
