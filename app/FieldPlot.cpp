@@ -197,27 +197,29 @@ void FieldPlot::SetPlotData(SolarField &SF, int plot_option)
     _option = plot_option;
     _is_data_ready = plot_option != 0;
 
-    // //update the calculation of the heliostat KD tree for quick mouse interaction
-	// Hvector *helios = _SF->getHeliostats();
+    //update the calculation of the heliostat KD tree for quick mouse interaction
+	Hvector *helios = _SF->getHeliostats();
 
-    // double extents[2];
-	// _SF->getLandObject()->getExtents(*_SF->getVarMap(), extents);
+    double extents[2];
+	_SF->getLandObject()->getExtents(*_SF->getVarMap(), extents);
 
-	// KDLayoutData ld;
-	// ld.xlim[0] = -extents[1];
-	// ld.xlim[1] = extents[1];
-	// ld.ylim[0] = -extents[1];
-	// ld.ylim[1] = extents[1];
-	// ld.min_unit_dx = ld.min_unit_dy = _SF->getHeliostatTemplates()->at(0)->getCollisionRadius()*2.;
+	KDLayoutData ld;
+	ld.xlim[0] = -extents[1];
+	ld.xlim[1] = extents[1];
+	ld.ylim[0] = -extents[1];
+	ld.ylim[1] = extents[1];
+	ld.min_unit_dx = ld.min_unit_dy = _SF->getHeliostatTemplates()->at(0)->getCollisionRadius()*2.;
 
-	// _helio_hash.create_mesh(&ld);
-	// for(size_t i=0; i<helios->size(); i++)
-	// {
-	// 	sp_point *loc = helios->at(i)->getLocation();
-	// 	_helio_hash.add_object((void*)helios->at(i), loc->x, loc->y );
-	// }
+	_helio_hash.create_mesh(ld);
+	for(size_t i=0; i<helios->size(); i++)
+	{
+		sp_point *loc = helios->at(i)->getLocation();
+		_helio_hash.add_object((void*)helios->at(i), loc->x, loc->y );
+	}
 
-	// _helio_hash.add_neighborhood_data();
+	_helio_hash.add_neighborhood_data();
+
+    return;
 }
 
 void FieldPlot::SetPPI(int ppi)

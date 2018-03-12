@@ -721,33 +721,9 @@ void SPFrame::OnFieldPlotMouseRight( wxMouseEvent &evt )
 	//Translate into dimensional click location
 	double xcoord = (x-origin[0])*scale;
 	double ycoord = (origin[1]-y)*scale;
-
-	//Find the nearest heliostat
-	Hvector *helios = _SF.getHeliostats();
 	
-	//use the search tree method.. is this data stored after layout? Each heliostat should be tagged with it's tree address.
-	double extents[2];
-	_SF.getLandObject()->getExtents(*_SF.getVarMap(), extents);
-
-	KDLayoutData ld;
-	ld.xlim[0] = -extents[1];
-	ld.xlim[1] = extents[1];
-	ld.ylim[0] = -extents[1];
-	ld.ylim[1] = extents[1];
-	ld.min_unit_dx = ld.min_unit_dy = _SF.getHeliostatTemplates()->at(0)->getCollisionRadius()*2.;
-
-	st_hash_tree helio_hash;
-	helio_hash.create_mesh(&ld);
-	for(size_t i=0; i<helios->size(); i++)
-	{
-		sp_point *loc = helios->at(i)->getLocation();
-		helio_hash.add_object((void*)helios->at(i), loc->x, loc->y );
-	}
-
-	// helio_hash.add_neighborhood_data();
 	std::vector<void*> hitelements;
-	// bool has_elements = _plot_frame->GetKDHashTree()->get_all_data_at_loc( hitelements, xcoord, ycoord );
-	bool has_elements = helio_hash.get_all_data_at_loc( hitelements, xcoord, ycoord );
+	bool has_elements = _plot_frame->GetKDHashTree()->get_all_data_at_loc( hitelements, xcoord, ycoord );
 
 	//brute search for closest
 	if(has_elements)
