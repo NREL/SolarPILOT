@@ -136,9 +136,11 @@ void SPFrame::CreateFieldPlotPage(wxScrolledWindow *parent, wxArrayStr &choices,
     _zoom_rect = new MyToggleButton(parent, wxID_ANY, zoom_rect_bit_on, zoom_rect_bit);
     _zoom_pan = new MyToggleButton(parent, wxID_ANY, zoom_pan_bit_on, zoom_pan_bit);
 
-	wxBitmap del_select_bit;
+	wxBitmap del_select_bit, undel_select_bit;
 	del_select_bit.LoadFile(_image_dir.GetPath(true) + "db_remove.png", wxBITMAP_TYPE_PNG);
+	undel_select_bit.LoadFile(_image_dir.GetPath(true) + "edit-undelete.png", wxBITMAP_TYPE_PNG);
 	wxBitmapButton *del_select = new wxBitmapButton(parent, wxID_ANY, del_select_bit);
+	wxBitmapButton *undel_select = new wxBitmapButton(parent, wxID_ANY, undel_select_bit);
 
     zoom_in->SetToolTip("Increase zoom");
     zoom_out->SetToolTip("Decrease zoom");
@@ -146,6 +148,7 @@ void SPFrame::CreateFieldPlotPage(wxScrolledWindow *parent, wxArrayStr &choices,
     _zoom_rect->SetToolTip("Select zoom area");
     _zoom_pan->SetToolTip("Pan view region");
 	del_select->SetToolTip("Delete selected heliostats");
+	undel_select->SetToolTip("Restore deleted heliostats");
 	
 	_plot_frame = new FieldPlot(parent, _SF,  selection, wxID_ANY, wxDefaultPosition, wxSize(600,500));
 	
@@ -168,6 +171,7 @@ void SPFrame::CreateFieldPlotPage(wxScrolledWindow *parent, wxArrayStr &choices,
     top_sizer->Add(_zoom_pan, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
     top_sizer->Add(new wxStaticLine(parent, wxID_ANY, wxDefaultPosition, wxSize(1,1), wxLI_VERTICAL), 0, wxEXPAND|wxLEFT|wxRIGHT, 10);
     top_sizer->Add(del_select, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
+    top_sizer->Add(undel_select, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
 
     zoom_in->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnFieldPlotZoomIn ), NULL, this);
     zoom_out->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnFieldPlotZoomOut ), NULL, this);
@@ -175,6 +179,7 @@ void SPFrame::CreateFieldPlotPage(wxScrolledWindow *parent, wxArrayStr &choices,
     _zoom_rect->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnFieldPlotZoomRect ), NULL, this);
     _zoom_pan->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnFieldPlotZoomPan ), NULL, this);
 	del_select->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnDeleteSelectedHeliostats ), NULL, this);
+	undel_select->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnRestoreSelectedHeliostats ), NULL, this);
 
     _plot_frame->Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler( SPFrame::OnFieldPlotMouseLeftDown ), NULL, this);
     _plot_frame->Connect(wxEVT_LEFT_UP, wxMouseEventHandler( SPFrame::OnFieldPlotMouseLeftUp ), NULL, this);
@@ -684,6 +689,23 @@ void SPFrame::OnDeleteSelectedHeliostats( wxCommandEvent &WXUNUSED(evt))
 	_plot_frame->Update();
 	_plot_frame->Refresh();
 	return;
+}
+
+void SPFrame::OnRestoreSelectedHeliostats( wxCommandEvent &WXUNUSED(evt))
+{
+	//restore the layout by re-enabling all of the disabled heliostats in the field
+	Hvector *helios = _SF.getHeliostats();
+	for(size_t i=0; i<helios->size(); i++)
+	{
+		helios->at(i)->setInLayout(true);
+		helios->at(i)->IsEnabled(true);
+	}
+
+	_plot_frame->ClearSelectedHeliostats();
+
+	_SF.updateAllCalculatedParameters( *_SF.getVarMap() );
+	_plot_frame->Update();
+	_plot_frame->Refresh();
 }
 
 void SPFrame::OnFieldPlotMouseLeftDown( wxMouseEvent &evt)
