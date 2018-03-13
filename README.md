@@ -60,3 +60,13 @@ If you would like to submit code to fix an issue or add a feature, you can use G
 ## License
 
 SolarPILOT's open source code is copyrighted by the Alliance for Sustainable Energy and licensed under a [mixed MIT and GPLv3 license](LICENSE.md). It allows for-profit and not-for-profit organizations to develop and redistribute software based on SolarPILOT under terms of an MIT license and requires that research entities including national laboratories, colleges and universities, and non-profit organizations make the source code of any redistribution publicly available under terms of a GPLv3 license.
+
+## Citing SolarPILOT
+
+If you find SolarPILOT useful, we ask that you appropriately cite it in documentation of your work. We provide the open-source code and executable distributions for free, but find value in being acknowledged in work that advances scientific knowledge and engineering technology. For general use of SolarPILOT, the preferred citation is:
+
+> Wagner, M.J., Braun, R.J., Newman, A.M. (2017). "Optimization of stored energy dispatch for concentrating solar power systems." Doctoral Thesis. Colorado School of Mines, Golden, Colorado. Chapter II, pp. 19-45. URL: [https://dspace.library.colostate.edu/handle/11124/171000](https://dspace.library.colostate.edu/handle/11124/171000).
+
+For work that builds substantially upon or is derived from the open source project, the preferred citation is:
+
+> Wagner, M.J. (2018). "SolarPILOT Open-Source Software Project: [github.com/NREL/SolarPILOT](https://github.com/NREL/SolarPILOT). National Renewable Energy Laboratory, Golden, Colorado.
