@@ -1027,7 +1027,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                     if( is_selected )
                     {
                         wxColour emph;
-                        emph.Set(255,255,0);
+                        emph.Set(0,255,0);
                         _dc.SetPen( wxPen( emph, 4, wxPENSTYLE_SOLID) );
                     }
                     else
