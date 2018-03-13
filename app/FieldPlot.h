@@ -147,6 +147,7 @@ public:
     st_hash_tree *GetKDHashTree();
     void HeliostatAnnotation(Heliostat *H);
     void ClearSelectedHeliostats();
+    std::vector< Heliostat* > *GetSelectedHeliostats();
 
     std::vector< std::string > GetPlotChoices();
     bool IsDataReady();

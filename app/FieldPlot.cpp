@@ -908,6 +908,10 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                 if((xlocm - rcoll)> canvsize[0] || (xlocm + rcoll) < 0 || (ylocm - rcoll)> canvsize[1] || (ylocm + rcoll) < 0)
                     continue;
 
+                //if the heliostat is omitted, don't draw a shadow
+                if(! H->getInLayout() )
+                    continue;
+
                 vector<sp_point> *shad = H->getShadowCoords();
                 int ns = shad->size();
                 double
@@ -975,6 +979,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             for(int i=0; i<npos; i++)
             {
                 H = heliostats->at(i);
+
                 double rcoll = H->getCollisionRadius()*ppm;
                 //check to see if this heliostat needs drawing
                 sp_point *loc = H->getLocation();
@@ -983,6 +988,14 @@ void FieldPlot::DoPaint(wxDC &_pdc)
 
                 if((xlocm - rcoll)> canvsize[0] || (xlocm + rcoll) < 0 || (ylocm - rcoll)> canvsize[1] || (ylocm + rcoll) < 0)
                     continue;
+
+                //if the heliostat is omitted, just put a dot and move on
+                if(! H->getInLayout() )
+                {
+                    // _dc.SetPen( wxPen( wxColour(0,0,0), 1, wxPENSTYLE_SOLID) );
+                    // _dc.DrawCircle(H->getLocation()->x*ppm + o[0], -H->getLocation()->y*ppm + o[1], (int)(std::ceil(ppm/2.+.00001)));
+                    continue;
+                } 
 
                 //get the corner coordinates for each heliostat and plot
                 vector<sp_point> *corners = H->getCornerCoords();
@@ -1336,20 +1349,15 @@ double FieldPlot::calcScale(double span, int segments)
 
 }
 
-/* void FieldPlot::SetCtrlKeyDown(bool is_down)
-{
-    _ctrl_down = is_down;
-}
-
-bool FieldPlot::GetCtrlKeyDown()
-{
-    return _ctrl_down;
-} */
-
 void FieldPlot::ClearSelectedHeliostats()
 {
     _helios_select.clear();
     _helios_annot.clear();
+}
+
+std::vector<Heliostat*> *FieldPlot::GetSelectedHeliostats()
+{
+    return &_helios_select;
 }
 
 void FieldPlot::HeliostatAnnotation(Heliostat *H)
@@ -1362,11 +1370,18 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
     if( ! H )
         return;
 
-    //Add the heliostat only if it's not already in the stored vector
-    if( std::find(_helios_select.begin(), _helios_select.end(), H) == _helios_select.end() )
-        _helios_select.push_back(H);
+    //--manage adding and removing based on selection state
+    ptrdiff_t pos = std::find(_helios_select.begin(), _helios_select.end(), H) - _helios_select.begin();
 
-    _helios_annot.Clear();  //clear the annotation string
+    if( pos >= _helios_select.size() ) 
+        //Add the heliostat only if it's not already in the stored vector
+        _helios_select.push_back(H);
+    else
+        //If a selected heliostat was clicked again, delete it from the selected vector
+        _helios_select.erase(_helios_select.begin()+pos);
+
+    //clear the annotation string
+    _helios_annot.Clear();  
 
     //declare and init reporting values
     double h_avg_tot = 0.;

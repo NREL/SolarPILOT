@@ -579,6 +579,7 @@ protected:
     void OnFieldPlotZoomRect( wxCommandEvent &event);
     void OnFieldPlotZoomPan( wxCommandEvent &event);
     void OnFieldPlotZoomOriginal( wxCommandEvent &event);
+    void OnDeleteSelectedHeliostats( wxCommandEvent &event );
     void OnFieldPlotMouseLeftDown( wxMouseEvent &event);
     void OnFieldPlotMouseLeftUp( wxMouseEvent &event);
     void OnFieldPlotMouseRight( wxMouseEvent &event );

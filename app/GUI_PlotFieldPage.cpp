@@ -136,13 +136,17 @@ void SPFrame::CreateFieldPlotPage(wxScrolledWindow *parent, wxArrayStr &choices,
     _zoom_rect = new MyToggleButton(parent, wxID_ANY, zoom_rect_bit_on, zoom_rect_bit);
     _zoom_pan = new MyToggleButton(parent, wxID_ANY, zoom_pan_bit_on, zoom_pan_bit);
 
+	wxBitmap del_select_bit;
+	del_select_bit.LoadFile(_image_dir.GetPath(true) + "db_remove.png", wxBITMAP_TYPE_PNG);
+	wxBitmapButton *del_select = new wxBitmapButton(parent, wxID_ANY, del_select_bit);
+
     zoom_in->SetToolTip("Increase zoom");
     zoom_out->SetToolTip("Decrease zoom");
     zoom_original->SetToolTip("Reset view");
     _zoom_rect->SetToolTip("Select zoom area");
     _zoom_pan->SetToolTip("Pan view region");
-
-
+	del_select->SetToolTip("Delete selected heliostats");
+	
 	_plot_frame = new FieldPlot(parent, _SF,  selection, wxID_ANY, wxDefaultPosition, wxSize(600,500));
 	
 	wxBoxSizer *top_sizer = new wxBoxSizer(wxHORIZONTAL);
@@ -150,24 +154,27 @@ void SPFrame::CreateFieldPlotPage(wxScrolledWindow *parent, wxArrayStr &choices,
 	top_sizer->Add(_plot_select, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
     top_sizer->Add(_show_field_data, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
 	top_sizer->Add((1,30), 0, 0, 0);
-	top_sizer->Add(new wxStaticLine(parent, wxID_ANY, wxDefaultPosition, wxSize(1,1), wxLI_VERTICAL), 0, wxEXPAND|wxLEFT|wxRIGHT, 20);
+	top_sizer->Add(new wxStaticLine(parent, wxID_ANY, wxDefaultPosition, wxSize(1,1), wxLI_VERTICAL), 0, wxEXPAND|wxLEFT|wxRIGHT, 10);
 	top_sizer->Add(font_inc, 0, wxRIGHT|wxALIGN_CENTER_VERTICAL, 2);
 	top_sizer->Add(font_dec, 0, wxALIGN_CENTER_VERTICAL, 0);
-	top_sizer->Add(new wxStaticLine(parent, wxID_ANY, wxDefaultPosition, wxSize(1,1), wxLI_VERTICAL), 0, wxEXPAND|wxLEFT|wxRIGHT, 20);
+	top_sizer->Add(new wxStaticLine(parent, wxID_ANY, wxDefaultPosition, wxSize(1,1), wxLI_VERTICAL), 0, wxEXPAND|wxLEFT|wxRIGHT, 10);
 	top_sizer->Add(save_bitmap, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
 	top_sizer->Add(file_export, 0, wxALIGN_CENTER_VERTICAL, 0);
-    top_sizer->Add(new wxStaticLine(parent, wxID_ANY, wxDefaultPosition, wxSize(1,1), wxLI_VERTICAL), 0, wxEXPAND|wxLEFT|wxRIGHT, 20);
+    top_sizer->Add(new wxStaticLine(parent, wxID_ANY, wxDefaultPosition, wxSize(1,1), wxLI_VERTICAL), 0, wxEXPAND|wxLEFT|wxRIGHT, 10);
     top_sizer->Add(zoom_in, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
     top_sizer->Add(zoom_out, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
     top_sizer->Add(zoom_original, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
     top_sizer->Add(_zoom_rect, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
     top_sizer->Add(_zoom_pan, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
+    top_sizer->Add(new wxStaticLine(parent, wxID_ANY, wxDefaultPosition, wxSize(1,1), wxLI_VERTICAL), 0, wxEXPAND|wxLEFT|wxRIGHT, 10);
+    top_sizer->Add(del_select, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 5);
 
     zoom_in->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnFieldPlotZoomIn ), NULL, this);
     zoom_out->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnFieldPlotZoomOut ), NULL, this);
     zoom_original->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnFieldPlotZoomOriginal ), NULL, this);
     _zoom_rect->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnFieldPlotZoomRect ), NULL, this);
     _zoom_pan->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnFieldPlotZoomPan ), NULL, this);
+	del_select->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnDeleteSelectedHeliostats ), NULL, this);
 
     _plot_frame->Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler( SPFrame::OnFieldPlotMouseLeftDown ), NULL, this);
     _plot_frame->Connect(wxEVT_LEFT_UP, wxMouseEventHandler( SPFrame::OnFieldPlotMouseLeftUp ), NULL, this);
@@ -659,6 +666,24 @@ void SPFrame::OnFieldPlotZoomOriginal( wxCommandEvent &WXUNUSED(evt))
 
     _plot_frame->Refresh();
     _plot_frame->Update();
+}
+
+void SPFrame::OnDeleteSelectedHeliostats( wxCommandEvent &WXUNUSED(evt))
+{
+	std::vector<Heliostat*> *hsel = _plot_frame->GetSelectedHeliostats();
+	for(size_t i=0; i<hsel->size(); i++)
+	{
+		hsel->at(i)->setInLayout(false);
+		hsel->at(i)->IsEnabled(false);
+	}
+
+	_SF.updateAllCalculatedParameters( *_SF.getVarMap() ); 
+
+	_plot_frame->ClearSelectedHeliostats();
+
+	_plot_frame->Update();
+	_plot_frame->Refresh();
+	return;
 }
 
 void SPFrame::OnFieldPlotMouseLeftDown( wxMouseEvent &evt)
