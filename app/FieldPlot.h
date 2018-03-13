@@ -57,8 +57,10 @@
 //#include <wx/dc.h>
 //#include <wx/dcgraph.h>
 //#include <wx/dcbuffer.h>
+#include "treemesh.h"
 
 class SolarField;
+class Heliostat;
 
     /* 
     Options for values to plot are:
@@ -110,9 +112,16 @@ private:
     wxBitmap _pbit; //bitmap containing the current plot
     double _zoom_fact;  //zoom factor
     int _origin_offset[2];  //offset in pixels for origin
+    int _origin_pixels[2]; //location of the origin in pixels. Set by DoPaint
+    double _meters_per_pixel; //real-life distance covered by single pixel
     int _zoom_rectangle[4]; //x0,y0,x1,y1
     bool _is_zoom_rectangle;
+    bool _ctrl_down;
     std::vector< std::string > _plot_choices;
+    st_hash_tree _helio_hash;
+    wxString _helios_annot; //annotation for selected heliostats
+    std::vector< Heliostat *> _helios_select;   //currently selected heliostats
+
     DECLARE_EVENT_TABLE()
 
 
@@ -135,6 +144,10 @@ public:
     void SetDataVisible(bool is_visible);
     void SetZoomRectangle(int xy0_xy1[4]);
     void EnableZoomRectangle(bool is_enabled=true);
+    st_hash_tree *GetKDHashTree();
+    void HeliostatAnnotation(Heliostat *H);
+    void ClearSelectedHeliostats();
+    std::vector< Heliostat* > *GetSelectedHeliostats();
 
     std::vector< std::string > GetPlotChoices();
     bool IsDataReady();
@@ -154,6 +167,16 @@ public:
         return _origin_offset;
     };
         
+    int *GetOriginPixels()
+    {
+        return _origin_pixels;
+    };
+
+    double GetMetersPerPixel()
+    {
+        return _meters_per_pixel;
+    };
+
     void SetPPI(int ppi);
     int GetPPI();
     void ResetPPIOnPaintEvent(int oldppi = -1);

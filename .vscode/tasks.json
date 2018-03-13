@@ -1,27 +1,29 @@
 {
-    "version": "0.1.0",
-    "command": "make",
-    "isShellCommand": true,
+    "version": "2.0.0",
     "options": {
         "cwd": "${workspaceRoot}/build_linux",
     },
     "tasks": [
         {
-            "taskName": "Makefile",
-
-            // Make this the default build command.
-            "isBuildCommand": true,
-
-            // Show the output window only if unrecognized errors occur.
-            "showOutput": "always",
-
-            // No args
-            "args": ["all"],
-
-            // Use the standard less compilation problem matcher.
+            "type": "shell",
+            "label": "Makefile",
+            "command": "make all",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
             "problemMatcher": {
                 "owner": "cpp",
-                "fileLocation": ["relative", "${workspaceRoot}"],
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
                 "pattern": {
                     "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
                     "file": 1,
