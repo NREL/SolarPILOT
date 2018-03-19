@@ -103,7 +103,7 @@ FieldPlot::FieldPlot(wxPanel *parent, SolarField &SF, const int plot_option,
     _origin_pixels[0] = -999;
     _origin_pixels[0] = -999;
     _ctrl_down = false;
-    _helios_annot.Clear();
+    _helios_annot.clear();
 
     _plot_choices.clear();
     /*
@@ -757,6 +757,10 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             for(int i=0; i<npos; i++)
             {
                 H = heliostats->at(i);
+
+				if (!(H->IsEnabled() && H->getInLayout()))
+					continue;
+
                 //Get the value of interest for the heliostat
                 if(_option == FIELD_PLOT::EFF_TOT)
                 {    //Total efficiency
@@ -1067,15 +1071,154 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         //if annotating, draw here
         if( _helios_annot.size() > 0 )
         {
-            wxSize ats = _dc.GetTextExtent( _helios_annot );
+			int annot_text_linesep = 2; //line separation/buffer
+			int annot_col_buffer = 20; //column separation
+			int annot_box_linewidth = 3; //bounding box line width
+			int annot_box_frame_buffer = 4; //bounding box external buffer (offset)
+			int annot_box_text_buffer = 5; //buffer between annot box and internal text
+			int annot_text_id_offset = 15; //offset between left of base text and ID lines
 
-            size_t abox_w = ats.GetWidth();
-            size_t abox_h = ats.GetHeight();
+			//parse the annotation
+			std::vector<std::string> lines = split(_helios_annot, ";");
+
+			//figure out the widest line
+			int abox_text_height = 0, col0width = 0, col1width = 0, i_id = -1;
+			for (size_t i = 0; i < lines.size(); i++)
+			{
+				//skip the ID line
+				if (lines.at(i).find("ID") != std::string::npos)
+				{
+					i_id = i;
+					continue;
+				}
+
+				//process other lines
+				std::vector<std::string> oneline = split(lines.at(i), ",");
+				wxSize ts_i0 = _dc.GetTextExtent(oneline.at(0));
+				wxSize ts_i1 = _dc.GetTextExtent(oneline.at(1));
+
+				if (i > 0)
+				{
+					if (ts_i0.GetWidth() > col0width)
+						col0width = ts_i0.GetWidth();
+					if (ts_i1.GetWidth() > col1width)
+						col1width = ts_i1.GetWidth();
+				}
+				else
+				{
+					col0width = ts_i0.GetWidth();
+					col1width = ts_i1.GetWidth();
+				}
+
+				//add the larger height of the label and value
+				abox_text_height += std::fmax(ts_i0.GetHeight(), ts_i1.GetHeight()) + annot_text_linesep;
+			}
+
+			//calculate the upper right of the plot frame
+			int Ux = canvsize[0] - right_buffer;
+			int Uy = top_buffer;
+
+			//box width and annot box x coord
+			int abox_w = col0width + annot_col_buffer + col1width + 2* annot_box_text_buffer + annot_box_linewidth;
+			int Ax = Ux - annot_box_frame_buffer - abox_w - annot_box_linewidth;
+
+			//adjust bounding box for the ID's line
+			
+			std::vector<std::string> idlines; //vector of lines to save
+
+			wxString idlab = "Selected heliostat ID's:";
+			if (i_id > 0)
+			{
+
+				std::vector<std::string> idline = split(lines.at(i_id), ",");
+				std::vector<std::string> idvals = split(idline.at(1), ".");
+
+				idlines.push_back("");
+
+				abox_text_height += _dc.GetTextExtent(idlab).GetHeight() + annot_text_linesep;
+				int nline = 0;
+				int cwidth = 0;
+				for (size_t i = 0; i < idvals.size(); i++)
+				{
+					wxSize id_ts = _dc.GetTextExtent(idvals.at(i)+", ");
+
+					//add height of the first line
+					if (i == 0)
+						abox_text_height += _dc.GetTextExtent(idvals.at(i)).GetHeight() + annot_text_linesep;
+					
+					//if the id list width spills over, start a new line
+					if (id_ts.GetWidth() + cwidth > abox_w - annot_text_id_offset - annot_box_linewidth - 2*annot_box_text_buffer) //offset by 20 px, mind buffer
+					{
+						cwidth = id_ts.GetWidth();
+						abox_text_height += id_ts.GetHeight() + annot_text_linesep;
+						nline++;
+						idlines.push_back(idvals.at(i) + (i < idvals.size() - 1 ? ", " : ""));
+					}
+					else
+					{
+						cwidth += id_ts.GetWidth();
+						idlines.at(nline).append(idvals.at(i) + (i < idvals.size() - 1 ? ", " : ""));
+					}
+				}
+			}
+
+			//final calc of box height
+			int abox_h = abox_text_height + 2 * annot_box_text_buffer + annot_box_linewidth; //buffer
+			int Ay = Uy + annot_box_frame_buffer + annot_box_linewidth;
+			//don't let abox spill off the bottom
+			abox_h = std::fmin(abox_h, plotsize[1] - 2 * annot_box_frame_buffer - annot_box_linewidth);
+
+			//calculate the x,y position of the text
+			int T0 = annot_box_linewidth / 2 + annot_box_text_buffer;
+			int Tx = Ax + T0;
+			int Ty = Ay + T0;
+
+			//draw the bounding rectangle
+
             wxPen cpen = _dc.GetPen();
-            _dc.SetPen( wxPen( wxColour(220,220,220), 2, wxPENSTYLE_SOLID ) );
-            _dc.DrawRectangle(canvsize[0]-right_buffer-12-abox_w, top_buffer+2, abox_w+10, abox_h+10 );
+            _dc.SetPen( wxPen( wxColour(220,220,220), annot_box_linewidth, wxPENSTYLE_SOLID ) );
+            _dc.DrawRectangle(Ax, Ay, abox_w, abox_h );
             _dc.SetPen( cpen );
-            _dc.DrawText(_helios_annot, canvsize[0]-right_buffer-7-abox_w, top_buffer+7);
+
+			//draw each line
+			int current_y = Ty;
+
+			//max drawable y
+			int max_y_lim = top_buffer + plotsize[1] - bottom_buffer - annot_box_frame_buffer - annot_box_linewidth - annot_box_text_buffer - _dc.GetTextExtent(idlines.back()).GetHeight() - annot_text_linesep;
+
+			for (size_t i = 0; i < lines.size(); i++)
+			{
+				std::vector<std::string> oneline = split(lines.at(i), ",");
+
+				if (i == i_id)
+				{
+					//handle ID's line separately
+					_dc.DrawText(idlab, Tx, current_y); //label
+					current_y += _dc.GetTextExtent(idlab).GetHeight() + annot_text_linesep;
+
+					for (size_t j = 0; j < idlines.size(); j++)
+					{
+						_dc.DrawText(idlines.at(j), Tx + annot_text_id_offset, current_y);
+						current_y += _dc.GetTextExtent(idlines.at(j)).GetHeight() + annot_text_linesep;
+						
+						if (current_y > max_y_lim)
+						{
+							_dc.DrawText("...", Tx + annot_text_id_offset, current_y);
+							break;
+						}
+					}
+
+				}
+				else
+				{
+					//regular items
+					_dc.DrawText(oneline.at(0), Tx, current_y ); //label
+					_dc.DrawText(oneline.at(1), Tx + col0width + annot_col_buffer, current_y); 
+
+					current_y += _dc.GetTextExtent(lines.at(i)).GetHeight() + annot_text_linesep;
+				}
+			}
+
         }
 
         //Draw the gradient bar
@@ -1381,7 +1524,7 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
         _helios_select.erase(_helios_select.begin()+pos);
 
     //clear the annotation string
-    _helios_annot.Clear();  
+    _helios_annot.clear();  
 
     //declare and init reporting values
     double h_avg_tot = 0.;
@@ -1428,37 +1571,23 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
         h_avg_power /= (double)nh;
     }
 
-    _helios_annot = wxString::Format(
-        "%s\t\t%.2f%\n"
-        "%s\t\t%.2f%\n"
-        "%s\t\t\t%.2f%\n"
-        "%s\t\t\t%.2f%\n"
-        "%s\t\t\t%.2f%\n"
-        "%s\t\t\t%.2f%\n"
-        "%s\t\t%.2f%\n"
-        "%s\t\t%.1f kW\n"
-        "%s\t\t%.1f kW\n"
-        "%s\t\t\t%.1f m2\n",
+	std::stringstream annot;
+	annot << "Total efficiency" << "," << wxString::Format("%.1f %%", h_avg_tot*100.) << ";";
+	annot << "Attenuation" << "," << wxString::Format("%.1f %%", h_avg_atten*100.) << ";";
+	annot << "Cosine" << "," << wxString::Format("%.1f %%", h_avg_cosine*100.) << ";";
+	annot << "Blocking" << "," << wxString::Format("%.1f %%", h_avg_blocking*100.) << ";";
+	annot << "Shading" << "," << wxString::Format("%.1f %%", h_avg_shading*100.) << ";";
+	annot << "Spillage" << "," << wxString::Format("%.1f %%", h_avg_spillage*100.) << ";";
+	annot << "Cloudiness" << "," << wxString::Format("%.1f %%", h_avg_cloud*100.) << ";";
+	annot << "Average power" << "," << wxString::Format("%.2f kW", h_avg_power / 1000.) << ";";
+	annot << "Total power" << "," << wxString::Format("%.2f kW", h_tot_power / 1000.) << ";";
+	annot << "Total area" << "," << wxString::Format("%.2f m2", h_tot_area) << ";";
+	annot << "ID" << ",";
 
-        "Total efficiency", h_avg_tot*100.,
-        "Attenuation", h_avg_atten*100.,
-        "Cosine", h_avg_cosine*100.,
-        "Blocking", h_avg_blocking*100.,
-        "Shading", h_avg_shading*100.,
-        "Spillage", h_avg_spillage*100.,
-        "Cloudiness", h_avg_cloud*100.,
-        "Average power", h_avg_power/1000.,
-        "Total power", h_tot_power/1000.,
-        "Total area", h_tot_area
-    );
+	for (size_t i = 0; i < nh; i++)
+		annot << _helios_select.at(i)->getId() << (i<nh-1 ? "." : "");
 
-    _helios_annot.append("ID");
-    _helios_annot.append( (nh > 1 ? "'s" : " ") );
-    _helios_annot.append("\t\t\t\t");
-    for(size_t i=0; i<nh; i++)
-        _helios_annot.append( my_to_string(_helios_select.at(i)->getId()) 
-                              + (i < nh-1 ? ( (i==1 || (i>1 && (i-1)%5==0) ) ? ",\n\t" : ", ") : "") 
-                            );
+	_helios_annot = annot.str();
 
     return;
 }
