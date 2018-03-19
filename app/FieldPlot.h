@@ -119,7 +119,7 @@ private:
     bool _ctrl_down;
     std::vector< std::string > _plot_choices;
     st_hash_tree _helio_hash;
-    wxString _helios_annot; //annotation for selected heliostats
+    std::string _helios_annot; //annotation for selected heliostats
     std::vector< Heliostat *> _helios_select;   //currently selected heliostats
 
     DECLARE_EVENT_TABLE()
