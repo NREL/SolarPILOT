@@ -59,6 +59,117 @@
 	<div id="topic_content">
 		
 <p></p>
+<h1 class="rvps6"><a name="top"></a>
+<span class="rvts0"><span class="rvts19">Page Overview</span></span></h1>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The Layout Results page displays the current heliostat field layout and tower position from a top-down view, and it allows you to view performance data for the entire field and smaller regions of individual heliostats. The plot is interactive and responds to certain mouse actions.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">This page includes:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><a class="rvts20" href="Layoutresults.html#plot-and-controls">Field Plot and Controls</a></p>
+<p class="rvps2"><a class="rvts20" href="Layoutresults.html#interacting">Interacting with the Plot</a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
+<h1 class="rvps6"><a name="plot-and-controls"></a>
+<span class="rvts0"><span class="rvts19">Field Plot and Controls</span></span></h1>
+<p class="rvps2"><a class="rvts34" href="Layoutresults.html#top">- Top of page -</a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The Layout results page consists of a control bar and the plot rendering of the field. The figure below annotates the various controls and pieces of information that are displayed on the plot. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The performance information shown on the plot corresponds to either:</span></p>
+<ol style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: decimal;">
+<li value="1" class="rvps2"><span class="rvts6">The sun position and Direct Normal Irradiation specified on the Performance Simulation page, if a performance simulation has been most recently executed, or</span></li>
+<li value="2" class="rvps2"><span class="rvts6">The Sun Location at Design Point and Design-Point DNI Value on the Layout Setup page, if a field layout has been most recently executed.</span></li>
+</ol>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts29">Plot data selection</span><span class="rvts6"> control allows you to specify which performance criteria is illustrated with the color map on the plot. The choices include:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts28">Land boundaries</span><span class="rvts6">: An illustration of the area in which heliostats can be placed.</span></li>
+<li class="rvps2"><span class="rvts28">Field layout</span><span class="rvts6">: An illustration of the position and orientation of each heliostat without any superimposed performance information.</span></li>
+<li class="rvps2"><span class="rvts28">Total efficiency</span><span class="rvts6">: The total optical efficiency (including spillage and transmission losses) of each heliostat at the simulated sun position.</span></li>
+<li class="rvps2"><span class="rvts28">Cosine efficiency</span><span class="rvts6">: The cosine efficiency due to nonzero angular displacement between the heliostat normal vector and the sun vector (1.- fractional cosine loss)*100%</span></li>
+<li class="rvps2"><span class="rvts28">Attenuation efficiency</span><span class="rvts6">: The attenuation efficiency due to atmospheric scattering after reflection (1.- fractional attenuation loss)*100%</span></li>
+<li class="rvps2"><span class="rvts28">Blocking efficiency</span><span class="rvts6">: Loss due to reflected light from the heliostat being intercepted by another heliostat (1. - fractional blocking loss)*100%</span></li>
+<li class="rvps2"><span class="rvts28">Shading efficiency</span><span class="rvts6">: Loss due to light from the sun being blocked from hitting the heliostat (a.k.a shadowing; 1 - fractional shading loss)*100%</span></li>
+<li class="rvps2"><span class="rvts28">Image intercept efficiency</span><span class="rvts6">: Loss due to light that is reflected by the heliostat that misses the receiver target (a.k.a. spillage; 1 - fractional intercept loss)*100%</span></li>
+<li class="rvps2"><span class="rvts28">Reflectivity</span><span class="rvts6">: Loss due to partial absorption of light incident on the heliostat mirror surface (light reflected / light incident)</span></li>
+<li class="rvps2"><span class="rvts28">Delivered power</span><span class="rvts6">: Total power delivered to the surface of the receiver (does not include receiver surface reflective loss)</span></li>
+<li class="rvps2"><span class="rvts28">Ranking metric</span><span class="rvts6">: The value used to determine which heliostats are to be included in the layout. By default, the ranking metric is the total energy delivered to the receiver over the course of all simulated hours. The metric does </span><span class="rvts29">not</span><span class="rvts6"> necessarily represent the expected annual production for each heliostat, but establishes which heliostats are relatively more productive over time.</span></li>
+<li class="rvps2"><span class="rvts28">Optical mesh</span><span class="rvts6">: The cylindrical coordinate zones into which heliostats are grouped to evaluate intercept factor during field layout, if the Enable Optical Layout Zone Method checkbox is enabled on the Layout Setup page. Heliostats within each zone have approximately the same intercept factor, and a single calculation is made for each zone to expedite the layout calculations. Note that the optical mesh is not used for performance simulations or for raytrace simulations.</span></li>
+</ul>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts29">Show data heliostat</span><span class="rvts6"> button toggles the display of the selected (numeric) performance value on each heliostat, if the plot is zoomed in sufficiently to allow each number to render. When enabled, the image shows a black triangle.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts29">Save image</span><span class="rvts6"> button opens a file dialog that allows you to export the displayed image to file. You can specify the resolution (DPI), path, and filename in the dialog. The image will reproduce the displayed plot in the application, including font, zoom, and pan attributes.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts29">Export plot data</span><span class="rvts6"> button opens a file dialog that allows you to export the performance data for each heliostat in the field. The dialog allows you to specify which fields will be provided for each heliostat.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps3"><img alt="" style="padding : 1px;" src="lib/NewItem218.png"></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts29">Remove selected heliostats</span><span class="rvts6"> button will remove the selected heliostats (see below for information on selecting heliostats) from the layout, although their position and information will be preserved and can be restored. Heliostats that are not in the layout are not included in performance calculations.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts29">Restore all heliostats</span><span class="rvts6"> button will repopulate the field with all original heliostats, restoring those that have been previously removed. This action cannot be undone.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><img width="766" height="646" alt="" style="padding : 1px;" src="lib/NewItem215.png"></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<a name="interacting"></a>
+<hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
+<h1 class="rvps6"><span class="rvts0"><span class="rvts19">Interacting with the plot</span></span></h1>
+<p class="rvps2"><a class="rvts34" href="Layoutresults.html#top">- Top of page -</a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The field plot is interactive, allowing several actions to be taken. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<div class="rvps2"><table border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
+<tr valign="top">
+<td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts29">Left mouse click + drag</span></p>
+</td>
+<td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts6">Pan the plot</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts29">Left mouse click + drag (zoom mode)</span></p>
+</td>
+<td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts6">Zoom to rectangle</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts29">Mouse wheel scroll</span></p>
+</td>
+<td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts6">Zoom in/out</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts29">Right mouse click</span></p>
+</td>
+<td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts6">Select nearest heliostat to click location</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts29">CTRL + right mouse click</span></p>
+</td>
+<td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts6">Select multiple heliostats</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts29">CTRL + right mouse click - selected</span></p>
+</td>
+<td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts6">De-select already selected heliostat</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts29">Right mouse click - empty space</span></p>
+</td>
+<td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts6">De-select all heliostats</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Upon selecting one or more heliostats, the field plot will display statistics in the upper right corner of the window. The values correspond only to the heliostat(s) that are currently selected. Selected heliostats will appear with a green border in the plot. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem217.png"></p>
 <p></p>
 </div>
 	
