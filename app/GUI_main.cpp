@@ -333,6 +333,13 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
     _grid_but_size = wxSize(100,25);
     
     _variables.reset();
+#ifdef _DEBUG
+	//if in debug mode, make the default field smaller so that processes run more quickly
+	_variables.sf.q_des.val = 75.;
+	_variables.sf.tht.val = 90.;
+	_variables.sf.des_sim_ndays.val = 2;
+#endif
+
 
     //Create the simulation progress timer and connect it to a timer event
     _sim_timer = new wxTimer(this, wxID_ANY);
