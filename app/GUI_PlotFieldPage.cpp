@@ -683,6 +683,7 @@ void SPFrame::OnDeleteSelectedHeliostats( wxCommandEvent &WXUNUSED(evt))
 	}
 
 	_SF.updateAllCalculatedParameters( *_SF.getVarMap() ); 
+	interop::UpdateMapLayoutData(*_SF.getVarMap(), _SF.getHeliostats());
 
 	_plot_frame->ClearSelectedHeliostats();
 
@@ -704,6 +705,8 @@ void SPFrame::OnRestoreSelectedHeliostats( wxCommandEvent &WXUNUSED(evt))
 	_plot_frame->ClearSelectedHeliostats();
 
 	_SF.updateAllCalculatedParameters( *_SF.getVarMap() );
+	interop::UpdateMapLayoutData(*_SF.getVarMap(), _SF.getHeliostats());
+
 	_plot_frame->Update();
 	_plot_frame->Refresh();
 }
