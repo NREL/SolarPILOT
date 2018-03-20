@@ -948,6 +948,10 @@ void SPFrame::Save(int save_config)
         {
             file_use = filedlg.GetPath().c_str();
         }
+		else
+		{
+			return;	
+		}
         
     }
     if(! ioutil::saveXMLInputFile((std::string)file_use.GetFullPath(), _variables, _par_data, _opt_data, _software_version) )
