@@ -1035,7 +1035,7 @@ void SPFrame::Open(wxString file_in, bool quiet)
         //provided for backward compatibility
         throw spexception("The old solarpilot (non-xml) format input file is no longer supported. Could not open file.");
     }
-    SetCaseName( ioutil::name_only( file.GetFullPath().ToStdString() ) );    //Update the displayed case name 
+    SetCaseName( file.GetFullPath() );    //Update the displayed case name 
 
     //is there data for a solar field layout?
     
@@ -1592,7 +1592,7 @@ void SPFrame::OnMenuRunUserParametric( wxCommandEvent &WXUNUSED(evt) )
 
 void SPFrame::SetCaseName(wxString case_name)
 {
-    SetTitle( "SolarPILOT |  " + case_name );
+    SetTitle( "SolarPILOT " + _software_version + "  |  " + ( case_name.IsEmpty() ? "New file" : case_name) );
 }
 
 void SPFrame::bindControls()
