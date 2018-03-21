@@ -189,7 +189,7 @@ void SPFrame::UpdateLayoutGrid()
 
 
         H = heliostats->at(i);    //shorthand the pointer
-        if(! H->getInLayout()) continue;
+        if(! H->IsInLayout()) continue;
 
         sp_point *loc = H->getLocation();
 

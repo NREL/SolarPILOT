@@ -758,7 +758,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             {
                 H = heliostats->at(i);
 
-				if (!(H->IsEnabled() && H->getInLayout()))
+				if (!(H->IsEnabled() && H->IsInLayout()))
 					continue;
 
                 //Get the value of interest for the heliostat
@@ -913,7 +913,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                     continue;
 
                 //if the heliostat is omitted, don't draw a shadow
-                if(! H->getInLayout() )
+                if(! H->IsInLayout() )
                     continue;
 
                 vector<sp_point> *shad = H->getShadowCoords();
@@ -994,7 +994,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                     continue;
 
                 //if the heliostat is omitted, just put a dot and move on
-                if(! H->getInLayout() )
+                if(! H->IsInLayout() )
                 {
                     // _dc.SetPen( wxPen( wxColour(0,0,0), 1, wxPENSTYLE_SOLID) );
                     // _dc.DrawCircle(H->getLocation()->x*ppm + o[0], -H->getLocation()->y*ppm + o[1], (int)(std::ceil(ppm/2.+.00001)));
