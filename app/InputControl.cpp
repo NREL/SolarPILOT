@@ -389,19 +389,6 @@ void InputControl::OnText( wxCommandEvent &WXUNUSED(event))
     _need_update = false;
 }
     
-void InputControl::OnBGPaintEvent( wxEraseEvent &event)
-{
-    event.Skip();
-}
-void InputControl::OnPaint( wxPaintEvent &event)
-{ 
-    this->Layout();
-        
-    Refresh(false);
-    event.Skip();
-}
-
-
 void InputControl::OnCombo( wxCommandEvent &event)
 {
     //handle combobox selection events
@@ -639,8 +626,7 @@ void InputControl::Build()
         if(!_text_only) bs->Add(st_units, 0, wxEXPAND|wxLEFT|wxTOP, 5);
         this->SetSizerAndFit(bs);
     }
-    this->Connect(wxEVT_ERASE_BACKGROUND, wxEraseEventHandler( InputControl::OnBGPaintEvent ), NULL, this);
-    this->Connect(wxEVT_PAINT, wxPaintEventHandler( InputControl::OnPaint ), NULL, this);
+
     this->Layout();
 }
 

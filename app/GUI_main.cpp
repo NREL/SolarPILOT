@@ -1515,11 +1515,12 @@ void SPFrame::OnMenuRunLayout( wxCommandEvent &WXUNUSED(evt) )
     _page_panel->SetActivePage( pageNames.simulations_layout );
     this->GetSizer()->Layout();
 
-    //update the button
-    wxCommandEvent newevent;
+    //Trigger the layout event as if the button were clicked
+    wxCommandEvent newevent( wxEVT_COMMAND_BUTTON_CLICKED );
+    newevent.SetId( _layout_button->GetId() );
     newevent.SetEventObject( _layout_button );
-    //do the layout
-    OnDoLayout( newevent );
+    _layout_button->GetEventHandler()->ProcessEvent(newevent);
+
 
 }
 
@@ -1530,9 +1531,12 @@ void SPFrame::OnMenuRunSimulation( wxCommandEvent &WXUNUSED(evt) )
         _page_panel->SetActivePage( pageNames.simulations_performance );
         this->GetSizer()->Layout();
 
-        wxCommandEvent newevent;
+        //Trigger the simulate event as if the button were clicked
+        wxCommandEvent newevent( wxEVT_COMMAND_BUTTON_CLICKED );
+        newevent.SetId( _flux_button->GetId() );
         newevent.SetEventObject( _flux_button );
-        OnDoPerformanceSimulation( newevent );
+        _flux_button->GetEventHandler()->ProcessEvent(newevent);
+
     }
     catch(std::exception &e)
     {
@@ -1930,9 +1934,11 @@ void SPFrame::FluxProgressBase(int n_complete, int n_tot, wxGauge *active_gauge,
     else simprog = 0.;
     simprog = max(min(simprog,1.), 0.);
     active_gauge->SetValue(int(simprog*1000.));
-    wxYieldIfNeeded();    //prevent GUI from freezing
-    active_gauge->Update();
+
+    //Refresh (mark as dirty) and force update. Note that wxYield* variants cause the window to hang on linux here.
     active_gauge->Refresh();
+    active_gauge->Update();
+
 }
 
 int SPFrame::SolTraceProgressUpdate(st_uint_t ntracedtotal, st_uint_t ntraced, st_uint_t ntotrace, st_uint_t curstage, st_uint_t nstages, void *data)
