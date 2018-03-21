@@ -1930,7 +1930,7 @@ void SPFrame::FluxProgressBase(int n_complete, int n_tot, wxGauge *active_gauge,
     else simprog = 0.;
     simprog = max(min(simprog,1.), 0.);
     active_gauge->SetValue(int(simprog*1000.));
-    wxYieldIfNeeded();    //prevent GUI from freezing
+    // wxYieldIfNeeded();    //prevent GUI from freezing
     active_gauge->Update();
     active_gauge->Refresh();
 }
