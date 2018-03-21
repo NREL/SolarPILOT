@@ -165,8 +165,6 @@ protected:
     void OnFile( wxCommandEvent &event);
     void OnFocus( wxFocusEvent &WXUNUSED(event));
     void OnLeaving( wxFocusEvent &event);
-    void OnBGPaintEvent( wxEraseEvent &event);
-    void OnPaint( wxPaintEvent &event);
     void OnMouseWheelSkip(wxCommandEvent &event); // catch mouse scroll events on combobox's here
     void Build();
 };

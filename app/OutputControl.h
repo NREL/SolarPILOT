@@ -130,7 +130,6 @@ public:
 
 protected:
     void Build();
-    void OnPaint( wxPaintEvent &event);
 };
 
 #endif
