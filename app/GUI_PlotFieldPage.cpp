@@ -682,8 +682,8 @@ void SPFrame::OnDeleteSelectedHeliostats( wxCommandEvent &WXUNUSED(evt))
 		hsel->at(i)->IsEnabled(false);
 	}
 
-	_SF.updateAllCalculatedParameters( *_SF.getVarMap() ); 
-	interop::UpdateMapLayoutData(*_SF.getVarMap(), _SF.getHeliostats());
+	_SF.UpdateLayoutAfterChange();
+	UpdateCalculatedGUIValues();
 
 	_plot_frame->ClearSelectedHeliostats();
 
@@ -704,8 +704,8 @@ void SPFrame::OnRestoreSelectedHeliostats( wxCommandEvent &WXUNUSED(evt))
 
 	_plot_frame->ClearSelectedHeliostats();
 
-	_SF.updateAllCalculatedParameters( *_SF.getVarMap() );
-	interop::UpdateMapLayoutData(*_SF.getVarMap(), _SF.getHeliostats());
+	_SF.UpdateLayoutAfterChange();
+	UpdateCalculatedGUIValues();
 
 	_plot_frame->Update();
 	_plot_frame->Refresh();
