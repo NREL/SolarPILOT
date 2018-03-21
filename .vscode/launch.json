@@ -8,6 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
+            "preLaunchTask": "Makefile",
             "program": "${workspaceFolder}/deploy/linux/solarpilot",
             "args": [],
             "stopAtEntry": false,
