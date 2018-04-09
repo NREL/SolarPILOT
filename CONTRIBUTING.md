@@ -18,7 +18,7 @@ _I agree to contribute to SolarPILOT. I agree to the following terms and conditi
 
 * SolarPILOT consists of [several code repositories](https://github.com/NREL/SolarPILOT/wiki/Software-Dependencies), so you will need to determine where to make your contribution. For example, if you are making a change to the way SolarPILOT's heliostat positioning algorithm model makes a calculation, you would work with the [SSC](https://github.com/NREL/SSC) repository. If you are adding a new feature that changes both calculations and the user interface, like adding a new layout algorithm, then you would work with both the SolarPILOT repository and the SSC repository. If you need help figuring out where your contribution should go, please [let us know](mailto://solarpilot.support@nrel.gov).
 
-* We use GitHub to manage the open source project, so you will need to learn how to use it to fork, clone, branch, check out, pull, add, commit, and push your work. 
+* We use GitHub to manage the open source project, so you will need to learn how to use it to fork, clone, branch, check out, pull, add, commit, and push your work.
 
 ### Instructions
 
@@ -32,33 +32,36 @@ Here are the steps that will prepare you to contribute code to SolarPILOT:
 
 ### Best practices
 
-The Git VCS is most effective when new development occurs in a branch and the proposed code changes are submitted via a _pull request_ into one of the main branches. The repository is configured to require special steps to be taken when contributing to one of the protected branches. This helps maintain stable releases and ensure new content conforms with the goals of the project. 
+The Git VCS is most effective when new development occurs in a branch and the proposed code changes are submitted via a _pull request_ into one of the main branches. The repository is configured to require special steps to be taken when contributing to one of the protected branches. This helps maintain stable releases and ensure new content conforms with the goals of the project.
 
-The repository is organized into several branches, and some have special importance. 
+The repository is organized into several branches, and some have special importance. The approach generally follows the model outlined [here](http://nvie.com/posts/a-successful-git-branching-model/).
 
-<table>
-<tr><th>Branch</th><th>Access</th><th>Description</th></tr>
-<tr><td>master</td><td>admin</td><td>Current stable version. This branch can only be modified by admins.</td></tr>
-<tr><td>develop</td><td>SolarPILOT-RW</td><td>Development version. Submit new features or non-patch fixes here via pull request.</td></tr>
-<tr><td>version-x.y</td><td>SolarPILOT-RW</td><td>Historical release version. This branch can only be modified by admins.</td></tr>
-<tr><td>_other_</td><td>Contributors</td><td>All new development occurs in named branches. These will be merged into other topic-specific branches or into develop.</td></tr>
+<table style="text-align:center">
+<tr><th>Branch</th><th>Access</th><th>Description</th><th>Branch from</th><th>Merge from</th><th>Merge to</th></tr>
+<tr><td>master</td><td>admin</td><td>Current stable version</td><td>---</td><td>patch, release</td><td>---</td></tr>
+<tr><td>develop</td><td>SolarPILOT-RW</td><td>Bleeding edge development version</td><td>---</td><td>feature, patch, release</td><td>---</td></tr>
+<tr><td>patch</td><td>Contributors</td><td>Hotfixes for current major.minor release</td><td>Master @tag</td><td>---</td><td>master, develop, patch</td></tr>
+<tr><td>release</td><td>SolarPILOT-RW</td><td>Next release version</td><td>develop</td><td>patch</td><td>master, develop</td></tr>
+<tr><td>feature-&ltname&gt</td><td>Contributors</td><td>All new development</td><td>develop, feature-&ltother&gt</td><td>develop, feature-&ltother&gt</td><td>develop, feature-&ltother&gt</td></tr>
 </table>
 
-The following steps should be taken when contributing code. 
-1. Determine the branch to which your code should apply. 
-    * Bug fixes for the existing release should start from the _version-x.y_ branch. 
+The following steps should be taken when contributing code.
+
+1. Determine the branch to which your code should apply.
+    * Bug fixes for the existing release should start from the _master_ branch with HEAD at the latest relevant version tag.
     * Bug fixes that don't affect the current release should start from _develop_.
-    * New features should start from _develop_ or a sub-branch. 
-2. If you have a bug fix, create an Issue on the issue tracker. If you are fixing a bug on the _develop_ branch and want it applied to prior stable releases as a patch, label the issue with ```needs-patch```.
-3. ```checkout``` the appropriate branch. Pull to the Head. 
+    * New features should start from _develop_ or a sub-branch.
+
+2. If you have a bug fix, create an Issue on the issue tracker. Label the issue with ```needs-patch``` and the milestone for the next version to which it should apply. Fixes in _develop_ should use the milestone for the next major.minor.0 release, while patches should use the existing major.minor.patch+1 tag. 
+3. ```checkout``` the appropriate branch or tag.
 4. Create and checkout a new branch for your changes. ```git checkout -b <new branch name>```.
-5. Make your changes and commit them to your branch with frequent, descriptive commits. 
+5. Make your changes and commit them to your branch with frequent, descriptive commits.
 6. Build SolarPILOT and test it to make sure your code works as expected (see [below](#test-protocol)).
 7. ```git push origin <new branch name>``` to publish your branch. 
 8. On the [repository](https://github.com/NREL/SolarPILOT) web page, create a pull request for your new branch. 
-    * Specify the target branch according to the selection from step (1) above. 
+    * Specify the target branch according to the selection from step (1) above.
     * Make sure to fully comment your pull request. 
-    * The project admins will review your pull request and solicit discussion if any issues arise. If your pull request is accepted, the branch will be deleted, and you can delete your local copy of the branch. If the request is not accepted, please review the discussion to determine and resolve any issues. 
+    * The project admins will review your pull request and solicit discussion if any issues arise. If your pull request is accepted, the branch will be deleted, and you can delete your local copy of the branch. If the request is not accepted, please review the discussion to determine and resolve any issues.
 
 ### Resources for Learning GitHub
 
@@ -76,13 +79,13 @@ If you are new to GitHub, you can find helpful articles to help you learn how it
 
 ### Test Protocol
 
-We are in the process of setting up a Google Test framework for testing your contribution to ensure that it does not cause any problems with the software. 
+We are in the process of setting up a Google Test framework for testing your contribution to ensure that it does not cause any problems with the software.
 
 For now, you can help to ensure that your code works with the rest of SolarPILOT by:
 
 1. Compiling SolarPILOT with your contribution for Windows, Mac, and Linux.
 
-3. Fixing any compiler warning messages.
+2. Fixing any compiler warning messages.
 
 3. Running the compiled program with several configurations.
 

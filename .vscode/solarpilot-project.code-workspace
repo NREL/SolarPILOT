@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "/home/mike/workspace/SolarPILOT",
+			"name": "UI"
+		},
+		{
+			"path": "/home/mike/workspace/ssc/solarpilot",
+			"name": "solarpilot"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"array": "cpp",
+			"initializer_list": "cpp",
+			"utility": "cpp",
+			"functional": "cpp"
+		}
+	}
+}

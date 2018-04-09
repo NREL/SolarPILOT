@@ -18,27 +18,27 @@ The desktop version of SolarPILOT for Windows or Linux builds from the following
 
 * This repository, **SolarPILOT**, provides the user interface to assign values to inputs of the computational modules, run the modules in the correct order, and display calculation results. It also includes tools for editing LK scripts, viewing field layout and receiver flux map data, and performing multi-dimensional system optimization.
 
-# Quick Steps for Building SolarPILOT
+## Quick Steps for Building SolarPILOT
 
 For detailed build instructions see the [wiki](https://github.com/NREL/SolarPILOT/wiki), with specific instructions for:
 
-  * [Windows](https://github.com/NREL/SolarPILOT/wiki/Windows-Build)
-  * [Linux](https://github.com/NREL/SolarPILOT/wiki/Linux-Build)
+* [Windows](https://github.com/NREL/SolarPILOT/wiki/Windows-Build)
+* [Linux](https://github.com/NREL/SolarPILOT/wiki/Linux-Build)
 
 These are the general quick steps you need to follow to set up your computer for developing SolarPILOT:
 
 1. Set up your development tools:
 
-    * Windows: Visual Studio 2017 Community or other editions available at https://www.visualstudio.com/.
-    * Linux: g++ compiler available at http://www.cprogramming.com/g++.html or as part of the Linux distribution.
+    * Windows: Visual Studio 2017 Community or other editions available [here](https://www.visualstudio.com/).
+    * Linux: g++ compiler available [here](http://www.cprogramming.com/g++.html) or as part of the Linux distribution.
 
-2. Download the wxWidgets 3.1.1 source code for your operating system from https://www.wxwidgets.org/downloads/.
+2. Download the [wxWidgets 3.1.1 source code](https://www.wxwidgets.org/downloads/) for your operating system.
 
 3. Build wxWidgets.
 
-5. In Windows, create the WXMSW3 environment variable on your computer to point to the wxWidgets installation folder, or Linux, create the dynamic link `/usr/<USERNAME>/local/bin/wx-config-3` to point to `/path/to/wxWidgets/bin/wx-config`.
+4. In Windows, create the WXMSW3 environment variable on your computer to point to the wxWidgets installation folder, or Linux, create the dynamic link `/usr/<USERNAME>/local/bin/wx-config-3` to point to `/path/to/wxWidgets/bin/wx-config`.
 
-6. As you did for wxWidgets, for each of the following projects, clone (download) the repository, build the project, and then (Windows only) create an environment variable pointing to the project folder. Build the projects in the following order, and assign the environment variable for each project before you build the next one:
+5. As you did for wxWidgets, for each of the following projects, clone (download) the repository, build the project, and then (Windows only) create an environment variable pointing to the project folder. Build the projects in the following order, and assign the environment variable for each project before you build the next one:
 
 <table>
 <tr><th>Project</th><th>Repository URL</th><th>Windows Environment Variable</th></tr>
@@ -51,12 +51,22 @@ These are the general quick steps you need to follow to set up your computer for
 <tr><td>SolarPILOT</td><td>https://github.com/NREL/SolarPILOT</td><td></td></tr>
 </table>
 
-# Contributing
+## Contributing
 
 If you would like to report an issue with SolarPILOT or make a feature request, please let us know by adding a new issue on the [issues page](https://github.com/NREL/SolarPILOT/issues).
 
 If you would like to submit code to fix an issue or add a feature, you can use GitHub to do so. Please see [Contributing](CONTRIBUTING.md) for instructions.
 
-# License
+## License
 
 SolarPILOT's open source code is copyrighted by the Alliance for Sustainable Energy and licensed under a [mixed MIT and GPLv3 license](LICENSE.md). It allows for-profit and not-for-profit organizations to develop and redistribute software based on SolarPILOT under terms of an MIT license and requires that research entities including national laboratories, colleges and universities, and non-profit organizations make the source code of any redistribution publicly available under terms of a GPLv3 license.
+
+## Citing SolarPILOT
+
+If you find SolarPILOT useful, we ask that you appropriately cite it in documentation of your work. We provide the open-source code and executable distributions for free, but find value in being acknowledged in work that advances scientific knowledge and engineering technology. For general use of SolarPILOT, the preferred citation is:
+
+> Wagner, M.J., Braun, R.J., Newman, A.M. (2017). "Optimization of stored energy dispatch for concentrating solar power systems." Doctoral Thesis. Colorado School of Mines, Golden, Colorado. Chapter II, pp. 19-45. URL: [https://dspace.library.colostate.edu/handle/11124/171000](https://dspace.library.colostate.edu/handle/11124/171000).
+
+For work that builds substantially upon or is derived from the open source project, the preferred citation is:
+
+> Wagner, M.J. (2018). "SolarPILOT Open-Source Software Project: [github.com/NREL/SolarPILOT](https://github.com/NREL/SolarPILOT). National Renewable Energy Laboratory, Golden, Colorado.

@@ -633,7 +633,7 @@ void SPFrame::OnDoPerformanceSimulation( wxCommandEvent &event)
             PopMessage("Simulation cancelled by user.", "Notice", wxICON_INFORMATION|wxOK);
             return;
         }
-        wxYieldIfNeeded();    //prevent GUI from freezing
+        // wxYieldIfNeeded();    //prevent GUI from freezing
     
         //Check if a layout is available for simulation
         if(_SF.getHeliostats()->size() == 0)

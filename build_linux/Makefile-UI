@@ -16,10 +16,9 @@ FCLIB = ./fieldcore.a
 FCDIR = $(SSCDIR)/solarpilot
 NLOPTLIB = $(SHAREDIR)/nlopt.a
 
-CC = g++ #gcc
+CC = g++ 
 CXX = g++
-#CFLAGS = -I. -I$(WEXDIR)/include -I$(LKDIR) -I$(SSCDIR) -I../rapidxml -I$(FCDIR) -I$(STDIR) -D__64BIT__ -g -O2 -std=c++0x -DLK_USE_WXWIDGETS -DSP_STANDALONE -D_GLIBCXX_USE_NANOSLEEP `wx-config-3 --cflags` 
-CFLAGS = -I. -I$(WEXDIR)/include -I$(LKDIR)/include -I$(SSCDIR) -I../rapidxml -I$(FCDIR) -I$(STDIR) -D__64BIT__ -g -std=c++0x -DLK_USE_WXWIDGETS -DSP_STANDALONE -D_GLIBCXX_USE_NANOSLEEP `wx-config-3 --cflags` 
+CFLAGS = -I. -I$(WEXDIR)/include -I$(LKDIR)/include -I$(SSCDIR) -I../rapidxml -I$(FCDIR) -I$(STDIR) -D__64BIT__ -g -O3 -std=c++0x -DLK_USE_WXWIDGETS -DSP_STANDALONE -D_GLIBCXX_USE_NANOSLEEP `wx-config-3 --cflags` 
 
 CXXFLAGS = $(CFLAGS)
 LDFLAGS =  $(WEXLIB) $(LKLIB) $(STLIB) $(FCLIB) $(NLOPTLIB) $(SHAREDLIB)  `wx-config-3 --libs stc` `wx-config-3 --libs aui` `wx-config-3 --libs` -lm  -lfontconfig -ldl -lcurl

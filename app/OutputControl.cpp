@@ -190,7 +190,6 @@ void OutputControl::Build()
         bs->Add(st_units, 0, wxEXPAND|wxLEFT|wxTOP, 5);
     }
         
-    this->Connect(wxEVT_PAINT, wxPaintEventHandler( OutputControl::OnPaint ), NULL, this);
     this->SetSizerAndFit(bs);
     this->Layout();
     
@@ -222,12 +221,4 @@ void OutputControl::setVarObject(spbase* varobj)
 void OutputControl::setValue(int value)
 {
     tc->SetValue(my_to_string( value ));
-}
-
-void OutputControl::OnPaint( wxPaintEvent &event)
-{ 
-    this->Layout();
-        
-    Refresh(false);
-    event.Skip();
 }

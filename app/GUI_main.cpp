@@ -262,7 +262,7 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
 
     //Set the version tag
 	_version_major = 1;
-	_version_minor = 1;
+	_version_minor = 2;
 	_version_patch = 0;
 
     _software_version = my_to_string(_version_major) + "." + my_to_string(_version_minor) + "." + my_to_string(_version_patch);
@@ -333,6 +333,13 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
     _grid_but_size = wxSize(100,25);
     
     _variables.reset();
+#ifdef _DEBUG
+	//if in debug mode, make the default field smaller so that processes run more quickly
+	_variables.sf.q_des.val = 75.;
+	_variables.sf.tht.val = 90.;
+	_variables.sf.des_sim_ndays.val = 2;
+#endif
+
 
     //Create the simulation progress timer and connect it to a timer event
     _sim_timer = new wxTimer(this, wxID_ANY);
@@ -941,6 +948,10 @@ void SPFrame::Save(int save_config)
         {
             file_use = filedlg.GetPath().c_str();
         }
+		else
+		{
+			return;	
+		}
         
     }
     if(! ioutil::saveXMLInputFile((std::string)file_use.GetFullPath(), _variables, _par_data, _opt_data, _software_version) )
@@ -1024,7 +1035,7 @@ void SPFrame::Open(wxString file_in, bool quiet)
         //provided for backward compatibility
         throw spexception("The old solarpilot (non-xml) format input file is no longer supported. Could not open file.");
     }
-    SetCaseName( ioutil::name_only( file.GetFullPath().ToStdString() ) );    //Update the displayed case name 
+    SetCaseName( file.GetFullPath() );    //Update the displayed case name 
 
     //is there data for a solar field layout?
     
@@ -1504,11 +1515,12 @@ void SPFrame::OnMenuRunLayout( wxCommandEvent &WXUNUSED(evt) )
     _page_panel->SetActivePage( pageNames.simulations_layout );
     this->GetSizer()->Layout();
 
-    //update the button
-    wxCommandEvent newevent;
+    //Trigger the layout event as if the button were clicked
+    wxCommandEvent newevent( wxEVT_COMMAND_BUTTON_CLICKED );
+    newevent.SetId( _layout_button->GetId() );
     newevent.SetEventObject( _layout_button );
-    //do the layout
-    OnDoLayout( newevent );
+    _layout_button->GetEventHandler()->ProcessEvent(newevent);
+
 
 }
 
@@ -1519,9 +1531,12 @@ void SPFrame::OnMenuRunSimulation( wxCommandEvent &WXUNUSED(evt) )
         _page_panel->SetActivePage( pageNames.simulations_performance );
         this->GetSizer()->Layout();
 
-        wxCommandEvent newevent;
+        //Trigger the simulate event as if the button were clicked
+        wxCommandEvent newevent( wxEVT_COMMAND_BUTTON_CLICKED );
+        newevent.SetId( _flux_button->GetId() );
         newevent.SetEventObject( _flux_button );
-        OnDoPerformanceSimulation( newevent );
+        _flux_button->GetEventHandler()->ProcessEvent(newevent);
+
     }
     catch(std::exception &e)
     {
@@ -1581,7 +1596,7 @@ void SPFrame::OnMenuRunUserParametric( wxCommandEvent &WXUNUSED(evt) )
 
 void SPFrame::SetCaseName(wxString case_name)
 {
-    SetTitle( "SolarPILOT |  " + case_name );
+    SetTitle( "SolarPILOT " + _software_version + "  |  " + ( case_name.IsEmpty() ? "New file" : case_name) );
 }
 
 void SPFrame::bindControls()
@@ -1919,9 +1934,11 @@ void SPFrame::FluxProgressBase(int n_complete, int n_tot, wxGauge *active_gauge,
     else simprog = 0.;
     simprog = max(min(simprog,1.), 0.);
     active_gauge->SetValue(int(simprog*1000.));
-    wxYieldIfNeeded();    //prevent GUI from freezing
-    active_gauge->Update();
+
+    //Refresh (mark as dirty) and force update. Note that wxYield* variants cause the window to hang on linux here.
     active_gauge->Refresh();
+    active_gauge->Update();
+
 }
 
 int SPFrame::SolTraceProgressUpdate(st_uint_t ntracedtotal, st_uint_t ntraced, st_uint_t ntotrace, st_uint_t curstage, st_uint_t nstages, void *data)

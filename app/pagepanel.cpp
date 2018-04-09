@@ -86,12 +86,6 @@ void PagePanel::OnClick(wxMouseEvent &evt)
     if( npage < m_pages.size() )
         SetActivePage( npage );
     
-    
-    m_parent->Layout();
-    m_parent->Update();
-    m_parent->Refresh();
-
-    wxYield();
 }
 
 void PagePanel::SetActivePage(int pagenum)
@@ -102,8 +96,11 @@ void PagePanel::SetActivePage(int pagenum)
         if(m_pages.at(i).page->IsShown() != (i==pagenum) )
             m_pages.at(i).page->Show( i==pagenum );
     }
-    this->Update();
-    this->Refresh();
+
+    //must refresh parent! not the window. Otherwise this glitches on Linux
+    m_pages.at(pagenum).page->GetParent()->Layout();
+    m_pages.at(pagenum).page->GetParent()->Refresh();
+
 }
 
 
@@ -119,8 +116,10 @@ void PagePanel::SetActivePage(wxString pagename)
         if(comptest)
             m_active_page = i;
     }
-    this->Update();
-    this->Refresh();
+    
+    //must refresh parent! not the window. Otherwise this glitches on Linux
+    m_pages.at(m_active_page).page->GetParent()->Layout();
+    m_pages.at(m_active_page).page->GetParent()->Refresh();
 }
 
 void PagePanel::RenamePage(wxString page_old, wxString page_new )
