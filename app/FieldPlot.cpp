@@ -382,7 +382,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                     x1 = radvals[1]*sin(sfangles[1])*ppm + o[0],
                     y1 = -radvals[1]*cos(sfangles[1])*ppm + o[1];
 
-                _dc.DrawArc(x0,y0,x1,y1,o[0],o[1]);
+                _dc.DrawArc(x1,y1,x0,y0,o[0],o[1]);
             }
         }
 
