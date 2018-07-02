@@ -73,4 +73,4 @@ The work is also presented in the following publication:
 
 For work that builds substantially upon or is derived from the open source project, the preferred citation is:
 
-> Wagner, M.J. (2018). "SolarPILOT Open-Source Software Project: [github.com/NREL/SolarPILOT](https://github.com/NREL/SolarPILOT). National Renewable Energy Laboratory, Golden, Colorado.
+> Wagner, M.J. (2018). "SolarPILOT Open-Source Software Project: [github.com/NREL/SolarPILOT](https://github.com/NREL/SolarPILOT)." Accessed _(dd/mm/yyyy)_. National Renewable Energy Laboratory, Golden, Colorado.
