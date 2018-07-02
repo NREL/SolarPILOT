@@ -65,6 +65,10 @@ SolarPILOT's open source code is copyrighted by the Alliance for Sustainable Ene
 
 If you find SolarPILOT useful, we ask that you appropriately cite it in documentation of your work. We provide the open-source code and executable distributions for free, but find value in being acknowledged in work that advances scientific knowledge and engineering technology. For general use of SolarPILOT, the preferred citation is:
 
+> Wagner, M.J., Wendelin, T. (2018). "SolarPILOT: A power tower solar field layout and characterization tool", _Solar Energy_, Vol. 171, pp. 185-196, ISSN 0038-092X, [https://doi.org/10.1016/j.solener.2018.06.063](https://doi.org/10.1016/j.solener.2018.06.063).
+
+The work is also presented in the following publication:
+
 > Wagner, M.J., Braun, R.J., Newman, A.M. (2017). "Optimization of stored energy dispatch for concentrating solar power systems." Doctoral Thesis. Colorado School of Mines, Golden, Colorado. Chapter II, pp. 19-45. URL: [https://dspace.library.colostate.edu/handle/11124/171000](https://dspace.library.colostate.edu/handle/11124/171000).
 
 For work that builds substantially upon or is derived from the open source project, the preferred citation is:
