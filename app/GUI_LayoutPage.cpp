@@ -356,7 +356,8 @@ void SPFrame::CreateLayoutPage(wxScrolledWindow *parent)
         *max_zone_size_az = new InputControl(parent, wxID_ANY,  _variables.sf.max_zone_size_az),
         *zone_div_tol = new InputControl(parent, wxID_ANY,  _variables.sf.zone_div_tol),
         *is_prox_filter = new InputControl(parent, wxID_ANY,  _variables.sf.is_prox_filter),
-        *prox_filter_frac = new InputControl(parent, wxID_ANY,  _variables.sf.prox_filter_frac);
+        *prox_filter_frac = new InputControl(parent, wxID_ANY,  _variables.sf.prox_filter_frac),
+        *interaction_limit = new InputControl(parent, wxID_ANY, _variables.sf.interaction_limit);
     {
     wxWindow* dsibs[] = {max_zone_size_rad, max_zone_size_az, min_zone_size_rad, min_zone_size_az, zone_div_tol};
     is_opt_zoning->setDisabledSiblings("false",    5, dsibs);
@@ -374,6 +375,7 @@ void SPFrame::CreateLayoutPage(wxScrolledWindow *parent)
     sbs_4->Add(new wxStaticLine(parent, wxID_ANY, wxDefaultPosition,wxSize(1,1), wxLI_HORIZONTAL), 0, wxEXPAND|wxLEFT|wxRIGHT, 5);
     sbs_4->Add(is_prox_filter);
     sbs_4->Add(prox_filter_frac);
+    sbs_4->Add(interaction_limit);
     //*********************************************************************
 
     //Add the group ot the first column sizer
@@ -394,7 +396,7 @@ void SPFrame::CreateLayoutPage(wxScrolledWindow *parent)
         max_scaled_rad, min_scaled_rad, is_bounds_fixed, max_fixed_rad, min_fixed_rad, is_bounds_array, sun_loc_des, is_exclusions_relative,
         sun_el_des_user, sun_az_des_user, row_spacing_x, row_spacing_y, xy_field_shape, xy_rect_aspect, is_prox_filter, 
         prox_filter_frac, is_opt_zoning, max_zone_size_rad, max_zone_size_az, min_zone_size_rad, min_zone_size_az, 
-        zone_div_tol, trans_limit_fact, is_sliprow_skipped, slip_plane_blocking, tower_offset_x, tower_offset_y, NULL};
+        zone_div_tol, trans_limit_fact, is_sliprow_skipped, slip_plane_blocking, tower_offset_x, tower_offset_y, interaction_limit, NULL};
     OutputControl *outputs[] = {radmax_m, radmin_m , NULL};
 
     i=0;

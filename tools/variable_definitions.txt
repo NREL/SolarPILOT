@@ -288,6 +288,7 @@ solarfield	trans_limit_fact	IN	DOUBLE	1	none	TRUE				Packing transition limit fa
 solarfield	xy_field_shape	IN	STRING	0		TRUE	combo	Hexagon=0;Rectangle=1;Undefined=2		Heliostat field layout shape	Enforced shape of the heliostat field
 solarfield	xy_rect_aspect	IN	DOUBLE	1	none	TRUE				Layout aspect ratio (Y/X)	Aspect ratio of the rectangular field layout (height in Y / width in X)
 solarfield	zone_div_tol	IN	DOUBLE	0.001	none	TRUE				Optical layout zone mesh tolerance	Allowable variation in optical intercept factor within a layout zone
+solarfield	interaction_limit	IN	DOUBLE	100	helio-ht	TRUE				Heliostat shading interaction limit	Multiply the heliostat height to determine the radius of possible interaction with other heliostats
 solarfield	rec_area	OUT	DOUBLE	0	m2	FALSE				Total receiver surface area	Surface area from all receivers included in the solar field
 solarfield	sf_area	OUT	DOUBLE	0	m2	FALSE				Total solar field area	The sum of all heliostat reflector area in the current layout
 solarfield	sim_step_data	OUT	WEATHERDATA		none	FALSE				Data used for design simulations	Data used for design simulations
