@@ -67,7 +67,7 @@ fluxsim	flux_day	IN	INT	20		TRUE				Day of the month	Day of the month for the fl
 fluxsim	flux_dist	IN	STRING	0		TRUE	combo	Triangular=0;Normal=1;Uniform=2		Aim point distribution sampling	Sampling basis for random positioning. Non-uniform distributions are weighted away from the center.
 fluxsim	flux_dni	IN	DOUBLE	950	W/m2	TRUE				Direct Normal Irradiation	Direct Normal Irradiation at the specified simulation point
 fluxsim	flux_hour	IN	DOUBLE	12	hr	TRUE				Hour of the day	Hour of the day for the flux simulation
-fluxsim	flux_model	IN	STRING	0	none	FALSE	combo	Hermite (analytical)=0;SolTrace=1		Flux simulation model	Desired flux simulation tool. Not all geometries can be simulated using the Hermite approximation.
+fluxsim	flux_model	IN	STRING	0	none	TRUE	combo	Hermite (analytical)=0;SolTrace=1		Flux simulation model	Desired flux simulation tool. Not all geometries can be simulated using the Hermite approximation.
 fluxsim	flux_month	IN	INT	3		TRUE				Month of the year	Month of the year for the flux simulation
 fluxsim	flux_solar_az_in	IN	DOUBLE	180		TRUE				Solar azimuth angle (0=N)	Solar azimuth angle to use for the flux simulation
 fluxsim	flux_solar_el_in	IN	DOUBLE	85		TRUE				Solar elevation angle	Solar elevation angle to use for the flux simulation
