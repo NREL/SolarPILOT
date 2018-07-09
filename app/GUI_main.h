@@ -165,6 +165,7 @@ class AutoPilot_MT;
 class LayoutSimThread;
 class STSimThread;
 class STSimThread;
+class SolarPILOTScriptWindow;
 
 struct ST_FluxObj;
 struct ST_System;
@@ -469,6 +470,8 @@ private:
     wxGrid *_results_grid;
     ST_System *_STSim;
 
+    SolarPILOTScriptWindow *_active_script_window;
+
     void CreateInputPages(wxWindow *parent, PagePanel *pagepanel);
     void SetCaseName(wxString case_name = _T("New Case"));
     void bindControls();
@@ -660,6 +663,7 @@ public:
     FieldPlot *GetFieldPlotObject();
     parametric *GetParametricDataObject();
     optimization *GetOptimizationDataObject();
+    void  SetScriptWindowPointer(SolarPILOTScriptWindow *p);
     std::string GetVersionInfo();
 
 
@@ -751,6 +755,7 @@ public:
     void LogFileVariableDump(var_map &vset);
     void LogFileVariableDump(var_map &vset, wxArrayStr &messages);
     int PopMessage(wxString message, wxString title = wxEmptyString, long style = wxOK|wxICON_INFORMATION);
+    void ScriptMessageOutput(const char *msg);
     
 };
 

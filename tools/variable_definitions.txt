@@ -67,7 +67,7 @@ fluxsim	flux_day	IN	INT	20		TRUE				Day of the month	Day of the month for the fl
 fluxsim	flux_dist	IN	STRING	0		TRUE	combo	Triangular=0;Normal=1;Uniform=2		Aim point distribution sampling	Sampling basis for random positioning. Non-uniform distributions are weighted away from the center.
 fluxsim	flux_dni	IN	DOUBLE	950	W/m2	TRUE				Direct Normal Irradiation	Direct Normal Irradiation at the specified simulation point
 fluxsim	flux_hour	IN	DOUBLE	12	hr	TRUE				Hour of the day	Hour of the day for the flux simulation
-fluxsim	flux_model	IN	STRING	0	none	FALSE	combo	Hermite (analytical)=0;SolTrace=1		Flux simulation model	Desired flux simulation tool. Not all geometries can be simulated using the Hermite approximation.
+fluxsim	flux_model	IN	STRING	0	none	TRUE	combo	Hermite (analytical)=0;SolTrace=1		Flux simulation model	Desired flux simulation tool. Not all geometries can be simulated using the Hermite approximation.
 fluxsim	flux_month	IN	INT	3		TRUE				Month of the year	Month of the year for the flux simulation
 fluxsim	flux_solar_az_in	IN	DOUBLE	180		TRUE				Solar azimuth angle (0=N)	Solar azimuth angle to use for the flux simulation
 fluxsim	flux_solar_el_in	IN	DOUBLE	85		TRUE				Solar elevation angle	Solar elevation angle to use for the flux simulation
@@ -288,6 +288,7 @@ solarfield	trans_limit_fact	IN	DOUBLE	1	none	TRUE				Packing transition limit fa
 solarfield	xy_field_shape	IN	STRING	0		TRUE	combo	Hexagon=0;Rectangle=1;Undefined=2		Heliostat field layout shape	Enforced shape of the heliostat field
 solarfield	xy_rect_aspect	IN	DOUBLE	1	none	TRUE				Layout aspect ratio (Y/X)	Aspect ratio of the rectangular field layout (height in Y / width in X)
 solarfield	zone_div_tol	IN	DOUBLE	0.001	none	TRUE				Optical layout zone mesh tolerance	Allowable variation in optical intercept factor within a layout zone
+solarfield	interaction_limit	IN	DOUBLE	100	helio-ht	TRUE				Heliostat shading interaction limit	Multiply the heliostat height to determine the radius of possible interaction with other heliostats
 solarfield	rec_area	OUT	DOUBLE	0	m2	FALSE				Total receiver surface area	Surface area from all receivers included in the solar field
 solarfield	sf_area	OUT	DOUBLE	0	m2	FALSE				Total solar field area	The sum of all heliostat reflector area in the current layout
 solarfield	sim_step_data	OUT	WEATHERDATA		none	FALSE				Data used for design simulations	Data used for design simulations

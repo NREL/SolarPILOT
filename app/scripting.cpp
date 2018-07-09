@@ -62,6 +62,11 @@
 
 using namespace std;
 
+static void EditorOutput(const char *msg)
+{
+    SPFrame::Instance().ScriptMessageOutput(msg);
+}
+
 static bool LKInfoCallback(simulation_info *siminfo, void *data)
 {
     SolarPILOTScriptWindow *frame = static_cast<SolarPILOTScriptWindow*>( data );
@@ -118,7 +123,7 @@ static void _add_receiver( lk::invoke_t &cxt )
     }
     if(dupe)
     {
-        cxt.error("Please enter a unique name for this geometry.");
+        EditorOutput("Please enter a unique name for this geometry.");
         return;
     }
 
@@ -185,7 +190,7 @@ static void _add_heliostat_template( lk::invoke_t &cxt )
     }
     if(dupe)
     {
-        cxt.error("Please enter a unique name for this heliostat template.");
+        EditorOutput("Please enter a unique name for this heliostat template.");
         return;
     }
 
@@ -360,7 +365,7 @@ static void _sp_var( lk::invoke_t &cxt )
         //make sure the specified variable exists
         if( vmap->_varptrs.find( sname ) == vmap->_varptrs.end() )
         {
-            cxt.error( "Invalid variable name: " + sname );
+            EditorOutput( ("Invalid variable name: " + sname).c_str() );
             cxt.result().assign(0.);
             return;
         }
@@ -378,7 +383,7 @@ static void _sp_var( lk::invoke_t &cxt )
                 }
                 else
                 {
-                    cxt.error("Invalid variable choice for \"" + sname + "\": \"" + arg + "\" is not a valid option.");
+                    EditorOutput( ("Invalid variable choice for \"" + sname + "\": \"" + arg + "\" is not a valid option.").c_str() );
                     cxt.result().assign(0.);
                     return;
                 }
@@ -584,7 +589,7 @@ static void _summary_results( lk::invoke_t &cxt )
 
     if( results->size() < 1 )
     {
-        cxt.error("No simulation summary results exist. Please simulate first.");
+        EditorOutput("No simulation summary results exist. Please simulate first.");
         return;
     }
 
@@ -1444,6 +1449,10 @@ static void _modify_heliostats( lk::invoke_t &cxt )
                 lobj.location.y = locvec->at(i).vec()->at(1).as_number();
                 lobj.location.z = 0.;
 
+                //update enabled/in layout statuses
+                lobj.is_enabled = helios.at(i)->IsEnabled();
+                lobj.is_in_layout = helios.at(i)->IsInLayout();
+
                 if( locvec->at(i).vec()->size() > 2 )
                     lobj.location.z = locvec->at(i).vec()->at(2).as_number();
 
@@ -1691,6 +1700,19 @@ SolarPILOTScriptWindow::SolarPILOTScriptWindow( wxWindow *parent, int id )
     SPFrame::Instance().GetSolarFieldObject()->getSimInfoObject()->setCallbackFunction(LKInfoCallback, (void*)this);
 }
 
+SolarPILOTScriptWindow::~SolarPILOTScriptWindow()
+{
+    SPFrame::Instance().SetScriptWindowPointer(0);
+}
+
+void SolarPILOTScriptWindow::ScriptOutput(const char *msg)
+{
+    wxString fmsg = msg;
+    fmsg.Append(wxT("\n"));
+
+    this->AddOutput(msg);
+}
+
 void SolarPILOTScriptWindow::OnHelp( )
 {
 }
@@ -1716,6 +1738,8 @@ SolarPILOTScriptWindowFactory::~SolarPILOTScriptWindowFactory()
 wxLKScriptWindow *SolarPILOTScriptWindowFactory::Create()
 {
     wxLKScriptWindow *sw = new SolarPILOTScriptWindow( &SPFrame::Instance(), wxID_ANY );
+    SPFrame::Instance().SetScriptWindowPointer( (SolarPILOTScriptWindow*)(sw) );
+
 #ifdef __WXMSW__
     sw->SetIcon( wxICON( appicon ) );
 #endif    

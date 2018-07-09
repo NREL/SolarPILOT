@@ -70,6 +70,8 @@ class SolarPILOTScriptWindow  : public wxLKScriptWindow
 {
 public:
     SolarPILOTScriptWindow( wxWindow *parent, int id = wxID_ANY );
+    ~SolarPILOTScriptWindow();
+    void ScriptOutput(const char *msg);
     
 protected:
     virtual void OnScriptStarted();

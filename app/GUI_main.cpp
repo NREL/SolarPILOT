@@ -357,10 +357,12 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
     //Initialize the solar field geometry objects
     _SF.Create(_variables);
     
+    //initialize pointers
     _SFopt_MT = 0;
     _SFopt_S = 0;
     _STSim = 0;
-    
+    _active_script_window = 0;
+
     //----Create the menu items------
     //recent items submenu
     recentMenu = new wxMenu;
@@ -1504,6 +1506,11 @@ optimization *SPFrame::GetOptimizationDataObject()
     return &_opt_data;
 }
 
+void SPFrame::SetScriptWindowPointer(SolarPILOTScriptWindow *p)
+{
+    _active_script_window = p;
+}
+
 std::string SPFrame::GetVersionInfo()
 {
     return _software_version;
@@ -2445,6 +2452,7 @@ bool SPFrame::SolTraceFluxSimulation(SolarField &SF, var_map &vset, Hvector &hel
     }
 
     //Clean up
+    _STSim->IntData.DeallocateArrays();
     if(_stthread != 0) delete[] _stthread;
 
     return true;
@@ -2668,6 +2676,13 @@ int SPFrame::PopMessage(wxString message, wxString title, long style)
 
 }
 
+void SPFrame::ScriptMessageOutput(const char *msg)
+{
+    if (_active_script_window != 0)
+    {
+        _active_script_window->ScriptOutput(msg);
+    }
+}
 
 static bool SAMParametricCallback(simulation_info *siminfo, void *data)
 {
