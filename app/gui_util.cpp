@@ -368,11 +368,11 @@ void grid_emulator::MapToWXGrid(wxGrid *grid)
             grid->SetCellValue(i, j, GetCellValue(i,j));
 }
 
-void grid_emulator::AddRow(int row, wxString label, wxString units, double value, int sigfigs, double min, double max, double stdev)
+void grid_emulator::AddRow(int row, wxString label, wxString units, double value, int sigfigs, double mean, double min, double max, double stdev)
 {
     //Row adding method for simple performance runs
 
-    if((GetNumberCols() < 5) || (GetNumberRows() < row+1))
+    if((GetNumberCols() < 6) || (GetNumberRows() < row+1))
         throw spexception("Sorry! Results table incorrectly formatted. Please contact solarpilot.support@nrel.gov for help.");
     
     bool is_currency = false;
@@ -381,7 +381,7 @@ void grid_emulator::AddRow(int row, wxString label, wxString units, double value
     //calculate a good precision
     if( sigfigs < 0 )
     {
-        int prec = 5-(int)log10f(value);
+        int prec = 4-(int)log10f(value);
         sigfigs = prec < 0 ? 0 : prec;
     }
 
@@ -391,9 +391,10 @@ void grid_emulator::AddRow(int row, wxString label, wxString units, double value
     SetRowLabelValue(row, label);
     SetCellValue(row, 0, units);
     SetCellValue(row, 1, is_currency ? gui_util::FormatAsCurrency(value) : to_string(value, infmt.c_str()) );
-    SetCellValue(row, 2, (min==min ? to_string(min, infmt.c_str()) : "") );
-    SetCellValue(row, 3, (max == max ? to_string(max, infmt.c_str()) : ""));
-    SetCellValue(row, 4, (stdev == stdev ? to_string(stdev, stfmt.c_str()) : ""));
+    SetCellValue(row, 2, (mean == mean ? to_string(mean, infmt.c_str()) : ""));
+    SetCellValue(row, 3, (min == min ? to_string(min, infmt.c_str()) : "") );
+    SetCellValue(row, 4, (max == max ? to_string(max, infmt.c_str()) : ""));
+    SetCellValue(row, 5, (stdev == stdev ? to_string(stdev, stfmt.c_str()) : ""));
 
 }
 
