@@ -584,6 +584,11 @@ SPFrame &SPFrame::Instance()
     return *g_mainWindow;
 }
 
+bool SPFrame::Destroyed()
+{
+    return !g_mainWindow;
+}
+
 SPFrame::~SPFrame()
 {
     g_mainWindow = 0;
