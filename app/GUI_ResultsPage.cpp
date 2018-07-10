@@ -111,7 +111,9 @@ void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &re
                 {
                     _results_grid->SetReadOnly(j,i,true);
                     if(_results_grid->GetCellValue(j,i).empty())
-                        _results_grid->SetCellBackgroundColour(j,i,wxColour(150,150,150,255));
+                        _results_grid->SetCellBackgroundColour(j,i,wxColour(100,100,100,255));
+                    else if(i > 1)
+                        _results_grid->SetCellBackgroundColour(j,i,wxColour(225,225,225,255));
                 }
             }
 

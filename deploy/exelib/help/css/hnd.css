@@ -318,6 +318,18 @@ span.rvts60
  font-family: 'Calibri';
  color: #000000;
 }
+span.rvts61
+{
+ font-size: 7pt;
+ font-weight: bold;
+ vertical-align: sub;
+}
+span.rvts62
+{
+ font-size: 11pt;
+ font-weight: bold;
+ color: #7f7f7f;
+}
 /* ========== Para Styles ========== */
 p,ul,ol /* Paragraph Style */
 {
