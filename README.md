@@ -6,7 +6,7 @@ The desktop version of SolarPILOT for Windows or Linux builds from the following
 
 * [SolTrace](https://github.com/nrel/soltrace) is a general tool for Monte-Carlo ray tracing that allows optical characterization of a wide range of possible systems. The tool is used by SolarPILOT alongside the analytical Hermite polynomial expansion model to ensure model accuracy.
 
-* [SSC](https://github.com/nrel/ssc) is a set of "compute modules" that simulate different kinds of power systems and financial structures. It can be run directly using the [SAM Software Development Kit](https://sam.nrel.gov/sdk). **If you are looking for the algorithms underlying the models, they are located in this repository.**
+* [SSC](https://github.com/nrel/ssc) is a set of "compute modules" that simulate different kinds of power systems and financial structures. It can be run directly using the [SAM Software Development Kit](https://sam.nrel.gov/sdk). **If you are looking for the algorithms underlying the models, they are located in this repository. For a list of SSC release versions that correspond with SolarPILOT GUI releases, see the release list and tags at [Mike Wagner's personal GitHub page](https://github.com/mjwagner2/ssc/releases).**
 
 * [LK](https://github.com/nrel/lk) is a scripting language that is integrated into SAM and allows users to add functionality to the program.
 
@@ -47,6 +47,7 @@ These are the general quick steps you need to follow to set up your computer for
 <tr><td>WEX</td><td>https://github.com/NREL/wex</td><td>WEXDIR</td></tr>
 <tr><td>Google Test</td><td>https://github.com/google/googletest</td><td>GTEST</td></tr>
 <tr><td>SSC</td><td>https://github.com/NREL/ssc</td><td>SSCDIR</td></tr>
+<tr><td>...or</td><td>https://github.com/mjwagner2/ssc</td><td></td></tr>
 <tr><td>SolTrace</td><td>https://github.com/NREL/SolTrace</td><td>CORETRACEDIR</td></tr>
 <tr><td>SolarPILOT</td><td>https://github.com/NREL/SolarPILOT</td><td></td></tr>
 </table>
