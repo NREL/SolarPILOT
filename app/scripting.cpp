@@ -1702,7 +1702,8 @@ SolarPILOTScriptWindow::SolarPILOTScriptWindow( wxWindow *parent, int id )
 
 SolarPILOTScriptWindow::~SolarPILOTScriptWindow()
 {
-    SPFrame::Instance().SetScriptWindowPointer(0);
+    if(! SPFrame::Destroyed() )
+        SPFrame::Instance().SetScriptWindowPointer(0);
 }
 
 void SolarPILOTScriptWindow::ScriptOutput(const char *msg)
