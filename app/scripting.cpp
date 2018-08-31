@@ -706,7 +706,7 @@ static void _detail_results( lk::invoke_t &cxt )
                                             *SF->getVarMap()->flux.flux_dni.val/1000. //kW
                         );
             p.hash_item( "efficiency", H->getEfficiencyTotal() );
-            p.hash_item( "cosine", H->getEfficiencyIntercept() );
+            p.hash_item( "cosine", H->getEfficiencyCosine() );
             p.hash_item( "intercept", H->getEfficiencyIntercept() );
             p.hash_item( "reflectance", H->getTotalReflectivity() );
             p.hash_item( "attenuation", H->getEfficiencyAtten() );
