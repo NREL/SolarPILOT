@@ -30,3 +30,4 @@ app/Custom/
 app/Custom/*
 deploy/linux/solarpilot
 deploy/x64/SolarPILOT.exe*
+deploy/x64/*.csv
