@@ -1,5 +1,7 @@
 # SolarPILOT - Solar Power tower Integrated Layout and Optimization Tool
 
+[![**develop** Build Status](https://travis-ci.org/NREL/SolarPILOT.svg?branch=develop)](https://travis-ci.org/NREL/SolarPILOT)
+
 The SolarPILOT Open Source Project repository contains the source code, tools, and instructions to build a desktop version of the National Renewable Energy Laboratory's SolarPILOT. SolarPILOT is a design, characterization, and optimization tool for concentrating solar power (CSP) tower plants. It is available through this repository as a standalone application with full functionality, and it is also included in several CSP tower models within NREL's System Advisor Model (SAM) in limited form. For more details about SolarPILOT's capabilities, see the SolarPILOT website at [https://www.nrel.gov/csp/solarpilot.html](https://www.nrel.gov/csp/solarpilot.html). For details on integration with SAM, see the SAM website at [sam.nrel.gov](https://sam.nrel.gov).
 
 The desktop version of SolarPILOT for Windows or Linux builds from the following open source projects:
