@@ -4,7 +4,7 @@ language: c++
 
 os:
   - linux
-  - osx
+#  - osx
 
 compiler:
   - gcc
@@ -17,8 +17,8 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then tar jxf wxWidgets-3.1.1.tar.bz2; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd wxWidgets-3.1.1; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then (./configure --prefix=$HOME/wx-3.1.1 --enable-shared=no --enable-stl=yes --enable-debug=no --with-gtk=2 --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --without-libjbig --without-liblzma --without-gtkprint --with-libnotify=no --with-libmspack=no --with-gnomevfs=no --with-opengl=yes --with-sdl=no --with-cxx=11); fi
-  #  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then (./configure --prefix=$HOME/wx-3.1.1 --enable-stl=yes --enable-debug=no --enable-shared=no --with-cocoa --enable-macosx_arch=x86_64 --enable-unicode --enable-webview --with-cxx=11 --with-macosx-version-min=10.9  --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-qtkit --disable-mediactrl); fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then (./configure --prefix=$HOME/wx-3.1.1 --enable-stl=yes --enable-debug=no --enable-shared=no --enable-macosx_arch=x86_64 --with-cxx=11 --with-macosx-version-min=10.9 --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --without-libjbig --without-liblzma --without-gtkprint --with-libnotify=no --with-libmspack=no --with-gnomevfs=no --with-opengl=yes --with-sdl=no --with-cxx=11 --disable-qtkit --disable-mediactrl); fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then (./configure --prefix=$HOME/wx-3.1.1 --enable-stl=yes --enable-debug=no --enable-shared=no --with-cocoa --enable-macosx_arch=x86_64 --enable-unicode --enable-webview --with-cxx=11 --with-macosx-version-min=10.9  --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-qtkit --disable-mediactrl); fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then (./configure --prefix=$HOME/wx-3.1.1 --enable-stl=yes --enable-debug=no --enable-shared=no --enable-macosx_arch=x86_64 --with-cxx=11 --with-macosx-version-min=10.9 --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --without-libjbig --without-liblzma --without-gtkprint --with-libnotify=no --with-libmspack=no --with-gnomevfs=no --with-opengl=yes --with-sdl=no --with-cxx=11 --disable-qtkit --disable-mediactrl); fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make -j4 all install; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ln -s $HOME/wx-3.1.1/bin/wx-config $HOME/wx-3.1.1/bin/wx-config-3; fi
   - user=$(echo $TRAVIS_REPO_SLUG | sed 's,/.*$,,')
@@ -26,7 +26,7 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export GTEST=/home/travis/build/$user/googletest/googletest; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export LKDIR=/home/travis/build/$user/lk; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export WEXDIR=/home/travis/build/$user/wex; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export SSCDIR=/home/travis/build/$user/ssc; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export SSCDIR=/home/travis/build/$user/ssc; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export SOLTRACEDIR=/home/travis/build/$user/soltrace; fi  
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CORETRACEDIR=$SOLTRACEDIR/coretrace; fi  
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export SOLARPILOTDIR=/home/travis/build/$user/solarpilot; fi  

@@ -2,7 +2,7 @@ SSCDIR = ../../ssc
 
 VPATH = $(SSCDIR)/solarpilot
 
-STDIR = ../../SolTrace/coretrace
+STDIR = ../../soltrace/coretrace
 STLIB = $(STDIR)/build_linux/coretrace.a
 SHARELIB = $(SSCDIR)/build_linux/shared.a
 NLOPTDIR = $(SSCDIR)/nlopt
