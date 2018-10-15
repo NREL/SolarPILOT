@@ -1547,6 +1547,8 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
     double h_avg_power = 0.;
     double h_tot_power = 0.;
     double h_tot_area = 0.;
+    double h_avg_annual = 0.;
+    double h_pow_annual = 0.;
 
     wxArrayStr ids;
 
@@ -1565,6 +1567,8 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
         h_avg_power += hi->getPowerToReceiver();
         h_tot_power += hi->getPowerToReceiver();
         h_tot_area += hi->getArea();
+        h_avg_annual += hi->getAnnualEfficiency();
+        h_pow_annual += hi->getAnnualPower();
 
         ids.push_back( my_to_string(hi->getId()) );
     }
@@ -1579,6 +1583,8 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
         h_avg_spillage /= (double)nh;
         h_avg_cloud /= (double)nh;
         h_avg_power /= (double)nh;
+        h_avg_annual /= (double)nh;
+        h_pow_annual /= (double)nh;
     }
 
 	std::stringstream annot;
@@ -1592,6 +1598,8 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
 	annot << "Average power" << "," << wxString::Format("%.2f kW", h_avg_power / 1000.) << ";";
 	annot << "Total power" << "," << wxString::Format("%.2f kW", h_tot_power / 1000.) << ";";
 	annot << "Total area" << "," << wxString::Format("%.2f m2", h_tot_area) << ";";
+    annot << "Annual efficiency" << "," << wxString::Format("%.1f %%", h_avg_annual*100.) << ";";
+    annot << "Annual power" << "," << wxString::Format("%2.f MW", h_pow_annual / 1e6) << ";";
 	annot << "ID" << ",";
 
 	for (size_t i = 0; i < nh; i++)
