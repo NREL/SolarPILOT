@@ -134,6 +134,8 @@ FieldPlot::FieldPlot(wxPanel *parent, SolarField &SF, const int plot_option,
         "Reflectivity",
         "Delivered power",
         "Ranking metric",
+        "Annual efficiency",
+        "Annual power",
         "Receiver map",
         "Optical mesh",
         "Cloudiness efficiency",
@@ -797,6 +799,14 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                 else if(_option == FIELD_PLOT::RANK)
                 {  //Color by layout ranking metric
                     plot_vals[i] = H->getRankingMetricValue();
+                }
+                else if (_option == FIELD_PLOT::EFF_ANNUAL)
+                {  //Color by annual average efficiency
+                    plot_vals[i] = H->getAnnualEfficiency();
+                }
+                else if (_option == FIELD_PLOT::POWER_ANNUAL)
+                {  //Color by annual power output
+                    plot_vals[i] = H->getAnnualPower();
                 }
                 else if(_option == FIELD_PLOT::RECEIVER)
                 {  //color by mapped receiver

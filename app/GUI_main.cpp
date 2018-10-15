@@ -1820,6 +1820,8 @@ void SPFrame::UpdateFieldPlotSelections()
         _plot_select->Append( choices.at(  FIELD_PLOT::EFF_REFLECT ) );
         _plot_select->Append( choices.at(  FIELD_PLOT::POWER ) );
         _plot_select->Append( choices.at(  FIELD_PLOT::RANK ) );
+        _plot_select->Append(choices.at(   FIELD_PLOT::EFF_ANNUAL ) );
+        _plot_select->Append(choices.at(   FIELD_PLOT::POWER_ANNUAL ) );
     }
 
     if( _SF.getVarMap()->recs.size() > 1 )
@@ -3249,6 +3251,8 @@ void SPFrame::ParametricSimulate( parametric &P )
             12 | Heliostat delivered power
             13 | Heliostat ranking metric
             14 | Heliostat shadow coordinates
+            15 | Annual power delivery
+            16 | Annual total efficiency
         
             */
             ld->getSelections(options);
@@ -3797,7 +3801,13 @@ void SPFrame::CreateResultsTable(sim_result &result, grid_emulator &table)
                     100.*result.eff_total_sf.min,
                     100.*result.eff_total_sf.max,
                     100.*result.eff_total_sf.stdev);
-            table.AddRow(id++, "Incident flux", "kW/m2", 
+            table.AddRow(id++, "Annualized heliostat efficiency", "%",
+                    100.*result.eff_annual.wtmean, 2,
+                    nan,
+                    100.*result.eff_annual.min,
+                    100.*result.eff_annual.max,
+                    100.*result.eff_annual.stdev);
+            table.AddRow(id++, "Incident flux", "kW/m2",
                     result.flux_density.ave, -1,
                     nan, 
                     result.flux_density.min, 

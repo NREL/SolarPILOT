@@ -92,6 +92,8 @@ enum FIELD_PLOT
     EFF_REFLECT,
     POWER,
     RANK,
+    EFF_ANNUAL,
+    POWER_ANNUAL,
     RECEIVER,
     MESH,
     EFF_CLOUD

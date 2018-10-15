@@ -276,8 +276,10 @@ void SPFrame::LayoutSimulationExport(SolarField &SF, wxString &fname, vector<boo
 	fmt.push_back( options.at(ind++) ? wxT("%.4f,") : wxEmptyString );		//10 | Heliostat shadowing efficiency
 	fmt.push_back( options.at(ind++) ? wxT("%.4f,") : wxEmptyString );		//11 | Heliostat intercept efficiency
 	fmt.push_back( options.at(ind++) ? wxT("%.2f,") : wxEmptyString );		//12 | Heliostat delivered power
-	fmt.push_back( options.at(ind++) ? wxT("%f,") : wxEmptyString );		//13 | Heliostat ranking metric
+	fmt.push_back( options.at(ind++) ? wxT("%f,")   : wxEmptyString );		//13 | Heliostat ranking metric
 	fmt.push_back( options.at(ind++) ? wxT("%.2f,%.2f,%.2f,") : wxEmptyString );	//14  | Heliostat shadow coordinates
+    fmt.push_back( options.at(ind++) ? wxT("%f,")   : wxEmptyString);		// | Heliostat ranking metric
+    fmt.push_back( options.at(ind++) ? wxT("%.4f,") : wxEmptyString);		// | Heliostat shadowing efficiency
 
 	for(unsigned int i=0; i<fmt.size(); i++)
 	{
@@ -422,7 +424,21 @@ void SPFrame::LayoutSimulationExport(SolarField &SF, wxString &fname, vector<boo
 		    s.Printf(fmt.at(15), stats.at(helio_perf_data::PERF_VALUES::ETA_CLOUD));
 			line.Append(s);
 		}
-			
+
+        //annual metrics
+        if (options.at(16))
+        {
+            s.Printf(fmt.at(16), stats.at(helio_perf_data::PERF_VALUES::ANNUAL_POWER));
+            line.Append(s);
+        }
+
+        if (options.at(17))
+        {
+            s.Printf(fmt.at(17), stats.at(helio_perf_data::PERF_VALUES::ANNUAL_EFFICIENCY));
+            line.Append(s);
+        }
+
+
 		fobj.AddLine(line);
 
 	}
@@ -471,6 +487,9 @@ void SPFrame::OnLayoutSimulationExport( wxCommandEvent &WXUNUSED(event))
 		13 | Heliostat ranking metric
 		14 | Heliostat shadow coordinates
 		15 | Cloudiness efficiency
+        16 | Annual power delivery
+        17 | Annual total efficiency
+
 		*/
 
 		ld->getSelections(options);
