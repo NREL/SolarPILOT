@@ -422,7 +422,11 @@ void SPFrame::OnDoLayout( wxCommandEvent &event)
             _results.resize(1);
             double azzen[2];
             _SF.CalcDesignPtSunPosition(_variables.sf.sun_loc_des.mapval(), azzen[0], azzen[1]);
-            _results.at(0).process_analytical_simulation(_SF, 0, azzen);
+
+            sim_params P;
+            P.dni = _variables.sf.dni_des.val;
+
+            _results.at(0).process_analytical_simulation(_SF, P, 0, azzen);
 
             //Load the results in the grid
             UpdateLayoutGrid();
