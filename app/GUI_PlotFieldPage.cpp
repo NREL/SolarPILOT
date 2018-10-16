@@ -201,6 +201,27 @@ void SPFrame::CreateFieldPlotPage(wxScrolledWindow *parent, wxArrayStr &choices,
 
 void SPFrame::LayoutSimulationExport(SolarField &SF, wxString &fname, vector<bool> &options, wxString &header, wxString &delim, bool quiet)
 {
+    /*
+    0  | Heliostat ID Number
+	1  | Heliostat location (x,y,z)
+	2  | Heliostat aim point on the receiver (x,y,z)
+	3  | Tracking vector (i,j,k)
+	4  | Heliostat reflectivity
+	5  | Heliostat soiling factor
+	6  | Total heliostat efficiency
+	7  | Heliostat cosine efficiency
+	8  | Heliostat attenuation efficiency
+	9  | Heliostat blocking efficiency
+	10 | Heliostat shadowing efficiency
+	11 | Heliostat intercept efficiency
+	12 | Heliostat delivered power
+	13 | Heliostat ranking metric
+	14 | Heliostat shadow coordinates
+	15 | Cloudiness efficiency
+    16 | Annual energy delivery
+    17 | Annual total efficiency
+    */
+
     wxTextFile fobj(fname);
 
 	if(! (fobj.Exists() ? fobj.Open() : fobj.Create() ) )
@@ -230,23 +251,37 @@ void SPFrame::LayoutSimulationExport(SolarField &SF, wxString &fname, vector<boo
 
 	wxString hdat;	//header line listing data entries
 	int ind=0;
-	hdat.Append( options.at(ind++) ? wxT("Heliostat ID,") : wxEmptyString );		//0  | Heliostat ID Number
-	hdat.Append( options.at(ind++) ? wxT("Pos-x,Pos-y,Pos-z,") : wxEmptyString );		//1  | Heliostat location (x,y,z)
-	hdat.Append( options.at(ind++) ? wxT("Aim-x,Aim-y,Aim-z,") : wxEmptyString );		//2  | Heliostat aim point on the receiver (x,y,z)
-	hdat.Append( options.at(ind++) ? wxT("Track-x,Track-y,Track-z,") : wxEmptyString );		//3  | Tracking vector (i,j,k)
-	hdat.Append( options.at(ind++) ? wxT("Reflectivity,") : wxEmptyString );		//4  | Heliostat reflectivity
-	hdat.Append( options.at(ind++) ? wxT("Soiling,") : wxEmptyString );		//5  | Heliostat soiling factor
-	hdat.Append( options.at(ind++) ? wxT("Total eff,") : wxEmptyString );		//6  | Total heliostat efficiency
-	hdat.Append( options.at(ind++) ? wxT("Cosine eff,") : wxEmptyString );		//7  | Heliostat cosine efficiency
-	hdat.Append( options.at(ind++) ? wxT("Attenuation,") : wxEmptyString );		//8  | Heliostat attenuation efficiency
-	hdat.Append( options.at(ind++) ? wxT("Blocking,") : wxEmptyString );		//9 | Heliostat blocking efficiency
-	hdat.Append( options.at(ind++) ? wxT("Shading,") : wxEmptyString );		//10 | Heliostat shadowing efficiency
-	hdat.Append( options.at(ind++) ? wxT("Intercept eff.,") : wxEmptyString );		//11 | Heliostat intercept efficiency
-	hdat.Append( options.at(ind++) ? wxT("Power [kW],") : wxEmptyString );		//12 | Heliostat delivered power
-	hdat.Append( options.at(ind++) ? wxT("Ranking metric,") : wxEmptyString );		//13 | Heliostat ranking metric
-	hdat.Append( options.at(ind++) ? wxT("Shadow coords-") : wxEmptyString );		//14  | Heliostat shadow coordinates
-
-	if(options.at(14))
+    //0 | Heliostat ID Number
+	hdat.Append( options.at(ind++) ? wxT("Heliostat ID,") : wxEmptyString );		
+    //1 | Heliostat location(x, y, z)
+	hdat.Append( options.at(ind++) ? wxT("Pos-x,Pos-y,Pos-z,") : wxEmptyString );		
+    //2 | Heliostat aim point on the receiver(x, y, z)
+	hdat.Append( options.at(ind++) ? wxT("Aim-x,Aim-y,Aim-z,") : wxEmptyString );
+    //3 | Tracking vector(i, j, k)
+	hdat.Append( options.at(ind++) ? wxT("Track-x,Track-y,Track-z,") : wxEmptyString );
+    //4 | Heliostat reflectivity
+	hdat.Append( options.at(ind++) ? wxT("Reflectivity,") : wxEmptyString );
+    //5 | Heliostat soiling factor
+	hdat.Append( options.at(ind++) ? wxT("Soiling,") : wxEmptyString );
+    //6 | Total heliostat efficiency
+	hdat.Append( options.at(ind++) ? wxT("Total eff,") : wxEmptyString );
+    //7 | Heliostat cosine efficiency
+	hdat.Append( options.at(ind++) ? wxT("Cosine eff,") : wxEmptyString );
+    //8 | Heliostat attenuation efficiency
+	hdat.Append( options.at(ind++) ? wxT("Attenuation,") : wxEmptyString );
+    //9 | Heliostat blocking efficiency
+	hdat.Append( options.at(ind++) ? wxT("Blocking,") : wxEmptyString );
+    //10 | Heliostat shadowing efficiency
+	hdat.Append( options.at(ind++) ? wxT("Shading,") : wxEmptyString );
+    //11 | Heliostat intercept efficiency
+	hdat.Append( options.at(ind++) ? wxT("Intercept eff.,") : wxEmptyString );
+    //12 | Heliostat delivered power
+	hdat.Append( options.at(ind++) ? wxT("Power [kW],") : wxEmptyString );
+    //13 | Heliostat ranking metric
+	hdat.Append( options.at(ind++) ? wxT("Ranking metric,") : wxEmptyString );
+    //14 | Heliostat shadow coordinates
+	hdat.Append( options.at(ind) ? wxT("Shadow coords-") : wxEmptyString );
+	if(options.at(ind++))
 	{
 	    for(unsigned int i=0; i<SF.getHeliostats()->at(0)->getCornerCoords()->size(); i++)
 	    {
@@ -255,192 +290,89 @@ void SPFrame::LayoutSimulationExport(SolarField &SF, wxString &fname, vector<boo
 			hdat.Append(s);
 		}
 	}
-	hdat.Append( options.at(ind++) ? wxT("Cloudiness eff,") : wxEmptyString ); //15 | heliostat cloudiness loss
+    //15 | Cloudiness efficiency
+	hdat.Append( options.at(ind++) ? wxT("Cloudiness eff,") : wxEmptyString );
+    //16 | Annual energy delivery
+    hdat.Append(options.at(ind++) ? wxT("Annual energy,") : wxEmptyString);
+    //17 | Annual total efficiency
+    hdat.Append(options.at(ind++) ? wxT("Annual efficiency,") : wxEmptyString);
 
-	hdat.Replace(wxT(","), delim, true);
+    hdat.Replace(wxT(","), delim, true);
 	fobj.AddLine(hdat);
 
+    std::vector< wxString > fmt = 
+    {
+        "%.0f,",        //0 | Heliostat ID Number
+        "%.2f,",        //1 | Heliostat location(x, y, z)
+        "%.2f,",        //2 | Heliostat aim point on the receiver(x, y, z)
+        "%.3f,",        //3 | Tracking vector(i, j, k)
+        "%.4f,",        //4 | Heliostat reflectivity
+        "%.4f,",        //5 | Heliostat soiling factor
+        "%.4f,",        //6 | Total heliostat efficiency
+        "%.4f,",        //7 | Heliostat cosine efficiency
+        "%.4f,",        //8 | Heliostat attenuation efficiency
+        "%.4f,",        //9 | Heliostat blocking efficiency
+        "%.4f,",        //10 | Heliostat shadowing efficiency
+        "%.4f,",        //11 | Heliostat intercept efficiency
+        "%.2f,",        //12 | Heliostat delivered power
+        "%f,",          //13 | Heliostat ranking metric
+        "%.2f,",        //14 | Heliostat shadow coordinates
+        "%.4f,",        //15 | Cloudiness efficiency
+        "%.1f,",        //16 | Annual energy delivery
+        "%.4f,",        //17 | Annual total efficiency
+    };
+
 	//Create the format strings
-	ind = 0;
-	vector<wxString> fmt;
-	fmt.push_back( options.at(ind++) ? wxT("%d,") : wxEmptyString );	//0  | Heliostat ID Number
-	fmt.push_back( options.at(ind++) ? wxT("%.2f,%.2f,%.2f,") : wxEmptyString );	//1  | Heliostat location (x,y,z)
-	fmt.push_back( options.at(ind++) ? wxT("%.2f,%.2f,%.2f,") : wxEmptyString );	//2  | Heliostat aim point on the receiver (x,y,z)
-	fmt.push_back( options.at(ind++) ? wxT("%.3f,%.3f,%.3f,") : wxEmptyString );	//3  | Tracking vector (i,j,k)
-	fmt.push_back( options.at(ind++) ? wxT("%.4f,") : wxEmptyString );		//4  | Heliostat reflectivity
-	fmt.push_back( options.at(ind++) ? wxT("%.4f,") : wxEmptyString );		//5  | Heliostat soiling factor
-	fmt.push_back( options.at(ind++) ? wxT("%.4f,") : wxEmptyString );		//6  | Total heliostat efficiency
-	fmt.push_back( options.at(ind++) ? wxT("%.4f,") : wxEmptyString );		//7  | Heliostat cosine efficiency
-	fmt.push_back( options.at(ind++) ? wxT("%.4f,") : wxEmptyString );		//8  | Heliostat attenuation efficiency
-	fmt.push_back( options.at(ind++) ? wxT("%.4f,") : wxEmptyString );		//9 | Heliostat blocking efficiency
-	fmt.push_back( options.at(ind++) ? wxT("%.4f,") : wxEmptyString );		//10 | Heliostat shadowing efficiency
-	fmt.push_back( options.at(ind++) ? wxT("%.4f,") : wxEmptyString );		//11 | Heliostat intercept efficiency
-	fmt.push_back( options.at(ind++) ? wxT("%.2f,") : wxEmptyString );		//12 | Heliostat delivered power
-	fmt.push_back( options.at(ind++) ? wxT("%f,")   : wxEmptyString );		//13 | Heliostat ranking metric
-	fmt.push_back( options.at(ind++) ? wxT("%.2f,%.2f,%.2f,") : wxEmptyString );	//14  | Heliostat shadow coordinates
-    fmt.push_back( options.at(ind++) ? wxT("%f,")   : wxEmptyString);		// | Heliostat ranking metric
-    fmt.push_back( options.at(ind++) ? wxT("%.4f,") : wxEmptyString);		// | Heliostat shadowing efficiency
-
 	for(unsigned int i=0; i<fmt.size(); i++)
-	{
 	    fmt[i].Replace(wxT(","), delim, true);
-	}
-	fmt.push_back( options.at(ind++) ? wxT("%.4f,") : wxEmptyString );	//15 | Cloudiness
 		
-	wxString line;
 	//Loop through each heliostat and create the input
-		
-	int npos = SF.getHeliostats()->size();
-	Heliostat *H; 
-	sp_point *loc, *aim;
-	Vect *track;
-	vector<double> stats;
-	vector<sp_point>* corners;
-
-
-	for(int i=0; i<npos; i++)
+	for(int i=0; i<SF.getHeliostats()->size(); i++)
 	{
-	    H = SF.getHeliostats()->at(i);
-		corners = H->getCornerCoords();
-		loc = H->getLocation();
-		aim = H->getAimPoint();
-		track = H->getTrackVector();
+	    Heliostat *H = SF.getHeliostats()->at(i);
+		std::vector<sp_point> *corners = H->getCornerCoords();
+		sp_point* loc = H->getLocation();
+        sp_point* aim = H->getAimPoint();
+		Vect* track = H->getTrackVector();
+        std::vector<double> stats;
 		H->getSummaryResults( stats );
-			
-		line.Clear();
-		wxString s;
-		//0  | Heliostat ID Number
 
-		if( options.at(0) )
-		{
-		    s.Printf(fmt.at(0), H->getId());
-			line.Append(s);
-		}
-		//1  | Heliostat location (x,y,z)
-
-		if( options.at(1) )
-		{
-		    s.Printf(fmt.at(1), loc->x, loc->y, loc->z);
-			line.Append(s);
-		}
-		//2  | Heliostat aim point on the receiver (x,y,z)
-
-		if( options.at(2) )
-		{
-		    s.Printf(fmt.at(2), aim->x, aim->y, aim->z);
-			line.Append(s);
-		}
-		//3  | Tracking vector (i,j,k)
-
-		if( options.at(3) )
-		{
-		    s.Printf(fmt.at(3), track->i, track->j, track->k);
-			line.Append(s);
-		}
-		//4  | Heliostat reflectivity
-
-		if( options.at(4) )
-		{
-		    s.Printf(fmt.at(4), stats.at(helio_perf_data::PERF_VALUES::REFLECTIVITY));
-			line.Append(s);
-		}
-		//5  | Heliostat soiling factor
-
-		if( options.at(5) )
-		{
-		    s.Printf(fmt.at(5), stats.at(helio_perf_data::PERF_VALUES::SOILING));
-			line.Append(s);
-		}
-		//6  | Total heliostat efficiency
-
-		if( options.at(6) )
-		{
-		    s.Printf(fmt.at(6), stats.at(helio_perf_data::PERF_VALUES::ETA_TOT));
-			line.Append(s);
-		}
-		//7  | Heliostat cosine efficiency
-
-		if( options.at(7) )
-		{
-		    s.Printf(fmt.at(7), stats.at(helio_perf_data::PERF_VALUES::ETA_COS));
-			line.Append(s);
-		}
-		//8  | Heliostat attenuation efficiency
-
-		if( options.at(8) )
-		{
-		    s.Printf(fmt.at(8), stats.at(helio_perf_data::PERF_VALUES::ETA_ATT));
-			line.Append(s);
-		}
-		//9 | Heliostat blocking efficiency
-
-		if( options.at(9) )
-		{
-		    s.Printf(fmt.at(9), stats.at(helio_perf_data::PERF_VALUES::ETA_BLOCK));
-			line.Append(s);
-		}
-		//10 | Heliostat shadowing efficiency
-
-		if( options.at(10) )
-		{
-		    s.Printf(fmt.at(10), stats.at(helio_perf_data::PERF_VALUES::ETA_SHADOW));
-			line.Append(s);
-		}
-		//11 | Heliostat intercept efficiency
-
-		if( options.at(11) )
-		{
-		    s.Printf(fmt.at(11), stats.at(helio_perf_data::PERF_VALUES::ETA_INT));
-			line.Append(s);
-		}
-		//12 | Heliostat delivered power
-
-		if( options.at(12) )
-		{
-		    s.Printf(fmt.at(12), stats.at(helio_perf_data::PERF_VALUES::POWER_TO_REC));
-			line.Append(s);
-		}
-		//13 | Heliostat ranking metric
-
-		if( options.at(13) )
-		{
-		    s.Printf(fmt.at(13), stats.at(helio_perf_data::PERF_VALUES::RANK_METRIC));
-			line.Append(s);
-		}
-		//14  | Heliostat shadow coordinates
-
-		if( options.at(14) )
-		{
-		    for(unsigned int j=0; j<corners->size(); j++)
-		    {
-		        s.Printf(fmt.at(14), corners->at(j).x, corners->at(j).y, corners->at(j).z);
-				line.Append(s);
-			}
-		}
-		//15  | Cloudiness
-
-		if( options.at(15) )
-		{
-		    s.Printf(fmt.at(15), stats.at(helio_perf_data::PERF_VALUES::ETA_CLOUD));
-			line.Append(s);
-		}
-
-        //annual metrics
-        if (options.at(16))
+        std::vector< std::vector<double> > all_data;
+        all_data.push_back( {(double)H->getId()} );                                       //0 | Heliostat ID Number
+        all_data.push_back( {loc->x, loc->y, loc->z} );                                    //1 | Heliostat location(x,y,z)
+        all_data.push_back( {aim->x, aim->y, aim->z} );                                    //2 | Heliostat aim point on the receiver(x,y,z)
+        all_data.push_back( {track->i, track->j, track->k} );                              //3 | Tracking vector(i,j,k)
+        all_data.push_back( {stats.at(helio_perf_data::PERF_VALUES::REFLECTIVITY)} );      //4 | Heliostat reflectivity
+        all_data.push_back( {stats.at(helio_perf_data::PERF_VALUES::SOILING)} );           //5 | Heliostat soiling factor
+        all_data.push_back( {stats.at(helio_perf_data::PERF_VALUES::ETA_TOT)} );           //6 | Total heliostat efficiency
+        all_data.push_back( {stats.at(helio_perf_data::PERF_VALUES::ETA_COS)} );           //7 | Heliostat cosine efficiency
+        all_data.push_back( {stats.at(helio_perf_data::PERF_VALUES::ETA_ATT)} );           //8 | Heliostat attenuation efficiency
+        all_data.push_back( {stats.at(helio_perf_data::PERF_VALUES::ETA_BLOCK)} );         //9 | Heliostat blocking efficiency
+        all_data.push_back( {stats.at(helio_perf_data::PERF_VALUES::ETA_SHADOW)} );        //10 | Heliostat shadowing efficiency
+        all_data.push_back( {stats.at(helio_perf_data::PERF_VALUES::ETA_INT)} );           //11 | Heliostat intercept efficiency
+        all_data.push_back( {stats.at(helio_perf_data::PERF_VALUES::POWER_TO_REC)} );      //12 | Heliostat delivered power
+        all_data.push_back( {stats.at(helio_perf_data::PERF_VALUES::RANK_METRIC)} );       //13 | Heliostat ranking metric
+        all_data.push_back( std::vector<double>() );      //fill this in below...                             //14 | Heliostat shadow coordinates
+        for (unsigned int j = 0; j < corners->size(); j++)
         {
-            s.Printf(fmt.at(16), stats.at(helio_perf_data::PERF_VALUES::ANNUAL_POWER));
-            line.Append(s);
+            sp_point *p = &corners->at(j);
+            all_data.back().push_back(p->x);
+            all_data.back().push_back(p->y);
+            all_data.back().push_back(p->z);
         }
+        all_data.push_back({stats.at(helio_perf_data::PERF_VALUES::ETA_CLOUD)} );         //15 | Cloudiness efficiency
+        all_data.push_back({stats.at(helio_perf_data::PERF_VALUES::ANNUAL_POWER)} );      //16 | Annual energy delivery
+        all_data.push_back({stats.at(helio_perf_data::PERF_VALUES::ANNUAL_EFFICIENCY)} ); //17 | Annual total efficiency
+        
+                                                                                            //heliotat shadow coords
 
-        if (options.at(17))
-        {
-            s.Printf(fmt.at(17), stats.at(helio_perf_data::PERF_VALUES::ANNUAL_EFFICIENCY));
-            line.Append(s);
-        }
-
+        wxString line;
+        for (int j = 0; j < (int)all_data.size(); j++)
+            if (options.at(j))
+                for (int k = 0; k < (int)all_data.at(j).size(); k++)
+                    line.Append(wxString::Format(fmt.at(j), all_data.at(j).at(k)) );
 
 		fobj.AddLine(line);
-
 	}
 		
 	fobj.Write();
@@ -487,7 +419,7 @@ void SPFrame::OnLayoutSimulationExport( wxCommandEvent &WXUNUSED(event))
 		13 | Heliostat ranking metric
 		14 | Heliostat shadow coordinates
 		15 | Cloudiness efficiency
-        16 | Annual power delivery
+        16 | Annual energy delivery
         17 | Annual total efficiency
 
 		*/

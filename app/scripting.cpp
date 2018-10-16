@@ -705,6 +705,8 @@ static void _detail_results( lk::invoke_t &cxt )
                                             *H->getEfficiencyCloudiness() 
                                             *SF->getVarMap()->flux.flux_dni.val/1000. //kW
                         );
+            p.hash_item( "energy", H->getEnergyValue() ); //kWh -- energy delivered over the simulation time period
+            p.hash_item( "efficiency_annual", H->getAnnualEfficiency() );
             p.hash_item( "efficiency", H->getEfficiencyTotal() );
             p.hash_item( "cosine", H->getEfficiencyCosine() );
             p.hash_item( "intercept", H->getEfficiencyIntercept() );

@@ -1821,7 +1821,7 @@ void SPFrame::UpdateFieldPlotSelections()
         _plot_select->Append( choices.at(  FIELD_PLOT::POWER ) );
         _plot_select->Append( choices.at(  FIELD_PLOT::RANK ) );
         _plot_select->Append(choices.at(   FIELD_PLOT::EFF_ANNUAL ) );
-        _plot_select->Append(choices.at(   FIELD_PLOT::POWER_ANNUAL ) );
+        _plot_select->Append(choices.at(   FIELD_PLOT::ENERGY ) );
     }
 
     if( _SF.getVarMap()->recs.size() > 1 )
