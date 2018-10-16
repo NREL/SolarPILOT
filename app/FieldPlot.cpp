@@ -134,6 +134,8 @@ FieldPlot::FieldPlot(wxPanel *parent, SolarField &SF, const int plot_option,
         "Reflectivity",
         "Delivered power",
         "Ranking metric",
+        "Annual efficiency",
+        "Annual energy",
         "Receiver map",
         "Optical mesh",
         "Cloudiness efficiency",
@@ -798,6 +800,14 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                 {  //Color by layout ranking metric
                     plot_vals[i] = H->getRankingMetricValue();
                 }
+                else if (_option == FIELD_PLOT::EFF_ANNUAL)
+                {  //Color by annual average efficiency
+                    plot_vals[i] = H->getAnnualEfficiency();
+                }
+                else if (_option == FIELD_PLOT::ENERGY)
+                {  //Color by annual power output
+                    plot_vals[i] = H->getAnnualEnergy();
+                }
                 else if(_option == FIELD_PLOT::RECEIVER)
                 {  //color by mapped receiver
                     int r=0;
@@ -827,20 +837,41 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         string maxlab, avelab, minlab;    //Create the gradient bar labels
         wxString labfmt;
         double vmult;
-        vmult = (_option==FIELD_PLOT::POWER || _option == FIELD_PLOT::RANK || _option==FIELD_PLOT::RECEIVER) ? 1. : 100.;
         string vunits;
-        if(_option==FIELD_PLOT::POWER)
+
+        switch (_option)
         {
-            vunits = "[kWt]";
-        }
-        else if(_option == FIELD_PLOT::RECEIVER || _option == FIELD_PLOT::RANK)
-        {
-            vunits = "";
-        }
-        else
-        {
+        case FIELD_PLOT::EFF_TOT:
+        case FIELD_PLOT::EFF_COS:
+        case FIELD_PLOT::EFF_ATT:
+        case FIELD_PLOT::EFF_BLOCK:
+        case FIELD_PLOT::EFF_SHAD:
+        case FIELD_PLOT::EFF_INT:
+        case FIELD_PLOT::EFF_REFLECT:
+        case FIELD_PLOT::EFF_CLOUD:
+        case FIELD_PLOT::EFF_ANNUAL:
+            vmult = 100.;
             vunits = "%";
+            break;
+        case FIELD_PLOT::POWER:
+            vmult = 1.e-3;
+            vunits = "kWt";
+            break;
+        case FIELD_PLOT::ENERGY:
+            vmult = 1.e-6;
+            vunits = "MWht";
+            break;
+        case FIELD_PLOT::RANK:
+        case FIELD_PLOT::RECEIVER:
+        case FIELD_PLOT::LAND:
+        case FIELD_PLOT::LAYOUT:
+        case FIELD_PLOT::MESH:
+        default:
+            vmult = 1.;
+            vunits = "";
+            break;
         }
+
 
         labfmt.Printf("%s.%df", "%", gui_util::CalcBestSigFigs(valmax*vmult));
         maxlab = to_string(valmax*vmult, labfmt.c_str()) + vunits;
@@ -1537,6 +1568,8 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
     double h_avg_power = 0.;
     double h_tot_power = 0.;
     double h_tot_area = 0.;
+    double h_avg_annual = 0.;
+    double h_e_annual = 0.;
 
     wxArrayStr ids;
 
@@ -1555,6 +1588,8 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
         h_avg_power += hi->getPowerToReceiver();
         h_tot_power += hi->getPowerToReceiver();
         h_tot_area += hi->getArea();
+        h_avg_annual += hi->getAnnualEfficiency();
+        h_e_annual += hi->getAnnualEnergy();
 
         ids.push_back( my_to_string(hi->getId()) );
     }
@@ -1569,6 +1604,8 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
         h_avg_spillage /= (double)nh;
         h_avg_cloud /= (double)nh;
         h_avg_power /= (double)nh;
+        h_avg_annual /= (double)nh;
+        h_e_annual /= (double)nh;
     }
 
 	std::stringstream annot;
@@ -1582,6 +1619,8 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
 	annot << "Average power" << "," << wxString::Format("%.2f kW", h_avg_power / 1000.) << ";";
 	annot << "Total power" << "," << wxString::Format("%.2f kW", h_tot_power / 1000.) << ";";
 	annot << "Total area" << "," << wxString::Format("%.2f m2", h_tot_area) << ";";
+    annot << "Annual efficiency" << "," << wxString::Format("%.1f %%", h_avg_annual*100.) << ";";
+    annot << "Annual energy" << "," << wxString::Format("%2.f MW", h_e_annual / 1e6) << ";";
 	annot << "ID" << ",";
 
 	for (size_t i = 0; i < nh; i++)

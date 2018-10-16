@@ -81,11 +81,13 @@ layout_export_dialog::layout_export_dialog(
     labels.push_back(wxT("Heliostat ranking metric"));
     labels.push_back(wxT("Heliostat shadow coordinates"));
     labels.push_back(wxT("Heliostat cloudiness loss"));
+    labels.push_back(wxT("Heliostat annual power production"));
+    labels.push_back(wxT("Heliostat annual total efficiency"));
         
     nchecks = (int)labels.size();    //Match the number of setting options enumerated below
 
     //Set the the default value for each option
-    bool defaults[] = {true, true, true, false, true, true, true, true, true, true, true, true, true, false, false, false};
+    bool defaults[] = {true, true, true, false, true, true, true, true, true, true, true, true, true, false, false, false, true, true};
 
     //Set up each object
     checkboxes.clear();

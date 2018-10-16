@@ -1820,6 +1820,8 @@ void SPFrame::UpdateFieldPlotSelections()
         _plot_select->Append( choices.at(  FIELD_PLOT::EFF_REFLECT ) );
         _plot_select->Append( choices.at(  FIELD_PLOT::POWER ) );
         _plot_select->Append( choices.at(  FIELD_PLOT::RANK ) );
+        _plot_select->Append(choices.at(   FIELD_PLOT::EFF_ANNUAL ) );
+        _plot_select->Append(choices.at(   FIELD_PLOT::ENERGY ) );
     }
 
     if( _SF.getVarMap()->recs.size() > 1 )
@@ -2390,8 +2392,10 @@ bool SPFrame::SolTraceFluxSimulation(SolarField &SF, var_map &vset, Hvector &hel
 
 
         //Process the results
+        sim_params P;
+        P.dni = dni;
         double azzen[2] = {az, PI/2.-el};
-        _results.back().process_raytrace_simulation(SF, 2, azzen, helios, _STSim->IntData.q_ray, _STSim->IntData.emap, _STSim->IntData.smap, _STSim->IntData.rnum, nint, bounds);    
+        _results.back().process_raytrace_simulation(SF, P, 2, azzen, helios, _STSim->IntData.q_ray, _STSim->IntData.emap, _STSim->IntData.smap, _STSim->IntData.rnum, nint, bounds);    
     }
 
     //If the user wants to save stage0 ray data, do so here
@@ -2621,7 +2625,10 @@ bool SPFrame::HermiteFluxSimulationHandler(SolarField &SF, Hvector &helios)
     azzen[0] = D2R* SF.getVarMap()->flux.flux_solar_az.Val();
     azzen[1] = D2R* (90. - SF.getVarMap()->flux.flux_solar_el.Val() );
     
-    _results.back().process_analytical_simulation(SF, 2, azzen, helios);
+    sim_params P;
+    P.dni = SF.getVarMap()->flux.flux_dni.val;
+
+    _results.back().process_analytical_simulation(SF, P, 2, azzen, helios);
     
     return true;
 }
@@ -2884,7 +2891,7 @@ void SPFrame::SAMInputParametric2()
 
             _SF.Simulate(azen_tab[i*2], azen_tab[i*2+1], P);
 
-            _results.at(k++).process_analytical_simulation(_SF, 2, &azen_tab[i*2]);    //TO DO: #2 is flux simulation. Add parametric-specific method
+            _results.at(k++).process_analytical_simulation(_SF, P, 2, &azen_tab[i*2]);    //TO DO: #2 is flux simulation. Add parametric-specific method
             
             string kstr = my_to_string(k+1);
             
@@ -3060,7 +3067,7 @@ void SPFrame::SAMInputParametric2()
 
             _SF.Simulate(azzen[0]*R2D, azzen[1]*R2D, P);  //re-use P from above
             _SF.HermiteFluxSimulation( *_SF.getHeliostats() );
-            _results.at(k).process_analytical_simulation(_SF, 2, azzen);    //TO DO: #2
+            _results.at(k).process_analytical_simulation(_SF, P, 2, azzen);    //TO DO: #2
             
             //Collect flux results here
             _results.at(k).process_flux( &_SF, is_fluxmap_norm);
@@ -3249,6 +3256,8 @@ void SPFrame::ParametricSimulate( parametric &P )
             12 | Heliostat delivered power
             13 | Heliostat ranking metric
             14 | Heliostat shadow coordinates
+            15 | Annual power delivery
+            16 | Annual total efficiency
         
             */
             ld->getSelections(options);
@@ -3797,7 +3806,13 @@ void SPFrame::CreateResultsTable(sim_result &result, grid_emulator &table)
                     100.*result.eff_total_sf.min,
                     100.*result.eff_total_sf.max,
                     100.*result.eff_total_sf.stdev);
-            table.AddRow(id++, "Incident flux", "kW/m2", 
+            table.AddRow(id++, "Annualized heliostat efficiency", "%",
+                    100.*result.eff_annual.wtmean, 2,
+                    nan,
+                    100.*result.eff_annual.min,
+                    100.*result.eff_annual.max,
+                    100.*result.eff_annual.stdev);
+            table.AddRow(id++, "Incident flux", "kW/m2",
                     result.flux_density.ave, -1,
                     nan, 
                     result.flux_density.min, 
