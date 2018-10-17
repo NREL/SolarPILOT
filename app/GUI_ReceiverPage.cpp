@@ -100,8 +100,30 @@ void SPFrame::CreateMasterReceiverPage(wxScrolledWindow *parent)
     htext->SetForegroundColour(_helptext_colour);
     sbs->Add(htext, 0, wxALL, 5);
 
+    //create objects for specifying the receiver power fractions
+    _rec_power_fractions = new wxGrid(parent, wxID_ANY, wxDefaultPosition);
+    _rec_power_fractions->CreateGrid(1, 1);
+    
+    InputControl *is_multirec_powfrac = new InputControl(parent, wxID_ANY, _variables.sf.is_multirec_powfrac);
+    is_multirec_powfrac->addDisabledSiblings("false", _rec_power_fractions);
+    _input_map[is_multirec_powfrac->getVarObject()] = is_multirec_powfrac;
+    
+    _msg_rec_power_fractions = new wxStaticText(parent, wxID_ANY, 
+        "Note: the specified power fractions will be scaled in proportion to\n"
+        "their values such that the total design power equals the field design power.");
+    _msg_rec_power_fractions->SetForegroundColour(_helptext_colour);
+
+    wxBoxSizer *power_sizer = new wxBoxSizer(wxVERTICAL);
+    power_sizer->Add(is_multirec_powfrac);
+    power_sizer->Add(_rec_power_fractions, 1, wxALL, 5);
+    power_sizer->Add(_msg_rec_power_fractions, 0, wxALL, 5);
+    power_sizer->SetSizeHints(parent);
+
+    UpdateReceiverPowerGrid();
+
     wxBoxSizer *main_sizer = new wxBoxSizer(wxVERTICAL);
     main_sizer->Add(sbs, 0, wxALL, 5);
+    main_sizer->Add(power_sizer, 0, wxALL, 5);
     parent->SetSizer(main_sizer);
 
     //Bindings
@@ -111,7 +133,8 @@ void SPFrame::CreateMasterReceiverPage(wxScrolledWindow *parent)
     _rec_rename->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnReceiverRename), NULL, this);
     _rec_config->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( SPFrame::OnReceiverSelect), NULL, this);
     _rec_config->Connect(wxEVT_COMMAND_LIST_ITEM_DESELECTED, wxListEventHandler( SPFrame::OnReceiverDeselect), NULL, this);
-    
+    _rec_power_fractions->Connect(wxEVT_GRID_CELL_CHANGED, wxGridEventHandler( SPFrame::OnReceiverPowerGridEdit), NULL, this);
+
     parent->SetScrollbars(10, 10, parent->GetSize().GetWidth()/10, parent->GetSize().GetWidth()/10);
     
     return;
@@ -557,12 +580,113 @@ void SPFrame::UpdateReceiverUITemplates()
         _rec_config->SetItem(i, 1, _variables.recs.at(i).is_enabled.val ? "Enabled" : "Disabled" );
     }
 
+    UpdateReceiverPowerGrid();
+
     _page_panel->Update();
     _page_panel->Refresh();
     
     this->Layout();
     this->Update();
     this->Refresh();
+}
+
+void SPFrame::UpdateReceiverPowerGrid()
+{
+    /*
+    Update the power limit grid on the receiver templates page
+    */
+    int ncol = 5;
+    if (_rec_power_fractions->GetNumberCols() != ncol) {
+        _rec_power_fractions->DeleteCols(0, _rec_power_fractions->GetNumberCols());
+        _rec_power_fractions->AppendCols(ncol, false);
+    }
+
+    string cols[] = { "Template", "Dimensions [m,m]", "Area [m2]", "Power fraction", "Power [MWt]" };
+    int dw = 80;
+    int widths[] = { 120,dw,dw,dw,dw };
+
+    _rec_power_fractions->SetRowLabelSize(40);
+    for (int i = 0; i < ncol; i++)
+    {
+        _rec_power_fractions->SetColLabelValue(i, cols[i]);
+        _rec_power_fractions->SetColSize(i, widths[i]);
+    }
+
+    //count how many receivers should go in the table. Only active ones appear
+    int nrec_active = 0;
+    for (int i = 0; i < _variables.recs.size(); i++)
+        if (_variables.recs[i].is_enabled.val)
+            nrec_active++;
+    
+    //set the correct number of rows in the table
+    if (_rec_power_fractions->GetNumberRows() > 0)
+        _rec_power_fractions->DeleteRows(0, _rec_power_fractions->GetNumberRows());
+
+    //Figure out what the sum of all fractions is. This will be used to scale the values.
+    double pow_frac_total = 0.;
+    for (int i = 0; i < (int)_variables.recs.size(); i++)
+        if( _variables.recs[i].is_enabled.val )
+            pow_frac_total += _variables.recs[i].power_fraction.val;
+    
+    //validate pow_frac_total
+    if (pow_frac_total <= 0.)
+        pow_frac_total = 1.;
+
+    //Fill in the data
+    int cur_row = 0;
+    for (int i = 0; i < (int)_variables.recs.size(); i++)
+    {
+        if (!_variables.recs[i].is_enabled.val)
+            continue;
+        //add 1 row
+        _rec_power_fractions->AppendRows();
+
+        bool is_external = _variables.recs[i].rec_type.mapval() == var_receiver::REC_TYPE::EXTERNAL_CYLINDRICAL;
+
+        //0  name        
+        _rec_power_fractions->SetCellValue(cur_row, 0, _variables.recs[i].rec_name.val);
+        //1  dimensions
+        _rec_power_fractions->SetCellValue(cur_row, 1,
+            wxString::Format("%s (%s) x %s (%s)", 
+                (is_external ? _variables.recs[i].rec_diameter.as_string() : _variables.recs[i].rec_width.as_string()).c_str(),
+                is_external ? "D" : "W",
+                _variables.recs[i].rec_height.as_string().c_str(),
+                "H"
+                )   
+            );
+        //2  area
+        _rec_power_fractions->SetCellValue(cur_row, 2, _variables.recs[i].absorber_area.as_string());
+        //3  power fraction (input)
+        _rec_power_fractions->SetCellValue(cur_row, 3, _variables.recs[i].power_fraction.as_string());
+        //4  power
+        wxString pfs = _rec_power_fractions->GetCellValue(cur_row, 3);
+        double pf;
+        if ( !pfs.ToDouble(&pf) )
+            pf = 1.;
+        wxString newpower = wxString::Format("%.2f", _variables.sf.q_des.val * pf/pow_frac_total );
+        _rec_power_fractions->SetCellValue(cur_row, 4, newpower);
+
+        cur_row++;
+    }
+
+    //update the land bounding area value determined during simulation
+    int icols[] = { 0, 1, 2, 4 };
+    for (int i = 0; i < 4; i++)
+    {
+        wxGridCellAttr *attr = new wxGridCellAttr();
+        attr->SetBackgroundColour(_colorTextBG);
+        attr->SetTextColour(_colorTextFG);
+        attr->SetReadOnly(true);
+        _rec_power_fractions->SetColAttr(icols[i], attr);
+    }
+
+    _rec_power_fractions->AutoSizeColumns();
+
+    //if the power fraction is not unity, warn the user
+    if (std::abs(pow_frac_total - 1.) > 1.e-3)
+        _msg_rec_power_fractions->Show(true);
+    else
+        _msg_rec_power_fractions->Show(false);
 }
 
 void SPFrame::OnReceiverDel( wxCommandEvent &WXUNUSED(event))
@@ -716,6 +840,8 @@ void SPFrame::OnReceiverState( wxCommandEvent &WXUNUSED(event))
             _rec_config->SetItem(sel, 0, rv->rec_name.val);
             _rec_config->SetItem(sel, 1, wxT("Enabled"));
         }
+
+        UpdateReceiverUITemplates();
     }
     catch(std::exception &e)
     {
@@ -788,6 +914,55 @@ void SPFrame::OnReceiverDeselect( wxListEvent &event)
     }
     event.Skip();
 
+}
+
+void SPFrame::OnReceiverPowerGridEdit( wxGridEvent &event )
+{
+    /*
+    If the power fractions grid has been edited, handle here
+    */
+
+    int
+        row = event.GetRow(),
+        col = event.GetCol();
+    
+    //which receiver is this?
+    int which_rec = 0;
+    {
+        int i = 0;
+        while (true)
+        {
+            if (which_rec == row)
+            {
+                which_rec = i;
+                break;
+            }
+            else if( _variables.recs[i].is_enabled.val)
+            {
+                which_rec++;
+            }
+            i++;
+        }
+    }
+    
+    wxString newtext = _rec_power_fractions->GetCellValue(row, col);
+    double newnum;
+    //validate
+    if( newtext.ToDouble(&newnum) )
+    {
+        if (newnum >= 0.)
+        {
+            _variables.recs[which_rec].power_fraction.val = newnum;
+            _rec_power_fractions->SetEvtHandlerEnabled(false);
+            UpdateReceiverPowerGrid();
+            _rec_power_fractions->SetEvtHandlerEnabled(true);
+            return;     //if getting this far, then the action is successful. update and return
+        }
+    }
+
+    //something went wrong. Notify user.
+    PopMessage("Please enter a valid non-negative number.", "Input error");
+    return;
 }
 
 

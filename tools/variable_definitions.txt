@@ -225,6 +225,7 @@ receiver	is_polygon	IN	BOOL	FALSE		TRUE	checkbox		X	Represent receiver as polygo
 receiver	n_panels	IN	INT	12	none	TRUE			X	Number of receiver panels	Number of receiver panels (polygon facets) for a polygonal receiver geometry
 receiver	panel_rotation	IN	DOUBLE	0	deg	TRUE			X	Receiver panel azimuthal orientation	Azimuth angle between the normal vector to the primary 'north' panel and North
 receiver	peak_flux	IN	DOUBLE	1000	kW/m2	TRUE				Allowable peak flux	Maximum allowable flux intensity on any portion of the receiver surface
+receiver	power_fraction	IN	DOUBLE	1	none	TRUE				Multi-receiver power fraction	Target fraction of absorbed energy delivered by the heliostat field in configurations with multiple receivers
 receiver	piping_loss_coef	IN	DOUBLE	10.2	kW/m	TRUE				Receiver piping loss coefficient	Loss per meter of tower height
 receiver	piping_loss_const	IN	DOUBLE	0	kW	TRUE				Receiver piping loss constant	Constant thermal loss due to piping - doesn't scale with tower height
 receiver	rec_azimuth	IN	DOUBLE	0	deg	TRUE				Receiver orientation azimuth	Receiver azimuth orientation: 0 deg is north, positive clockwise
@@ -263,6 +264,7 @@ solarfield	is_sliprow_skipped	IN	BOOL	FALSE	none	TRUE	checkbox			Offset slip pla
 solarfield	is_opt_zoning	IN	BOOL	TRUE	none	FALSE	checkbox			Enable optical layout zone method	Enables grouping of heliostats into zones for intercept factor calculation during layout only
 solarfield	is_prox_filter	IN	BOOL	FALSE	none	TRUE	checkbox			Apply proximity filter	Post-process the layout to select heliostats that are closer to the tower.
 solarfield	is_tht_opt	IN	BOOL	TRUE	none	FALSE	checkbox			Optimize tower height	Vary the tower height during optimization to identify optimal level?
+solarfield	is_multirec_powfrac	IN	BOOL	FALSE	none	TRUE	checkbox			Specify multi-receiver power fractions	Enables the user to specify the fraction of power delivered from the heliostat to each receiver
 solarfield	layout_data	IN	STRING			FALSE				Layout data in string form	Layout data in string form
 solarfield	layout_method	IN	STRING	0	none	FALSE	combo	Radial Stagger=1;Cornfield=2;User-defined=3		Layout method	Field layout method
 solarfield	max_zone_size_az	IN	DOUBLE	1	tower-ht	TRUE				Max. optical layout zone size - azimuthal	Maximum zone size (azimuthal direction) for grouping optical intercept factor calculations

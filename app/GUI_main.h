@@ -319,6 +319,8 @@ private:
     std::vector<wxPanel*> _rec_pages;    //pointers to all of the receiver pages
     InputControl *_rec_which;    //Combo list of available receivers
     std::map<std::string, std::vector<wxTextCtrl*> > _hll_coefs, _hlw_coefs;
+    wxGrid *_rec_power_fractions;
+    wxStaticText *_msg_rec_power_fractions;
 
     //Objects for Layout page
     wxGrid *_design_grid;
@@ -562,6 +564,7 @@ protected:
     void OnReceiverRename( wxCommandEvent &event);
     void OnReceiverSelect( wxListEvent &event);
     void OnReceiverDeselect( wxListEvent &event);
+    void OnReceiverPowerGridEdit( wxGridEvent &event );
     
     void OnHeatLossLoadFocus( wxFocusEvent &event);
     void OnHeatLossWindFocus( wxFocusEvent &event);
@@ -670,6 +673,7 @@ public:
 
     void UpdateHelioUITemplates();
     void UpdateReceiverUITemplates();
+    void UpdateReceiverPowerGrid();
     void UpdateInputValues();
     void UpdateCalculatedGUIValues();
     void UpdateFieldPlotSelections();

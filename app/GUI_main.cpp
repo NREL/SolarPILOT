@@ -1785,6 +1785,9 @@ void SPFrame::UpdateCalculatedGUIValues()
         out->second->setValue( out->first->as_string() );
     }
 
+    //need to update calculated values in the receiver power fractions grid too
+    UpdateReceiverPowerGrid();
+
     _page_panel->GetActivePage()->Layout();
     _page_panel->GetActivePage()->Refresh();
     
