@@ -3717,7 +3717,8 @@ void SPFrame::CreateResultsTable(sim_result &result, grid_emulator &table)
 {
     try
     {
-        table.CreateGrid(result.is_soltrace ? 18 : 17, 6);
+        //table.CreateGrid(result.is_soltrace ? 18 : 18, 6);
+        table.CreateGrid(18, 6);
         
         table.SetColLabelValue(0, "Units");
         table.SetColLabelValue(1, "Value");

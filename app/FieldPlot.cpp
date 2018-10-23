@@ -754,6 +754,8 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             valave = 0.;
         double *plot_vals = new double[npos];
 
+        std::vector< int > rec_count(_SF->getActiveReceiverCount(), 0);
+
         if(_option != FIELD_PLOT::LAYOUT)
         {
             for(int i=0; i<npos; i++)
@@ -813,7 +815,11 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                     int r=0;
                     for(r=0; r<(int)_SF->getReceivers()->size(); r++)
                     {
-                        if(H->getWhichReceiver() == _SF->getReceivers()->at(r)) break;
+                        if (H->getWhichReceiver() == _SF->getReceivers()->at(r))
+                        {
+                            rec_count.at(r)++;
+                            break;
+                        }
                     }
                     plot_vals[i] = (double)(r+1);
                 }
