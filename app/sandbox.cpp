@@ -388,6 +388,8 @@ bool SPFrame::Sandbox()
     F.GetFieldPlotObject()->SetPlotData(*SF, FIELD_PLOT::EFF_TOT);
     F.GetFieldPlotObject()->Update();
 
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
     Hvector *helios = SF->getHeliostats();
     std::vector<Receiver*> *recs = SF->getReceivers();
     int Nrec = recs->size();
@@ -431,14 +433,6 @@ bool SPFrame::Sandbox()
             
             max_rank = std::fmax( powalloc*rank_metric, max_rank);
         }
-        
-
-        ////normalize power fractions
-        //double ftot = 0.;
-        //for (int j = 0; j < Nrec; j++)
-        //    ftot += power_fracs[id].at(j);
-        //for (int j = 0; j < Nrec; j++)
-        //    power_fracs[id].at(j) /= (ftot > 0. ? ftot : 1.);
     }
 
     for (unordered_map<int, std::vector<double> >::iterator pair = costs.begin(); pair != costs.end(); pair++)
