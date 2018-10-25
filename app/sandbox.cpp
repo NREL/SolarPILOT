@@ -371,7 +371,7 @@ bool SPFrame::Sandbox()
     V->recs.back().power_fraction.val = 1.;
 
     V->sf.tht.val = 90.;
-    V->sf.q_des.val = 75;
+    V->sf.q_des.val = 50;
 
     wxString climfile = (wxString)V->amb.weather_file.val;
     F.UpdateClimateFile(climfile, *V, true);
@@ -408,53 +408,69 @@ bool SPFrame::Sandbox()
     int Nh = helios->size();
 
     //heliostat to receiver power fractions
-    unordered_map<int, std::vector<double> > power_fracs;
-    unordered_map<int, double > power_design;
+    unordered_map<int, std::vector<double> > power_allocs;
+    unordered_map<int, std::vector<double> > costs;
+    double max_rank = 0.;
 
     for (int i = 0; i < Nh; i++)
     {
         int id = helios->at(i)->getId();
 
-        unordered_map<Receiver*,double> rpa = helios->at(i)->getReceiverPowerAlloc();
+        double rank_metric = helios->at(i)->getRankingMetricValue();
 
-        power_fracs[id] = std::vector<double>();
+        unordered_map<Receiver*,double> rpa = helios->at(i)->getReceiverPowerAlloc();
+        
+        power_allocs[id] = std::vector<double>();
+        costs[id] = std::vector<double>();
 
         for (std::vector<Receiver*>::iterator r = recs->begin(); r != recs->end(); r++)
         {
-            power_fracs[id].push_back( rpa[*r] );
-            power_design[id] =  helios->at(i)->getPowerValue();
+            double powalloc = rpa[*r];
+            power_allocs[id].push_back( powalloc );
+            costs[id].push_back( powalloc * rank_metric );
+            
+            max_rank = std::fmax( powalloc*rank_metric, max_rank);
         }
         
-        //normalize power fractions
-        double ftot = 0.;
-        for (int j = 0; j < Nrec; j++)
-            ftot += power_fracs[id].at(j);
-        for (int j = 0; j < Nrec; j++)
-            power_fracs[id].at(j) /= (ftot > 0. ? ftot : 1.);
+
+        ////normalize power fractions
+        //double ftot = 0.;
+        //for (int j = 0; j < Nrec; j++)
+        //    ftot += power_fracs[id].at(j);
+        //for (int j = 0; j < Nrec; j++)
+        //    power_fracs[id].at(j) /= (ftot > 0. ? ftot : 1.);
     }
+
+    for (unordered_map<int, std::vector<double> >::iterator pair = costs.begin(); pair != costs.end(); pair++)
+        for( std::vector<double>::iterator dit = pair->second.begin(); dit != pair->second.end(); dit++)
+            *dit = max_rank / (*dit >  0. ? *dit : max_rank*1e3);
 
     //---------------------------------------
     
     optimization_vars O;
 
 
-    O.add_var("x", optimization_vars::VAR_TYPE::REAL_T, optimization_vars::VAR_DIM::DIM_T, Nh, 0., 1.);
+    O.add_var("x", optimization_vars::VAR_TYPE::REAL_T, optimization_vars::VAR_DIM::DIM_NT, Nh, Nrec, 0., 1.);
     O.construct();
 
-    lprec* lp = make_lp(0, Nh);
+    lprec* lp = make_lp(0, Nh*Nrec);
 
     Random rng;
 
     //set up objective
-    int *col = new int[Nh];
-    REAL *row = new REAL[Nh];
-    for (int i = 0; i < Nh; i++)
+    int *col = new int[Nh*Nrec];
+    REAL *row = new REAL[Nh*Nrec];
+    for (int j = 0; j < Nrec; j++)
     {
-        col[i] = O.column("x", i);
-        row[i] = 1.;  //cost of including a heliostat
+        for (int i = 0; i < Nh; i++)
+        {
+            col[j*Nh + i] = O.column("x", i, j);
+            row[j*Nh + i] = costs[ helios->at(i)->getId() ][j];  //cost of energy proxy for each heliostat
+        }
+
     }
 
-    set_obj_fnex(lp, Nh, row, col);
+    set_obj_fnex(lp, Nh*Nrec, row, col);
 
     set_add_rowmode(lp, TRUE);
 
@@ -465,14 +481,18 @@ bool SPFrame::Sandbox()
     */
     //upper and lower variable bounds
 
-    for (int j = 0; j < Nh; j++)
+    for (int j = 0; j < Nrec; j++)
     {
-        set_upbo(lp, j + 1, 1.);
-        set_lowbo(lp, j + 1, 0. );
+        for (int i = 0; i < Nh; i++)
+        {
+            //set_upbo(lp, j*Nh + i + 1, 1.);
+            set_lowbo(lp, j*Nh + i + 1, 0. );
 
-        char s[40];
-        sprintf(s, "%d", helios->at(j)->getId());
-        set_col_name(lp, O.column("x", j), s);
+            //set column name
+            char s[40];
+            sprintf(s, "%d:%d", helios->at(i)->getId(), j);
+            set_col_name(lp, O.column("x", i, j), s);
+        }
     }
 
 
@@ -489,12 +509,22 @@ bool SPFrame::Sandbox()
         for (int i = 0; i < Nh; i++)
         {
             int id = helios->at(i)->getId();
-            col[i] = O.column("x", i);
-            row[i] = power_fracs[id].at(j) * power_design[id];            
+            col[i] = O.column("x", i, j);
+            row[i] = power_allocs[id].at(j);
         }
         add_constraintex(lp, Nh, row, col, GE, rec_design_power.at(j));
     }
 
+    //total allocation can't exceed 1
+    for (int i = 0; i < Nh; i++)
+    {
+        for (int j = 0; j < Nrec; j++)
+        {
+            col[j] = O.column("x", i, j);
+            row[j] = 1.;
+        }
+        add_constraintex(lp, Nrec, row, col, LE, 1.);
+    }
 
     delete[] row;
     delete[] col;
@@ -551,23 +581,50 @@ bool SPFrame::Sandbox()
     std::ofstream outf("layout_results.csv");
     outf.clear();
 
-    outf << "ID,X,Y,Qdes,";
+    outf << "ID,X,Y,";
     for (int i = 0; i < Nrec; i++)
-        outf << "f_rec_" << i + 1 << ",";
-    outf << "Var\n";
+        outf << "Q_rec_" << i + 1 << ",";
+    for (int i = 0; i < Nrec; i++)
+        outf << "x_rec_" << i + 1 << ",";
+    outf << "\n";
+
+    unordered_map<int, unordered_map<int, double> > results;
 
     for (int i = 0; i < ncols; i++)
     {
-        char *colname = get_col_name(lp, i+1);
+        char *colname = get_col_name(lp, i + 1);
         if (!colname) continue;
+        int id, rec;
+        try
+        {
+            std::vector<std::string> h_r = split(colname, ":");
 
-        int id = std::stoi(colname);
+            id = std::stoi(h_r.front());
+            rec = std::stoi(h_r.back());
+        }
+        catch (...)
+        {
+            continue;
+        }
 
-        sp_point *loc = SF->getHeliostatsByID()->at(id)->getLocation();
-        outf << id << "," << loc->x << "," << loc->y << "," << power_design[id] << ",";
+        results[id][rec] = vars[i];
+    }
+
+    for(unordered_map<int, unordered_map<int,double> >::iterator hres = results.begin(); hres!=results.end(); hres++)
+    {
+        sp_point *loc = SF->getHeliostatsByID()->at(hres->first)->getLocation();
+        outf << hres->first << "," << loc->x << "," << loc->y << ",";
         for (int j = 0; j < Nrec; j++)
-            outf << power_fracs[id].at(j) << ",";
-        outf << vars[i] << "\n";
+            outf << power_allocs[hres->first].at(j) << ",";
+        for (int j = 0; j < Nrec; j++)
+        {
+            if (hres->second.find(j) != hres->second.end())
+                outf << hres->second.at(j);
+            else
+                outf << "0";
+            outf << ",";
+        }
+        outf << "\n";
     }
 
     outf.close();
