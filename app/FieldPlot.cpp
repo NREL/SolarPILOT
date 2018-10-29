@@ -60,6 +60,8 @@
 #include "OpticalMesh.h"
 #include "SolarField.h"
 
+#include "plot_base.h"      //include this for the color maps. We don't directly use this class here, yet (but should)
+
 using namespace std;
 
 void FieldPlot::SetPlotOption(int option)
@@ -972,6 +974,8 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             }
         }
 
+        unordered_map<std::string, wxColour> receiver_color_map;
+
         //Handle round and rectangular heliostats differently
         if( heliostats->at(0)->getVarMap()->is_round.mapval() == var_heliostat::IS_ROUND::ROUND)
         {
@@ -1062,7 +1066,13 @@ void FieldPlot::DoPaint(wxDC &_pdc)
 
                     //if the heliostat is selected, use a different outline
                     wxColour gc;
-                    ColorGradientHotCold( gc, (plot_vals[i]-valmin)/(valmax - valmin) );
+                    if (_option == FIELD_PLOT::RECEIVER)
+                    {
+                        PlotBase::ColorGradientRainbow(gc, (plot_vals[i] - valmin) / (valmax+1 - valmin));
+                        receiver_color_map[H->getWhichReceiver()->getVarMap()->rec_name.val] = gc;
+                    }
+                    else
+                        ColorGradientHotCold( gc, (plot_vals[i]-valmin)/(valmax - valmin) );
 
                     bool is_selected = std::find(_helios_select.begin(), _helios_select.end(), H ) != _helios_select.end();
                     if( is_selected )
@@ -1258,24 +1268,51 @@ void FieldPlot::DoPaint(wxDC &_pdc)
 
         }
 
-        //Draw the gradient bar
-        if(_option > 1)
-            _dc.GradientFillLinear( wxRect(wxPoint(canvsize[0]-right_buffer+5*ppimult, 50*ppimult), wxPoint(canvsize[0]-right_buffer+25*ppimult, x_axis_loc-50*ppimult)), grad_low, grad_high, wxNORTH);
-        double lineave;
-        if( fabs(valmax-valmin) > 1.e-6 )
-            lineave = 50*ppimult+(plotsize[1]-100.)*(1.-(valave-valmin)/(valmax-valmin));    //where should the average line indicator be in Y?
-        else
-            lineave = 50*ppimult+(plotsize[1]-100.)*.5;
-        //Draw the average line
-        _dc.SetPen( wxPen( white, 1, wxPENSTYLE_SOLID) );
-        _dc.DrawLine(canvsize[0]-right_buffer+5*ppimult, lineave, canvsize[0]-right_buffer+25*ppimult, lineave);
-        //Label the gradient bar
-        if(_option != FIELD_PLOT::LAYOUT)
+        if (_option != FIELD_PLOT::RECEIVER)
         {
-            _dc.DrawText( maxlab, canvsize[0]-right_buffer+2*ppimult, 51*ppimult-glabs.GetHeight() );
-            _dc.DrawText( minlab, canvsize[0]-right_buffer+2*ppimult, x_axis_loc-48*ppimult);
-            _dc.DrawText( avelab, canvsize[0]-right_buffer+27*ppimult, lineave-glabs.GetHeight()/2 );
+            //Draw the gradient bar
+            if (_option > FIELD_PLOT::LAYOUT && _option != FIELD_PLOT::RECEIVER )
+                _dc.GradientFillLinear(wxRect(wxPoint(canvsize[0] - right_buffer + 5 * ppimult, 50 * ppimult), wxPoint(canvsize[0] - right_buffer + 25 * ppimult, x_axis_loc - 50 * ppimult)), grad_low, grad_high, wxNORTH);
+            double lineave;
+            if (fabs(valmax - valmin) > 1.e-6)
+                lineave = 50 * ppimult + (plotsize[1] - 100.)*(1. - (valave - valmin) / (valmax - valmin));    //where should the average line indicator be in Y?
+            else
+                lineave = 50 * ppimult + (plotsize[1] - 100.)*.5;
+            //Draw the average line
+            _dc.SetPen(wxPen(white, 1, wxPENSTYLE_SOLID));
+            _dc.DrawLine(canvsize[0] - right_buffer + 5 * ppimult, lineave, canvsize[0] - right_buffer + 25 * ppimult, lineave);
+            //Label the gradient bar
+            if (_option != FIELD_PLOT::LAYOUT && _option != FIELD_PLOT::RECEIVER )
+            {
+                _dc.DrawText(maxlab, canvsize[0] - right_buffer + 2 * ppimult, 51 * ppimult - glabs.GetHeight());
+                _dc.DrawText(minlab, canvsize[0] - right_buffer + 2 * ppimult, x_axis_loc - 48 * ppimult);
+                _dc.DrawText(avelab, canvsize[0] - right_buffer + 27 * ppimult, lineave - glabs.GetHeight() / 2);
+            }
         }
+        else
+        {
+            int cboxpos_x = left_buffer + 10;
+            int cboxpos_y = top_buffer + 5;
+
+            for (unordered_map<std::string, wxColour>::iterator rc = receiver_color_map.begin(); rc != receiver_color_map.end(); rc++)
+            {
+                _dc.SetBrush(rc->second);
+                wxSize labsize = _dc.GetTextExtent(rc->first);
+
+                _dc.DrawRectangle(cboxpos_x, cboxpos_y, 1.3*labsize.GetHeight(), labsize.GetHeight());
+                cboxpos_x += (int)(1.3*labsize.GetHeight()) + 4;
+                
+                _dc.DrawText(rc->first, cboxpos_x, cboxpos_y);
+                cboxpos_x += labsize.GetWidth()+5;
+
+                if (cboxpos_x > 0.8 * canvsize[0] + left_buffer)
+                {
+                    cboxpos_x = left_buffer + 10;
+                    cboxpos_y += 25;
+                }
+            }
+        }
+
         delete [] plot_vals;
 
 
