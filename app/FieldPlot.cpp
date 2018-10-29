@@ -1069,6 +1069,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                     if (_option == FIELD_PLOT::RECEIVER)
                     {
                         PlotBase::ColorGradientRainbow(gc, (plot_vals[i] - valmin) / (valmax+1 - valmin));
+                        //keep track of which receiver is assigned to which color
                         receiver_color_map[H->getWhichReceiver()->getVarMap()->rec_name.val] = gc;
                     }
                     else
@@ -1291,6 +1292,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         }
         else
         {
+            //draw the receiver colormap legend
             int cboxpos_x = left_buffer + 10;
             int cboxpos_y = top_buffer + 5;
 
