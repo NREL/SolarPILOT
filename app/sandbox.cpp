@@ -391,7 +391,7 @@ bool SPFrame::Sandbox()
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     Hvector *helios = SF->getHeliostats();
-    std::vector<Receiver*> *recs = SF->getReceivers();
+    Rvector *recs = SF->getReceivers();
     int Nrec = recs->size();
 
     //calculate receiver maximum powers
@@ -425,7 +425,7 @@ bool SPFrame::Sandbox()
         power_allocs[id] = std::vector<double>();
         costs[id] = std::vector<double>();
 
-        for (std::vector<Receiver*>::iterator r = recs->begin(); r != recs->end(); r++)
+        for (Rvector::iterator r = recs->begin(); r != recs->end(); r++)
         {
             double powalloc = rpa[*r];
             power_allocs[id].push_back( powalloc );

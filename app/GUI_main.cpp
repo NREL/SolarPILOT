@@ -1842,7 +1842,7 @@ void SPFrame::UpdateFieldPlotSelections()
 void SPFrame::UpdateFluxPlotSelections()
 {
     _rec_select->Clear();
-    std::vector<Receiver*> *active_recs = _SF.getReceivers();
+    Rvector *active_recs = _SF.getReceivers();
     for (int i = 0; i < active_recs->size(); i++)
         _rec_select->Append(active_recs->at(i)->getVarMap()->rec_name.val);
 
@@ -2988,7 +2988,7 @@ void SPFrame::SAMInputParametric2()
     //--------- Generate the flux map file ---------------------------------
     //Check if there are multiple receivers. If so, prompt the user to select 
     //which receiver they would like to simulate
-    vector<Receiver*> rec_to_sim;
+    Rvector rec_to_sim;
     if(_SF.getActiveReceiverCount() > 1)
     {
         rec_select_dialog *rdlg = new rec_select_dialog(this, wxID_ANY, wxT("Select receivers"), &_SF);

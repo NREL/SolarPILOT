@@ -145,7 +145,7 @@ void SPFrame::CreateFluxPlotPage(wxScrolledWindow *parent)
 
     //Selection for the receiver
     wxArrayStr receivers;
-    std::vector<Receiver*> *active_recs = _SF.getReceivers();
+    Rvector *active_recs = _SF.getReceivers();
     for(unsigned int i=0; i<active_recs->size(); i++)
         receivers.push_back( active_recs->at(i)->getVarMap()->rec_name.val );
     
@@ -378,7 +378,7 @@ void SPFrame::OnFluxPlotBinChange( int axis )
 
 
     //Regenerate the flux map plot data
-    vector<Receiver*> *rec_to_sim = _SF.getReceivers();
+    Rvector *rec_to_sim = _SF.getReceivers();
     //Shape the flux surface files to match
     for(unsigned int i=0; i<rec_to_sim->size(); i++)
     {
