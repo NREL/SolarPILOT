@@ -91,6 +91,17 @@ void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent)
             copy_button = new wxButton(parent, wxID_ANY, wxT("Copy to clipboard"));
             copy_button->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnSimulationResultsCopy ), NULL, this);
 
+            wxComboBox *rec_select_combo=0;
+            if (_results.front().receiver_names.size() > 1)
+            {
+                wxArrayString recnames;
+                recnames.push_back("All receivers");
+                for (int i = 0; i < _results.front().receiver_names.size(); i++)
+                    recnames.push_back(_results.front().receiver_names.at(i));
+                rec_select_combo = new wxComboBox(parent, wxID_ANY, recnames.front(), wxDefaultPosition, wxDefaultSize, recnames, wxCB_DROPDOWN | wxCB_READONLY);
+                rec_select_combo->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( SPFrame::OnResultsReceiverSelect ), NULL, this);
+            }
+
             wxStaticBox *grid_sb = new wxStaticBox(parent, wxID_ANY, wxT("Flux simulation results summary"));
             wxStaticBoxSizer *grid_sbs = new wxStaticBoxSizer(grid_sb, wxVERTICAL);
         
@@ -119,6 +130,13 @@ void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent)
             wxBoxSizer *bsizer = new wxBoxSizer(wxHORIZONTAL);
             bsizer->Add(export_button, 0, wxALL, 5);
             bsizer->Add(copy_button, 0, wxALL, 5);
+            if (rec_select_combo)
+            {
+                bsizer->AddSpacer(25);
+                bsizer->Add( new wxStaticText(parent, wxID_ANY, "Results display selection"), 0, wxALL, 5 );
+                bsizer->Add(rec_select_combo, 0, wxALL, 5);
+            }
+
             grid_sbs->Add(bsizer, 0, 0, 0);
             grid_sbs->Add(_results_grid, 0, wxALL|wxEXPAND, 5);
                 
@@ -308,4 +326,33 @@ void SPFrame::OnSimulationResultsCopy( wxCommandEvent &WXUNUSED(event))
 
     //Notify
     PopMessage("Successfully copied to the clipboard.");
+}
+
+void SPFrame::OnResultsReceiverSelect(wxCommandEvent &evt)
+{
+    wxString selection = static_cast<wxComboBox*>(evt.GetEventObject())->GetValue();
+    //which result is this?
+    sim_result* result = 0;
+    
+    if (selection == "All receivers")
+    {
+        result = &_results.front();
+    }
+    else
+    {
+        for (sim_results::iterator sr = _results.begin(); sr != _results.end(); sr++)
+            if (selection == sr->receiver_names.front())
+                result = &*sr;
+        if (!result)
+            return;
+    }
+
+    grid_emulator textgrid;
+    _results_grid->ClearGrid();
+    CreateResultsTable(*result, textgrid);
+    
+    textgrid.MapToWXGrid(_results_grid);
+
+    _results_grid->GetParent()->Update();
+    _results_grid->GetParent()->Refresh();
 }

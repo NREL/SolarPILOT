@@ -2631,7 +2631,23 @@ bool SPFrame::HermiteFluxSimulationHandler(SolarField &SF, Hvector &helios)
     sim_params P;
     P.dni = SF.getVarMap()->flux.flux_dni.val;
 
-    _results.back().process_analytical_simulation(SF, P, 2, azzen, helios);
+    _results.back().process_analytical_simulation(SF, P, 2, azzen, &helios);
+
+    //if we have more than 1 receiver, create performance summaries for each and append to the results vector
+    if (SF.getActiveReceiverCount() > 1)
+    {
+        //which heliostats are aiming at which receiver?
+        unordered_map<Receiver*, Hvector> aim_map;
+        for (Hvector::iterator h = helios.begin(); h != helios.end(); h++)
+            aim_map[(*h)->getWhichReceiver()].push_back( *h );
+
+        for (Rvector::iterator rec = SF.getReceivers()->begin(); rec != SF.getReceivers()->end(); rec++)
+        {
+            _results.push_back( sim_result() );
+            Rvector recs = { *rec };
+            _results.back().process_analytical_simulation(SF, P, 2, azzen, &aim_map[*rec], &recs);
+        }
+    }
     
     return true;
 }

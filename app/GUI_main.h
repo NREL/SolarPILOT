@@ -644,7 +644,8 @@ protected:
 
 
     void OnSimulationResultsExport( wxCommandEvent &event);            
-    void OnSimulationResultsCopy( wxCommandEvent &event);            
+    void OnSimulationResultsCopy( wxCommandEvent &event);  
+    void OnResultsReceiverSelect( wxCommandEvent &event);
 
 public:
     SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
