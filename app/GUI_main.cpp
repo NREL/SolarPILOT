@@ -701,7 +701,7 @@ void SPFrame::CreateInputPages(wxWindow *parent, PagePanel *pagepanel)
     //Display a black results page
     this->_results.clear();
     wxScrolledWindow *page = new wxScrolledWindow(this);
-    CreateResultsSummaryPage(page, this->_results);
+    CreateResultsSummaryPage(page);
     _page_panel->InsertPage( _page_panel->GetPagePosition( pageNames.results_flux )+1, page, pageNames.results_summary, ID_ICON_TABLE, 1, pageNames.results );
 
     //Bind all of the input objects to handle changes in values
@@ -1910,7 +1910,7 @@ bool SPFrame::GetGeomState()
     return _geom_modified; 
 }
 
-void SPFrame::DoResultsPage(sim_results &results)
+void SPFrame::DoResultsPage()
 {
     //Delete old pages
     wxWindow *page = _page_panel->GetPage(pageNames.results_summary );
@@ -1918,7 +1918,7 @@ void SPFrame::DoResultsPage(sim_results &results)
     
     page->DestroyChildren();
 
-    CreateResultsSummaryPage(swpage, results);
+    CreateResultsSummaryPage(swpage);
 
 }
 

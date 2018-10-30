@@ -54,7 +54,7 @@
 
 using namespace std;
 
-void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &results)
+void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent)
 {
     /* 
     Create page with a summary of simulation results.
@@ -68,14 +68,14 @@ void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &re
     {
         
         int empty_sim_results = -1234;
-        if(results.size() == 0) //goto empty_sim_results_flag;
+        if(_results.size() == 0) //goto empty_sim_results_flag;
             throw empty_sim_results;  //empty sim results
 
         wxButton 
             *export_button,
             *copy_button;
     
-        int sim_type = results.at(0).sim_type;    //Use the first simulation to figure out what type of simulation it is
+        int sim_type = _results.at(0).sim_type;    //Use the first simulation to figure out what type of simulation it is
         if(sim_type == 0)
         {    //Layout
             
@@ -94,11 +94,10 @@ void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &re
             wxStaticBox *grid_sb = new wxStaticBox(parent, wxID_ANY, wxT("Flux simulation results summary"));
             wxStaticBoxSizer *grid_sbs = new wxStaticBoxSizer(grid_sb, wxVERTICAL);
         
-            sim_result *res = &results.at(0);
-
             _results_grid = new wxGrid(parent, wxID_ANY, wxDefaultPosition, wxSize(350,600));
             grid_emulator textgrid;
-            CreateResultsTable(*res, textgrid);
+            CreateResultsTable(_results.front(), textgrid);
+            _results_grid->CreateGrid(textgrid.GetNumberRows(),textgrid.GetNumberCols());
             textgrid.MapToWXGrid(_results_grid);
             _results_grid->SetRowLabelSize(200);
 
@@ -137,12 +136,13 @@ void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &re
         
             _results_grid = new wxGrid(parent, wxID_ANY, wxDefaultPosition, wxSize(350,600));
             grid_emulator textgrid;
-            CreateParametricsTable(_par_data, results, textgrid);
+            CreateParametricsTable(_par_data, _results, textgrid);
+            _results_grid->CreateGrid(textgrid.GetNumberRows(), textgrid.GetNumberCols());
             textgrid.MapToWXGrid(_results_grid);
-        
+
             _results_grid->SetRowLabelSize(200);
 
-        
+
             int nrow=_results_grid->GetNumberRows(),
                 ncol=_results_grid->GetNumberCols();
             for(int i=0; i<ncol; i++)

@@ -492,7 +492,7 @@ private:
     void CreateSimulationsLayoutTab(wxScrolledWindow *parent);
     void CreateSimulationsFluxTab(wxScrolledWindow *parent);
     void CreateSimulationsParametricsTab(wxScrolledWindow *parent);
-    void CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &results);
+    void CreateResultsSummaryPage(wxScrolledWindow *parent);
     void CreateOptimizationPage(wxScrolledWindow *parent);
 #if _SANDBOX == 1
     bool Sandbox();
@@ -716,7 +716,7 @@ public:
     void SetGeomState(bool state);
     bool GetGeomState();
 
-    void DoResultsPage(sim_results &results);
+    void DoResultsPage();  //create from _results
     void SAMInputParametric();
     void SAMInputParametric2();
     void LayoutSimulationExport(SolarField &SF, wxString &fname, std::vector<bool> &options, wxString &header, wxString &delim, bool quiet = false);

@@ -673,7 +673,7 @@ void SPFrame::OnDoPerformanceSimulation( wxCommandEvent &event)
             UpdateFieldPlotSelections();
             UpdateFluxPlotSelections();
 
-            DoResultsPage(_results);
+            DoResultsPage();
             
             UpdateLayoutGrid();    //update to show new aim points
             //Go to the new flux plot

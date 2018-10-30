@@ -778,7 +778,7 @@ void SPFrame::OnParametricSimulate( wxCommandEvent &WXUNUSED(event))
 
         ParametricSimulate(_par_data);
     
-        DoResultsPage(_results);
+        DoResultsPage();
             
         //Show the simulation results
         _page_panel->SetActivePage( pageNames.results_summary );
@@ -1430,7 +1430,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
 
         StopSimTimer();
         SetSimulationStatus(false, _in_user_param_simulation, _user_par_button);
-        DoResultsPage(_results);
+        DoResultsPage();
 
         //Show the simulation results
         _page_panel->SetActivePage( pageNames.results_summary );
