@@ -218,6 +218,7 @@ void FieldPlot::SetPlotData(SolarField &SF, int plot_option)
 	ld.ylim[1] = extents[1];
 	ld.min_unit_dx = ld.min_unit_dy = _SF->getHeliostatTemplates()->at(0)->getCollisionRadius()*2.;
 
+    _helio_hash.reset();        //make sure the heliostat hash tree is cleaned out (Was causing crashes without this)
 	_helio_hash.create_mesh(ld);
 	for(size_t i=0; i<helios->size(); i++)
 	{
