@@ -190,6 +190,8 @@ optimize	max_gs_iter	IN	INT	5	none	FALSE			X	Max. refinement iterations	Maximum 
 optimize	max_iter	IN	INT	200	none	TRUE				Maximum iterations	Maximum number of times the optimization can iterate
 optimize	max_step	IN	DOUBLE	0.06	none	TRUE				Initial step size	Maximum total relative step size during optimization
 optimize	power_penalty	IN	DOUBLE	2	none	TRUE				Power shortage penalty	Relative weight in the objective function given to power to the receiver below the required minimum
+optimize	multirec_opt_timeout	IN	DOUBLE	60	sec	FALSE				Multi-receiver optimization solver time	Maximum allowable solver time for multiple receiver heliostat position and aimpoint optimization
+optimize	multirec_screen_mult	IN	DOUBLE	1.25	none	FALSE				Multi-receiver heliostat screen fraction	The number of heliostats required to meet this value times the design power of each receiver are considered for layout
 optimize	aspect_display	OUT	DOUBLE		none	FALSE				Current receiver aspect ratio (H/W)	Current receiver aspect ratio (H/W)
 optimize	gs_refine_ratio	OUT	DOUBLE		none	FALSE			X	Refinement relative bounding box	The relative step size of the refined area during refinement simulations. More iterations will allow greater refinement
 parametric	class_name	IN	STRING	Parametric Simulation	none	FALSE				Class name	Class name
@@ -238,6 +240,7 @@ receiver	rec_name	IN	STRING	Receiver 1		FALSE				Receiver template name	Receiver
 receiver	rec_offset_x	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - X axis	Offset of receiver center in the East(+)/West(-) direction from the tower
 receiver	rec_offset_y	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - Y axis	Offset of receiver center in the North(+)/South(-) direction from the tower
 receiver	rec_offset_z	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - Z axis	Offset of the receiver center in the vertical direction, positive upwards
+receiver	rec_offset_reference	IN	STRING	0	none	FALSE	combo	Tower=0		Receiver offset reference	Receiver offset is relative to the position of the selected item. Options include tower or other receivers.
 receiver	rec_type	IN	STRING	0	none	FALSE	combo	External cylindrical=0;Flat plate=2		Receiver type	Receiver geometrical configuration
 receiver	rec_width	IN	DOUBLE	17	m	TRUE				Receiver width	Receiver width for cavity or flat receivers
 receiver	span_max	IN	DOUBLE	180	deg	TRUE			X	Max. receiver panel span angle	Maximum (CW) bound of the arc defining the receiver surface
@@ -251,6 +254,7 @@ receiver	piping_loss	OUT	DOUBLE	0	MW	FALSE				Receiver piping loss	Thermal loss 
 receiver	rec_aspect	OUT	DOUBLE	1.2	none	TRUE				Receiver aspect ratio (H/W)	Ratio of receiver height to width
 receiver	therm_eff	OUT	DOUBLE	0	none	FALSE				Receiver calculated thermal efficiency	Receiver calculated thermal efficiency
 receiver	therm_loss	OUT	DOUBLE	0	MW	FALSE				Design-point thermal loss	Receiver thermal loss at design
+receiver	q_rec_des	OUT	DOUBLE	0	MW	FALSE				Design-point thermal power	Power produced by the receiver at design after thermal losses
 solarfield	accept_max	IN	DOUBLE	180	deg	TRUE				Maximum solar field extent angle	Upper bound of the angular range containing the heliostat field
 solarfield	accept_min	IN	DOUBLE	-180	deg	TRUE				Minimum solar field extent angle	Lower bound of the angular range containing the heliostat field
 solarfield	az_spacing	IN	DOUBLE	2	none	TRUE				Azimuthal spacing factor	Azimuthal spacing factor for the first row of heliostats after a reset. Heliostats separated by heliostat width times this factor.

@@ -94,11 +94,20 @@ void SPFrame::CreateMasterReceiverPage(wxScrolledWindow *parent)
     sbs->Add(but_sizer, 0, wxALL, 5);
     sbs->Add(_rec_config, 0, wxALL, 5);
 
-    
     wxString msg = wxT("Note: Each enabled receiver template will be used in the simulation.");
     wxStaticText *htext = new wxStaticText(parent, wxID_ANY, msg);
     htext->SetForegroundColour(_helptext_colour);
     sbs->Add(htext, 0, wxALL, 5);
+
+    wxStaticBox *sbopt = new wxStaticBox(parent, wxID_ANY, wxT("Multi-receiver aimpoint and layout optimization"));
+    wxStaticBoxSizer *sbsopt = new wxStaticBoxSizer(sbopt, wxVERTICAL);
+    InputControl *multirec_opt_timeout = new InputControl(parent, wxID_ANY, _variables.opt.multirec_opt_timeout);
+    InputControl *multirec_screen_mult = new InputControl(parent, wxID_ANY, _variables.opt.multirec_screen_mult);
+    sbsopt->Add(multirec_opt_timeout);
+    sbsopt->Add(multirec_screen_mult);
+    _input_map[multirec_opt_timeout->getVarObject()] = multirec_opt_timeout;
+    _input_map[multirec_screen_mult->getVarObject()] = multirec_screen_mult;
+
 
     //create objects for specifying the receiver power fractions
     _rec_power_fractions = new wxGrid(parent, wxID_ANY, wxDefaultPosition);
@@ -123,6 +132,7 @@ void SPFrame::CreateMasterReceiverPage(wxScrolledWindow *parent)
 
     wxBoxSizer *main_sizer = new wxBoxSizer(wxVERTICAL);
     main_sizer->Add(sbs, 0, wxALL, 5);
+    main_sizer->Add(sbsopt, 0, wxALL, 5);
     main_sizer->Add(power_sizer, 0, wxALL, 5);
     parent->SetSizer(main_sizer);
 
