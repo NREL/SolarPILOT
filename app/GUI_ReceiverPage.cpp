@@ -595,6 +595,8 @@ void SPFrame::UpdateReceiverPowerGrid()
     /*
     Update the power limit grid on the receiver templates page
     */
+    _SF.updateCalculatedReceiverPower(_variables);
+
     int ncol = 5;
     if (_rec_power_fractions->GetNumberCols() != ncol) {
         _rec_power_fractions->DeleteCols(0, _rec_power_fractions->GetNumberCols());
@@ -621,16 +623,6 @@ void SPFrame::UpdateReceiverPowerGrid()
     //set the correct number of rows in the table
     if (_rec_power_fractions->GetNumberRows() > 0)
         _rec_power_fractions->DeleteRows(0, _rec_power_fractions->GetNumberRows());
-
-    //Figure out what the sum of all fractions is. This will be used to scale the values.
-    double pow_frac_total = 0.;
-    for (int i = 0; i < (int)_variables.recs.size(); i++)
-        if( _variables.recs[i].is_enabled.val )
-            pow_frac_total += _variables.recs[i].power_fraction.val;
-    
-    //validate pow_frac_total
-    if (pow_frac_total <= 0.)
-        pow_frac_total = 1.;
 
     //Fill in the data
     int cur_row = 0;
@@ -663,7 +655,7 @@ void SPFrame::UpdateReceiverPowerGrid()
         double pf;
         if ( !pfs.ToDouble(&pf) )
             pf = 1.;
-        wxString newpower = wxString::Format("%.2f", _variables.sf.q_des.val * pf/pow_frac_total );
+        wxString newpower = wxString::Format("%.2f", _variables.recs.at(i).q_rec_des.Val() );
         _rec_power_fractions->SetCellValue(cur_row, 4, newpower);
 
         cur_row++;
@@ -683,6 +675,11 @@ void SPFrame::UpdateReceiverPowerGrid()
     _rec_power_fractions->AutoSizeColumns();
 
     //if the power fraction is not unity, warn the user
+    double pow_frac_total = 0.;
+    for (int i = 0; i < (int)_variables.recs.size(); i++)
+        if (_variables.recs[i].is_enabled.val)
+            pow_frac_total += _variables.recs[i].power_fraction.val;
+    
     if (std::abs(pow_frac_total - 1.) > 1.e-3)
         _msg_rec_power_fractions->Show(true);
     else
