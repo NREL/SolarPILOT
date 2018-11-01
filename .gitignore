@@ -22,6 +22,7 @@ build_vs2017/x64/
 build_vs2017/win32/
 build_vs2017/build/
 build_vs2017/SolarPILOT_vs2017.aps
+build_vs2017/*.txt
 build_linux/solarpilot
 *.iobj
 *.ipdb
