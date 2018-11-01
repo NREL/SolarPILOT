@@ -269,23 +269,30 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
         *rec_offset_x = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_offset_x),
         *rec_offset_y = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_offset_y),
         *rec_offset_z = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_offset_z),
+        *rec_offset_reference = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_offset_reference),
         *is_open_geom = new InputControl(parent, wxID_ANY, _variables.recs[id].is_open_geom);
         
     OutputControl
+        *rec_offset_x_global = new OutputControl(parent, wxID_ANY, _variables.recs[id].rec_offset_x_global),
+        *rec_offset_y_global = new OutputControl(parent, wxID_ANY, _variables.recs[id].rec_offset_y_global),
+        *rec_offset_z_global = new OutputControl(parent, wxID_ANY, _variables.recs[id].rec_offset_z_global),
         *optical_height = new OutputControl(parent, wxID_ANY, _variables.recs[id].optical_height); 
 
     //informational text
-    msg = "Receiver position offset is relative to the tower location {x=0 + x_offset,\n"
-        "y=0 + y_offset} and tower height {z=tow. height + z_offset}.";
+    msg = "Receiver position offset is relative to the specified object.";
     wxStaticText *rmsg = new wxStaticText(parent, wxID_ANY, msg);
     rmsg->SetForegroundColour(_helptext_colour);
 
     sbs1->Add(rmsg);
+    sbs1->Add(rec_offset_reference);
     sbs1->Add(rec_offset_x);
     sbs1->Add(rec_offset_y);
     sbs1->Add(rec_offset_z);
-    sbs1->Add(is_open_geom);
     sbs1->Add(optical_height);
+    sbs1->Add(rec_offset_x_global);
+    sbs1->Add(rec_offset_y_global);
+    sbs1->Add(rec_offset_z_global);
+    sbs1->Add(is_open_geom);
 
     //Optical properties
     wxStaticBox *sb2 = new wxStaticBox(parent, wxID_ANY, wxT("Optical properties"));
@@ -402,8 +409,8 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
 
 
     InputControl *inputs[] = {rec_type, is_polygon, n_panels, panel_rotation, rec_height, rec_diameter, rec_width, aperture_type, rec_azimuth, rec_elevation, 
-                              rec_cav_rad, rec_cav_cdepth, rec_offset_x, rec_offset_y, rec_offset_z, span_min, therm_loss_base,
-                              piping_loss_coef, piping_loss_const, span_max, peak_flux, absorptance, accept_ang_type, 
+                              rec_cav_rad, rec_cav_cdepth, rec_offset_reference, rec_offset_x, rec_offset_y, rec_offset_z, 
+                              span_min, therm_loss_base, piping_loss_coef, piping_loss_const, span_max, peak_flux, absorptance, accept_ang_type, 
                               is_open_geom, accept_ang_x, accept_ang_y, NULL};
     int i=0;
     while(inputs[i] != NULL)
@@ -413,7 +420,8 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     }
     
     i=0;
-    OutputControl *outputs[] = {rec_aspect, optical_height, absorber_area, therm_loss, piping_loss, NULL};
+    OutputControl *outputs[] = {rec_aspect, optical_height, rec_offset_x_global, rec_offset_y_global, rec_offset_z_global, 
+                                absorber_area, therm_loss, piping_loss, NULL};
     while(outputs[i] != NULL)
     { 
         _output_map[ outputs[i]->getVarObject() ] = outputs[i]; 
@@ -573,6 +581,18 @@ void SPFrame::UpdateReceiverUITemplates()
     {
         //enable or disable according to state
         ((wxScrolledWindow*)_variables.recs.at(i).cbdata.val)->Enable( _variables.recs.at(i).is_enabled.val );
+
+        //update the combo choices for the offset reference dropdown
+        _variables.recs.at(i).rec_offset_reference.combo_clear();
+        _variables.recs.at(i).rec_offset_reference.combo_add_choice("Tower", std::to_string(var_receiver::REC_OFFSET_REFERENCE::TOWER) );
+        for (int j = 0; j < ntemp; j++)
+        {
+            if (_variables.recs.at(i).rec_name.val == _variables.recs.at(j).rec_name.val)
+                continue;   //don't add an option for the same receiver
+
+            _variables.recs.at(i).rec_offset_reference.combo_add_choice( _variables.recs.at(j).rec_name.val, _variables.recs.at(j).id.as_string() );
+        }
+        _input_map[ static_cast<spbase*>( &_variables.recs.at(i).rec_offset_reference ) ]->updateComboChoices();
     }
 
     //Update page values and bindings

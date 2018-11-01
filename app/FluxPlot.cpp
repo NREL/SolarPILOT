@@ -374,9 +374,9 @@ void FluxPlot::DoPaint(wxDC &_pdc)
             double raz = vrec->rec_azimuth.val*D2R;
             double rel = vrec->rec_elevation.val*D2R;
             double tht = vrec->optical_height.Val();
-            double offx = vrec->rec_offset_x.val;
-            double offy = vrec->rec_offset_y.val;
-            //double offz = vrec->rec_offset_z.val;
+            double offx = vrec->rec_offset_x_global.Val();
+            double offy = vrec->rec_offset_y_global.Val();
+            //double offz = vrec->rec_offset_z_global.Val();
             double rdiam = rec->getReceiverWidth(*vrec);
             double rheight = vrec->rec_height.val;
 

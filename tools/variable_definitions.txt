@@ -237,10 +237,10 @@ receiver	rec_diameter	IN	DOUBLE	17.65	m	TRUE				Receiver diameter	Receiver diame
 receiver	rec_elevation	IN	DOUBLE	0	deg	TRUE				Receiver orientation elevation	Receiver elevation orientation: 0 deg to the horizon, negative rotating downward
 receiver	rec_height	IN	DOUBLE	21.6	m	TRUE				Receiver height	Height of the absorbing component
 receiver	rec_name	IN	STRING	Receiver 1		FALSE				Receiver template name	Receiver template name
-receiver	rec_offset_x	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - X axis	Offset of receiver center in the East(+)/West(-) direction from the tower
-receiver	rec_offset_y	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - Y axis	Offset of receiver center in the North(+)/South(-) direction from the tower
-receiver	rec_offset_z	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - Z axis	Offset of the receiver center in the vertical direction, positive upwards
-receiver	rec_offset_reference	IN	STRING	0	none	FALSE	combo	Tower=0		Receiver offset reference	Receiver offset is relative to the position of the selected item. Options include tower or other receivers.
+receiver	rec_offset_x	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - X axis	Offset of receiver center in the East(+)/West(-) direction from the reference object
+receiver	rec_offset_y	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - Y axis	Offset of receiver center in the North(+)/South(-) direction from the reference object
+receiver	rec_offset_z	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - Z axis	Offset of the receiver center in the vertical direction from the reference object, positive upwards
+receiver	rec_offset_reference	IN	STRING	0	none	FALSE	combo	Tower=-1		Receiver offset reference	Receiver offset is relative to the position of the selected item. Options include tower or other receivers.
 receiver	rec_type	IN	STRING	0	none	FALSE	combo	External cylindrical=0;Flat plate=2		Receiver type	Receiver geometrical configuration
 receiver	rec_width	IN	DOUBLE	17	m	TRUE				Receiver width	Receiver width for cavity or flat receivers
 receiver	span_max	IN	DOUBLE	180	deg	TRUE			X	Max. receiver panel span angle	Maximum (CW) bound of the arc defining the receiver surface
@@ -255,6 +255,9 @@ receiver	rec_aspect	OUT	DOUBLE	1.2	none	TRUE				Receiver aspect ratio (H/W)	Rati
 receiver	therm_eff	OUT	DOUBLE	0	none	FALSE				Receiver calculated thermal efficiency	Receiver calculated thermal efficiency
 receiver	therm_loss	OUT	DOUBLE	0	MW	FALSE				Design-point thermal loss	Receiver thermal loss at design
 receiver	q_rec_des	OUT	DOUBLE	0	MW	FALSE				Design-point thermal power	Power produced by the receiver at design after thermal losses
+receiver	rec_offset_x_global	OUT	DOUBLE	0	m	FALSE				Receiver global positioning offset - X axis	Offset of receiver center in the East(+)/West(-) direction from the tower
+receiver	rec_offset_y_global	OUT	DOUBLE	0	m	FALSE				Receiver global positioning offset - Y axis	Offset of receiver center in the North(+)/South(-) direction from the tower
+receiver	rec_offset_z_global	OUT	DOUBLE	0	m	FALSE				Receiver global positioning offset - Z axis	Offset of the receiver center in the vertical direction, positive upwards
 solarfield	accept_max	IN	DOUBLE	180	deg	TRUE				Maximum solar field extent angle	Upper bound of the angular range containing the heliostat field
 solarfield	accept_min	IN	DOUBLE	-180	deg	TRUE				Minimum solar field extent angle	Lower bound of the angular range containing the heliostat field
 solarfield	az_spacing	IN	DOUBLE	2	none	TRUE				Azimuthal spacing factor	Azimuthal spacing factor for the first row of heliostats after a reset. Heliostats separated by heliostat width times this factor.

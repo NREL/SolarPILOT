@@ -2510,7 +2510,7 @@ bool SPFrame::SolTraceFluxBinning(SolarField &SF)
             raz = RV->rec_azimuth.val*D2R;
             rh = RV->rec_height.val;
             
-            sp_point offset(RV->rec_offset_x.val, RV->rec_offset_y.val, RV->optical_height.Val() );   //optical height includes z offset
+            sp_point offset(RV->rec_offset_x_global.Val(), RV->rec_offset_y_global.Val(), RV->optical_height.Val() );   //optical height includes z offset
 
             //The number of points in the flux grid 
             //(x-axis is angular around the circumference, y axis is receiver height)
@@ -2563,7 +2563,7 @@ bool SPFrame::SolTraceFluxBinning(SolarField &SF)
             rh = RV->rec_height.val;
             rw = Rec->getReceiverWidth(*RV); 
             
-            sp_point offset(RV->rec_offset_x.val, RV->rec_offset_y.val, RV->optical_height.Val() );   //optical height includes z offset
+            sp_point offset(RV->rec_offset_x_global.Val(), RV->rec_offset_y_global.Val(), RV->optical_height.Val() );   //optical height includes z offset
 
             //The number of points in the flux grid 
             //(x-axis receiver width, y axis is receiver height)
