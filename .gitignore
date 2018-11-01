@@ -16,6 +16,7 @@ src/Custom/
 *.res
 *.o
 *.a
+*~*.xlsx
 ~script
 build_vs2017/.vs/
 build_vs2017/x64/
