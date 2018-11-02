@@ -1844,7 +1844,12 @@ void SPFrame::UpdateFluxPlotSelections()
     _rec_select->Clear();
     Rvector *active_recs = _SF.getReceivers();
     for (int i = 0; i < active_recs->size(); i++)
-        _rec_select->Append(active_recs->at(i)->getVarMap()->rec_name.val);
+    {
+        std::string rname = active_recs->at(i)->getVarMap()->rec_name.val;
+        _rec_select->Append(rname);
+        if (i == 0)
+            _rec_select->SetValue(rname);
+    }
 
 }
 
