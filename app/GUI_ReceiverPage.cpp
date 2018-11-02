@@ -454,7 +454,8 @@ void SPFrame::OnReceiverAdd( wxCommandEvent &WXUNUSED(event))
         name = "Receiver " + name;
     
         bool no_errs = false;
-        while( ! no_errs)
+        bool cancelled = false;
+        while( ! (no_errs || cancelled) )
         {
             
             rename_dlg *dlg = new rename_dlg(this, wxID_ANY, "Receiver geometry name", name, wxDefaultPosition, wxSize(350,100));
@@ -486,11 +487,11 @@ void SPFrame::OnReceiverAdd( wxCommandEvent &WXUNUSED(event))
             }
             else
             {
-                no_errs = false;
+                cancelled = true;
             }
             dlg->Destroy();
         }
-        if(no_errs)
+        if(no_errs && !cancelled)
         {
             //Re-create the solar field object
             _SF.Create(_variables);
