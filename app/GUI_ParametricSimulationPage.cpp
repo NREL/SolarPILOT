@@ -1321,6 +1321,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
                 //Get all of the heliostats
                 helios = *_par_SF.getHeliostats();
             }
+            int n_old_result = _results.size();
             _results.push_back(sim_result());
             //if the simulation is SolTrace, we need to automatically generate new aim points according to the specified method
             if( vset.flux.flux_model.mapval() == var_fluxsim::FLUX_MODEL::SOLTRACE )
@@ -1331,7 +1332,9 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
             }
         
             if(!sim_cancelled) sim_cancelled = sim_cancelled || !DoPerformanceSimulation(_par_SF, vset, helios);
-            _results.back().sim_type = 3;
+            for(int r= n_old_result; r<_results.size(); r++)
+                _results.at(r).sim_type = 3;
+            int n_new_result = _results.size() - n_old_result;
 
             //------------------------------------------------------------------
             //export performance data
@@ -1339,23 +1342,32 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
             {
                 wxString fname;
                 fname.Printf("%s/userparam_summary_%d.csv",_working_dir.GetPath().c_str(),i+1);
-                grid_emulator gridtable;
-                CreateResultsTable(_results.back(), gridtable);
-
-                //Write the table
-                wxArrayStr textresults;
-                gridtable.GetPrintableTable(textresults, "");
-
+                
                 //open and write the file
                 wxTextFile fout(fname);
-                if(! (fout.Exists() ? fout.Open() : fout.Create()) )
+                fout.Clear();
+                if (!(fout.Exists() ? fout.Open() : fout.Create()))
                 {
-                    PopMessage("Error opening the parametric output file \""+fname+"\". Terminating the simulation");
+                    PopMessage("Error opening the parametric output file \"" + fname + "\". Terminating the simulation");
+                    fout.Close();
                     return;
                 }
-                fout.Clear();
-                for(int j=0; j<(int)textresults.size(); j++)
-                    fout.AddLine(textresults[j]);
+
+                for (int r = 0; r < n_new_result; r++)
+                { 
+                    grid_emulator gridtable;
+                    CreateResultsTable(_results.at(n_old_result + r), gridtable);
+
+                    //Write the table
+                    wxArrayStr textresults;
+                    gridtable.GetPrintableTable(textresults, "");
+                    
+                    if (n_new_result > 1)
+                        fout.AddLine(wxString::Format("Performance for:, %s", r == 0 ? "All receivers" : _results.at(n_old_result + r).receiver_names.front()));
+                    
+                    for(int j=0; j<(int)textresults.size(); j++)
+                        fout.AddLine(textresults[j]);
+                }
                 fout.Write();
                 fout.Close();
             }
@@ -1390,7 +1402,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
                 wxString fname;
                 fname.Printf("%s/userparam_field-plot_%d.png", save_field_dir.c_str(), i+1);
                 wxClientDC pdc(this);
-                _plot_frame->SetPlotData(_par_SF, FIELD_PLOT::EFF_TOT);
+                _plot_frame->SetPlotData(_par_SF, _plot_select->GetSelection() );
                 _plot_frame->DoPaint(pdc);
                 wxBitmap *bitmap = _plot_frame->GetBitmap();
                 wxImage image = bitmap->ConvertToImage();

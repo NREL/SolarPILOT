@@ -3556,6 +3556,7 @@ void SPFrame::ParametricSimulate( parametric &P )
                 if(helios.size() == 0)
                     throw spexception("Empty field layout - can't perform parametric performance simulation!");
 
+                int n_old_result = _results.size();
                 try
                 {
                     _results.push_back(sim_result());
@@ -3564,7 +3565,6 @@ void SPFrame::ParametricSimulate( parametric &P )
                 {
                     throw spexception("Memory error creating results storage array");
                 }
-                
                 try
                 {
                     if(!sim_cancelled) sim_cancelled = sim_cancelled || !DoPerformanceSimulation(_par_SF, varpar, helios); //Returns TRUE if successful
@@ -3579,7 +3579,9 @@ void SPFrame::ParametricSimulate( parametric &P )
                 }
         
                 //reset the sim type to parametric
-                _results.back().sim_type = 3;
+                int n_new_result = _results.size() - n_old_result;
+                for(int i=n_old_result; i<_results.size(); i++)
+                    _results.at(i).sim_type = 3;
 
                 //update the layout data stored in the variable map
                 try
@@ -3607,30 +3609,34 @@ void SPFrame::ParametricSimulate( parametric &P )
                         wxString emsg = "Error opening the parametric output file \""+fname+"\". Terminating the simulation";
                         throw spexception(emsg.ToStdString());
                     }
-                    grid_emulator gridtable;
                     try
                     {
-                        CreateResultsTable(_results.back(), gridtable);
-
-                        //Write the table
-                        wxArrayStr textresults;
-                        gridtable.GetPrintableTable(textresults, "");
-
-                    
                         fout.Clear();
-                        for(int j=0; j<(int)unlinked.size(); j++)
+                        for (int r = 0; r < n_new_result; r++)
                         {
-                            fout.AddLine(wxString::Format("%s, %s", unlinked.at(j)->display_text.c_str(), unlinked.at(j)->sim_values.back().c_str()) );
-                        }
-                        for(int j=0; j<(int)linked.size(); j++)
-                        {
-                            fout.AddLine(wxString::Format("%s, %s", linked.at(j)->display_text.c_str(), linked.at(j)->sim_values.back().c_str()) );
-                        }
-                        fout.AddLine(wxString::Format("Layout?, %s", full_layout ? "True" : "False") );
+                            grid_emulator gridtable;
+                            CreateResultsTable(_results.at(n_old_result + r), gridtable);
 
-                        for(int j=0; j<(int)textresults.size(); j++)
-                            fout.AddLine(textresults[j]);
-                    
+                            //Write the table
+                            wxArrayStr textresults;
+                            gridtable.GetPrintableTable(textresults, "");
+
+                            if (n_new_result > 1)
+                                fout.AddLine(wxString::Format("Performance for:, %s", r==0 ? "All receivers" : _results.at(n_old_result+r).receiver_names.front()));
+
+                            for (int j = 0; j < (int)unlinked.size(); j++)
+                            {
+                                fout.AddLine(wxString::Format("%s, %s", unlinked.at(j)->display_text.c_str(), unlinked.at(j)->sim_values.back().c_str()));
+                            }
+                            for (int j = 0; j < (int)linked.size(); j++)
+                            {
+                                fout.AddLine(wxString::Format("%s, %s", linked.at(j)->display_text.c_str(), linked.at(j)->sim_values.back().c_str()));
+                            }
+                            fout.AddLine(wxString::Format("Layout?, %s", full_layout ? "True" : "False"));
+
+                            for (int j = 0; j < (int)textresults.size(); j++)
+                                fout.AddLine(textresults[j]);
+                        }
                     }
                     catch(spexception &err)
                     {
@@ -3675,7 +3681,7 @@ void SPFrame::ParametricSimulate( parametric &P )
                     wxString fname;
                     fname.Printf("%s/param_field-plot_%d.png", save_field_dir.c_str(), nsim+1);
                     wxClientDC pdc(this);
-                    _plot_frame->SetPlotData(_par_SF, FIELD_PLOT::EFF_TOT);
+                    _plot_frame->SetPlotData(_par_SF, _plot_select->GetSelection());
                     _plot_frame->DoPaint(pdc);
                     wxBitmap *bitmap = _plot_frame->GetBitmap();
                     wxImage image = bitmap->ConvertToImage();
@@ -3856,21 +3862,24 @@ void SPFrame::CreateParametricsTable(parametric &par, sim_results &results, grid
 {
     //how many simulations are there?
     int nsim = results.size();
+    int nrec = std::max( (int)results.front().receiver_names.size(), 1);
     //how many variables were parameterized?
     int nvar = par.size();
 
-    table.CreateGrid(18+nvar, 1+nsim);
+    table.CreateGrid(18+nvar+(nrec>1 ? 1 : 0), 1+nsim);
     table.SetColLabelValue(0, "Units");
     for(int i=0; i<nsim; i++)
     {
         wxString collab;
-        collab.Printf("Simulation %d", i+1);
+        collab.Printf("Simulation %d", i/(nrec+1)+1);
         table.SetColLabelValue(i+1, collab);
     }
 
     int id=0;
     for(int i=0; i<nvar; i++)
         table.SetRowLabelValue(id++, par.at(i).display_text);
+    if(nrec > 1)
+        table.SetRowLabelValue(id++, "Which receiver");
     table.SetRowLabelValue(id++, "Total plant cost");
     table.SetRowLabelValue(id++, "Cost/Energy metric");
     table.SetRowLabelValue(id++, "Simulated heliostat area");
@@ -3894,6 +3903,8 @@ void SPFrame::CreateParametricsTable(parametric &par, sim_results &results, grid
     id=0;
     for(int i=0; i<nvar; i++)
         table.SetCellValue(par.at(i).units, id++, 0);
+    if (nrec > 1)
+        table.SetCellValue("-", id++, 0);
     table.SetCellValue("$", id++, 0);
     table.SetCellValue("-", id++, 0);
     table.SetCellValue("m^2", id++, 0);
@@ -3918,17 +3929,24 @@ void SPFrame::CreateParametricsTable(parametric &par, sim_results &results, grid
     {
         sim_result *result = &results.at(i);
         id=0;
+
         for(int j=0; j<nvar; j++)
         {
+            int iadj = i;
+            if(nrec > 1 ) 
+                iadj /= (nrec + 1);
+
             if(par.at(j).data_type == "location")
             {
-                table.SetCellValue(ioutil::name_only( par.at(j).sim_values[i] ), id++, i+1);
+                table.SetCellValue(ioutil::name_only( par.at(j).sim_values[iadj] ), id++, i+1);
             }
             else
             { 
-                table.SetCellValue(par.at(j).sim_values[i], id++, i+1); 
+                table.SetCellValue(par.at(j).sim_values[iadj], id++, i+1);
             }
         }
+        if (nrec > 1)
+            table.SetCellValue(i%(nrec+1)==0 ? "All receivers" : result->receiver_names.front(), id++, i + 1);
         table.SetCellValue(gui_util::FormatAsCurrency( result->total_installed_cost ), id++, i+1);
         table.SetCellValue(to_string(result->coe_metric, "%.3f"), id++, i+1);
         table.SetCellValue(to_string(result->total_heliostat_area, "%.1f"), id++, i+1);
