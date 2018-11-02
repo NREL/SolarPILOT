@@ -584,15 +584,6 @@ void SPFrame::UpdateReceiverUITemplates()
         ((wxScrolledWindow*)_variables.recs.at(i).cbdata.val)->Enable( _variables.recs.at(i).is_enabled.val );
 
         //update the combo choices for the offset reference dropdown
-        _variables.recs.at(i).rec_offset_reference.combo_clear();
-        _variables.recs.at(i).rec_offset_reference.combo_add_choice("Tower", std::to_string(var_receiver::REC_OFFSET_REFERENCE::TOWER) );
-        for (int j = 0; j < ntemp; j++)
-        {
-            if (_variables.recs.at(i).rec_name.val == _variables.recs.at(j).rec_name.val)
-                continue;   //don't add an option for the same receiver
-
-            _variables.recs.at(i).rec_offset_reference.combo_add_choice( _variables.recs.at(j).rec_name.val, _variables.recs.at(j).id.as_string() );
-        }
         _input_map[ static_cast<spbase*>( &_variables.recs.at(i).rec_offset_reference ) ]->updateComboChoices();
     }
 
