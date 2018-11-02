@@ -1297,21 +1297,28 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             int cboxpos_x = left_buffer + 10;
             int cboxpos_y = top_buffer + 5;
 
+            std::vector< std::string > r_in_map;
             for (unordered_map<std::string, wxColour>::iterator rc = receiver_color_map.begin(); rc != receiver_color_map.end(); rc++)
+                r_in_map.push_back(rc->first);
+            std::sort(r_in_map.begin(), r_in_map.end());
+
+            for (int rc = 0; rc < r_in_map.size(); rc++)
             {
-                _dc.SetBrush(rc->second);
-                wxSize labsize = _dc.GetTextExtent(rc->first);
+                int xstartpos = cboxpos_x;
 
-                _dc.DrawRectangle(cboxpos_x, cboxpos_y, 1.3*labsize.GetHeight(), labsize.GetHeight());
-                cboxpos_x += (int)(1.3*labsize.GetHeight()) + 4;
+                _dc.SetBrush(receiver_color_map[ r_in_map[rc] ]);
+                wxSize labsize = _dc.GetTextExtent(r_in_map[rc]);
+                int th = labsize.GetHeight();
+                _dc.DrawRectangle(cboxpos_x, cboxpos_y, 1.3*th, th);
+                cboxpos_x += (int)(1.3*th) + 4;
                 
-                _dc.DrawText(rc->first, cboxpos_x, cboxpos_y);
-                cboxpos_x += labsize.GetWidth()+5;
+                _dc.DrawText(r_in_map[rc], cboxpos_x, cboxpos_y);
+                cboxpos_x += labsize.GetWidth()+th/2;
 
-                if (cboxpos_x > 0.8 * canvsize[0] + left_buffer)
+                if (2*cboxpos_x-xstartpos > canvsize[0]*0.9 + left_buffer)
                 {
                     cboxpos_x = left_buffer + 10;
-                    cboxpos_y += 25;
+                    cboxpos_y += 1.3*th;
                 }
             }
         }
