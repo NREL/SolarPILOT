@@ -96,7 +96,8 @@ enum FIELD_PLOT
     ENERGY,
     RECEIVER,
     MESH,
-    EFF_CLOUD
+    EFF_CLOUD,
+    _END
 };
 
 

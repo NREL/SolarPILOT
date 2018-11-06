@@ -419,6 +419,7 @@ private:
     //
     wxPanel
         *_par_panel;
+    std::vector<int> _plot_export_selections;
     wxButton
         *_par_add_var,
         *_par_remove_var,
@@ -624,6 +625,7 @@ protected:
     void OnParVarlistSelected( wxCommandEvent &event);
     void OnParVarDoubleClick( wxCommandEvent &event);
     void OnParametricSimulate( wxCommandEvent &event);            
+    void OnParFieldSaveChoicePanel(wxCommandEvent &event);
     void OnUserVarCount( wxCommandEvent &event);
     void OnUserSimCount( wxCommandEvent &event);
     void OnUserParImport( wxCommandEvent &event);

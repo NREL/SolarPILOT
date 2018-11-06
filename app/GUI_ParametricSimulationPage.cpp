@@ -161,7 +161,14 @@ void SPFrame::CreateSimulationsParametricsTab( wxScrolledWindow *param)
     wxBoxSizer *par_save_sizer = new wxBoxSizer(wxVERTICAL);
     par_save_sizer->Add(par_save_helio);
     par_save_sizer->Add(par_save_summary);
-    par_save_sizer->Add(par_save_field_img);
+    
+    wxBoxSizer *par_save_field_img_sizer = new wxBoxSizer(wxHORIZONTAL);
+    par_save_field_img_sizer->Add(par_save_field_img);
+    wxButton *morebut = new wxButton(_par_panel, wxID_ANY, "...", wxDefaultPosition, wxSize(25,21));
+    par_save_field_img_sizer->Add( morebut );
+    morebut->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnParFieldSaveChoicePanel), NULL, this);
+    par_save_sizer->Add(par_save_field_img_sizer);
+
     par_save_sizer->Add(par_save_flux_img);
     par_save_sizer->Add(par_save_flux_dat);
     par_panel_sizer->Add(par_save_sizer, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -723,6 +730,117 @@ void SPFrame::OnParEditLinkages( wxCommandEvent &WXUNUSED(event))
         PopMessage("Caught unspecified error. Simulation is terminating.", "OnParEditLinkages Error", wxICON_ERROR|wxOK);
         return;
     }
+}
+
+
+class PlotSelectDialog : public wxDialog
+{
+    std::vector< wxCheckBox* > _options;
+    
+public:
+    PlotSelectDialog(wxWindow* parent, wxWindowID id, wxString label,
+        std::vector<std::string> options, wxPoint pos = wxDefaultPosition, wxSize size = wxDefaultSize,
+        long style = wxDEFAULT_DIALOG_STYLE | wxSTAY_ON_TOP | wxRESIZE_BORDER)
+    {
+        Create(parent, id, label, pos, size, style);
+
+        wxFlexGridSizer *fgs = new wxFlexGridSizer(2, wxSize(5, 5));
+        _options.clear();
+        for (size_t i = 0; i < options.size(); i++)
+        {
+            _options.push_back( new wxCheckBox(this, wxID_ANY, options.at(i)) );
+            fgs->Add(_options.back());
+        }
+
+        wxBoxSizer *main = new wxBoxSizer(wxVERTICAL);
+        main->Add(fgs, 0, wxALL, 5);
+
+        wxButton *apply = new wxButton(this, wxID_ANY, "Apply");
+        apply->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlotSelectDialog::OnApplyButton), NULL, this);
+        wxButton *cancel = new wxButton(this, wxID_ANY, "Cancel");
+        cancel->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlotSelectDialog::OnCancelButton), NULL, this);
+        wxButton *all = new wxButton(this, wxID_ANY, "All");
+        all->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlotSelectDialog::OnAllButton), NULL, this);
+        wxButton *none = new wxButton(this, wxID_ANY, "None");
+        none->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlotSelectDialog::OnNoneButton), NULL, this);
+
+        wxBoxSizer *bsizer = new wxBoxSizer(wxHORIZONTAL);
+        bsizer->Add(apply, 0, wxALL, 5);
+        bsizer->Add(cancel, 0, wxALL, 5);
+        bsizer->Add(all, 0, wxALL, 5);
+        bsizer->Add(none, 0, wxALL, 5);
+        main->Add(bsizer, 0, wxALL, 5);
+
+        this->SetSizer(main);
+        this->CenterOnParent();
+    };
+
+    void OnApplyButton(wxCommandEvent &)
+    {
+        this->EndModal(wxID_APPLY);
+    };
+
+    void OnCancelButton(wxCommandEvent&)
+    {
+        this->EndModal(wxID_CANCEL);
+    };
+
+    void OnAllButton(wxCommandEvent &)
+    {
+        std::vector<int> all;
+        for (int i = 0; i < (int)_options.size(); i++)
+            all.push_back(i);
+        SetSelections(&all);
+    };
+
+    void OnNoneButton(wxCommandEvent &)
+    {
+        SetSelections();
+    };
+
+    std::vector<int> GetSelectionIds()
+    {
+        std::vector<int> sel;
+        for (size_t i = 0; i < _options.size(); i++)
+            if (_options.at(i)->IsChecked())
+                sel.push_back(i);
+        return sel;
+    };
+
+    void SetSelections(std::vector<int> *indices = 0)
+    {
+        if (indices)
+        {
+            SetSelections();    //clear
+            for (size_t i = 0; i < indices->size(); i++)
+                if (indices->at(i) < _options.size())
+                    _options.at(indices->at(i))->SetValue(true);
+        }
+        else
+        {
+            for (size_t i = 0; i < _options.size(); i++)
+                _options.at(i)->SetValue(false);
+        }
+        this->Update();
+        this->Refresh();
+    };
+};
+
+
+void SPFrame::OnParFieldSaveChoicePanel(wxCommandEvent &)
+{
+    std::vector< std::string > choices = _plot_frame->GetPlotChoices();
+
+    PlotSelectDialog dlg(this, wxID_ANY, "Select saved figures", choices);
+    
+    dlg.SetSelections(&_plot_export_selections);
+
+    if (dlg.ShowModal() == wxID_APPLY)
+    {
+        _plot_export_selections = dlg.GetSelectionIds();
+    }
+    else
+    {}
 }
 
 void SPFrame::OnParametricSimulate( wxCommandEvent &WXUNUSED(event))
