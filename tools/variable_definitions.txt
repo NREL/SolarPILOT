@@ -199,12 +199,12 @@ parametric	eff_file_name	IN	STRING	eff_array.csv		FALSE				Efficiency file name	
 parametric	flux_file_name	IN	STRING	fluxmap.csv		FALSE				Fluxmap file name	Name of the output file containing the fluxmap data
 parametric	fluxmap_format	IN	STRING	0		FALSE	combo	SAM format=0;12x10 array=1;Specified dimensions=2		Fluxmap data dimensions	Dimensions of the fluxmap data (rows,cols)
 parametric	is_fluxmap_norm	IN	BOOL	TRUE		FALSE	checkbox			Normalize flux data	Flux data is reported as normalized
-parametric	par_save_field_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save field efficiency image	Save field efficiency image
+parametric	par_save_field_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save field image	Save field image based on selected options
 parametric	par_save_flux_dat	IN	BOOL	FALSE	none	FALSE	checkbox			Save receiver flux data	Save receiver flux data
 parametric	par_save_flux_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save receiver flux image	Save receiver flux image
 parametric	par_save_helio	IN	BOOL	FALSE	none	FALSE	checkbox			Save heliostat performance data	Save detailed heliostat performance data for each run
 parametric	par_save_summary	IN	BOOL	FALSE	none	FALSE	checkbox			Save performance summary information	Save detailed system performance data to a file for each run
-parametric	upar_save_field_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save field efficiency image (User)	Save field efficiency image
+parametric	upar_save_field_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save field image (User)	Save field image based on selected options
 parametric	upar_save_flux_dat	IN	BOOL	FALSE	none	FALSE	checkbox			Save receiver flux data (User)	Save receiver flux data
 parametric	upar_save_flux_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save receiver flux image (User)	Save receiver flux image
 parametric	upar_save_helio	IN	BOOL	FALSE	none	FALSE	checkbox			Save heliostat performance data (User)	Save detailed heliostat performance data for each run

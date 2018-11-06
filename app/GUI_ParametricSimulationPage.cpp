@@ -244,6 +244,12 @@ void SPFrame::CreateSimulationsParametricsTab( wxScrolledWindow *param)
     _input_map[ upar_save_flux_img->getVarObject() ] = upar_save_flux_img;
     _input_map[ upar_save_flux_dat->getVarObject() ] = upar_save_flux_dat;
     
+
+    wxBoxSizer *upar_save_field_img_sizer = new wxBoxSizer(wxHORIZONTAL);
+    upar_save_field_img_sizer->Add(upar_save_field_img);
+    wxButton *umorebut = new wxButton(_user_par_panel, wxID_ANY, "...", wxDefaultPosition, wxSize(25, 21));
+    upar_save_field_img_sizer->Add(umorebut);
+    umorebut->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnParFieldSaveChoicePanel), NULL, this);
         
     //Progress gauges
     _user_single_gauge = new wxGauge(_user_par_panel, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL|wxGA_SMOOTH);
@@ -282,7 +288,8 @@ void SPFrame::CreateSimulationsParametricsTab( wxScrolledWindow *param)
     wxBoxSizer *user_save_sizer = new wxBoxSizer(wxVERTICAL);
     user_save_sizer->Add(upar_save_helio);
     user_save_sizer->Add(upar_save_summary);
-    user_save_sizer->Add(upar_save_field_img);
+    //user_save_sizer->Add(upar_save_field_img);
+    user_save_sizer->Add(upar_save_field_img_sizer);
     user_save_sizer->Add(upar_save_flux_img);
     user_save_sizer->Add(upar_save_flux_dat);
     user_bottom_sizer->Add(user_save_sizer, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -1517,14 +1524,17 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
             //save field image
             if(save_field_img && !sim_cancelled)
             {
-                wxString fname;
-                fname.Printf("%s/userparam_field-plot_%d.png", save_field_dir.c_str(), i+1);
-                wxClientDC pdc(this);
-                _plot_frame->SetPlotData(_par_SF, _plot_select->GetSelection() );
-                _plot_frame->DoPaint(pdc);
-                wxBitmap *bitmap = _plot_frame->GetBitmap();
-                wxImage image = bitmap->ConvertToImage();
-                image.SaveFile( fname, wxBITMAP_TYPE_PNG );
+                for (std::vector<int>::iterator pn = _plot_export_selections.begin(); pn != _plot_export_selections.end(); pn++)
+                {
+                    wxString fname;
+                    fname.Printf("%s/userparam_field-plot_%d_%d.png", save_field_dir.c_str(), i+1, *pn);
+                    wxClientDC pdc(this);
+                    _plot_frame->SetPlotData(_par_SF, *pn );
+                    _plot_frame->DoPaint(pdc);
+                    wxBitmap *bitmap = _plot_frame->GetBitmap();
+                    wxImage image = bitmap->ConvertToImage();
+                    image.SaveFile( fname, wxBITMAP_TYPE_PNG );
+                }
 
             }
             //save flux image

@@ -3678,14 +3678,17 @@ void SPFrame::ParametricSimulate( parametric &P )
                 //save field image
                 if(save_field_img && !sim_cancelled)
                 {
-                    wxString fname;
-                    fname.Printf("%s/param_field-plot_%d.png", save_field_dir.c_str(), nsim+1);
-                    wxClientDC pdc(this);
-                    _plot_frame->SetPlotData(_par_SF, _plot_select->GetSelection());
-                    _plot_frame->DoPaint(pdc);
-                    wxBitmap *bitmap = _plot_frame->GetBitmap();
-                    wxImage image = bitmap->ConvertToImage();
-                    image.SaveFile( fname, wxBITMAP_TYPE_PNG );
+                    for (std::vector<int>::iterator pn = _plot_export_selections.begin(); pn != _plot_export_selections.end(); pn++)
+                    {
+                        wxString fname;
+                        fname.Printf("%s/param_field-plot_%d_%d.png", save_field_dir.c_str(), nsim+1, *pn);
+                        wxClientDC pdc(this);
+                        _plot_frame->SetPlotData(_par_SF, *pn);
+                        _plot_frame->DoPaint(pdc);
+                        wxBitmap *bitmap = _plot_frame->GetBitmap();
+                        wxImage image = bitmap->ConvertToImage();
+                        image.SaveFile( fname, wxBITMAP_TYPE_PNG );
+                    }
 
                 }
                 //save flux image
