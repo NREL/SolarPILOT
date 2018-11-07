@@ -1280,6 +1280,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
                 ||  layout_str.find("1") != string::npos;
 
             //iterate over all variable keys
+            std::vector< std::string > variable_record;
             for(int j=0; j<(int)simvars.size(); j++)
             {
                 if( lower_case(simvars[j]) == "regenerate layout") continue;
@@ -1287,7 +1288,13 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
                 spbase *vdat = vset._varptrs.at(simvars[j]); //getVarByString(vset, keys[j]);
 
                 //set the variable in the map
-                vdat->set_from_string( _user_sim_table[simvars[j]].at(i).c_str() );
+                std::string vval = _user_sim_table[simvars[j]].at(i);
+                vdat->set_from_string( vval.c_str() );
+
+                //keep track of variable name and value for reporting
+                variable_record.push_back(
+                    wxString::Format("%s,%s;", vdat->short_desc.c_str(), vval.c_str()).ToStdString()
+                );
             }
 
             //Update the climate file if needed
@@ -1439,6 +1446,15 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
                     wxClientDC pdc(this);
                     _plot_frame->SetPlotData(_par_SF, *pn );
                     _plot_frame->SolarFieldAnnotation(&_par_SF, &_results.at(n_old_result + 1), _plot_annot_selections);
+                    std::string *annot = _plot_frame->getSolarFieldAnnotationObject();
+                    if (std::find(_plot_annot_selections.begin(), _plot_annot_selections.end(), PlotSelectDialog::VARIABLES) != _plot_annot_selections.end())
+                    {
+                        for (int j = 0; j < (int)variable_record.size(); j++)
+                        {
+                            annot->append(variable_record.at(j));
+                        }
+                    }
+
                     _plot_frame->DoPaint(pdc);
                     wxBitmap *bitmap = _plot_frame->GetBitmap();
                     wxImage image = bitmap->ConvertToImage();
