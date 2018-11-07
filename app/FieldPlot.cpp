@@ -109,6 +109,7 @@ FieldPlot::FieldPlot(wxPanel *parent, SolarField &SF, const int plot_option,
     _origin_pixels[0] = -999;
     _ctrl_down = false;
     _helios_annot.clear();
+    _solarfield_annot.clear();
 
     _plot_choices.clear();
     /*
@@ -206,6 +207,7 @@ void FieldPlot::SetPlotData(SolarField &SF, int plot_option)
     _is_data_ready = plot_option != 0;
     _helios_select.clear();
     _helios_annot.clear();
+    _solarfield_annot.clear();
 
     //update the calculation of the heliostat KD tree for quick mouse interaction
 	Hvector *helios = _SF->getHeliostats();
@@ -1120,7 +1122,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         _dc.DrawRectangle(0, 0, canvsize[0], 1);
 
         //if annotating, draw here
-        if( _helios_annot.size() > 0 )
+        if( _helios_annot.size() + _solarfield_annot.size() > 0 )
         {
 			int annot_text_linesep = 2; //line separation/buffer
 			int annot_col_buffer = 20; //column separation
@@ -1129,8 +1131,8 @@ void FieldPlot::DoPaint(wxDC &_pdc)
 			int annot_box_text_buffer = 5; //buffer between annot box and internal text
 			int annot_text_id_offset = 15; //offset between left of base text and ID lines
 
-			//parse the annotation
-			std::vector<std::string> lines = split(_helios_annot, ";");
+			//parse the annotation. solarfield annotation overrides heliostat annotation
+			std::vector<std::string> lines = split( _solarfield_annot.size() > 0 ? _solarfield_annot : _helios_annot, ";");
 
 			//figure out the widest line
 			int abox_text_height = 0, col0width = 0, col1width = 0, i_id = -1;
@@ -1176,6 +1178,9 @@ void FieldPlot::DoPaint(wxDC &_pdc)
 			//adjust bounding box for the ID's line
 			
 			std::vector<std::string> idlines; //vector of lines to save
+
+            if (_solarfield_annot.size() > 0)
+                i_id = -1; //don't do the individual ID stuff if we're in solarfield mode
 
 			wxString idlab = "Selected heliostat ID's:";
 			if (i_id > 0)
@@ -1235,7 +1240,9 @@ void FieldPlot::DoPaint(wxDC &_pdc)
 			int current_y = Ty;
 
 			//max drawable y
-			int max_y_lim = top_buffer + plotsize[1] - bottom_buffer - annot_box_frame_buffer - annot_box_linewidth - annot_box_text_buffer - _dc.GetTextExtent(idlines.back()).GetHeight() - annot_text_linesep;
+			int max_y_lim = top_buffer + plotsize[1] - bottom_buffer - annot_box_frame_buffer - annot_box_linewidth - annot_box_text_buffer - annot_text_linesep;
+            if (idlines.size() > 0)
+                max_y_lim -= _dc.GetTextExtent(idlines.back()).GetHeight();
 
 			for (size_t i = 0; i < lines.size(); i++)
 			{
@@ -1682,6 +1689,62 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
 		annot << _helios_select.at(i)->getId() << (i<nh-1 ? "." : "");
 
 	_helios_annot = annot.str();
+
+    return;
+}
+
+void FieldPlot::SolarFieldAnnotation(SolarField *SF, sim_result *R, std::vector<int> &options)
+{
+    /*
+    Produce an annotated text box that describes the solar field
+    */
+    
+    _solarfield_annot.clear();
+    
+    //validation
+    if (!SF || !R || options.size() == 0)
+        return;
+
+    std::stringstream annot;
+
+    for (std::vector<int>::iterator opt = options.begin(); opt != options.end(); opt++)
+    {
+        switch (*opt)
+        {
+        case PlotSelectDialog::DATE_TIME:
+            annot << "Date/time," << R->time_date_stamp << ";";
+            break;
+        case PlotSelectDialog::SUN_POSITION:
+            annot << "Sun position," << wxString::Format("%d az %d el (deg)", (int)R->solar_az, (int)(90. - R->solar_zen)) << ";";
+            break;
+        case PlotSelectDialog::DNI:
+            annot << "DNI," << (int)(R->dni*1000.) << " W/m2;";
+            break;
+        case PlotSelectDialog::TOTAL_EFF:
+            annot << "Total efficiency," << (int)(1000.*(R->eff_total_sf.wtmean / R->eff_absorption.wtmean))/10. << "%;";
+            break;
+        case PlotSelectDialog::COSINE_EFF:
+            annot << "Cosine efficiency," << std::setw(4) << (int)(1000.*R->eff_cosine.wtmean) / 10. << "%;";
+            break;
+        case PlotSelectDialog::BLOCK_EFF:
+            annot << "Block/Shade efficiency," << std::setw(4) << (int)(1000.*R->eff_blocking.wtmean*R->eff_shading.wtmean) / 10. << "%;";
+            break;
+        case PlotSelectDialog::ATT_EFF:
+            annot << "Attenuation efficiency," << std::setw(4) << (int)(1000.*R->eff_attenuation.wtmean) / 10. << "%;";
+            break;
+        case PlotSelectDialog::INT_EFF:
+            annot << "Intercept efficiency," << std::setw(4) << (int)(1000.* R->eff_intercept.wtmean) / 10. << "%;";
+            break;
+        case PlotSelectDialog::TOT_POWER:
+            annot << "Total power," << std::setw(4) << R->power_absorbed/1000. << " MW;";
+            break;
+        case PlotSelectDialog::AIM_METHOD:
+            annot << "Aim method," << R->aim_method << ";";
+            break;
+        }
+    }
+
+    _solarfield_annot = annot.str();
 
     return;
 }

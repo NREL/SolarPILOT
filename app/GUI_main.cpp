@@ -3683,8 +3683,22 @@ void SPFrame::ParametricSimulate( parametric &P )
                     {
                         wxString fname;
                         fname.Printf("%s/param_field-plot_%d_%d.png", save_field_dir.c_str(), nsim+1, *pn);
-                        wxClientDC pdc(this);
+                        wxClientDC pdc(this); 
                         _plot_frame->SetPlotData(_par_SF, *pn);
+                        _plot_frame->SolarFieldAnnotation(&_par_SF, &_results.at(n_old_result), _plot_annot_selections);
+                        std::string *annot = _plot_frame->getSolarFieldAnnotationObject();
+                        if (std::find(_plot_annot_selections.begin(), _plot_annot_selections.end(), PlotSelectDialog::VARIABLES) != _plot_annot_selections.end())
+                        {
+                            for (int j = 0; j < (int)unlinked.size(); j++)
+                            {
+                                annot->append(wxString::Format("%s,%s;", unlinked.at(j)->display_text.c_str(), unlinked.at(j)->sim_values.back().c_str()));
+                            }
+                            for (int j = 0; j < (int)linked.size(); j++)
+                            {
+                                annot->append(wxString::Format("%s,%s;", linked.at(j)->display_text.c_str(), linked.at(j)->sim_values.back().c_str()));
+                            }
+                        }
+
                         _plot_frame->DoPaint(pdc);
                         wxBitmap *bitmap = _plot_frame->GetBitmap();
                         wxImage image = bitmap->ConvertToImage();
