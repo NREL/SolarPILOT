@@ -37,6 +37,7 @@
     <ClInclude Include="..\app\plot_base.h" />
     <ClInclude Include="..\app\plot_contourf.h" />
     <ClInclude Include="..\app\plot_scatter.h" />
+    <ClInclude Include="..\app\plot_select_dialog.h" />
     <ClInclude Include="..\app\rec_select_dialog.h" />
     <ClInclude Include="..\app\rename_dialog.h" />
     <ClInclude Include="..\app\scripting.h" />
@@ -75,6 +76,7 @@
     <ClCompile Include="..\app\plot_base.cpp" />
     <ClCompile Include="..\app\plot_contourf.cpp" />
     <ClCompile Include="..\app\plot_scatter.cpp" />
+    <ClCompile Include="..\app\plot_select_dialog.cpp" />
     <ClCompile Include="..\app\rec_select_dialog.cpp" />
     <ClCompile Include="..\app\rename_dialog.cpp" />
     <ClCompile Include="..\app\sandbox.cpp" />

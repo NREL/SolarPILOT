@@ -84,6 +84,7 @@ wxWidgets
 #include "STSimulateThread.h"
 #include "STObject.h"
 #include "IOUtil.h"
+#include "plot_select_dialog.h"
 
 using namespace std;
 

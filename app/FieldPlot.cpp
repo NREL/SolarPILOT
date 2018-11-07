@@ -54,11 +54,14 @@
 #include <wx/dc.h>
 #include <wx/dcgraph.h>
 #include <wx/dcbuffer.h>
+#include <sstream>
+#include <iomanip>
 
 #include "FieldPlot.h"
 #include "gui_util.h"
 #include "OpticalMesh.h"
 #include "SolarField.h"
+#include "plot_select_dialog.h"
 
 #include "plot_base.h"      //include this for the color maps. We don't directly use this class here, yet (but should)
 
@@ -194,7 +197,6 @@ st_hash_tree *FieldPlot::GetKDHashTree()
 {
     return &_helio_hash;
 }
-
 
 void FieldPlot::SetPlotData(SolarField &SF, int plot_option)
 {

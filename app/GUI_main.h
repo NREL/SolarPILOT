@@ -420,6 +420,7 @@ private:
     wxPanel
         *_par_panel;
     std::vector<int> _plot_export_selections;
+    std::vector<int> _plot_annot_selections;
     wxButton
         *_par_add_var,
         *_par_remove_var,
