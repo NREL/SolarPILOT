@@ -1715,7 +1715,7 @@ void FieldPlot::SolarFieldAnnotation(SolarField *SF, sim_result *R, std::vector<
             annot << "Date/time," << R->time_date_stamp << ";";
             break;
         case PlotSelectDialog::SUN_POSITION:
-            annot << "Sun position," << wxString::Format("%d az %d el (deg)", (int)R->solar_az, (int)(90. - R->solar_zen)) << ";";
+            annot << "Sun position," << wxString::Format("%d az %d el (deg)", (int)(R->solar_az*R2D), (int)(90. - R->solar_zen*R2D)) << ";";
             break;
         case PlotSelectDialog::DNI:
             annot << "DNI," << (int)(R->dni*1000.) << " W/m2;";
