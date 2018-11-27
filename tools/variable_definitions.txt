@@ -227,6 +227,8 @@ receiver	is_polygon	IN	BOOL	FALSE		TRUE	checkbox		X	Represent receiver as polygo
 receiver	n_panels	IN	INT	12	none	TRUE			X	Number of receiver panels	Number of receiver panels (polygon facets) for a polygonal receiver geometry
 receiver	panel_rotation	IN	DOUBLE	0	deg	TRUE			X	Receiver panel azimuthal orientation	Azimuth angle between the normal vector to the primary 'north' panel and North
 receiver	peak_flux	IN	DOUBLE	1000	kW/m2	TRUE				Allowable peak flux	Maximum allowable flux intensity on any portion of the receiver surface
+receiver	flux_profile_type	IN	STRING	0	none	TRUE	combo	Uniform=0;User=1		Desired receiver flux profile	Desired receiver flux profile type, Image Size Priority mode only
+receiver	user_flux_profile	IN	STRING		none	FALSE				User flux profile data	User flux profile data
 receiver	power_fraction	IN	DOUBLE	1	none	TRUE				Multi-receiver power fraction	Target fraction of absorbed energy delivered by the heliostat field in configurations with multiple receivers
 receiver	piping_loss_coef	IN	DOUBLE	10.2	kW/m	TRUE				Receiver piping loss coefficient	Loss per meter of tower height
 receiver	piping_loss_const	IN	DOUBLE	0	kW	TRUE				Receiver piping loss constant	Constant thermal loss due to piping - doesn't scale with tower height

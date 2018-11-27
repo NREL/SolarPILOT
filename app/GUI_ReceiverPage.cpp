@@ -298,13 +298,53 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     wxStaticBox *sb2 = new wxStaticBox(parent, wxID_ANY, wxT("Optical properties"));
     wxStaticBoxSizer *sbs2 = new wxStaticBoxSizer(sb2, wxVERTICAL);
     InputControl
+        *absorptance = new InputControl(parent, wxID_ANY, _variables.recs[id].absorptance),
         *peak_flux = new InputControl(parent, wxID_ANY, _variables.recs[id].peak_flux),
-        *absorptance = new InputControl(parent, wxID_ANY, _variables.recs[id].absorptance);
+        *flux_profile_type = new InputControl(parent, wxID_ANY, _variables.recs[id].flux_profile_type);
     string sid = my_to_string(id);    
     
-    
-    sbs2->Add(peak_flux);
+    //----------------------------------------
+    wxPanel *user_flux_panel = new wxPanel(parent);
+
+    wxButton *import_user_flux = new wxButton(user_flux_panel, wxID_ANY, "Import", wxDefaultPosition, wxDefaultSize, 0L, wxDefaultValidator, sid);
+    import_user_flux->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnUserFluxImport), NULL, this);
+    wxButton *export_user_flux = new wxButton(user_flux_panel, wxID_ANY, "Export", wxDefaultPosition, wxDefaultSize, 0L, wxDefaultValidator, sid);
+    export_user_flux->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnUserFluxExport), NULL, this);
+    wxSpinCtrl *n_flux_x = new wxSpinCtrl(user_flux_panel, wxID_ANY, "5", wxDefaultPosition, _spin_ctrl_size, wxSP_ARROW_KEYS | wxALIGN_RIGHT, 1, 1000, 5, sid);
+    n_flux_x->Connect(wxEVT_COMMAND_SPINCTRL_UPDATED, wxCommandEventHandler(SPFrame::OnUserFluxNx), NULL, this);
+    wxSpinCtrl *n_flux_y = new wxSpinCtrl(user_flux_panel, wxID_ANY, "5", wxDefaultPosition, _spin_ctrl_size, wxSP_ARROW_KEYS | wxALIGN_RIGHT, 1, 1000, 5, sid);
+    n_flux_y->Connect(wxEVT_COMMAND_SPINCTRL_UPDATED, wxCommandEventHandler(SPFrame::OnUserFluxNy), NULL, this);
+
+    wxBoxSizer *flux_button_sizer = new wxBoxSizer(wxHORIZONTAL);
+    flux_button_sizer->Add(import_user_flux, 0, wxALL, 5);
+    flux_button_sizer->Add(export_user_flux, 0, wxALL, 5);
+    flux_button_sizer->AddSpacer(10);
+    flux_button_sizer->Add(new wxStaticText(user_flux_panel, wxID_ANY, "X-axis bins"), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
+    flux_button_sizer->Add(n_flux_x, 0, wxALL, 5);
+    flux_button_sizer->AddSpacer(10);
+    flux_button_sizer->Add(new wxStaticText(user_flux_panel, wxID_ANY, "Y-axis bins"), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
+    flux_button_sizer->Add(n_flux_y, 0, wxALL, 5);
+
+    wxBoxSizer *user_flux_sizer = new wxBoxSizer(wxVERTICAL);
+    user_flux_sizer->Add(flux_button_sizer);
+
+    wxGrid *user_flux_grid = new wxGrid(user_flux_panel, wxID_ANY, wxDefaultPosition, wxSize(250, 250), 262144L, sid);
+    user_flux_grid->CreateGrid(5, 5);
+    user_flux_grid->Connect(wxEVT_GRID_CELL_CHANGED, wxGridEventHandler(SPFrame::OnUserFluxGridChange), NULL, this);
+
+    user_flux_sizer->Add(user_flux_grid, 1, wxEXPAND | wxALL, 5);
+
+    user_flux_panel->SetSizer(user_flux_sizer);
+
+    flux_profile_type->setPanelObject("User", *user_flux_panel);
+    //----------------------------------------
+
     sbs2->Add(absorptance);
+    sbs2->Add(peak_flux);
+    sbs2->Add(flux_profile_type);
+    sbs2->Add(user_flux_panel);
+
+    flux_profile_type->updateInputDisplay();
 
     //-----Thermal losses group
     wxStaticBox *sb3 = new wxStaticBox(parent, wxID_ANY, wxT("Thermal losses"));
@@ -410,7 +450,7 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
 
     InputControl *inputs[] = {rec_type, is_polygon, n_panels, panel_rotation, rec_height, rec_diameter, rec_width, aperture_type, rec_azimuth, rec_elevation, 
                               rec_cav_rad, rec_cav_cdepth, rec_offset_reference, rec_offset_x, rec_offset_y, rec_offset_z, 
-                              span_min, therm_loss_base, piping_loss_coef, piping_loss_const, span_max, peak_flux, absorptance, accept_ang_type, 
+                              span_min, therm_loss_base, piping_loss_coef, piping_loss_const, span_max, peak_flux, flux_profile_type, absorptance, accept_ang_type,
                               is_open_geom, accept_ang_x, accept_ang_y, NULL};
     int i=0;
     while(inputs[i] != NULL)
@@ -1027,4 +1067,48 @@ void SPFrame::OnHeatLossWindFocus( wxFocusEvent &event)
     
     UpdateCalculatedGUIValues();
     event.Skip();
+}
+
+
+void SPFrame::OnUserFluxImport(wxCommandEvent &evt)
+{
+    int recid;
+    to_integer( static_cast<wxButton*>(evt.GetEventObject())->GetName().ToStdString() , &recid );
+
+    UpdateUserFluxGrid(recid);
+}
+
+void SPFrame::OnUserFluxExport(wxCommandEvent &evt) 
+{
+    int recid;
+    to_integer(static_cast<wxButton*>(evt.GetEventObject())->GetName().ToStdString(), &recid);
+
+
+}
+
+void SPFrame::OnUserFluxNx(wxCommandEvent &evt)
+{
+    int recid;
+    to_integer(static_cast<wxSpinCtrl*>(evt.GetEventObject())->GetName().ToStdString(), &recid);
+    UpdateUserFluxGrid(recid);
+}
+
+void SPFrame::OnUserFluxNy(wxCommandEvent &evt)
+{
+    int recid;
+    to_integer(static_cast<wxSpinCtrl*>(evt.GetEventObject())->GetName().ToStdString(), &recid);
+    UpdateUserFluxGrid(recid);
+}
+
+void SPFrame::OnUserFluxGridChange(wxGridEvent &evt)
+{
+    int recid;
+    to_integer(static_cast<wxGrid*>(evt.GetEventObject())->GetName().ToStdString(), &recid);
+    UpdateUserFluxGrid(recid);
+}
+
+void SPFrame::UpdateUserFluxGrid(int id)
+{
+
+    return;
 }

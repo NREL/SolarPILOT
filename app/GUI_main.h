@@ -570,6 +570,11 @@ protected:
     
     void OnHeatLossLoadFocus( wxFocusEvent &event);
     void OnHeatLossWindFocus( wxFocusEvent &event);
+    void OnUserFluxImport(wxCommandEvent &event);
+    void OnUserFluxExport(wxCommandEvent &event);
+    void OnUserFluxNx(wxCommandEvent &event);
+    void OnUserFluxNy(wxCommandEvent &event);
+    void OnUserFluxGridChange(wxGridEvent &event);
 
     void OnDoLayout( wxCommandEvent &event);            
     void OnLayoutImport( wxCommandEvent &event);            
@@ -719,6 +724,7 @@ public:
 
     void SetGeomState(bool state);
     bool GetGeomState();
+    void UpdateUserFluxGrid(int id = 0);
 
     void DoResultsPage();  //create from _results
     void SAMInputParametric();
