@@ -1854,30 +1854,41 @@ void SPFrame::UpdateFluxPlotSelections()
 
 }
 
-void SPFrame::GridCount( wxSpinCtrl *sc, wxGrid *grid)
+void SPFrame::GridCount(wxSpinCtrl *sc, wxGrid *grid)
 {
     int nnew = sc->GetValue();
-    int nprev = grid->GetNumberRows();
+    GridCount(grid->GetNumberCols(), nnew, grid);
+}
+
+void SPFrame::GridCount(int nrow, int ncol, wxGrid *grid)
+{
+    int nprevc = grid->GetNumberCols();
+    int nprevr = grid->GetNumberRows();
     
-    if(nnew > 0)
+    //Add the correct number of rows
+    if(nrow > nprevr)
     {
-        //Add the correct number
-        if(nnew > nprev)
-        {
-            grid->AppendRows(nnew-nprev);
-        }
-        else if(nnew < nprev)
-        {
-            grid->DeleteRows(nnew, nprev-nnew);
-        }
-        else
-        { /* do nothing */ }
-            }
-    else
-    {
-        sc->SetValue(1);
+        grid->AppendRows(nrow-nprevr);
     }
+    else if(nrow < nprevr)
+    {
+        grid->DeleteRows(nrow, nprevr-nrow);
+    }
+    else
+    { /* do nothing */ }
     
+    //Add the correct number of columns
+    if (ncol > nprevc)
+    {
+        grid->AppendCols(ncol - nprevc);
+    }
+    else if (ncol < nprevc)
+    {
+        grid->DeleteCols(ncol, nprevc - ncol);
+    }
+    else
+    { /* do nothing */
+    }
 }
 
 void SPFrame::SetGeomState(bool state)

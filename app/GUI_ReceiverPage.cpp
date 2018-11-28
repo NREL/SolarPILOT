@@ -51,6 +51,8 @@
 
 
 #include "GUI_main.h"
+#include "IOUtil.h"
+#include <fstream>
 
 using namespace std;
 
@@ -310,9 +312,9 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     import_user_flux->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnUserFluxImport), NULL, this);
     wxButton *export_user_flux = new wxButton(user_flux_panel, wxID_ANY, "Export", wxDefaultPosition, wxDefaultSize, 0L, wxDefaultValidator, sid);
     export_user_flux->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnUserFluxExport), NULL, this);
-    wxSpinCtrl *n_flux_x = new wxSpinCtrl(user_flux_panel, wxID_ANY, "5", wxDefaultPosition, _spin_ctrl_size, wxSP_ARROW_KEYS | wxALIGN_RIGHT, 1, 1000, 5, sid);
+    wxSpinCtrl *n_flux_x = new wxSpinCtrl(user_flux_panel, wxID_ANY, "5", wxDefaultPosition, _spin_ctrl_size, wxSP_ARROW_KEYS | wxALIGN_RIGHT, 2, 1000, 5, sid);
     n_flux_x->Connect(wxEVT_COMMAND_SPINCTRL_UPDATED, wxCommandEventHandler(SPFrame::OnUserFluxNx), NULL, this);
-    wxSpinCtrl *n_flux_y = new wxSpinCtrl(user_flux_panel, wxID_ANY, "5", wxDefaultPosition, _spin_ctrl_size, wxSP_ARROW_KEYS | wxALIGN_RIGHT, 1, 1000, 5, sid);
+    wxSpinCtrl *n_flux_y = new wxSpinCtrl(user_flux_panel, wxID_ANY, "5", wxDefaultPosition, _spin_ctrl_size, wxSP_ARROW_KEYS | wxALIGN_RIGHT, 2, 1000, 5, sid);
     n_flux_y->Connect(wxEVT_COMMAND_SPINCTRL_UPDATED, wxCommandEventHandler(SPFrame::OnUserFluxNy), NULL, this);
 
     wxBoxSizer *flux_button_sizer = new wxBoxSizer(wxHORIZONTAL);
@@ -329,7 +331,10 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     user_flux_sizer->Add(flux_button_sizer);
 
     wxGrid *user_flux_grid = new wxGrid(user_flux_panel, wxID_ANY, wxDefaultPosition, wxSize(250, 250), 262144L, sid);
+    _user_flux_objects[id] = s_user_flux_objects(user_flux_grid, n_flux_y, n_flux_x);
+
     user_flux_grid->CreateGrid(5, 5);
+    UpdateUserFluxGrid(id);
     user_flux_grid->Connect(wxEVT_GRID_CELL_CHANGED, wxGridEventHandler(SPFrame::OnUserFluxGridChange), NULL, this);
 
     user_flux_sizer->Add(user_flux_grid, 1, wxEXPAND | wxALL, 5);
@@ -1075,7 +1080,73 @@ void SPFrame::OnUserFluxImport(wxCommandEvent &evt)
     int recid;
     to_integer( static_cast<wxButton*>(evt.GetEventObject())->GetName().ToStdString() , &recid );
 
-    UpdateUserFluxGrid(recid);
+    wxFileDialog filedlg(this, "Select a file for import...", wxEmptyString, wxEmptyString,
+        "Data files (*.txt;*.dat;*.csv)|*.txt;*.dat;*.csv");
+    filedlg.CentreOnParent();
+
+    //Show and process
+    if (filedlg.ShowModal() == wxID_OK)
+    {
+        wxString info = filedlg.GetPath().c_str();
+        //Try opening the file
+        if (ioutil::file_exists(info.c_str()))
+        {
+            std::string
+                files,
+                fnames = (std::string)info,
+                eol;
+            ioutil::read_file(fnames, files, eol);
+            wxString file(files), fname(fnames);
+            std::vector<std::string> entries = split(file.ToStdString(), eol);
+            int nlines = entries.size();
+
+            //determine the delimiter
+            std::vector<std::string> data;
+
+            //Find the type of delimiter
+            std::vector<std::string> delims;
+            delims.push_back(",");
+            delims.push_back(" ");
+            delims.push_back("\t");
+            delims.push_back(";");
+            std::string delim = "\t";    //initialize
+            unsigned int  ns = 0;
+            for (unsigned int i = 0; i < delims.size(); i++)
+            {
+                data = split(entries.at(0), delims.at(i));
+                if (data.size() > ns)
+                {
+                    delim = delims.at(i); ns = data.size();
+                }    //pick the delimiter that returns the most entries
+            }
+            data.clear();
+
+            wxFormatString fmt = "%f,%f;";
+            wxString stemp;
+            matrix_t<double> *vval = &_variables.recs[recid].user_flux_profile.val;
+
+            vval->clear();    //Clear
+            vval->resize(nlines, ns);
+
+            //Process all of the entries
+            for (int i = 0; i < nlines; i++)
+            {
+                data = split(entries.at(i), delim);
+
+                for (unsigned int j = 0; j < ns; j++)
+                    to_double(data.at(j), &vval->at(i,j));
+
+            }
+            //Call to the function that sets the data
+            UpdateUserFluxGrid(recid);
+        }
+        else
+        {
+            //Error: the file was not found
+            PopMessage("The specified file could not be loaded: File not found.", "Error");
+        }
+    }
+
 }
 
 void SPFrame::OnUserFluxExport(wxCommandEvent &evt) 
@@ -1083,32 +1154,179 @@ void SPFrame::OnUserFluxExport(wxCommandEvent &evt)
     int recid;
     to_integer(static_cast<wxButton*>(evt.GetEventObject())->GetName().ToStdString(), &recid);
 
+    //Get the file
+    wxFileDialog filedlg(this, "Select a path for export...", wxEmptyString, wxEmptyString,
+        "Comma separated file (*.csv)|*.txt;*.csv", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+    filedlg.CentreOnParent();
 
+    //Show and process
+    if (filedlg.ShowModal() == wxID_OK)
+    {
+        wxString info = filedlg.GetPath().c_str();
+
+        matrix_t<double> *vals = &_variables.recs[recid].user_flux_profile.val;
+
+        ofstream file;
+        file.open((string)info);
+        if (!file.is_open())
+        {
+            PopMessage("The specified file could not be opened for writing. Please ensure that the file is not open or write-protected.", "Error", wxICON_ERROR | wxOK);
+            return;
+        }
+
+        int nc = (int)vals->ncols();
+
+        for (int i = 0; i < (int)vals->nrows(); i++)
+            for (int j = 0; j < nc; j++)
+                file << vals->at(i, j) << (j < nc - 1 ? "," : "\n");
+
+        file.close();
+
+        //notify the user of a successful export
+        wxString msg;
+        msg.sprintf("%s\nFile successfully created.", info.c_str());
+        PopMessage(msg, "Success");
+    }
 }
 
 void SPFrame::OnUserFluxNx(wxCommandEvent &evt)
 {
     int recid;
-    to_integer(static_cast<wxSpinCtrl*>(evt.GetEventObject())->GetName().ToStdString(), &recid);
-    UpdateUserFluxGrid(recid);
+    wxSpinCtrl* spin = static_cast<wxSpinCtrl*>(evt.GetEventObject());
+    to_integer(spin->GetName().ToStdString(), &recid);
+
+    wxGrid* grid = _user_flux_objects[recid].gridptr;
+
+    int nspin = spin->GetValue();
+    int ngrid = grid->GetNumberCols();
+
+    if (nspin < ngrid)
+        grid->DeleteCols(nspin, ngrid-nspin);
+    else if (nspin > ngrid)
+    {
+        grid->AppendCols(nspin-ngrid);
+
+        int nc = grid->GetNumberCols();
+
+        //set the new column values to equal the last previously existing column
+        for (size_t j = ngrid; j < nspin; j++)
+            for (size_t i = 0; i < grid->GetNumberRows(); i++)
+                grid->SetCellValue(i, j, grid->GetCellValue(i, j - 1));
+
+        //update the col labels
+        for (size_t j = ngrid; j < nspin; j++)
+        {
+            _user_flux_objects[recid].gridptr->SetColLabelValue(j, std::to_string(j + 1));
+            _user_flux_objects[recid].gridptr->SetColSize(j, 50);
+        }
+    }
+    else
+        return;
+
+    UpdateUserFluxData(recid);
 }
 
 void SPFrame::OnUserFluxNy(wxCommandEvent &evt)
 {
     int recid;
-    to_integer(static_cast<wxSpinCtrl*>(evt.GetEventObject())->GetName().ToStdString(), &recid);
-    UpdateUserFluxGrid(recid);
+    wxSpinCtrl* spin = static_cast<wxSpinCtrl*>(evt.GetEventObject());
+    to_integer(spin->GetName().ToStdString(), &recid);
+    
+    if (_user_flux_objects.find(recid) == _user_flux_objects.end())
+        return;     //invalid receiver ID
+
+    wxGrid* grid = _user_flux_objects[recid].gridptr;
+
+    int nc = grid->GetNumberCols();
+
+    int nspin = spin->GetValue();
+    int ngrid = grid->GetNumberRows();
+
+    if (nspin < ngrid)
+        grid->DeleteRows(nspin, ngrid-nspin);
+    else if (nspin > ngrid)
+    {
+        grid->AppendRows(nspin-ngrid);
+
+        int nr = grid->GetNumberRows();
+
+        //set the new column values to equal the last previously existing column
+        for (size_t j = ngrid; j < nspin; j++)
+            for (size_t i = 0; i < grid->GetNumberCols(); i++)
+                grid->SetCellValue(j, i, grid->GetCellValue(j-1, i));
+        
+    }
+    else
+        return;
+
+    UpdateUserFluxData(recid);
 }
 
 void SPFrame::OnUserFluxGridChange(wxGridEvent &evt)
 {
     int recid;
     to_integer(static_cast<wxGrid*>(evt.GetEventObject())->GetName().ToStdString(), &recid);
-    UpdateUserFluxGrid(recid);
+    UpdateUserFluxData(recid);
 }
 
 void SPFrame::UpdateUserFluxGrid(int id)
 {
+    /*
+    Take the current data in the variable map string and update the interface grid.
+
+    format:
+    x1y1,x2y1,x3y1...;x1y2,x2,y2,...;...
+
+    */
+
+    if (id > _variables.recs.size() - 1)
+        return;     //out of bounds
+
+    matrix_t<double>* table = &_variables.recs[id].user_flux_profile.val;
+
+    //resize the grid
+    _user_flux_objects[id].nxptr->SetValue(table->ncols());
+    _user_flux_objects[id].nyptr->SetValue(table->nrows());
+    GridCount(table->nrows(), table->ncols(), _user_flux_objects[id].gridptr);
+
+    //update the grid
+    for (size_t i = 0; i < table->nrows(); i++)
+        for (size_t j = 0; j < table->ncols(); j++)
+            _user_flux_objects[id].gridptr->SetCellValue(i, j, wxString::Format("%f", table->at(i, j)));
+
+    //update the col labels
+    for (size_t j = 0; j < table->ncols(); j++)
+    {
+        _user_flux_objects[id].gridptr->SetColLabelValue(j, std::to_string(j + 1));
+        _user_flux_objects[id].gridptr->SetColSize(j, 50);
+    }
+
+    return;
+}
+
+void SPFrame::UpdateUserFluxData(int id)
+{
+    /*
+    Take the current data in the user flux grid and format it for storage as a string variable
+    in the variable map.
+
+    format:
+    x1y1,x2y1,x3y1...;x1y2,x2,y2,...;...
+
+    */
+       
+    wxGrid* grid = _user_flux_objects[id].gridptr;
+    matrix_t<double>* table = &_variables.recs[id].user_flux_profile.val;
+
+    int
+        nr = grid->GetNumberRows(),
+        nc = grid->GetNumberCols();
+
+    table->resize(nr, nc);
+
+    for (size_t i = 0; i < (size_t)nr; i++)
+        for (size_t j = 0; j < (size_t)nc; j++)
+            to_double(grid->GetCellValue(i, j).ToStdString(), &table->at(i, j));
 
     return;
 }

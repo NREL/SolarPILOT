@@ -321,6 +321,20 @@ private:
     std::map<std::string, std::vector<wxTextCtrl*> > _hll_coefs, _hlw_coefs;
     wxGrid *_rec_power_fractions;
     wxStaticText *_msg_rec_power_fractions;
+    struct s_user_flux_objects
+    {
+        wxSpinCtrl* nxptr;
+        wxSpinCtrl* nyptr;
+        wxGrid* gridptr;
+        s_user_flux_objects() {};
+        s_user_flux_objects(wxGrid* g, wxSpinCtrl* y, wxSpinCtrl* x)
+        {
+            nxptr = x;
+            nyptr = y;
+            gridptr = g;
+        };
+    };
+    std::map< int, s_user_flux_objects > _user_flux_objects;
 
     //Objects for Layout page
     wxGrid *_design_grid;
@@ -708,6 +722,7 @@ public:
     void PlotFontIncrease( wxString type);
     void PlotFontDecrease( wxString type);
     
+    void GridCount(int nrow, int ncol, wxGrid *grid);
     void GridCount( wxSpinCtrl *sc, wxGrid *grid );
     
     void UpdateUserSunGrid();
@@ -724,7 +739,8 @@ public:
 
     void SetGeomState(bool state);
     bool GetGeomState();
-    void UpdateUserFluxGrid(int id = 0);
+    void UpdateUserFluxGrid(int id);
+    void UpdateUserFluxData(int id);
 
     void DoResultsPage();  //create from _results
     void SAMInputParametric();
