@@ -263,8 +263,8 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
 
     //Set the version tag
 	_version_major = 1;
-	_version_minor = 2;
-	_version_patch = 1;
+	_version_minor = 3;
+	_version_patch = -1;
 
     _software_version = my_to_string(_version_major) + "." + my_to_string(_version_minor) + "." + my_to_string(_version_patch);
     _contact_info = "solarpilot.support@nrel.gov";
@@ -1857,7 +1857,7 @@ void SPFrame::UpdateFluxPlotSelections()
 void SPFrame::GridCount(wxSpinCtrl *sc, wxGrid *grid)
 {
     int nnew = sc->GetValue();
-    GridCount(grid->GetNumberCols(), nnew, grid);
+    GridCount(nnew, grid->GetNumberCols(), grid);
 }
 
 void SPFrame::GridCount(int nrow, int ncol, wxGrid *grid)

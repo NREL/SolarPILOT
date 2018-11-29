@@ -1328,5 +1328,8 @@ void SPFrame::UpdateUserFluxData(int id)
         for (size_t j = 0; j < (size_t)nc; j++)
             to_double(grid->GetCellValue(i, j).ToStdString(), &table->at(i, j));
 
+    //update scaling
+    Receiver::updateUserFluxNormalization(_variables.recs[id]);
+
     return;
 }

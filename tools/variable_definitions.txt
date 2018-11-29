@@ -250,6 +250,7 @@ receiver	span_min	IN	DOUBLE	-180	deg	TRUE			X	Min. receiver panel span angle	Min
 receiver	therm_loss_base	IN	DOUBLE	30	kW/m2	TRUE				Design point receiver thermal loss	Thermal loss from the receiver at design-point conditions
 receiver	therm_loss_load	IN	MATRIX_T	1,0,0,0	none	FALSE				Load-based thermal loss adjustment	Temperature-dependant thermal loss
 receiver	therm_loss_wind	IN	MATRIX_T	1,0,0,0	none	FALSE				Wind-based thermal loss adjustment	Wind speed-dependant thermal loss
+receiver	n_user_flux_profile	OUT	MATRIX_T		none	FALSE				Normalized user flux profile	Normalized user flux profile
 receiver	absorber_area	OUT	DOUBLE	0	m2	FALSE				Receiver absorber area	Effective area of the receiver absorber panels
 receiver	optical_height	OUT	DOUBLE	195	m	FALSE				Receiver optical height	Calculated height of the centerline of the receiver above the plane of the heliostats
 receiver	piping_loss	OUT	DOUBLE	0	MW	FALSE				Receiver piping loss	Thermal loss from non-absorber receiver piping
