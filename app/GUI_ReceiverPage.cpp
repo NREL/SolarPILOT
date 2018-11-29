@@ -260,8 +260,6 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
 		rec_type->setDisabledSiblings("External cylindrical", 2, dsibs);
     }
 
-    rec_type->updateInputDisplay();
-
 
     //Receiver positioning group
     wxStaticBox *sb1 = new wxStaticBox(parent, wxID_ANY, wxT("Receiver position"));
@@ -342,6 +340,13 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     user_flux_panel->SetSizer(user_flux_sizer);
 
     flux_profile_type->setPanelObject("User", *user_flux_panel);
+    
+    {
+        wxWindow* dsibs[] = { user_flux_panel, flux_profile_type };
+        rec_type->addDisabledSiblings("External cylindrical", 2, dsibs);
+    }
+    rec_type->updateInputDisplay();
+
     //----------------------------------------
 
     sbs2->Add(absorptance);

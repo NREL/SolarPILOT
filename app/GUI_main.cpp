@@ -1732,15 +1732,6 @@ void SPFrame::UpdateCalculatedGUIValues()
                 for(unsigned int i=0; i<disobj->size(); i++)
                         odisplay[ disobj->at(i) ] = false;
             }
-            if(disobj->size() > 0)
-            {
-                //If the control is a combobox or checkbox and there are associated disabled siblings..
-                for(unsigned int i=0; i<disobj->size(); i++)
-                {
-                    //Disable the control
-                    odisplay[ disobj->at(i) ] = false;
-                }
-            }
         }
     }
     //Check outputcontrols for override status
