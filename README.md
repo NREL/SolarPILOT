@@ -48,7 +48,7 @@ These are the general quick steps you need to follow to set up your computer for
 <tr><td>LK</td><td>https://github.com/NREL/lk</td><td>LKDIR</td></tr>
 <tr><td>WEX</td><td>https://github.com/NREL/wex</td><td>WEXDIR</td></tr>
 <tr><td>Google Test</td><td>https://github.com/google/googletest</td><td>GTEST</td></tr>
-<tr><td>SSC</td><td>https://github.com/mjwagner2/ssc/tree/solarpilot-develop</td><td>SSCDIR</td></tr>
+<tr><td>SSC</td><td>https://github.com/mjwagner2/ssc, -b solarpilot-develop</td><td>SSCDIR</td></tr>
 <tr><td>SolTrace</td><td>https://github.com/NREL/SolTrace</td><td>CORETRACEDIR</td></tr>
 <tr><td>SolarPILOT</td><td>https://github.com/NREL/SolarPILOT</td><td></td></tr>
 </table>
