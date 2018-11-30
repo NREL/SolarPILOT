@@ -82,4 +82,4 @@ branches:
   only:
 #  - master
 #  - develop 
-  - travis-test
+  - travis
