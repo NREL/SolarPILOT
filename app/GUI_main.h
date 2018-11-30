@@ -692,7 +692,7 @@ public:
     optimization *GetOptimizationDataObject();
     void  SetScriptWindowPointer(SolarPILOTScriptWindow *p);
     std::string GetVersionInfo();
-
+    wxFileName GetImageDir();
 
     void UpdateHelioUITemplates();
     void UpdateReceiverUITemplates();

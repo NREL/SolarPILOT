@@ -1522,6 +1522,11 @@ std::string SPFrame::GetVersionInfo()
     return _software_version;
 }
 
+wxFileName SPFrame::GetImageDir()
+{
+    return _image_dir;
+}
+
 void SPFrame::OnMenuRunLayout( wxCommandEvent &WXUNUSED(evt) )
 {
     //switch to the layout page
