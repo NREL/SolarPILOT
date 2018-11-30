@@ -103,10 +103,12 @@ public:
 
     void DrawScaledPolygon( wxDC &dc, double ppx, double ppy, double origin[2], double x[], double y[], int n_points);
     //colormaps
-    void ColorGradientHotCold(wxColour &col, double index);
-    void ColorGradientJet(wxColour &col, double index);
-    void ColorGradientGrayscale(wxColour &col, double index);
-    void ColorGradientParula(wxColour &col, double index);
+    static void ColorGradientHotCold(wxColour &col, double index);
+    static void ColorGradientJet(wxColour &col, double index);
+    static void ColorGradientGrayscale(wxColour &col, double index);
+    static void ColorGradientLookup(wxColour &col, double index, double* table, int nrow);
+    static void ColorGradientParula(wxColour &col, double index);
+    static void ColorGradientRainbow(wxColour &col, double index);
     //---
     double calcScale(double span, int segments);
     double bilinearInterp(double xf, double yf, double *Z);

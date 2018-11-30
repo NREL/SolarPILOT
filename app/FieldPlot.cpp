@@ -54,11 +54,16 @@
 #include <wx/dc.h>
 #include <wx/dcgraph.h>
 #include <wx/dcbuffer.h>
+#include <sstream>
+#include <iomanip>
 
 #include "FieldPlot.h"
 #include "gui_util.h"
 #include "OpticalMesh.h"
 #include "SolarField.h"
+#include "plot_select_dialog.h"
+
+#include "plot_base.h"      //include this for the color maps. We don't directly use this class here, yet (but should)
 
 using namespace std;
 
@@ -104,6 +109,7 @@ FieldPlot::FieldPlot(wxPanel *parent, SolarField &SF, const int plot_option,
     _origin_pixels[0] = -999;
     _ctrl_down = false;
     _helios_annot.clear();
+    _solarfield_annot.clear();
 
     _plot_choices.clear();
     /*
@@ -193,7 +199,6 @@ st_hash_tree *FieldPlot::GetKDHashTree()
     return &_helio_hash;
 }
 
-
 void FieldPlot::SetPlotData(SolarField &SF, int plot_option)
 {
     //assign
@@ -202,6 +207,7 @@ void FieldPlot::SetPlotData(SolarField &SF, int plot_option)
     _is_data_ready = plot_option != 0;
     _helios_select.clear();
     _helios_annot.clear();
+    _solarfield_annot.clear();
 
     //update the calculation of the heliostat KD tree for quick mouse interaction
 	Hvector *helios = _SF->getHeliostats();
@@ -216,6 +222,7 @@ void FieldPlot::SetPlotData(SolarField &SF, int plot_option)
 	ld.ylim[1] = extents[1];
 	ld.min_unit_dx = ld.min_unit_dy = _SF->getHeliostatTemplates()->at(0)->getCollisionRadius()*2.;
 
+    _helio_hash.reset();        //make sure the heliostat hash tree is cleaned out (Was causing crashes without this)
 	_helio_hash.create_mesh(ld);
 	for(size_t i=0; i<helios->size(); i++)
 	{
@@ -754,6 +761,8 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             valave = 0.;
         double *plot_vals = new double[npos];
 
+        std::vector< int > rec_count(_SF->getActiveReceiverCount(), 0);
+
         if(_option != FIELD_PLOT::LAYOUT)
         {
             for(int i=0; i<npos; i++)
@@ -813,7 +822,11 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                     int r=0;
                     for(r=0; r<(int)_SF->getReceivers()->size(); r++)
                     {
-                        if(H->getWhichReceiver() == _SF->getReceivers()->at(r)) break;
+                        if (H->getWhichReceiver() == _SF->getReceivers()->at(r))
+                        {
+                            rec_count.at(r)++;
+                            break;
+                        }
                     }
                     plot_vals[i] = (double)(r+1);
                 }
@@ -966,6 +979,8 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             }
         }
 
+        unordered_map<std::string, wxColour> receiver_color_map;
+
         //Handle round and rectangular heliostats differently
         if( heliostats->at(0)->getVarMap()->is_round.mapval() == var_heliostat::IS_ROUND::ROUND)
         {
@@ -1056,7 +1071,14 @@ void FieldPlot::DoPaint(wxDC &_pdc)
 
                     //if the heliostat is selected, use a different outline
                     wxColour gc;
-                    ColorGradientHotCold( gc, (plot_vals[i]-valmin)/(valmax - valmin) );
+                    if (_option == FIELD_PLOT::RECEIVER)
+                    {
+                        PlotBase::ColorGradientRainbow(gc, (plot_vals[i] - valmin) / (valmax+1 - valmin));
+                        //keep track of which receiver is assigned to which color
+                        receiver_color_map[H->getWhichReceiver()->getVarMap()->rec_name.val] = gc;
+                    }
+                    else
+                        ColorGradientHotCold( gc, (plot_vals[i]-valmin)/(valmax - valmin) );
 
                     bool is_selected = std::find(_helios_select.begin(), _helios_select.end(), H ) != _helios_select.end();
                     if( is_selected )
@@ -1100,7 +1122,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         _dc.DrawRectangle(0, 0, canvsize[0], 1);
 
         //if annotating, draw here
-        if( _helios_annot.size() > 0 )
+        if( _helios_annot.size() + _solarfield_annot.size() > 0 )
         {
 			int annot_text_linesep = 2; //line separation/buffer
 			int annot_col_buffer = 20; //column separation
@@ -1109,8 +1131,8 @@ void FieldPlot::DoPaint(wxDC &_pdc)
 			int annot_box_text_buffer = 5; //buffer between annot box and internal text
 			int annot_text_id_offset = 15; //offset between left of base text and ID lines
 
-			//parse the annotation
-			std::vector<std::string> lines = split(_helios_annot, ";");
+			//parse the annotation. solarfield annotation overrides heliostat annotation
+			std::vector<std::string> lines = split( _solarfield_annot.size() > 0 ? _solarfield_annot : _helios_annot, ";");
 
 			//figure out the widest line
 			int abox_text_height = 0, col0width = 0, col1width = 0, i_id = -1;
@@ -1156,6 +1178,9 @@ void FieldPlot::DoPaint(wxDC &_pdc)
 			//adjust bounding box for the ID's line
 			
 			std::vector<std::string> idlines; //vector of lines to save
+
+            if (_solarfield_annot.size() > 0)
+                i_id = -1; //don't do the individual ID stuff if we're in solarfield mode
 
 			wxString idlab = "Selected heliostat ID's:";
 			if (i_id > 0)
@@ -1215,7 +1240,9 @@ void FieldPlot::DoPaint(wxDC &_pdc)
 			int current_y = Ty;
 
 			//max drawable y
-			int max_y_lim = top_buffer + plotsize[1] - bottom_buffer - annot_box_frame_buffer - annot_box_linewidth - annot_box_text_buffer - _dc.GetTextExtent(idlines.back()).GetHeight() - annot_text_linesep;
+			int max_y_lim = top_buffer + plotsize[1] - bottom_buffer - annot_box_frame_buffer - annot_box_linewidth - annot_box_text_buffer - annot_text_linesep;
+            if (idlines.size() > 0)
+                max_y_lim -= _dc.GetTextExtent(idlines.back()).GetHeight();
 
 			for (size_t i = 0; i < lines.size(); i++)
 			{
@@ -1252,24 +1279,59 @@ void FieldPlot::DoPaint(wxDC &_pdc)
 
         }
 
-        //Draw the gradient bar
-        if(_option > 1)
-            _dc.GradientFillLinear( wxRect(wxPoint(canvsize[0]-right_buffer+5*ppimult, 50*ppimult), wxPoint(canvsize[0]-right_buffer+25*ppimult, x_axis_loc-50*ppimult)), grad_low, grad_high, wxNORTH);
-        double lineave;
-        if( fabs(valmax-valmin) > 1.e-6 )
-            lineave = 50*ppimult+(plotsize[1]-100.)*(1.-(valave-valmin)/(valmax-valmin));    //where should the average line indicator be in Y?
-        else
-            lineave = 50*ppimult+(plotsize[1]-100.)*.5;
-        //Draw the average line
-        _dc.SetPen( wxPen( white, 1, wxPENSTYLE_SOLID) );
-        _dc.DrawLine(canvsize[0]-right_buffer+5*ppimult, lineave, canvsize[0]-right_buffer+25*ppimult, lineave);
-        //Label the gradient bar
-        if(_option != FIELD_PLOT::LAYOUT)
+        if (_option != FIELD_PLOT::RECEIVER)
         {
-            _dc.DrawText( maxlab, canvsize[0]-right_buffer+2*ppimult, 51*ppimult-glabs.GetHeight() );
-            _dc.DrawText( minlab, canvsize[0]-right_buffer+2*ppimult, x_axis_loc-48*ppimult);
-            _dc.DrawText( avelab, canvsize[0]-right_buffer+27*ppimult, lineave-glabs.GetHeight()/2 );
+            //Draw the gradient bar
+            if (_option > FIELD_PLOT::LAYOUT && _option != FIELD_PLOT::RECEIVER )
+                _dc.GradientFillLinear(wxRect(wxPoint(canvsize[0] - right_buffer + 5 * ppimult, 50 * ppimult), wxPoint(canvsize[0] - right_buffer + 25 * ppimult, x_axis_loc - 50 * ppimult)), grad_low, grad_high, wxNORTH);
+            double lineave;
+            if (fabs(valmax - valmin) > 1.e-6)
+                lineave = 50 * ppimult + (plotsize[1] - 100.)*(1. - (valave - valmin) / (valmax - valmin));    //where should the average line indicator be in Y?
+            else
+                lineave = 50 * ppimult + (plotsize[1] - 100.)*.5;
+            //Draw the average line
+            _dc.SetPen(wxPen(white, 1, wxPENSTYLE_SOLID));
+            _dc.DrawLine(canvsize[0] - right_buffer + 5 * ppimult, lineave, canvsize[0] - right_buffer + 25 * ppimult, lineave);
+            //Label the gradient bar
+            if (_option != FIELD_PLOT::LAYOUT && _option != FIELD_PLOT::RECEIVER )
+            {
+                _dc.DrawText(maxlab, canvsize[0] - right_buffer + 2 * ppimult, 51 * ppimult - glabs.GetHeight());
+                _dc.DrawText(minlab, canvsize[0] - right_buffer + 2 * ppimult, x_axis_loc - 48 * ppimult);
+                _dc.DrawText(avelab, canvsize[0] - right_buffer + 27 * ppimult, lineave - glabs.GetHeight() / 2);
+            }
         }
+        else
+        {
+            //draw the receiver colormap legend
+            int cboxpos_x = left_buffer + 10;
+            int cboxpos_y = top_buffer + 5;
+
+            std::vector< std::string > r_in_map;
+            for (unordered_map<std::string, wxColour>::iterator rc = receiver_color_map.begin(); rc != receiver_color_map.end(); rc++)
+                r_in_map.push_back(rc->first);
+            std::sort(r_in_map.begin(), r_in_map.end());
+
+            for (int rc = 0; rc < r_in_map.size(); rc++)
+            {
+                int xstartpos = cboxpos_x;
+
+                _dc.SetBrush(receiver_color_map[ r_in_map[rc] ]);
+                wxSize labsize = _dc.GetTextExtent(r_in_map[rc]);
+                int th = labsize.GetHeight();
+                _dc.DrawRectangle(cboxpos_x, cboxpos_y, 1.3*th, th);
+                cboxpos_x += (int)(1.3*th) + 4;
+                
+                _dc.DrawText(r_in_map[rc], cboxpos_x, cboxpos_y);
+                cboxpos_x += labsize.GetWidth()+th/2;
+
+                if (2*cboxpos_x-xstartpos > canvsize[0]*0.9 + left_buffer)
+                {
+                    cboxpos_x = left_buffer + 10;
+                    cboxpos_y += 1.3*th;
+                }
+            }
+        }
+
         delete [] plot_vals;
 
 
@@ -1627,6 +1689,62 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
 		annot << _helios_select.at(i)->getId() << (i<nh-1 ? "." : "");
 
 	_helios_annot = annot.str();
+
+    return;
+}
+
+void FieldPlot::SolarFieldAnnotation(SolarField *SF, sim_result *R, std::vector<int> &options)
+{
+    /*
+    Produce an annotated text box that describes the solar field
+    */
+    
+    _solarfield_annot.clear();
+    
+    //validation
+    if (!SF || !R || options.size() == 0)
+        return;
+
+    std::stringstream annot;
+
+    for (std::vector<int>::iterator opt = options.begin(); opt != options.end(); opt++)
+    {
+        switch (*opt)
+        {
+        case PlotSelectDialog::DATE_TIME:
+            annot << "Date/time," << R->time_date_stamp << ";";
+            break;
+        case PlotSelectDialog::SUN_POSITION:
+            annot << "Sun position," << wxString::Format("%d az %d el (deg)", (int)(R->solar_az*R2D), (int)(90. - R->solar_zen*R2D)) << ";";
+            break;
+        case PlotSelectDialog::DNI:
+            annot << "DNI," << (int)(R->dni*1000.) << " W/m2;";
+            break;
+        case PlotSelectDialog::TOTAL_EFF:
+            annot << "Total efficiency," << (int)(1000.*(R->eff_total_sf.wtmean / R->eff_absorption.wtmean))/10. << "%;";
+            break;
+        case PlotSelectDialog::COSINE_EFF:
+            annot << "Cosine efficiency," << std::setw(4) << (int)(1000.*R->eff_cosine.wtmean) / 10. << "%;";
+            break;
+        case PlotSelectDialog::BLOCK_EFF:
+            annot << "Block/Shade efficiency," << std::setw(4) << (int)(1000.*R->eff_blocking.wtmean*R->eff_shading.wtmean) / 10. << "%;";
+            break;
+        case PlotSelectDialog::ATT_EFF:
+            annot << "Attenuation efficiency," << std::setw(4) << (int)(1000.*R->eff_attenuation.wtmean) / 10. << "%;";
+            break;
+        case PlotSelectDialog::INT_EFF:
+            annot << "Intercept efficiency," << std::setw(4) << (int)(1000.* R->eff_intercept.wtmean) / 10. << "%;";
+            break;
+        case PlotSelectDialog::TOT_POWER:
+            annot << "Total power," << std::setw(4) << R->power_absorbed/1000. << " MW;";
+            break;
+        case PlotSelectDialog::AIM_METHOD:
+            annot << "Aim method," << R->aim_method << ";";
+            break;
+        }
+    }
+
+    _solarfield_annot = annot.str();
 
     return;
 }

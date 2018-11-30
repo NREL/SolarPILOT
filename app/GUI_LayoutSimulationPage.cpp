@@ -439,7 +439,7 @@ void SPFrame::OnDoLayout( wxCommandEvent &event)
             //update the receiver flux map selection combo
             UpdateFluxPlotSelections();
     
-            DoResultsPage(_results);
+            DoResultsPage();
             proctime = _sim_watch.Time() - simtime;
         }
         catch(int ierr)

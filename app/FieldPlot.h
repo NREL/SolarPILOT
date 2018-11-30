@@ -58,9 +58,12 @@
 //#include <wx/dcgraph.h>
 //#include <wx/dcbuffer.h>
 #include "treemesh.h"
+#include <vector>
+#include <string>
 
 class SolarField;
 class Heliostat;
+class sim_result;
 
     /* 
     Options for values to plot are:
@@ -96,7 +99,8 @@ enum FIELD_PLOT
     ENERGY,
     RECEIVER,
     MESH,
-    EFF_CLOUD
+    EFF_CLOUD,
+    _END
 };
 
 
@@ -123,6 +127,7 @@ private:
     st_hash_tree _helio_hash;
     std::string _helios_annot; //annotation for selected heliostats
     std::vector< Heliostat *> _helios_select;   //currently selected heliostats
+    std::string _solarfield_annot; //annotations relating to the whole field overlaid on the plot. See PlotSelectDialog enum ANNOT for options
 
     DECLARE_EVENT_TABLE()
 
@@ -148,6 +153,8 @@ public:
     void EnableZoomRectangle(bool is_enabled=true);
     st_hash_tree *GetKDHashTree();
     void HeliostatAnnotation(Heliostat *H);
+    void SolarFieldAnnotation(SolarField *SF, sim_result *R, std::vector<int> &options);
+    std::string *getSolarFieldAnnotationObject() { return &_solarfield_annot; }
     void ClearSelectedHeliostats();
     std::vector< Heliostat* > *GetSelectedHeliostats();
 

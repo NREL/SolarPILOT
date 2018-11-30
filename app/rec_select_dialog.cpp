@@ -78,7 +78,7 @@ rec_select_dialog::rec_select_dialog(
 
     wxGridSizer *check_sizer = new wxGridSizer(1, 5, 0);
 
-    vector<Receiver*> *Recs = SF->getReceivers();
+    Rvector *Recs = SF->getReceivers();
 
     checkboxes.clear();
     rmap.clear();
@@ -111,7 +111,7 @@ rec_select_dialog::rec_select_dialog(
 
 };
 
-void rec_select_dialog::getSelectedReceivers(vector<Receiver*> &rec_ptrs)
+void rec_select_dialog::getSelectedReceivers(Rvector &rec_ptrs)
 {
     
     //Cycle through the checkbox map and set rec_ptrs to include pointers to all of the selected

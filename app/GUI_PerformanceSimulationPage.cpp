@@ -122,7 +122,7 @@ void SPFrame::CreateSimulationsFluxTab( wxScrolledWindow *flux)
     wxWindow* dsibs[] = {aim_method, sigma_limit_x, sigma_limit_y};
     flux_model->setDisabledSiblings("SolTrace", 3, dsibs);
     }    //preserve aim points for SolTrace runs
-    _input_map[ &_variables.recs[0].rec_type ]->setDisabledSiblings("External cylindrical", sigma_limit_x);
+    _input_map[ &_variables.recs[0].rec_type ]->addDisabledSiblings("External cylindrical", sigma_limit_x);
 
     //save ray data button
     wxBitmap savebit;
@@ -673,7 +673,7 @@ void SPFrame::OnDoPerformanceSimulation( wxCommandEvent &event)
             UpdateFieldPlotSelections();
             UpdateFluxPlotSelections();
 
-            DoResultsPage(_results);
+            DoResultsPage();
             
             UpdateLayoutGrid();    //update to show new aim points
             //Go to the new flux plot

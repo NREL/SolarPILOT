@@ -55,6 +55,7 @@
 
 #include <wx/wx.h>	
 #include "Receiver.h"
+typedef std::vector<Receiver*> Rvector;
 
 class rec_select_dialog : public wxDialog
 {
@@ -75,7 +76,7 @@ public:
         wxSize size = wxDefaultSize,
         long style=wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP|wxRESIZE_BORDER);
 
-    void getSelectedReceivers(std::vector<Receiver*> &rec_ptrs);
+    void getSelectedReceivers(Rvector &rec_ptrs);
 
     void OnOkButton(wxCommandEvent &WXUNUSED(event));
 

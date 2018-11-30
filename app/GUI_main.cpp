@@ -84,6 +84,7 @@ wxWidgets
 #include "STSimulateThread.h"
 #include "STObject.h"
 #include "IOUtil.h"
+#include "plot_select_dialog.h"
 
 using namespace std;
 
@@ -262,8 +263,8 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
 
     //Set the version tag
 	_version_major = 1;
-	_version_minor = 2;
-	_version_patch = 1;
+	_version_minor = 3;
+	_version_patch = -1;
 
     _software_version = my_to_string(_version_major) + "." + my_to_string(_version_minor) + "." + my_to_string(_version_patch);
     _contact_info = "solarpilot.support@nrel.gov";
@@ -701,7 +702,7 @@ void SPFrame::CreateInputPages(wxWindow *parent, PagePanel *pagepanel)
     //Display a black results page
     this->_results.clear();
     wxScrolledWindow *page = new wxScrolledWindow(this);
-    CreateResultsSummaryPage(page, this->_results);
+    CreateResultsSummaryPage(page);
     _page_panel->InsertPage( _page_panel->GetPagePosition( pageNames.results_flux )+1, page, pageNames.results_summary, ID_ICON_TABLE, 1, pageNames.results );
 
     //Bind all of the input objects to handle changes in values
@@ -1731,15 +1732,6 @@ void SPFrame::UpdateCalculatedGUIValues()
                 for(unsigned int i=0; i<disobj->size(); i++)
                         odisplay[ disobj->at(i) ] = false;
             }
-            if(disobj->size() > 0)
-            {
-                //If the control is a combobox or checkbox and there are associated disabled siblings..
-                for(unsigned int i=0; i<disobj->size(); i++)
-                {
-                    //Disable the control
-                    odisplay[ disobj->at(i) ] = false;
-                }
-            }
         }
     }
     //Check outputcontrols for override status
@@ -1784,6 +1776,9 @@ void SPFrame::UpdateCalculatedGUIValues()
     {
         out->second->setValue( out->first->as_string() );
     }
+
+    //need to update calculated values in the receiver power fractions grid too
+    UpdateReceiverPowerGrid();
 
     _page_panel->GetActivePage()->Layout();
     _page_panel->GetActivePage()->Refresh();
@@ -1839,36 +1834,52 @@ void SPFrame::UpdateFieldPlotSelections()
 void SPFrame::UpdateFluxPlotSelections()
 {
     _rec_select->Clear();
-    std::vector<Receiver*> *active_recs = _SF.getReceivers();
+    Rvector *active_recs = _SF.getReceivers();
     for (int i = 0; i < active_recs->size(); i++)
-        _rec_select->Append(active_recs->at(i)->getVarMap()->rec_name.val);
+    {
+        std::string rname = active_recs->at(i)->getVarMap()->rec_name.val;
+        _rec_select->Append(rname);
+        if (i == 0)
+            _rec_select->SetValue(rname);
+    }
 
 }
 
-void SPFrame::GridCount( wxSpinCtrl *sc, wxGrid *grid)
+void SPFrame::GridCount(wxSpinCtrl *sc, wxGrid *grid)
 {
     int nnew = sc->GetValue();
-    int nprev = grid->GetNumberRows();
+    GridCount(nnew, grid->GetNumberCols(), grid);
+}
+
+void SPFrame::GridCount(int nrow, int ncol, wxGrid *grid)
+{
+    int nprevc = grid->GetNumberCols();
+    int nprevr = grid->GetNumberRows();
     
-    if(nnew > 0)
+    //Add the correct number of rows
+    if(nrow > nprevr)
     {
-        //Add the correct number
-        if(nnew > nprev)
-        {
-            grid->AppendRows(nnew-nprev);
-        }
-        else if(nnew < nprev)
-        {
-            grid->DeleteRows(nnew, nprev-nnew);
-        }
-        else
-        { /* do nothing */ }
-            }
-    else
-    {
-        sc->SetValue(1);
+        grid->AppendRows(nrow-nprevr);
     }
+    else if(nrow < nprevr)
+    {
+        grid->DeleteRows(nrow, nprevr-nrow);
+    }
+    else
+    { /* do nothing */ }
     
+    //Add the correct number of columns
+    if (ncol > nprevc)
+    {
+        grid->AppendCols(ncol - nprevc);
+    }
+    else if (ncol < nprevc)
+    {
+        grid->DeleteCols(ncol, nprevc - ncol);
+    }
+    else
+    { /* do nothing */
+    }
 }
 
 void SPFrame::SetGeomState(bool state)
@@ -1907,7 +1918,7 @@ bool SPFrame::GetGeomState()
     return _geom_modified; 
 }
 
-void SPFrame::DoResultsPage(sim_results &results)
+void SPFrame::DoResultsPage()
 {
     //Delete old pages
     wxWindow *page = _page_panel->GetPage(pageNames.results_summary );
@@ -1915,7 +1926,7 @@ void SPFrame::DoResultsPage(sim_results &results)
     
     page->DestroyChildren();
 
-    CreateResultsSummaryPage(swpage, results);
+    CreateResultsSummaryPage(swpage);
 
 }
 
@@ -2507,7 +2518,7 @@ bool SPFrame::SolTraceFluxBinning(SolarField &SF)
             raz = RV->rec_azimuth.val*D2R;
             rh = RV->rec_height.val;
             
-            sp_point offset(RV->rec_offset_x.val, RV->rec_offset_y.val, RV->optical_height.Val() );   //optical height includes z offset
+            sp_point offset(RV->rec_offset_x_global.Val(), RV->rec_offset_y_global.Val(), RV->optical_height.Val() );   //optical height includes z offset
 
             //The number of points in the flux grid 
             //(x-axis is angular around the circumference, y axis is receiver height)
@@ -2560,7 +2571,7 @@ bool SPFrame::SolTraceFluxBinning(SolarField &SF)
             rh = RV->rec_height.val;
             rw = Rec->getReceiverWidth(*RV); 
             
-            sp_point offset(RV->rec_offset_x.val, RV->rec_offset_y.val, RV->optical_height.Val() );   //optical height includes z offset
+            sp_point offset(RV->rec_offset_x_global.Val(), RV->rec_offset_y_global.Val(), RV->optical_height.Val() );   //optical height includes z offset
 
             //The number of points in the flux grid 
             //(x-axis receiver width, y axis is receiver height)
@@ -2628,7 +2639,23 @@ bool SPFrame::HermiteFluxSimulationHandler(SolarField &SF, Hvector &helios)
     sim_params P;
     P.dni = SF.getVarMap()->flux.flux_dni.val;
 
-    _results.back().process_analytical_simulation(SF, P, 2, azzen, helios);
+    _results.back().process_analytical_simulation(SF, P, 2, azzen, &helios);
+
+    //if we have more than 1 receiver, create performance summaries for each and append to the results vector
+    if (SF.getActiveReceiverCount() > 1)
+    {
+        //which heliostats are aiming at which receiver?
+        unordered_map<Receiver*, Hvector> aim_map;
+        for (Hvector::iterator h = helios.begin(); h != helios.end(); h++)
+            aim_map[(*h)->getWhichReceiver()].push_back( *h );
+
+        for (Rvector::iterator rec = SF.getReceivers()->begin(); rec != SF.getReceivers()->end(); rec++)
+        {
+            _results.push_back( sim_result() );
+            Rvector recs = { *rec };
+            _results.back().process_analytical_simulation(SF, P, 2, azzen, &aim_map[*rec], &recs);
+        }
+    }
     
     return true;
 }
@@ -2985,7 +3012,7 @@ void SPFrame::SAMInputParametric2()
     //--------- Generate the flux map file ---------------------------------
     //Check if there are multiple receivers. If so, prompt the user to select 
     //which receiver they would like to simulate
-    vector<Receiver*> rec_to_sim;
+    Rvector rec_to_sim;
     if(_SF.getActiveReceiverCount() > 1)
     {
         rec_select_dialog *rdlg = new rec_select_dialog(this, wxID_ANY, wxT("Select receivers"), &_SF);
@@ -3532,6 +3559,7 @@ void SPFrame::ParametricSimulate( parametric &P )
                 if(helios.size() == 0)
                     throw spexception("Empty field layout - can't perform parametric performance simulation!");
 
+                int n_old_result = _results.size();
                 try
                 {
                     _results.push_back(sim_result());
@@ -3540,7 +3568,6 @@ void SPFrame::ParametricSimulate( parametric &P )
                 {
                     throw spexception("Memory error creating results storage array");
                 }
-                
                 try
                 {
                     if(!sim_cancelled) sim_cancelled = sim_cancelled || !DoPerformanceSimulation(_par_SF, varpar, helios); //Returns TRUE if successful
@@ -3555,7 +3582,9 @@ void SPFrame::ParametricSimulate( parametric &P )
                 }
         
                 //reset the sim type to parametric
-                _results.back().sim_type = 3;
+                int n_new_result = _results.size() - n_old_result;
+                for(int i=n_old_result; i<_results.size(); i++)
+                    _results.at(i).sim_type = 3;
 
                 //update the layout data stored in the variable map
                 try
@@ -3583,30 +3612,34 @@ void SPFrame::ParametricSimulate( parametric &P )
                         wxString emsg = "Error opening the parametric output file \""+fname+"\". Terminating the simulation";
                         throw spexception(emsg.ToStdString());
                     }
-                    grid_emulator gridtable;
                     try
                     {
-                        CreateResultsTable(_results.back(), gridtable);
-
-                        //Write the table
-                        wxArrayStr textresults;
-                        gridtable.GetPrintableTable(textresults, "");
-
-                    
                         fout.Clear();
-                        for(int j=0; j<(int)unlinked.size(); j++)
+                        for (int r = 0; r < n_new_result; r++)
                         {
-                            fout.AddLine(wxString::Format("%s, %s", unlinked.at(j)->display_text.c_str(), unlinked.at(j)->sim_values.back().c_str()) );
-                        }
-                        for(int j=0; j<(int)linked.size(); j++)
-                        {
-                            fout.AddLine(wxString::Format("%s, %s", linked.at(j)->display_text.c_str(), linked.at(j)->sim_values.back().c_str()) );
-                        }
-                        fout.AddLine(wxString::Format("Layout?, %s", full_layout ? "True" : "False") );
+                            grid_emulator gridtable;
+                            CreateResultsTable(_results.at(n_old_result + r), gridtable);
 
-                        for(int j=0; j<(int)textresults.size(); j++)
-                            fout.AddLine(textresults[j]);
-                    
+                            //Write the table
+                            wxArrayStr textresults;
+                            gridtable.GetPrintableTable(textresults, "");
+
+                            if (n_new_result > 1)
+                                fout.AddLine(wxString::Format("Performance for:, %s", r==0 ? "All receivers" : _results.at(n_old_result+r).receiver_names.front()));
+
+                            for (int j = 0; j < (int)unlinked.size(); j++)
+                            {
+                                fout.AddLine(wxString::Format("%s, %s", unlinked.at(j)->display_text.c_str(), unlinked.at(j)->sim_values.back().c_str()));
+                            }
+                            for (int j = 0; j < (int)linked.size(); j++)
+                            {
+                                fout.AddLine(wxString::Format("%s, %s", linked.at(j)->display_text.c_str(), linked.at(j)->sim_values.back().c_str()));
+                            }
+                            fout.AddLine(wxString::Format("Layout?, %s", full_layout ? "True" : "False"));
+
+                            for (int j = 0; j < (int)textresults.size(); j++)
+                                fout.AddLine(textresults[j]);
+                        }
                     }
                     catch(spexception &err)
                     {
@@ -3648,14 +3681,31 @@ void SPFrame::ParametricSimulate( parametric &P )
                 //save field image
                 if(save_field_img && !sim_cancelled)
                 {
-                    wxString fname;
-                    fname.Printf("%s/param_field-plot_%d.png", save_field_dir.c_str(), nsim+1);
-                    wxClientDC pdc(this);
-                    _plot_frame->SetPlotData(_par_SF, FIELD_PLOT::EFF_TOT);
-                    _plot_frame->DoPaint(pdc);
-                    wxBitmap *bitmap = _plot_frame->GetBitmap();
-                    wxImage image = bitmap->ConvertToImage();
-                    image.SaveFile( fname, wxBITMAP_TYPE_PNG );
+                    for (std::vector<int>::iterator pn = _plot_export_selections.begin(); pn != _plot_export_selections.end(); pn++)
+                    {
+                        wxString fname;
+                        fname.Printf("%s/param_field-plot_%d_%d.png", save_field_dir.c_str(), nsim+1, *pn);
+                        wxClientDC pdc(this); 
+                        _plot_frame->SetPlotData(_par_SF, *pn);
+                        _plot_frame->SolarFieldAnnotation(&_par_SF, &_results.at(n_old_result), _plot_annot_selections);
+                        std::string *annot = _plot_frame->getSolarFieldAnnotationObject();
+                        if (std::find(_plot_annot_selections.begin(), _plot_annot_selections.end(), PlotSelectDialog::VARIABLES) != _plot_annot_selections.end())
+                        {
+                            for (int j = 0; j < (int)unlinked.size(); j++)
+                            {
+                                annot->append(wxString::Format("%s,%s;", unlinked.at(j)->display_text.c_str(), unlinked.at(j)->sim_values.back().c_str()));
+                            }
+                            for (int j = 0; j < (int)linked.size(); j++)
+                            {
+                                annot->append(wxString::Format("%s,%s;", linked.at(j)->display_text.c_str(), linked.at(j)->sim_values.back().c_str()));
+                            }
+                        }
+
+                        _plot_frame->DoPaint(pdc);
+                        wxBitmap *bitmap = _plot_frame->GetBitmap();
+                        wxImage image = bitmap->ConvertToImage();
+                        image.SaveFile( fname, wxBITMAP_TYPE_PNG );
+                    }
 
                 }
                 //save flux image
@@ -3714,7 +3764,8 @@ void SPFrame::CreateResultsTable(sim_result &result, grid_emulator &table)
 {
     try
     {
-        table.CreateGrid(result.is_soltrace ? 18 : 17, 6);
+        //table.CreateGrid(result.is_soltrace ? 18 : 18, 6);
+        table.CreateGrid(18, 6);
         
         table.SetColLabelValue(0, "Units");
         table.SetColLabelValue(1, "Value");
@@ -3831,21 +3882,24 @@ void SPFrame::CreateParametricsTable(parametric &par, sim_results &results, grid
 {
     //how many simulations are there?
     int nsim = results.size();
+    int nrec = std::max( (int)results.front().receiver_names.size(), 1);
     //how many variables were parameterized?
     int nvar = par.size();
 
-    table.CreateGrid(18+nvar, 1+nsim);
+    table.CreateGrid(18+nvar+(nrec>1 ? 1 : 0), 1+nsim);
     table.SetColLabelValue(0, "Units");
     for(int i=0; i<nsim; i++)
     {
         wxString collab;
-        collab.Printf("Simulation %d", i+1);
+        collab.Printf("Simulation %d", i/(nrec+1)+1);
         table.SetColLabelValue(i+1, collab);
     }
 
     int id=0;
     for(int i=0; i<nvar; i++)
         table.SetRowLabelValue(id++, par.at(i).display_text);
+    if(nrec > 1)
+        table.SetRowLabelValue(id++, "Which receiver");
     table.SetRowLabelValue(id++, "Total plant cost");
     table.SetRowLabelValue(id++, "Cost/Energy metric");
     table.SetRowLabelValue(id++, "Simulated heliostat area");
@@ -3869,6 +3923,8 @@ void SPFrame::CreateParametricsTable(parametric &par, sim_results &results, grid
     id=0;
     for(int i=0; i<nvar; i++)
         table.SetCellValue(par.at(i).units, id++, 0);
+    if (nrec > 1)
+        table.SetCellValue("-", id++, 0);
     table.SetCellValue("$", id++, 0);
     table.SetCellValue("-", id++, 0);
     table.SetCellValue("m^2", id++, 0);
@@ -3893,17 +3949,24 @@ void SPFrame::CreateParametricsTable(parametric &par, sim_results &results, grid
     {
         sim_result *result = &results.at(i);
         id=0;
+
         for(int j=0; j<nvar; j++)
         {
+            int iadj = i;
+            if(nrec > 1 ) 
+                iadj /= (nrec + 1);
+
             if(par.at(j).data_type == "location")
             {
-                table.SetCellValue(ioutil::name_only( par.at(j).sim_values[i] ), id++, i+1);
+                table.SetCellValue(ioutil::name_only( par.at(j).sim_values[iadj] ), id++, i+1);
             }
             else
             { 
-                table.SetCellValue(par.at(j).sim_values[i], id++, i+1); 
+                table.SetCellValue(par.at(j).sim_values[iadj], id++, i+1);
             }
         }
+        if (nrec > 1)
+            table.SetCellValue(i%(nrec+1)==0 ? "All receivers" : result->receiver_names.front(), id++, i + 1);
         table.SetCellValue(gui_util::FormatAsCurrency( result->total_installed_cost ), id++, i+1);
         table.SetCellValue(to_string(result->coe_metric, "%.3f"), id++, i+1);
         table.SetCellValue(to_string(result->total_heliostat_area, "%.1f"), id++, i+1);

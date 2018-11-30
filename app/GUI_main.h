@@ -319,6 +319,22 @@ private:
     std::vector<wxPanel*> _rec_pages;    //pointers to all of the receiver pages
     InputControl *_rec_which;    //Combo list of available receivers
     std::map<std::string, std::vector<wxTextCtrl*> > _hll_coefs, _hlw_coefs;
+    wxGrid *_rec_power_fractions;
+    wxStaticText *_msg_rec_power_fractions;
+    struct s_user_flux_objects
+    {
+        wxSpinCtrl* nxptr;
+        wxSpinCtrl* nyptr;
+        wxGrid* gridptr;
+        s_user_flux_objects() {};
+        s_user_flux_objects(wxGrid* g, wxSpinCtrl* y, wxSpinCtrl* x)
+        {
+            nxptr = x;
+            nyptr = y;
+            gridptr = g;
+        };
+    };
+    std::map< int, s_user_flux_objects > _user_flux_objects;
 
     //Objects for Layout page
     wxGrid *_design_grid;
@@ -417,6 +433,8 @@ private:
     //
     wxPanel
         *_par_panel;
+    std::vector<int> _plot_export_selections;
+    std::vector<int> _plot_annot_selections;
     wxButton
         *_par_add_var,
         *_par_remove_var,
@@ -490,7 +508,7 @@ private:
     void CreateSimulationsLayoutTab(wxScrolledWindow *parent);
     void CreateSimulationsFluxTab(wxScrolledWindow *parent);
     void CreateSimulationsParametricsTab(wxScrolledWindow *parent);
-    void CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &results);
+    void CreateResultsSummaryPage(wxScrolledWindow *parent);
     void CreateOptimizationPage(wxScrolledWindow *parent);
 #if _SANDBOX == 1
     bool Sandbox();
@@ -562,9 +580,15 @@ protected:
     void OnReceiverRename( wxCommandEvent &event);
     void OnReceiverSelect( wxListEvent &event);
     void OnReceiverDeselect( wxListEvent &event);
+    void OnReceiverPowerGridEdit( wxGridEvent &event );
     
     void OnHeatLossLoadFocus( wxFocusEvent &event);
     void OnHeatLossWindFocus( wxFocusEvent &event);
+    void OnUserFluxImport(wxCommandEvent &event);
+    void OnUserFluxExport(wxCommandEvent &event);
+    void OnUserFluxNx(wxCommandEvent &event);
+    void OnUserFluxNy(wxCommandEvent &event);
+    void OnUserFluxGridChange(wxGridEvent &event);
 
     void OnDoLayout( wxCommandEvent &event);            
     void OnLayoutImport( wxCommandEvent &event);            
@@ -621,6 +645,7 @@ protected:
     void OnParVarlistSelected( wxCommandEvent &event);
     void OnParVarDoubleClick( wxCommandEvent &event);
     void OnParametricSimulate( wxCommandEvent &event);            
+    void OnParFieldSaveChoicePanel(wxCommandEvent &event);
     void OnUserVarCount( wxCommandEvent &event);
     void OnUserSimCount( wxCommandEvent &event);
     void OnUserParImport( wxCommandEvent &event);
@@ -641,7 +666,8 @@ protected:
 
 
     void OnSimulationResultsExport( wxCommandEvent &event);            
-    void OnSimulationResultsCopy( wxCommandEvent &event);            
+    void OnSimulationResultsCopy( wxCommandEvent &event);  
+    void OnResultsReceiverSelect( wxCommandEvent &event);
 
 public:
     SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
@@ -670,6 +696,7 @@ public:
 
     void UpdateHelioUITemplates();
     void UpdateReceiverUITemplates();
+    void UpdateReceiverPowerGrid();
     void UpdateInputValues();
     void UpdateCalculatedGUIValues();
     void UpdateFieldPlotSelections();
@@ -695,6 +722,7 @@ public:
     void PlotFontIncrease( wxString type);
     void PlotFontDecrease( wxString type);
     
+    void GridCount(int nrow, int ncol, wxGrid *grid);
     void GridCount( wxSpinCtrl *sc, wxGrid *grid );
     
     void UpdateUserSunGrid();
@@ -711,8 +739,10 @@ public:
 
     void SetGeomState(bool state);
     bool GetGeomState();
+    void UpdateUserFluxGrid(int id);
+    void UpdateUserFluxData(int id);
 
-    void DoResultsPage(sim_results &results);
+    void DoResultsPage();  //create from _results
     void SAMInputParametric();
     void SAMInputParametric2();
     void LayoutSimulationExport(SolarField &SF, wxString &fname, std::vector<bool> &options, wxString &header, wxString &delim, bool quiet = false);

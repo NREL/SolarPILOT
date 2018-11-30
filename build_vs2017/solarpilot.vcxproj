@@ -34,6 +34,7 @@
     <ClInclude Include="..\..\ssc\solarpilot\Land.h" />
     <ClInclude Include="..\..\ssc\solarpilot\LayoutSimulateThread.h" />
     <ClInclude Include="..\..\ssc\solarpilot\mod_base.h" />
+    <ClInclude Include="..\..\ssc\solarpilot\MultiRecOptimize.h" />
     <ClInclude Include="..\..\ssc\solarpilot\OpticalMesh.h" />
     <ClInclude Include="..\..\ssc\solarpilot\optimize.h" />
     <ClInclude Include="..\..\ssc\solarpilot\rapidxml.hpp" />
@@ -64,6 +65,7 @@
     <ClCompile Include="..\..\ssc\solarpilot\Land.cpp" />
     <ClCompile Include="..\..\ssc\solarpilot\LayoutSimulateThread.cpp" />
     <ClCompile Include="..\..\ssc\solarpilot\mod_base.cpp" />
+    <ClCompile Include="..\..\ssc\solarpilot\MultiRecOptimize.cpp" />
     <ClCompile Include="..\..\ssc\solarpilot\OpticalMesh.cpp" />
     <ClCompile Include="..\..\ssc\solarpilot\optimize.cpp" />
     <ClCompile Include="..\..\ssc\solarpilot\Receiver.cpp" />
@@ -142,7 +144,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\rapidxml;$(SolutionDir)\..\custom;$(SolutionDir)\..\solpos;$(SSCDIR);$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(WEXDIR);$(CORETRACEDIR)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SSCDIR)\lpsolve;$(SolutionDir)\..\rapidxml;$(SolutionDir)\..\custom;$(SolutionDir)\..\solpos;$(SSCDIR);$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(WEXDIR);$(CORETRACEDIR)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SP_STANDALONE;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_MBCS;</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -153,7 +155,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\rapidxml;$(SolutionDir)\..\custom;$(SolutionDir)\..\solpos;$(SSCDIR);$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(WEXDIR);$(CORETRACEDIR)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SSCDIR)\lpsolve;$(SolutionDir)\..\rapidxml;$(SolutionDir)\..\custom;$(SolutionDir)\..\solpos;$(SSCDIR);$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(WEXDIR);$(CORETRACEDIR)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SP_STANDALONE;WIN64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_MBCS;</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -166,7 +168,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\rapidxml;$(SolutionDir)\..\custom;$(SolutionDir)\..\solpos;$(SSCDIR);$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(WEXDIR);$(CORETRACEDIR)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SSCDIR)\lpsolve;$(SolutionDir)\..\rapidxml;$(SolutionDir)\..\custom;$(SolutionDir)\..\solpos;$(SSCDIR);$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(WEXDIR);$(CORETRACEDIR)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SP_STANDALONE;_MBCS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -181,7 +183,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\rapidxml;$(SolutionDir)\..\custom;$(SolutionDir)\..\solpos;$(SSCDIR);$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(WEXDIR);$(CORETRACEDIR)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SSCDIR)\lpsolve;$(SolutionDir)\..\rapidxml;$(SolutionDir)\..\custom;$(SolutionDir)\..\solpos;$(SSCDIR);$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(WEXDIR);$(CORETRACEDIR)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SP_STANDALONE;_MBCS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>

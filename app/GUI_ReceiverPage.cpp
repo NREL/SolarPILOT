@@ -51,6 +51,8 @@
 
 
 #include "GUI_main.h"
+#include "IOUtil.h"
+#include <fstream>
 
 using namespace std;
 
@@ -94,14 +96,46 @@ void SPFrame::CreateMasterReceiverPage(wxScrolledWindow *parent)
     sbs->Add(but_sizer, 0, wxALL, 5);
     sbs->Add(_rec_config, 0, wxALL, 5);
 
-    
     wxString msg = wxT("Note: Each enabled receiver template will be used in the simulation.");
     wxStaticText *htext = new wxStaticText(parent, wxID_ANY, msg);
     htext->SetForegroundColour(_helptext_colour);
     sbs->Add(htext, 0, wxALL, 5);
 
+    wxStaticBox *sbopt = new wxStaticBox(parent, wxID_ANY, wxT("Multi-receiver aimpoint and layout optimization"));
+    wxStaticBoxSizer *sbsopt = new wxStaticBoxSizer(sbopt, wxVERTICAL);
+    InputControl *multirec_opt_timeout = new InputControl(parent, wxID_ANY, _variables.opt.multirec_opt_timeout);
+    InputControl *multirec_screen_mult = new InputControl(parent, wxID_ANY, _variables.opt.multirec_screen_mult);
+    sbsopt->Add(multirec_opt_timeout);
+    sbsopt->Add(multirec_screen_mult);
+    _input_map[multirec_opt_timeout->getVarObject()] = multirec_opt_timeout;
+    _input_map[multirec_screen_mult->getVarObject()] = multirec_screen_mult;
+
+
+    //create objects for specifying the receiver power fractions
+    _rec_power_fractions = new wxGrid(parent, wxID_ANY, wxDefaultPosition);
+    _rec_power_fractions->CreateGrid(1, 1);
+    
+    InputControl *is_multirec_powfrac = new InputControl(parent, wxID_ANY, _variables.sf.is_multirec_powfrac);
+    is_multirec_powfrac->addDisabledSiblings("false", _rec_power_fractions);
+    _input_map[is_multirec_powfrac->getVarObject()] = is_multirec_powfrac;
+    
+    _msg_rec_power_fractions = new wxStaticText(parent, wxID_ANY, 
+        "Note: the specified power fractions will be scaled in proportion to\n"
+        "their values such that the total design power equals the field design power.");
+    _msg_rec_power_fractions->SetForegroundColour(_helptext_colour);
+
+    wxBoxSizer *power_sizer = new wxBoxSizer(wxVERTICAL);
+    power_sizer->Add(is_multirec_powfrac);
+    power_sizer->Add(_rec_power_fractions, 1, wxALL, 5);
+    power_sizer->Add(_msg_rec_power_fractions, 0, wxALL, 5);
+    power_sizer->SetSizeHints(parent);
+
+    UpdateReceiverPowerGrid();
+
     wxBoxSizer *main_sizer = new wxBoxSizer(wxVERTICAL);
     main_sizer->Add(sbs, 0, wxALL, 5);
+    main_sizer->Add(sbsopt, 0, wxALL, 5);
+    main_sizer->Add(power_sizer, 0, wxALL, 5);
     parent->SetSizer(main_sizer);
 
     //Bindings
@@ -111,7 +145,8 @@ void SPFrame::CreateMasterReceiverPage(wxScrolledWindow *parent)
     _rec_rename->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnReceiverRename), NULL, this);
     _rec_config->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( SPFrame::OnReceiverSelect), NULL, this);
     _rec_config->Connect(wxEVT_COMMAND_LIST_ITEM_DESELECTED, wxListEventHandler( SPFrame::OnReceiverDeselect), NULL, this);
-    
+    _rec_power_fractions->Connect(wxEVT_GRID_CELL_CHANGED, wxGridEventHandler( SPFrame::OnReceiverPowerGridEdit), NULL, this);
+
     parent->SetScrollbars(10, 10, parent->GetSize().GetWidth()/10, parent->GetSize().GetWidth()/10);
     
     return;
@@ -225,8 +260,6 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
 		rec_type->setDisabledSiblings("External cylindrical", 2, dsibs);
     }
 
-    rec_type->updateInputDisplay();
-
 
     //Receiver positioning group
     wxStaticBox *sb1 = new wxStaticBox(parent, wxID_ANY, wxT("Receiver position"));
@@ -236,35 +269,92 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
         *rec_offset_x = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_offset_x),
         *rec_offset_y = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_offset_y),
         *rec_offset_z = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_offset_z),
+        *rec_offset_reference = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_offset_reference),
         *is_open_geom = new InputControl(parent, wxID_ANY, _variables.recs[id].is_open_geom);
         
     OutputControl
+        *rec_offset_x_global = new OutputControl(parent, wxID_ANY, _variables.recs[id].rec_offset_x_global),
+        *rec_offset_y_global = new OutputControl(parent, wxID_ANY, _variables.recs[id].rec_offset_y_global),
+        *rec_offset_z_global = new OutputControl(parent, wxID_ANY, _variables.recs[id].rec_offset_z_global),
         *optical_height = new OutputControl(parent, wxID_ANY, _variables.recs[id].optical_height); 
 
     //informational text
-    msg = "Receiver position offset is relative to the tower location {x=0 + x_offset,\n"
-        "y=0 + y_offset} and tower height {z=tow. height + z_offset}.";
+    msg = "Receiver position offset is relative to the specified object.";
     wxStaticText *rmsg = new wxStaticText(parent, wxID_ANY, msg);
     rmsg->SetForegroundColour(_helptext_colour);
 
     sbs1->Add(rmsg);
+    sbs1->Add(rec_offset_reference);
     sbs1->Add(rec_offset_x);
     sbs1->Add(rec_offset_y);
     sbs1->Add(rec_offset_z);
-    sbs1->Add(is_open_geom);
     sbs1->Add(optical_height);
+    sbs1->Add(rec_offset_x_global);
+    sbs1->Add(rec_offset_y_global);
+    sbs1->Add(rec_offset_z_global);
+    sbs1->Add(is_open_geom);
 
     //Optical properties
     wxStaticBox *sb2 = new wxStaticBox(parent, wxID_ANY, wxT("Optical properties"));
     wxStaticBoxSizer *sbs2 = new wxStaticBoxSizer(sb2, wxVERTICAL);
     InputControl
+        *absorptance = new InputControl(parent, wxID_ANY, _variables.recs[id].absorptance),
         *peak_flux = new InputControl(parent, wxID_ANY, _variables.recs[id].peak_flux),
-        *absorptance = new InputControl(parent, wxID_ANY, _variables.recs[id].absorptance);
+        *flux_profile_type = new InputControl(parent, wxID_ANY, _variables.recs[id].flux_profile_type);
     string sid = my_to_string(id);    
     
+    //----------------------------------------
+    wxPanel *user_flux_panel = new wxPanel(parent);
+
+    wxButton *import_user_flux = new wxButton(user_flux_panel, wxID_ANY, "Import", wxDefaultPosition, wxDefaultSize, 0L, wxDefaultValidator, sid);
+    import_user_flux->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnUserFluxImport), NULL, this);
+    wxButton *export_user_flux = new wxButton(user_flux_panel, wxID_ANY, "Export", wxDefaultPosition, wxDefaultSize, 0L, wxDefaultValidator, sid);
+    export_user_flux->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnUserFluxExport), NULL, this);
+    wxSpinCtrl *n_flux_x = new wxSpinCtrl(user_flux_panel, wxID_ANY, "5", wxDefaultPosition, _spin_ctrl_size, wxSP_ARROW_KEYS | wxALIGN_RIGHT, 2, 1000, 5, sid);
+    n_flux_x->Connect(wxEVT_COMMAND_SPINCTRL_UPDATED, wxCommandEventHandler(SPFrame::OnUserFluxNx), NULL, this);
+    wxSpinCtrl *n_flux_y = new wxSpinCtrl(user_flux_panel, wxID_ANY, "5", wxDefaultPosition, _spin_ctrl_size, wxSP_ARROW_KEYS | wxALIGN_RIGHT, 2, 1000, 5, sid);
+    n_flux_y->Connect(wxEVT_COMMAND_SPINCTRL_UPDATED, wxCommandEventHandler(SPFrame::OnUserFluxNy), NULL, this);
+
+    wxBoxSizer *flux_button_sizer = new wxBoxSizer(wxHORIZONTAL);
+    flux_button_sizer->Add(import_user_flux, 0, wxALL, 5);
+    flux_button_sizer->Add(export_user_flux, 0, wxALL, 5);
+    flux_button_sizer->AddSpacer(10);
+    flux_button_sizer->Add(new wxStaticText(user_flux_panel, wxID_ANY, "X-axis bins"), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
+    flux_button_sizer->Add(n_flux_x, 0, wxALL, 5);
+    flux_button_sizer->AddSpacer(10);
+    flux_button_sizer->Add(new wxStaticText(user_flux_panel, wxID_ANY, "Y-axis bins"), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
+    flux_button_sizer->Add(n_flux_y, 0, wxALL, 5);
+
+    wxBoxSizer *user_flux_sizer = new wxBoxSizer(wxVERTICAL);
+    user_flux_sizer->Add(flux_button_sizer);
+
+    wxGrid *user_flux_grid = new wxGrid(user_flux_panel, wxID_ANY, wxDefaultPosition, wxSize(250, 250), 262144L, sid);
+    _user_flux_objects[id] = s_user_flux_objects(user_flux_grid, n_flux_y, n_flux_x);
+
+    user_flux_grid->CreateGrid(5, 5);
+    UpdateUserFluxGrid(id);
+    user_flux_grid->Connect(wxEVT_GRID_CELL_CHANGED, wxGridEventHandler(SPFrame::OnUserFluxGridChange), NULL, this);
+
+    user_flux_sizer->Add(user_flux_grid, 1, wxEXPAND | wxALL, 5);
+
+    user_flux_panel->SetSizer(user_flux_sizer);
+
+    flux_profile_type->setPanelObject("User", *user_flux_panel);
     
-    sbs2->Add(peak_flux);
+    {
+        wxWindow* dsibs[] = { user_flux_panel, flux_profile_type };
+        rec_type->addDisabledSiblings("External cylindrical", 2, dsibs);
+    }
+    rec_type->updateInputDisplay();
+
+    //----------------------------------------
+
     sbs2->Add(absorptance);
+    sbs2->Add(peak_flux);
+    sbs2->Add(flux_profile_type);
+    sbs2->Add(user_flux_panel);
+
+    flux_profile_type->updateInputDisplay();
 
     //-----Thermal losses group
     wxStaticBox *sb3 = new wxStaticBox(parent, wxID_ANY, wxT("Thermal losses"));
@@ -369,8 +459,8 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
 
 
     InputControl *inputs[] = {rec_type, is_polygon, n_panels, panel_rotation, rec_height, rec_diameter, rec_width, aperture_type, rec_azimuth, rec_elevation, 
-                              rec_cav_rad, rec_cav_cdepth, rec_offset_x, rec_offset_y, rec_offset_z, span_min, therm_loss_base,
-                              piping_loss_coef, piping_loss_const, span_max, peak_flux, absorptance, accept_ang_type, 
+                              rec_cav_rad, rec_cav_cdepth, rec_offset_reference, rec_offset_x, rec_offset_y, rec_offset_z, 
+                              span_min, therm_loss_base, piping_loss_coef, piping_loss_const, span_max, peak_flux, flux_profile_type, absorptance, accept_ang_type,
                               is_open_geom, accept_ang_x, accept_ang_y, NULL};
     int i=0;
     while(inputs[i] != NULL)
@@ -380,7 +470,8 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     }
     
     i=0;
-    OutputControl *outputs[] = {rec_aspect, optical_height, absorber_area, therm_loss, piping_loss, NULL};
+    OutputControl *outputs[] = {rec_aspect, optical_height, rec_offset_x_global, rec_offset_y_global, rec_offset_z_global, 
+                                absorber_area, therm_loss, piping_loss, NULL};
     while(outputs[i] != NULL)
     { 
         _output_map[ outputs[i]->getVarObject() ] = outputs[i]; 
@@ -413,7 +504,8 @@ void SPFrame::OnReceiverAdd( wxCommandEvent &WXUNUSED(event))
         name = "Receiver " + name;
     
         bool no_errs = false;
-        while( ! no_errs)
+        bool cancelled = false;
+        while( ! (no_errs || cancelled) )
         {
             
             rename_dlg *dlg = new rename_dlg(this, wxID_ANY, "Receiver geometry name", name, wxDefaultPosition, wxSize(350,100));
@@ -445,11 +537,11 @@ void SPFrame::OnReceiverAdd( wxCommandEvent &WXUNUSED(event))
             }
             else
             {
-                no_errs = false;
+                cancelled = true;
             }
             dlg->Destroy();
         }
-        if(no_errs)
+        if(no_errs && !cancelled)
         {
             //Re-create the solar field object
             _SF.Create(_variables);
@@ -540,6 +632,9 @@ void SPFrame::UpdateReceiverUITemplates()
     {
         //enable or disable according to state
         ((wxScrolledWindow*)_variables.recs.at(i).cbdata.val)->Enable( _variables.recs.at(i).is_enabled.val );
+
+        //update the combo choices for the offset reference dropdown
+        _input_map[ static_cast<spbase*>( &_variables.recs.at(i).rec_offset_reference ) ]->updateComboChoices();
     }
 
     //Update page values and bindings
@@ -557,12 +652,110 @@ void SPFrame::UpdateReceiverUITemplates()
         _rec_config->SetItem(i, 1, _variables.recs.at(i).is_enabled.val ? "Enabled" : "Disabled" );
     }
 
+    UpdateReceiverPowerGrid();
+
     _page_panel->Update();
     _page_panel->Refresh();
     
     this->Layout();
     this->Update();
     this->Refresh();
+}
+
+void SPFrame::UpdateReceiverPowerGrid()
+{
+    /*
+    Update the power limit grid on the receiver templates page
+    */
+    _SF.updateCalculatedReceiverPower(_variables);
+
+    int ncol = 5;
+    if (_rec_power_fractions->GetNumberCols() != ncol) {
+        _rec_power_fractions->DeleteCols(0, _rec_power_fractions->GetNumberCols());
+        _rec_power_fractions->AppendCols(ncol, false);
+    }
+
+    string cols[] = { "Template", "Dimensions [m,m]", "Area [m2]", "Power fraction", "Power [MWt]" };
+    int dw = 80;
+    int widths[] = { 120,dw,dw,dw,dw };
+
+    _rec_power_fractions->SetRowLabelSize(40);
+    for (int i = 0; i < ncol; i++)
+    {
+        _rec_power_fractions->SetColLabelValue(i, cols[i]);
+        _rec_power_fractions->SetColSize(i, widths[i]);
+    }
+
+    //count how many receivers should go in the table. Only active ones appear
+    int nrec_active = 0;
+    for (int i = 0; i < _variables.recs.size(); i++)
+        if (_variables.recs[i].is_enabled.val)
+            nrec_active++;
+    
+    //set the correct number of rows in the table
+    if (_rec_power_fractions->GetNumberRows() > 0)
+        _rec_power_fractions->DeleteRows(0, _rec_power_fractions->GetNumberRows());
+
+    //Fill in the data
+    int cur_row = 0;
+    for (int i = 0; i < (int)_variables.recs.size(); i++)
+    {
+        if (!_variables.recs[i].is_enabled.val)
+            continue;
+        //add 1 row
+        _rec_power_fractions->AppendRows();
+
+        bool is_external = _variables.recs[i].rec_type.mapval() == var_receiver::REC_TYPE::EXTERNAL_CYLINDRICAL;
+
+        //0  name        
+        _rec_power_fractions->SetCellValue(cur_row, 0, _variables.recs[i].rec_name.val);
+        //1  dimensions
+        _rec_power_fractions->SetCellValue(cur_row, 1,
+            wxString::Format("%s (%s) x %s (%s)", 
+                (is_external ? _variables.recs[i].rec_diameter.as_string() : _variables.recs[i].rec_width.as_string()).c_str(),
+                is_external ? "D" : "W",
+                _variables.recs[i].rec_height.as_string().c_str(),
+                "H"
+                )   
+            );
+        //2  area
+        _rec_power_fractions->SetCellValue(cur_row, 2, _variables.recs[i].absorber_area.as_string());
+        //3  power fraction (input)
+        _rec_power_fractions->SetCellValue(cur_row, 3, _variables.recs[i].power_fraction.as_string());
+        //4  power
+        wxString pfs = _rec_power_fractions->GetCellValue(cur_row, 3);
+        double pf;
+        if ( !pfs.ToDouble(&pf) )
+            pf = 1.;
+        wxString newpower = wxString::Format("%.2f", _variables.recs.at(i).q_rec_des.Val() );
+        _rec_power_fractions->SetCellValue(cur_row, 4, newpower);
+
+        cur_row++;
+    }
+
+    //update the land bounding area value determined during simulation
+    int icols[] = { 0, 1, 2, 4 };
+    for (int i = 0; i < 4; i++)
+    {
+        wxGridCellAttr *attr = new wxGridCellAttr();
+        attr->SetBackgroundColour(_colorTextBG);
+        attr->SetTextColour(_colorTextFG);
+        attr->SetReadOnly(true);
+        _rec_power_fractions->SetColAttr(icols[i], attr);
+    }
+
+    _rec_power_fractions->AutoSizeColumns();
+
+    //if the power fraction is not unity, warn the user
+    double pow_frac_total = 0.;
+    for (int i = 0; i < (int)_variables.recs.size(); i++)
+        if (_variables.recs[i].is_enabled.val)
+            pow_frac_total += _variables.recs[i].power_fraction.val;
+    
+    if (std::abs(pow_frac_total - 1.) > 1.e-3)
+        _msg_rec_power_fractions->Show(true);
+    else
+        _msg_rec_power_fractions->Show(false);
 }
 
 void SPFrame::OnReceiverDel( wxCommandEvent &WXUNUSED(event))
@@ -716,6 +909,8 @@ void SPFrame::OnReceiverState( wxCommandEvent &WXUNUSED(event))
             _rec_config->SetItem(sel, 0, rv->rec_name.val);
             _rec_config->SetItem(sel, 1, wxT("Enabled"));
         }
+
+        UpdateReceiverUITemplates();
     }
     catch(std::exception &e)
     {
@@ -790,6 +985,55 @@ void SPFrame::OnReceiverDeselect( wxListEvent &event)
 
 }
 
+void SPFrame::OnReceiverPowerGridEdit( wxGridEvent &event )
+{
+    /*
+    If the power fractions grid has been edited, handle here
+    */
+
+    int
+        row = event.GetRow(),
+        col = event.GetCol();
+    
+    //which receiver is this?
+    int which_rec = 0;
+    {
+        int i = 0;
+        while (true)
+        {
+            if (which_rec == row)
+            {
+                which_rec = i;
+                break;
+            }
+            else if( _variables.recs[i].is_enabled.val)
+            {
+                which_rec++;
+            }
+            i++;
+        }
+    }
+    
+    wxString newtext = _rec_power_fractions->GetCellValue(row, col);
+    double newnum;
+    //validate
+    if( newtext.ToDouble(&newnum) )
+    {
+        if (newnum >= 0.)
+        {
+            _variables.recs[which_rec].power_fraction.val = newnum;
+            _rec_power_fractions->SetEvtHandlerEnabled(false);
+            UpdateReceiverPowerGrid();
+            _rec_power_fractions->SetEvtHandlerEnabled(true);
+            return;     //if getting this far, then the action is successful. update and return
+        }
+    }
+
+    //something went wrong. Notify user.
+    PopMessage("Please enter a valid non-negative number.", "Input error");
+    return;
+}
+
 
 void SPFrame::OnHeatLossLoadFocus( wxFocusEvent &event)
 {
@@ -833,4 +1077,264 @@ void SPFrame::OnHeatLossWindFocus( wxFocusEvent &event)
     
     UpdateCalculatedGUIValues();
     event.Skip();
+}
+
+
+void SPFrame::OnUserFluxImport(wxCommandEvent &evt)
+{
+    int recid;
+    to_integer( static_cast<wxButton*>(evt.GetEventObject())->GetName().ToStdString() , &recid );
+
+    wxFileDialog filedlg(this, "Select a file for import...", wxEmptyString, wxEmptyString,
+        "Data files (*.txt;*.dat;*.csv)|*.txt;*.dat;*.csv");
+    filedlg.CentreOnParent();
+
+    //Show and process
+    if (filedlg.ShowModal() == wxID_OK)
+    {
+        wxString info = filedlg.GetPath().c_str();
+        //Try opening the file
+        if (ioutil::file_exists(info.c_str()))
+        {
+            std::string
+                files,
+                fnames = (std::string)info,
+                eol;
+            ioutil::read_file(fnames, files, eol);
+            wxString file(files), fname(fnames);
+            std::vector<std::string> entries = split(file.ToStdString(), eol);
+            int nlines = entries.size();
+
+            //determine the delimiter
+            std::vector<std::string> data;
+
+            //Find the type of delimiter
+            std::vector<std::string> delims;
+            delims.push_back(",");
+            delims.push_back(" ");
+            delims.push_back("\t");
+            delims.push_back(";");
+            std::string delim = "\t";    //initialize
+            unsigned int  ns = 0;
+            for (unsigned int i = 0; i < delims.size(); i++)
+            {
+                data = split(entries.at(0), delims.at(i));
+                if (data.size() > ns)
+                {
+                    delim = delims.at(i); ns = data.size();
+                }    //pick the delimiter that returns the most entries
+            }
+            data.clear();
+
+            wxFormatString fmt = "%f,%f;";
+            wxString stemp;
+            matrix_t<double> *vval = &_variables.recs[recid].user_flux_profile.val;
+
+            vval->clear();    //Clear
+            vval->resize(nlines, ns);
+
+            //Process all of the entries
+            for (int i = 0; i < nlines; i++)
+            {
+                data = split(entries.at(i), delim);
+
+                for (unsigned int j = 0; j < ns; j++)
+                    to_double(data.at(j), &vval->at(i,j));
+
+            }
+            //Call to the function that sets the data
+            UpdateUserFluxGrid(recid);
+        }
+        else
+        {
+            //Error: the file was not found
+            PopMessage("The specified file could not be loaded: File not found.", "Error");
+        }
+    }
+
+}
+
+void SPFrame::OnUserFluxExport(wxCommandEvent &evt) 
+{
+    int recid;
+    to_integer(static_cast<wxButton*>(evt.GetEventObject())->GetName().ToStdString(), &recid);
+
+    //Get the file
+    wxFileDialog filedlg(this, "Select a path for export...", wxEmptyString, wxEmptyString,
+        "Comma separated file (*.csv)|*.txt;*.csv", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+    filedlg.CentreOnParent();
+
+    //Show and process
+    if (filedlg.ShowModal() == wxID_OK)
+    {
+        wxString info = filedlg.GetPath().c_str();
+
+        matrix_t<double> *vals = &_variables.recs[recid].user_flux_profile.val;
+
+        ofstream file;
+        file.open((string)info);
+        if (!file.is_open())
+        {
+            PopMessage("The specified file could not be opened for writing. Please ensure that the file is not open or write-protected.", "Error", wxICON_ERROR | wxOK);
+            return;
+        }
+
+        int nc = (int)vals->ncols();
+
+        for (int i = 0; i < (int)vals->nrows(); i++)
+            for (int j = 0; j < nc; j++)
+                file << vals->at(i, j) << (j < nc - 1 ? "," : "\n");
+
+        file.close();
+
+        //notify the user of a successful export
+        wxString msg;
+        msg.sprintf("%s\nFile successfully created.", info.c_str());
+        PopMessage(msg, "Success");
+    }
+}
+
+void SPFrame::OnUserFluxNx(wxCommandEvent &evt)
+{
+    int recid;
+    wxSpinCtrl* spin = static_cast<wxSpinCtrl*>(evt.GetEventObject());
+    to_integer(spin->GetName().ToStdString(), &recid);
+
+    wxGrid* grid = _user_flux_objects[recid].gridptr;
+
+    int nspin = spin->GetValue();
+    int ngrid = grid->GetNumberCols();
+
+    if (nspin < ngrid)
+        grid->DeleteCols(nspin, ngrid-nspin);
+    else if (nspin > ngrid)
+    {
+        grid->AppendCols(nspin-ngrid);
+
+        int nc = grid->GetNumberCols();
+
+        //set the new column values to equal the last previously existing column
+        for (size_t j = ngrid; j < nspin; j++)
+            for (size_t i = 0; i < grid->GetNumberRows(); i++)
+                grid->SetCellValue(i, j, grid->GetCellValue(i, j - 1));
+
+        //update the col labels
+        for (size_t j = ngrid; j < nspin; j++)
+        {
+            _user_flux_objects[recid].gridptr->SetColLabelValue(j, std::to_string(j + 1));
+            _user_flux_objects[recid].gridptr->SetColSize(j, 50);
+        }
+    }
+    else
+        return;
+
+    UpdateUserFluxData(recid);
+}
+
+void SPFrame::OnUserFluxNy(wxCommandEvent &evt)
+{
+    int recid;
+    wxSpinCtrl* spin = static_cast<wxSpinCtrl*>(evt.GetEventObject());
+    to_integer(spin->GetName().ToStdString(), &recid);
+    
+    if (_user_flux_objects.find(recid) == _user_flux_objects.end())
+        return;     //invalid receiver ID
+
+    wxGrid* grid = _user_flux_objects[recid].gridptr;
+
+    int nc = grid->GetNumberCols();
+
+    int nspin = spin->GetValue();
+    int ngrid = grid->GetNumberRows();
+
+    if (nspin < ngrid)
+        grid->DeleteRows(nspin, ngrid-nspin);
+    else if (nspin > ngrid)
+    {
+        grid->AppendRows(nspin-ngrid);
+
+        int nr = grid->GetNumberRows();
+
+        //set the new column values to equal the last previously existing column
+        for (size_t j = ngrid; j < nspin; j++)
+            for (size_t i = 0; i < grid->GetNumberCols(); i++)
+                grid->SetCellValue(j, i, grid->GetCellValue(j-1, i));
+        
+    }
+    else
+        return;
+
+    UpdateUserFluxData(recid);
+}
+
+void SPFrame::OnUserFluxGridChange(wxGridEvent &evt)
+{
+    int recid;
+    to_integer(static_cast<wxGrid*>(evt.GetEventObject())->GetName().ToStdString(), &recid);
+    UpdateUserFluxData(recid);
+}
+
+void SPFrame::UpdateUserFluxGrid(int id)
+{
+    /*
+    Take the current data in the variable map string and update the interface grid.
+
+    format:
+    x1y1,x2y1,x3y1...;x1y2,x2,y2,...;...
+
+    */
+
+    if (id > _variables.recs.size() - 1)
+        return;     //out of bounds
+
+    matrix_t<double>* table = &_variables.recs[id].user_flux_profile.val;
+
+    //resize the grid
+    _user_flux_objects[id].nxptr->SetValue(table->ncols());
+    _user_flux_objects[id].nyptr->SetValue(table->nrows());
+    GridCount(table->nrows(), table->ncols(), _user_flux_objects[id].gridptr);
+
+    //update the grid
+    for (size_t i = 0; i < table->nrows(); i++)
+        for (size_t j = 0; j < table->ncols(); j++)
+            _user_flux_objects[id].gridptr->SetCellValue(i, j, wxString::Format("%f", table->at(i, j)));
+
+    //update the col labels
+    for (size_t j = 0; j < table->ncols(); j++)
+    {
+        _user_flux_objects[id].gridptr->SetColLabelValue(j, std::to_string(j + 1));
+        _user_flux_objects[id].gridptr->SetColSize(j, 50);
+    }
+
+    return;
+}
+
+void SPFrame::UpdateUserFluxData(int id)
+{
+    /*
+    Take the current data in the user flux grid and format it for storage as a string variable
+    in the variable map.
+
+    format:
+    x1y1,x2y1,x3y1...;x1y2,x2,y2,...;...
+
+    */
+       
+    wxGrid* grid = _user_flux_objects[id].gridptr;
+    matrix_t<double>* table = &_variables.recs[id].user_flux_profile.val;
+
+    int
+        nr = grid->GetNumberRows(),
+        nc = grid->GetNumberCols();
+
+    table->resize(nr, nc);
+
+    for (size_t i = 0; i < (size_t)nr; i++)
+        for (size_t j = 0; j < (size_t)nc; j++)
+            to_double(grid->GetCellValue(i, j).ToStdString(), &table->at(i, j));
+
+    //update scaling
+    Receiver::updateUserFluxNormalization(_variables.recs[id]);
+
+    return;
 }

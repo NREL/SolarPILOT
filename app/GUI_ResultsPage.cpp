@@ -54,7 +54,7 @@
 
 using namespace std;
 
-void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &results)
+void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent)
 {
     /* 
     Create page with a summary of simulation results.
@@ -68,14 +68,14 @@ void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &re
     {
         
         int empty_sim_results = -1234;
-        if(results.size() == 0) //goto empty_sim_results_flag;
+        if(_results.size() == 0) //goto empty_sim_results_flag;
             throw empty_sim_results;  //empty sim results
 
         wxButton 
             *export_button,
             *copy_button;
     
-        int sim_type = results.at(0).sim_type;    //Use the first simulation to figure out what type of simulation it is
+        int sim_type = _results.at(0).sim_type;    //Use the first simulation to figure out what type of simulation it is
         if(sim_type == 0)
         {    //Layout
             
@@ -91,14 +91,24 @@ void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &re
             copy_button = new wxButton(parent, wxID_ANY, wxT("Copy to clipboard"));
             copy_button->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnSimulationResultsCopy ), NULL, this);
 
+            wxComboBox *rec_select_combo=0;
+            if (_results.front().receiver_names.size() > 1)
+            {
+                wxArrayString recnames;
+                recnames.push_back("All receivers");
+                for (int i = 0; i < _results.front().receiver_names.size(); i++)
+                    recnames.push_back(_results.front().receiver_names.at(i));
+                rec_select_combo = new wxComboBox(parent, wxID_ANY, recnames.front(), wxDefaultPosition, wxDefaultSize, recnames, wxCB_DROPDOWN | wxCB_READONLY);
+                rec_select_combo->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( SPFrame::OnResultsReceiverSelect ), NULL, this);
+            }
+
             wxStaticBox *grid_sb = new wxStaticBox(parent, wxID_ANY, wxT("Flux simulation results summary"));
             wxStaticBoxSizer *grid_sbs = new wxStaticBoxSizer(grid_sb, wxVERTICAL);
         
-            sim_result *res = &results.at(0);
-
             _results_grid = new wxGrid(parent, wxID_ANY, wxDefaultPosition, wxSize(350,600));
             grid_emulator textgrid;
-            CreateResultsTable(*res, textgrid);
+            CreateResultsTable(_results.front(), textgrid);
+            _results_grid->CreateGrid(textgrid.GetNumberRows(),textgrid.GetNumberCols());
             textgrid.MapToWXGrid(_results_grid);
             _results_grid->SetRowLabelSize(200);
 
@@ -120,6 +130,13 @@ void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &re
             wxBoxSizer *bsizer = new wxBoxSizer(wxHORIZONTAL);
             bsizer->Add(export_button, 0, wxALL, 5);
             bsizer->Add(copy_button, 0, wxALL, 5);
+            if (rec_select_combo)
+            {
+                bsizer->AddSpacer(25);
+                bsizer->Add( new wxStaticText(parent, wxID_ANY, "Results display selection"), 0, wxALL, 5 );
+                bsizer->Add(rec_select_combo, 0, wxALL, 5);
+            }
+
             grid_sbs->Add(bsizer, 0, 0, 0);
             grid_sbs->Add(_results_grid, 0, wxALL|wxEXPAND, 5);
                 
@@ -137,12 +154,13 @@ void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent, sim_results &re
         
             _results_grid = new wxGrid(parent, wxID_ANY, wxDefaultPosition, wxSize(350,600));
             grid_emulator textgrid;
-            CreateParametricsTable(_par_data, results, textgrid);
+            CreateParametricsTable(_par_data, _results, textgrid);
+            _results_grid->CreateGrid(textgrid.GetNumberRows(), textgrid.GetNumberCols());
             textgrid.MapToWXGrid(_results_grid);
-        
+
             _results_grid->SetRowLabelSize(200);
 
-        
+
             int nrow=_results_grid->GetNumberRows(),
                 ncol=_results_grid->GetNumberCols();
             for(int i=0; i<ncol; i++)
@@ -308,4 +326,33 @@ void SPFrame::OnSimulationResultsCopy( wxCommandEvent &WXUNUSED(event))
 
     //Notify
     PopMessage("Successfully copied to the clipboard.");
+}
+
+void SPFrame::OnResultsReceiverSelect(wxCommandEvent &evt)
+{
+    wxString selection = static_cast<wxComboBox*>(evt.GetEventObject())->GetValue();
+    //which result is this?
+    sim_result* result = 0;
+    
+    if (selection == "All receivers")
+    {
+        result = &_results.front();
+    }
+    else
+    {
+        for (sim_results::iterator sr = _results.begin(); sr != _results.end(); sr++)
+            if (selection == sr->receiver_names.front())
+                result = &*sr;
+        if (!result)
+            return;
+    }
+
+    grid_emulator textgrid;
+    _results_grid->ClearGrid();
+    CreateResultsTable(*result, textgrid);
+    
+    textgrid.MapToWXGrid(_results_grid);
+
+    _results_grid->GetParent()->Update();
+    _results_grid->GetParent()->Refresh();
 }

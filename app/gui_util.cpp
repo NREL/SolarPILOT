@@ -357,8 +357,18 @@ void grid_emulator::GetPrintableTable(wxArrayStr &printable, wxString eol)
 
 void grid_emulator::MapToWXGrid(wxGrid *grid)
 {
-    grid->CreateGrid(_nrow, _ncol);
     
+    if (grid->GetNumberRows() != GetNumberRows())
+    {
+        grid->DeleteRows(0, grid->GetNumberRows());
+        grid->AppendRows(GetNumberRows());
+    }
+    if (grid->GetNumberCols() != GetNumberCols())
+    {
+        grid->DeleteCols(0, grid->GetNumberCols());
+        grid->AppendCols(GetNumberCols());
+    }
+
     for(int i=0; i<_nrow; i++)
         grid->SetRowLabelValue(i, rowlabs.at(i));
     for(int i=0; i<_ncol; i++)
@@ -366,6 +376,20 @@ void grid_emulator::MapToWXGrid(wxGrid *grid)
     for(int i=0; i<_nrow; i++)
         for(int j=0; j<_ncol; j++)
             grid->SetCellValue(i, j, GetCellValue(i,j));
+
+    int nrow = grid->GetNumberRows(),
+        ncol = grid->GetNumberCols();
+    for (int i = 0; i < ncol; i++)
+    {
+        for (int j = 0; j < nrow; j++)
+        {
+            grid->SetReadOnly(j, i, true);
+            if (grid->GetCellValue(j, i).empty())
+                grid->SetCellBackgroundColour(j, i, wxColour(100, 100, 100, 255));
+            else if (i > 1)
+                grid->SetCellBackgroundColour(j, i, wxColour(225, 225, 225, 255));
+        }
+    }
 }
 
 void grid_emulator::AddRow(int row, wxString label, wxString units, double value, int sigfigs, double mean, double min, double max, double stdev)

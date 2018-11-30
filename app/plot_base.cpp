@@ -176,6 +176,107 @@ void PlotBase::ColorGradientGrayscale(wxColour &col, double index)
     return;
 }
 
+void PlotBase::ColorGradientRainbow(wxColour &col, double index)
+{
+    static double rainbow[] = {
+        255, 0, 0,
+        255, 23.60742188, 0,
+        255, 47.21484375, 0,
+        255, 70.82226563, 0,
+        255, 94.4296875, 0,
+        255, 118.0371094, 0,
+        255, 141.7441406, 0,
+        255, 165.3515625, 0,
+        255, 188.9589844, 0,
+        255, 212.5664063, 0,
+        255, 236.1738281, 0,
+        248.0273438, 252.9082031, 0,
+        226.4121094, 255, 0,
+        202.8046875, 255, 0,
+        179.1972656, 255, 0,
+        155.5898438, 255, 0,
+        131.9824219, 255, 0,
+        108.2753906, 255, 0,
+        84.66796875, 255, 0,
+        61.06054688, 255, 0,
+        37.453125, 255, 0,
+        13.84570313, 255, 0,
+        1.9921875, 255, 11.75390625,
+        0, 255, 33.36914063,
+        0, 255, 56.9765625,
+        0, 255, 80.58398438,
+        0, 255, 104.1914063,
+        0, 255, 127.7988281,
+        0, 255, 151.40625,
+        0, 255, 175.1132813,
+        0, 255, 198.7207031,
+        0, 255, 222.328125,
+        0, 255, 245.9355469,
+        0, 240.3574219, 255,
+        0, 216.75, 255,
+        0, 193.0429688, 255,
+        0, 169.4355469, 255,
+        0, 145.828125, 255,
+        0, 122.2207031, 255,
+        0, 98.61328125, 255,
+        0, 74.90625, 255,
+        0, 51.29882813, 255,
+        0, 27.69140625, 255,
+        3.884765625, 7.96875, 255,
+        19.42382813, 0, 255,
+        43.03125, 0, 255,
+        66.73828125, 0, 255,
+        90.34570313, 0, 255,
+        113.953125, 0, 255,
+        137.5605469, 0, 255,
+        161.1679688, 0, 255,
+        184.7753906, 0, 255,
+        208.4824219, 0, 255,
+        232.0898438, 0, 255,
+        249.9199219, 0, 249.1230469,
+        255, 0, 230.5957031,
+        255, 0, 206.9882813,
+        255, 0, 183.28125,
+        255, 0, 159.6738281,
+        255, 0, 136.0664063,
+        255, 0, 112.4589844,
+        255, 0, 88.8515625,
+        255, 0, 65.24414063,
+        255, 0, 41.53710938
+    };
+
+    ColorGradientLookup(col, index, rainbow, sizeof(rainbow) / sizeof(double) / 3);
+
+    return;
+}
+
+void PlotBase::ColorGradientLookup(wxColour &col, double index, double* table, int nc)
+{
+    double index_use = index < 1. ? (index < 0. ? 0. : index) : (index > 1. ? 1. : index);
+    
+    int hi = (int)(index_use*nc) + 1;
+    hi = hi < 1 ? 1 : hi;
+    hi = hi > nc - 1 ? nc - 1 : hi;
+
+    int lo = hi - 1 < 0 ? 0 : hi - 1;
+    double f = index_use * nc - lo;
+
+    double
+        rh = table[hi * 3],
+        gh = table[hi * 3 + 1],
+        bh = table[hi * 3 + 2],
+        rl = table[lo * 3],
+        gl = table[lo * 3 + 1],
+        bl = table[lo * 3 + 2];
+
+    int
+        r = rl + (rh - rl)*f,
+        g = gl + (gh - gl)*f,
+        b = bl + (bh - bl)*f;
+
+    col.Set(r, g, b);
+}
+
 void PlotBase::ColorGradientParula(wxColour &col, double index)
 {
     static double parula [] = {
@@ -281,30 +382,7 @@ void PlotBase::ColorGradientParula(wxColour &col, double index)
       248.9565,  250.6905,   13.7190
       };
 
-    double index_use = index < 1. ? (index < 0. ? 0. : index) : (index > 1. ? 1. : index);
-    int nc = sizeof(parula)/sizeof(double)/3;
-
-    int hi = (int)(index_use*nc)+1;
-    hi = hi < 1 ? 1 : hi;
-    hi = hi > nc-1 ? nc-1 : hi;
-
-    int lo = hi-1 < 0 ? 0 : hi-1;
-    double f = index_use*nc - lo;
-
-    double 
-        rh = parula[hi*3],
-        gh = parula[hi*3+1],
-        bh = parula[hi*3+2],
-        rl = parula[lo*3],
-        gl = parula[lo*3+1],
-        bl = parula[lo*3+2];
-
-    int
-        r = rl + (rh-rl)*f,
-        g = gl + (gh-gl)*f,
-        b = bl + (bh-bl)*f;
-
-    col.Set(r,g,b);
+      ColorGradientLookup(col, index, parula, sizeof(parula) / sizeof(double) / 3);
 
     return;
 }

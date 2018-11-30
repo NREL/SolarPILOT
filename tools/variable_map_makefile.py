@@ -122,7 +122,7 @@ fdh.write( \
 """%(pi, 180./pi, pi/180.)
 )
 
-domains = dmap.keys()
+domains = list(dmap.keys())
 domains.sort()
 
 for domain in domains:

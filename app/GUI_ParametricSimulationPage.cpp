@@ -52,6 +52,7 @@
 
 #include "GUI_main.h"
 #include "LayoutSimulateThread.h"
+#include "plot_select_dialog.h"
 #include "IOUtil.h"
 
 using namespace std;
@@ -161,7 +162,14 @@ void SPFrame::CreateSimulationsParametricsTab( wxScrolledWindow *param)
     wxBoxSizer *par_save_sizer = new wxBoxSizer(wxVERTICAL);
     par_save_sizer->Add(par_save_helio);
     par_save_sizer->Add(par_save_summary);
-    par_save_sizer->Add(par_save_field_img);
+    
+    wxBoxSizer *par_save_field_img_sizer = new wxBoxSizer(wxHORIZONTAL);
+    par_save_field_img_sizer->Add(par_save_field_img);
+    wxButton *morebut = new wxButton(_par_panel, wxID_ANY, "...", wxDefaultPosition, wxSize(25,21));
+    par_save_field_img_sizer->Add( morebut );
+    morebut->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnParFieldSaveChoicePanel), NULL, this);
+    par_save_sizer->Add(par_save_field_img_sizer);
+
     par_save_sizer->Add(par_save_flux_img);
     par_save_sizer->Add(par_save_flux_dat);
     par_panel_sizer->Add(par_save_sizer, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -237,6 +245,12 @@ void SPFrame::CreateSimulationsParametricsTab( wxScrolledWindow *param)
     _input_map[ upar_save_flux_img->getVarObject() ] = upar_save_flux_img;
     _input_map[ upar_save_flux_dat->getVarObject() ] = upar_save_flux_dat;
     
+
+    wxBoxSizer *upar_save_field_img_sizer = new wxBoxSizer(wxHORIZONTAL);
+    upar_save_field_img_sizer->Add(upar_save_field_img);
+    wxButton *umorebut = new wxButton(_user_par_panel, wxID_ANY, "...", wxDefaultPosition, wxSize(25, 21));
+    upar_save_field_img_sizer->Add(umorebut);
+    umorebut->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnParFieldSaveChoicePanel), NULL, this);
         
     //Progress gauges
     _user_single_gauge = new wxGauge(_user_par_panel, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL|wxGA_SMOOTH);
@@ -275,7 +289,8 @@ void SPFrame::CreateSimulationsParametricsTab( wxScrolledWindow *param)
     wxBoxSizer *user_save_sizer = new wxBoxSizer(wxVERTICAL);
     user_save_sizer->Add(upar_save_helio);
     user_save_sizer->Add(upar_save_summary);
-    user_save_sizer->Add(upar_save_field_img);
+    //user_save_sizer->Add(upar_save_field_img);
+    user_save_sizer->Add(upar_save_field_img_sizer);
     user_save_sizer->Add(upar_save_flux_img);
     user_save_sizer->Add(upar_save_flux_dat);
     user_bottom_sizer->Add(user_save_sizer, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -725,6 +740,24 @@ void SPFrame::OnParEditLinkages( wxCommandEvent &WXUNUSED(event))
     }
 }
 
+void SPFrame::OnParFieldSaveChoicePanel(wxCommandEvent &)
+{
+    std::vector< std::string > choices = _plot_frame->GetPlotChoices();
+
+    PlotSelectDialog dlg(this, wxID_ANY, "Select saved figures", choices);
+    
+    dlg.SetSelections(&_plot_export_selections);
+    dlg.SetAnnotations(&_plot_annot_selections);
+
+    if (dlg.ShowModal() == wxID_APPLY)
+    {
+        _plot_export_selections = dlg.GetSelectionIds();
+        _plot_annot_selections = dlg.GetAnnotationIds();
+    }
+    else
+    {}
+}
+
 void SPFrame::OnParametricSimulate( wxCommandEvent &WXUNUSED(event))
 {
     /* The parametric simulate button has been pressed */
@@ -778,7 +811,7 @@ void SPFrame::OnParametricSimulate( wxCommandEvent &WXUNUSED(event))
 
         ParametricSimulate(_par_data);
     
-        DoResultsPage(_results);
+        DoResultsPage();
             
         //Show the simulation results
         _page_panel->SetActivePage( pageNames.results_summary );
@@ -1247,6 +1280,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
                 ||  layout_str.find("1") != string::npos;
 
             //iterate over all variable keys
+            std::vector< std::string > variable_record;
             for(int j=0; j<(int)simvars.size(); j++)
             {
                 if( lower_case(simvars[j]) == "regenerate layout") continue;
@@ -1254,7 +1288,13 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
                 spbase *vdat = vset._varptrs.at(simvars[j]); //getVarByString(vset, keys[j]);
 
                 //set the variable in the map
-                vdat->set_from_string( _user_sim_table[simvars[j]].at(i).c_str() );
+                std::string vval = _user_sim_table[simvars[j]].at(i);
+                vdat->set_from_string( vval.c_str() );
+
+                //keep track of variable name and value for reporting
+                variable_record.push_back(
+                    wxString::Format("%s,%s;", vdat->short_desc.c_str(), vval.c_str()).ToStdString()
+                );
             }
 
             //Update the climate file if needed
@@ -1321,6 +1361,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
                 //Get all of the heliostats
                 helios = *_par_SF.getHeliostats();
             }
+            int n_old_result = _results.size();
             _results.push_back(sim_result());
             //if the simulation is SolTrace, we need to automatically generate new aim points according to the specified method
             if( vset.flux.flux_model.mapval() == var_fluxsim::FLUX_MODEL::SOLTRACE )
@@ -1331,7 +1372,9 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
             }
         
             if(!sim_cancelled) sim_cancelled = sim_cancelled || !DoPerformanceSimulation(_par_SF, vset, helios);
-            _results.back().sim_type = 3;
+            for(int r= n_old_result; r<_results.size(); r++)
+                _results.at(r).sim_type = 3;
+            int n_new_result = _results.size() - n_old_result;
 
             //------------------------------------------------------------------
             //export performance data
@@ -1339,23 +1382,32 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
             {
                 wxString fname;
                 fname.Printf("%s/userparam_summary_%d.csv",_working_dir.GetPath().c_str(),i+1);
-                grid_emulator gridtable;
-                CreateResultsTable(_results.back(), gridtable);
-
-                //Write the table
-                wxArrayStr textresults;
-                gridtable.GetPrintableTable(textresults, "");
-
+                
                 //open and write the file
                 wxTextFile fout(fname);
-                if(! (fout.Exists() ? fout.Open() : fout.Create()) )
+                fout.Clear();
+                if (!(fout.Exists() ? fout.Open() : fout.Create()))
                 {
-                    PopMessage("Error opening the parametric output file \""+fname+"\". Terminating the simulation");
+                    PopMessage("Error opening the parametric output file \"" + fname + "\". Terminating the simulation");
+                    fout.Close();
                     return;
                 }
-                fout.Clear();
-                for(int j=0; j<(int)textresults.size(); j++)
-                    fout.AddLine(textresults[j]);
+
+                for (int r = 0; r < n_new_result; r++)
+                { 
+                    grid_emulator gridtable;
+                    CreateResultsTable(_results.at(n_old_result + r), gridtable);
+
+                    //Write the table
+                    wxArrayStr textresults;
+                    gridtable.GetPrintableTable(textresults, "");
+                    
+                    if (n_new_result > 1)
+                        fout.AddLine(wxString::Format("Performance for:, %s", r == 0 ? "All receivers" : _results.at(n_old_result + r).receiver_names.front()));
+                    
+                    for(int j=0; j<(int)textresults.size(); j++)
+                        fout.AddLine(textresults[j]);
+                }
                 fout.Write();
                 fout.Close();
             }
@@ -1387,14 +1439,27 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
             //save field image
             if(save_field_img && !sim_cancelled)
             {
-                wxString fname;
-                fname.Printf("%s/userparam_field-plot_%d.png", save_field_dir.c_str(), i+1);
-                wxClientDC pdc(this);
-                _plot_frame->SetPlotData(_par_SF, FIELD_PLOT::EFF_TOT);
-                _plot_frame->DoPaint(pdc);
-                wxBitmap *bitmap = _plot_frame->GetBitmap();
-                wxImage image = bitmap->ConvertToImage();
-                image.SaveFile( fname, wxBITMAP_TYPE_PNG );
+                for (std::vector<int>::iterator pn = _plot_export_selections.begin(); pn != _plot_export_selections.end(); pn++)
+                {
+                    wxString fname;
+                    fname.Printf("%s/userparam_field-plot_%d_%d.png", save_field_dir.c_str(), i+1, *pn);
+                    wxClientDC pdc(this);
+                    _plot_frame->SetPlotData(_par_SF, *pn );
+                    _plot_frame->SolarFieldAnnotation(&_par_SF, &_results.at(n_old_result + 1), _plot_annot_selections);
+                    std::string *annot = _plot_frame->getSolarFieldAnnotationObject();
+                    if (std::find(_plot_annot_selections.begin(), _plot_annot_selections.end(), PlotSelectDialog::VARIABLES) != _plot_annot_selections.end())
+                    {
+                        for (int j = 0; j < (int)variable_record.size(); j++)
+                        {
+                            annot->append(variable_record.at(j));
+                        }
+                    }
+
+                    _plot_frame->DoPaint(pdc);
+                    wxBitmap *bitmap = _plot_frame->GetBitmap();
+                    wxImage image = bitmap->ConvertToImage();
+                    image.SaveFile( fname, wxBITMAP_TYPE_PNG );
+                }
 
             }
             //save flux image
@@ -1430,7 +1495,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
 
         StopSimTimer();
         SetSimulationStatus(false, _in_user_param_simulation, _user_par_button);
-        DoResultsPage(_results);
+        DoResultsPage();
 
         //Show the simulation results
         _page_panel->SetActivePage( pageNames.results_summary );

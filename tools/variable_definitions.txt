@@ -190,6 +190,8 @@ optimize	max_gs_iter	IN	INT	5	none	FALSE			X	Max. refinement iterations	Maximum 
 optimize	max_iter	IN	INT	200	none	TRUE				Maximum iterations	Maximum number of times the optimization can iterate
 optimize	max_step	IN	DOUBLE	0.06	none	TRUE				Initial step size	Maximum total relative step size during optimization
 optimize	power_penalty	IN	DOUBLE	2	none	TRUE				Power shortage penalty	Relative weight in the objective function given to power to the receiver below the required minimum
+optimize	multirec_opt_timeout	IN	DOUBLE	60	sec	FALSE				Multi-receiver optimization solver time	Maximum allowable solver time for multiple receiver heliostat position and aimpoint optimization
+optimize	multirec_screen_mult	IN	DOUBLE	1.25	none	FALSE				Multi-receiver heliostat screen fraction	The number of heliostats required to meet this value times the design power of each receiver are considered for layout
 optimize	aspect_display	OUT	DOUBLE		none	FALSE				Current receiver aspect ratio (H/W)	Current receiver aspect ratio (H/W)
 optimize	gs_refine_ratio	OUT	DOUBLE		none	FALSE			X	Refinement relative bounding box	The relative step size of the refined area during refinement simulations. More iterations will allow greater refinement
 parametric	class_name	IN	STRING	Parametric Simulation	none	FALSE				Class name	Class name
@@ -197,12 +199,12 @@ parametric	eff_file_name	IN	STRING	eff_array.csv		FALSE				Efficiency file name	
 parametric	flux_file_name	IN	STRING	fluxmap.csv		FALSE				Fluxmap file name	Name of the output file containing the fluxmap data
 parametric	fluxmap_format	IN	STRING	0		FALSE	combo	SAM format=0;12x10 array=1;Specified dimensions=2		Fluxmap data dimensions	Dimensions of the fluxmap data (rows,cols)
 parametric	is_fluxmap_norm	IN	BOOL	TRUE		FALSE	checkbox			Normalize flux data	Flux data is reported as normalized
-parametric	par_save_field_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save field efficiency image	Save field efficiency image
+parametric	par_save_field_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save field image	Save field image based on selected options
 parametric	par_save_flux_dat	IN	BOOL	FALSE	none	FALSE	checkbox			Save receiver flux data	Save receiver flux data
 parametric	par_save_flux_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save receiver flux image	Save receiver flux image
 parametric	par_save_helio	IN	BOOL	FALSE	none	FALSE	checkbox			Save heliostat performance data	Save detailed heliostat performance data for each run
 parametric	par_save_summary	IN	BOOL	FALSE	none	FALSE	checkbox			Save performance summary information	Save detailed system performance data to a file for each run
-parametric	upar_save_field_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save field efficiency image (User)	Save field efficiency image
+parametric	upar_save_field_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save field image (User)	Save field image based on selected options
 parametric	upar_save_flux_dat	IN	BOOL	FALSE	none	FALSE	checkbox			Save receiver flux data (User)	Save receiver flux data
 parametric	upar_save_flux_img	IN	BOOL	FALSE	none	FALSE	checkbox			Save receiver flux image (User)	Save receiver flux image
 parametric	upar_save_helio	IN	BOOL	FALSE	none	FALSE	checkbox			Save heliostat performance data (User)	Save detailed heliostat performance data for each run
@@ -225,6 +227,9 @@ receiver	is_polygon	IN	BOOL	FALSE		TRUE	checkbox		X	Represent receiver as polygo
 receiver	n_panels	IN	INT	12	none	TRUE			X	Number of receiver panels	Number of receiver panels (polygon facets) for a polygonal receiver geometry
 receiver	panel_rotation	IN	DOUBLE	0	deg	TRUE			X	Receiver panel azimuthal orientation	Azimuth angle between the normal vector to the primary 'north' panel and North
 receiver	peak_flux	IN	DOUBLE	1000	kW/m2	TRUE				Allowable peak flux	Maximum allowable flux intensity on any portion of the receiver surface
+receiver	flux_profile_type	IN	STRING	0	none	TRUE	combo	Uniform=0;User=1		Desired receiver flux profile	Desired receiver flux profile type, Image Size Priority mode only
+receiver	user_flux_profile	IN	MATRIX_T	1,1,1,1,1;1,1,1,1,1;1,1,1,1,1;1,1,1,1,1;1,1,1,1,1	none	FALSE				User flux profile data	User flux profile data
+receiver	power_fraction	IN	DOUBLE	1	none	TRUE				Multi-receiver power fraction	Target fraction of absorbed energy delivered by the heliostat field in configurations with multiple receivers
 receiver	piping_loss_coef	IN	DOUBLE	10.2	kW/m	TRUE				Receiver piping loss coefficient	Loss per meter of tower height
 receiver	piping_loss_const	IN	DOUBLE	0	kW	TRUE				Receiver piping loss constant	Constant thermal loss due to piping - doesn't scale with tower height
 receiver	rec_azimuth	IN	DOUBLE	0	deg	TRUE				Receiver orientation azimuth	Receiver azimuth orientation: 0 deg is north, positive clockwise
@@ -234,9 +239,10 @@ receiver	rec_diameter	IN	DOUBLE	17.65	m	TRUE				Receiver diameter	Receiver diame
 receiver	rec_elevation	IN	DOUBLE	0	deg	TRUE				Receiver orientation elevation	Receiver elevation orientation: 0 deg to the horizon, negative rotating downward
 receiver	rec_height	IN	DOUBLE	21.6	m	TRUE				Receiver height	Height of the absorbing component
 receiver	rec_name	IN	STRING	Receiver 1		FALSE				Receiver template name	Receiver template name
-receiver	rec_offset_x	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - X axis	Offset of receiver center in the East(+)/West(-) direction from the tower
-receiver	rec_offset_y	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - Y axis	Offset of receiver center in the North(+)/South(-) direction from the tower
-receiver	rec_offset_z	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - Z axis	Offset of the receiver center in the vertical direction, positive upwards
+receiver	rec_offset_x	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - X axis	Offset of receiver center in the East(+)/West(-) direction from the reference object
+receiver	rec_offset_y	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - Y axis	Offset of receiver center in the North(+)/South(-) direction from the reference object
+receiver	rec_offset_z	IN	DOUBLE	0	m	TRUE				Receiver positioning offset - Z axis	Offset of the receiver center in the vertical direction from the reference object, positive upwards
+receiver	rec_offset_reference	IN	STRING	0	none	FALSE	combo	Tower=-1		Receiver offset reference	Receiver offset is relative to the position of the selected item. Options include tower or other receivers.
 receiver	rec_type	IN	STRING	0	none	FALSE	combo	External cylindrical=0;Flat plate=2		Receiver type	Receiver geometrical configuration
 receiver	rec_width	IN	DOUBLE	17	m	TRUE				Receiver width	Receiver width for cavity or flat receivers
 receiver	span_max	IN	DOUBLE	180	deg	TRUE			X	Max. receiver panel span angle	Maximum (CW) bound of the arc defining the receiver surface
@@ -244,12 +250,17 @@ receiver	span_min	IN	DOUBLE	-180	deg	TRUE			X	Min. receiver panel span angle	Min
 receiver	therm_loss_base	IN	DOUBLE	30	kW/m2	TRUE				Design point receiver thermal loss	Thermal loss from the receiver at design-point conditions
 receiver	therm_loss_load	IN	MATRIX_T	1,0,0,0	none	FALSE				Load-based thermal loss adjustment	Temperature-dependant thermal loss
 receiver	therm_loss_wind	IN	MATRIX_T	1,0,0,0	none	FALSE				Wind-based thermal loss adjustment	Wind speed-dependant thermal loss
+receiver	n_user_flux_profile	OUT	MATRIX_T		none	FALSE				Normalized user flux profile	Normalized user flux profile
 receiver	absorber_area	OUT	DOUBLE	0	m2	FALSE				Receiver absorber area	Effective area of the receiver absorber panels
 receiver	optical_height	OUT	DOUBLE	195	m	FALSE				Receiver optical height	Calculated height of the centerline of the receiver above the plane of the heliostats
 receiver	piping_loss	OUT	DOUBLE	0	MW	FALSE				Receiver piping loss	Thermal loss from non-absorber receiver piping
 receiver	rec_aspect	OUT	DOUBLE	1.2	none	TRUE				Receiver aspect ratio (H/W)	Ratio of receiver height to width
 receiver	therm_eff	OUT	DOUBLE	0	none	FALSE				Receiver calculated thermal efficiency	Receiver calculated thermal efficiency
 receiver	therm_loss	OUT	DOUBLE	0	MW	FALSE				Design-point thermal loss	Receiver thermal loss at design
+receiver	q_rec_des	OUT	DOUBLE	0	MW	FALSE				Design-point thermal power	Power produced by the receiver at design after thermal losses
+receiver	rec_offset_x_global	OUT	DOUBLE	0	m	FALSE				Receiver global positioning offset - X axis	Offset of receiver center in the East(+)/West(-) direction from the tower
+receiver	rec_offset_y_global	OUT	DOUBLE	0	m	FALSE				Receiver global positioning offset - Y axis	Offset of receiver center in the North(+)/South(-) direction from the tower
+receiver	rec_offset_z_global	OUT	DOUBLE	0	m	FALSE				Receiver global positioning offset - Z axis	Offset of the receiver center in the vertical direction, positive upwards
 solarfield	accept_max	IN	DOUBLE	180	deg	TRUE				Maximum solar field extent angle	Upper bound of the angular range containing the heliostat field
 solarfield	accept_min	IN	DOUBLE	-180	deg	TRUE				Minimum solar field extent angle	Lower bound of the angular range containing the heliostat field
 solarfield	az_spacing	IN	DOUBLE	2	none	TRUE				Azimuthal spacing factor	Azimuthal spacing factor for the first row of heliostats after a reset. Heliostats separated by heliostat width times this factor.
@@ -263,6 +274,7 @@ solarfield	is_sliprow_skipped	IN	BOOL	FALSE	none	TRUE	checkbox			Offset slip pla
 solarfield	is_opt_zoning	IN	BOOL	TRUE	none	FALSE	checkbox			Enable optical layout zone method	Enables grouping of heliostats into zones for intercept factor calculation during layout only
 solarfield	is_prox_filter	IN	BOOL	FALSE	none	TRUE	checkbox			Apply proximity filter	Post-process the layout to select heliostats that are closer to the tower.
 solarfield	is_tht_opt	IN	BOOL	TRUE	none	FALSE	checkbox			Optimize tower height	Vary the tower height during optimization to identify optimal level?
+solarfield	is_multirec_powfrac	IN	BOOL	FALSE	none	TRUE	checkbox			Specify multi-receiver power fractions	Enables the user to specify the fraction of power delivered from the heliostat to each receiver
 solarfield	layout_data	IN	STRING			FALSE				Layout data in string form	Layout data in string form
 solarfield	layout_method	IN	STRING	0	none	FALSE	combo	Radial Stagger=1;Cornfield=2;User-defined=3		Layout method	Field layout method
 solarfield	max_zone_size_az	IN	DOUBLE	1	tower-ht	TRUE				Max. optical layout zone size - azimuthal	Maximum zone size (azimuthal direction) for grouping optical intercept factor calculations
