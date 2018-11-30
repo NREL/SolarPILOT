@@ -145,7 +145,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(SSCDIR)\lpsolve;$(SolutionDir)\..\rapidxml;$(SolutionDir)\..\custom;$(SolutionDir)\..\solpos;$(SSCDIR);$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(WEXDIR);$(CORETRACEDIR)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>SP_STANDALONE;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_MBCS;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;SP_STANDALONE;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_MBCS;</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -156,7 +156,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(SSCDIR)\lpsolve;$(SolutionDir)\..\rapidxml;$(SolutionDir)\..\custom;$(SolutionDir)\..\solpos;$(SSCDIR);$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(WEXDIR);$(CORETRACEDIR)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>SP_STANDALONE;WIN64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_MBCS;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;SP_STANDALONE;WIN64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_MBCS;</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -169,7 +169,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>$(SSCDIR)\lpsolve;$(SolutionDir)\..\rapidxml;$(SolutionDir)\..\custom;$(SolutionDir)\..\solpos;$(SSCDIR);$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(WEXDIR);$(CORETRACEDIR)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>SP_STANDALONE;_MBCS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;SP_STANDALONE;_MBCS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -184,7 +184,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>$(SSCDIR)\lpsolve;$(SolutionDir)\..\rapidxml;$(SolutionDir)\..\custom;$(SolutionDir)\..\solpos;$(SSCDIR);$(SSCDIR)\nlopt;$(SSCDIR)\solarpilot;$(WEXDIR);$(CORETRACEDIR)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>SP_STANDALONE;_MBCS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;SP_STANDALONE;_MBCS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
