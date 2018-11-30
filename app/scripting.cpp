@@ -59,6 +59,7 @@
 #include "scripting.h"
 #include "GUI_main.h"
 #include "IOUtil.h"
+#include "param_dialog.h"
 
 using namespace std;
 
@@ -1700,6 +1701,7 @@ SolarPILOTScriptWindow::SolarPILOTScriptWindow( wxWindow *parent, int id )
 {
     GetEditor()->RegisterLibrary( solarpilot_functions(), "SolarPILOT Functions");
     SPFrame::Instance().GetSolarFieldObject()->getSimInfoObject()->setCallbackFunction(LKInfoCallback, (void*)this);
+    this->AddOutput("\nTip: Use the 'Help' button to look up and add variables to the script.");
 }
 
 SolarPILOTScriptWindow::~SolarPILOTScriptWindow()
@@ -1716,8 +1718,40 @@ void SolarPILOTScriptWindow::ScriptOutput(const char *msg)
     this->AddOutput(msg);
 }
 
+static std::string join(std::vector<std::string> &items, std::string sep)
+{
+    std::string result = items.front();
+    for (size_t i = 1; i < items.size(); i++)
+        result.append(sep + items.at(i));
+    return result;
+}
+
 void SolarPILOTScriptWindow::OnHelp( )
 {
+    var_map *V = SPFrame::Instance().GetVariablesObject();
+    wxFileName fn = SPFrame::Instance().GetImageDir();
+
+    par_variables_dialog *dlg = new par_variables_dialog(this, wxID_ANY, fn.GetPath(true), false, wxT("Variable lookup"));
+    dlg->SetItems(V);
+    
+    dlg->SetSize(450, 550);
+
+    if (dlg->ShowModal() == wxID_OK)
+    {
+        wxArrayStr vals = dlg->GetCheckedNames();
+
+        std::string names;
+
+        for (int i = 0; i < (int)vals.size(); i++)
+        {
+            spbase* v = V->_varptrs.at(vals[i].ToStdString());
+            names.append( "var(\"" + v->name + "\")" );
+            if (v->ctype == "combo")
+                names.append("   /*" + join(v->combo_get_choices(), ",") + "*/");
+            names.append("\n");
+        }
+        this->GetEditor()->InsertText(this->GetEditor()->GetCurrentPos(), names);
+    }
 }
 
 void SolarPILOTScriptWindow::OnScriptStarted()
