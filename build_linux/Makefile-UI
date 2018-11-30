@@ -15,13 +15,14 @@ SHAREDLIB = $(SHAREDIR)/shared.a
 FCLIB = ./fieldcore.a
 FCDIR = $(SSCDIR)/solarpilot
 NLOPTLIB = $(SHAREDIR)/nlopt.a
+LPSOLVELIB = $(SHAREDIR)/lpsolve.a
 
 CC = g++ 
 CXX = g++
 CFLAGS = -I. -I$(WEXDIR)/include -I$(LKDIR)/include -I$(SSCDIR) -I../rapidxml -I$(FCDIR) -I$(STDIR) -D__64BIT__ -g -O3 -std=c++0x -no-pie -DLK_USE_WXWIDGETS -DSP_STANDALONE -D_GLIBCXX_USE_NANOSLEEP `wx-config-3 --cflags` 
 
 CXXFLAGS = $(CFLAGS)
-LDFLAGS =  $(WEXLIB) $(LKLIB) $(STLIB) $(FCLIB) $(NLOPTLIB) $(SHAREDLIB)  `wx-config-3 --libs stc` `wx-config-3 --libs aui` `wx-config-3 --libs` -lm  -lfontconfig -ldl -lcurl -no-pie
+LDFLAGS =  $(WEXLIB) $(LKLIB) $(STLIB) $(FCLIB) $(NLOPTLIB) $(SHAREDLIB) $(LPSOLVELIB) `wx-config-3 --libs stc` `wx-config-3 --libs aui` `wx-config-3 --libs` -lm  -lfontconfig -ldl -lcurl -no-pie
 
 
 OBJECTS  = \
@@ -49,6 +50,7 @@ OBJECTS  = \
 	OutputControl.o \
 	kml_select_dialog.o \
 	layout_sim_export_dialog.o \
+	plot_select_dialog.o \
 	numericvareditform.o \
 	pagepanel.o \
 	param_dialog.o \
