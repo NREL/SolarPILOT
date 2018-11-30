@@ -26,24 +26,25 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export GTEST=/home/travis/build/$user/googletest/googletest; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export LKDIR=/home/travis/build/$user/lk; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export WEXDIR=/home/travis/build/$user/wex; fi
-#  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export SSCDIR=/home/travis/build/$user/ssc; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export SSCDIR=/home/travis/build/$user/ssc; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export SOLTRACEDIR=/home/travis/build/$user/soltrace; fi  
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CORETRACEDIR=$SOLTRACEDIR/coretrace; fi  
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export SOLARPILOTDIR=/home/travis/build/$user/solarpilot; fi  
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then git clone https://github.com/google/googletest /home/travis/build/$user/googletest; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then git clone https://github.com/$user/lk $LKDIR; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then git clone https://github.com/$user/wex $WEXDIR; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then git clone https://github.com/$user/soltrace $SOLTRACEDIR; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then git clone https://github.com/$user/solarpilot $SOLARPILOTDIR; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export GTEST=/Users/travis/build/$user/googletest/googletest; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LKDIR=/Users/travis/build/$user/lk; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export WEXDIR=/Users/travis/build/$user/wex; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export SSCDIR=/Users/travis/build/$user/ssc; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then git clone https://github.com/google/googletest /home/travis/build/$user/googletest; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then git clone https://github.com/$user/lk $LKDIR; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then git clone https://github.com/$user/wex $WEXDIR; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then git clone https://github.com/$user/soltrace $SOLTRACEDIR; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then git clone https://github.com/$user/solarpilot $SOLARPILOTDIR; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then git clone https://github.com/NREL/lk $LKDIR; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then git clone https://github.com/NREL/wex $WEXDIR; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then git clone https://github.com/mjwagner2/ssc -b solarpilot-develop $SSCDIR; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then git clone https://github.com/NREL/soltrace $SOLTRACEDIR; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then git clone https://github.com/NREL/solarpilot $SOLARPILOTDIR; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export GTEST=/Users/travis/build/$user/googletest/googletest; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LKDIR=/Users/travis/build/$user/lk; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export WEXDIR=/Users/travis/build/$user/wex; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export SSCDIR=/Users/travis/build/$user/ssc; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then git clone https://github.com/google/googletest /home/travis/build/$user/googletest; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then git clone https://github.com/$user/lk $LKDIR; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then git clone https://github.com/$user/wex $WEXDIR; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then git clone https://github.com/$user/soltrace $SOLTRACEDIR; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then git clone https://github.com/$user/solarpilot $SOLARPILOTDIR; fi
 
 script:
  # - ./configure --enable-gcov && make && make_check
@@ -71,14 +72,14 @@ script:
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libgtk2.0-dev libgl1-mesa-dev mesa-common-dev freeglut3-dev libcurl4-openssl-dev libc6; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install ccache; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH="/usr/local/opt/ccache/libexec:$PATH"; fi 
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install ccache; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH="/usr/local/opt/ccache/libexec:$PATH"; fi 
 
 after_sucess:
    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then coveralls --exclude lib --exclude tests --gcov-options '\-lp'; fi
    
 branches:
   only:
-  - master
-  - develop 
-  - travis-test
+#  - master
+#  - develop 
+  - travis

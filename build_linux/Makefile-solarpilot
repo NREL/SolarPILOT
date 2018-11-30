@@ -3,14 +3,15 @@ SSCDIR = ../../ssc
 VPATH = $(SSCDIR)/solarpilot
 
 STDIR = ../../soltrace/coretrace
-STLIB = $(STDIR)/build_linux/coretrace.a
-SHARELIB = $(SSCDIR)/build_linux/shared.a
+#STLIB = $(STDIR)/build_linux/coretrace.a
+#SHARELIB = $(SSCDIR)/build_linux/shared.a
 NLOPTDIR = $(SSCDIR)/nlopt
-NLOPTLIB = $(SSCDIR)/build_linux/nlopt.a
+#NLOPTLIB = $(SSCDIR)/build_linux/nlopt.a
+LPSOLVEDIR = $(SSCDIR)/lpsolve
 
 CC = g++ #gcc
 CXX = g++
-CFLAGS = -fPIC -Wall -g -O3 -DSP_STANDALONE -I../ -D__64BIT__ -I$(NLOPTDIR) -I$(STDIR) -I../rapidxml -I$(SSCDIR) -std=c++0x -D_GLIBCXX_USE_NANOSLEEP
+CFLAGS = -fPIC -Wall -g -O3 -DSP_STANDALONE -I../ -D__64BIT__ -I$(NLOPTDIR) -I$(STDIR) -I$(LPSOLVEDIR) -I../rapidxml -I$(SSCDIR) -std=c++0x -D_GLIBCXX_USE_NANOSLEEP
 CXXFLAGS = $(CFLAGS) #$(STLIB) $(SHARELIB) $(NLOPTLIB)
 
 OBJECTS = \
@@ -29,6 +30,7 @@ Land.o \
 LayoutSimulateThread.o \
 mod_base.o \
 OpticalMesh.o \
+MultiRecOptimize.o\
 optimize.o \
 Receiver.o \
 Ambient.o \
