@@ -80,6 +80,6 @@ after_sucess:
    
 branches:
   only:
-  - master
-  - develop 
-#  - travis-test
+#  - master
+#  - develop 
+  - travis-test
