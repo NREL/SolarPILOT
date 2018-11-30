@@ -1,343 +1,467 @@
-﻿<html>
-	
+
+
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-	<title>Heliostat Template</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="generator" content="HelpNDoc Professional Edition 4.6.2.573">
-	<meta name="keywords" content="">
-	
-	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
-	<!--[if lte IE 8]>
-		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
-	<![endif]-->
-	<style type="text/css">
-		#topic_header
-		{
-			background-color: #EFEFEF;
-		}
-	</style>
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/hnd.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function()
-		{
-			if (top.frames.length == 0)
-			{
-				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
-				top.location.href = "SolarPILOT.html?" + sTopicUrl;
-			}
-			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
-			{
-				top.FrameTOC.SelectTocItem("HeliostatTemplate");
-			}
-		});
-	</script>
-	
-	</head>
 
-<body>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="generator" content="HelpNDoc Personal Edition 5.8.2.643">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.ico"/>
 
-<div id="topic_header">
-			<div id="topic_header_content">
-				<h1 id="topic_header_text">Heliostat Template</h1>
-				
-				<div id="topic_breadcrumb">
-					<a href="InputPageReference.html">Input Page Reference</a> &rsaquo;&rsaquo; <a href="HeliostatsTree.html">Heliostats</a> &rsaquo;&rsaquo; </div>
-				</div>
-			<div id="topic_header_nav">
-				<a href="HeliostatsTree.html"><img src="img/arrow_up.png" alt="Parent"/></a>
-				
-				<a href="HelioTempManagement.html"><img src="img/arrow_left.png" alt="Previous"/></a>
-				
-				<a href="ReceiversTree.html"><img src="img/arrow_right.png" alt="Next"/></a>
-				
-				</div>
-			<div class="clear"></div>
-		</div>
-	<div id="topic_content">
-		
+  <title>Heliostat Template</title>
+  <meta name="description" content="A Tool for Solar Power Tower Layout and Optimization" /> 
+  <meta name="keywords" content="">
+
+
+
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Heliostat Template">
+  <meta name="twitter:description" content="A Tool for Solar Power Tower Layout and Optimization">
+
+  <!-- Open Graph data -->
+  <meta property="og:title" content="Heliostat Template" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="A Tool for Solar Power Tower Layout and Optimization" />
+  <meta property="og:site_name" content="SolarPILOT User's Manual" /> 
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/respond-1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <!-- JsTree styles -->
+  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+
+  <!-- Hnd styles -->
+  <link href="css/layout.min.css" rel="stylesheet" />
+  <link href="css/effects.min.css" rel="stylesheet" />
+  <link href="css/theme-light-blue.min.css" rel="stylesheet" />
+  <link href="css/print.min.css" rel="stylesheet" media="print" />
+  <style type="text/css">nav { width: 350px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 350px} body.md-nav-expanded header { padding-left: 364px} }</style>
+
+  <!-- Content style -->
+  <link href="css/hnd.content.css" rel="stylesheet" />
+
+  
+
+
+
+</head>
+
+<body class="md-nav-expanded">
+
+
+
+  <div id="skip-link">
+    <a href="#main-content" class="element-invisible">Skip to main content</a>
+  </div>
+
+  <header class="headroom">
+    <button class="hnd-toggle btn btn-default">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>        
+    </button>
+    <h1>SolarPILOT User's Manual</h1>
+    
+  </header>
+
+  <nav class="md-nav-expanded">
+    <!-- Nav tabs -->
+    <ul class="tab-tabs nav nav-tabs" role="tablist">
+      <li id="nav-close"> 
+        <button class="hnd-toggle btn btn-default">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+      </li>
+      
+	  
+        <li role="presentation" class="tab active">
+            <a href="#contents" id="tab-contents" aria-controls="contents" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-list"></i>
+                Contents
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#index" id="tab-index" aria-controls="index" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-asterisk"></i>
+                Index
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#search" id="tab-search" aria-controls="search" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-search"></i>
+                Search
+            </a>
+        </li>
+      
+    </ul>  <!-- /Nav tabs -->
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+	  
+      <div role="tabpanel" class="tab-pane active" id="contents">
+        <div id="toc" class="tree-container unselectable"
+            data-url="_toc.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /contents-->
+      
+      <div role="tabpanel" class="tab-pane" id="index">
+        <div id="keywords" class="tree-container unselectable"
+            data-url="_keywords.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /index-->
+      
+      <div role="tabpanel" class="tab-pane" id="search">
+        <div class="search-content">
+          <div class="search-input">
+            <form id="search-form">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="input-search" name="input-search" placeholder="Search..." />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>  <!-- /search-input -->
+          <div class="search-result">
+            <div id="search-info"></div>
+            <div class="tree-container unselectable" id="search-tree"></div>
+          </div>  <!-- /search-result -->
+        </div>  <!-- /search-content -->
+      </div>  <!-- /search-->
+      
+    </div>  <!-- /Tab panes -->
+
+  </nav>
+
+  <div id="main">
+
+    <article>
+        <div id="topic-content" class="container-fluid" 
+		  data-hnd-id="HeliostatTemplate"
+		  data-hnd-context="7"
+		  data-hnd-title="Heliostat Template"
+		>
+            
+                <div class="navigation">
+                    <ol class="breadcrumb">
+                        <li><a href="InputPageReference.html">Input Page Reference</a></li><li><a href="HeliostatsTree.html">Heliostats</a></li>
+                    </ol>
+                    <div class="nav-arrows">
+                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="HeliostatsTree.html" title="Heliostats" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="HelioTempManagement.html" title="Template management" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="ReceiversTree.html" title="Receivers" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                    </div>
+                </div> 
+            
+
+            <a id="main-content"></a>
+
+            <h2>Heliostat Template</h2>
+
+            <div class="main-content">
+                
 <p></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h1 class="rvps6"><a name="Top of page"></a>
-<span class="rvts0"><span class="rvts19">Page Overview</span></span></h1>
+<h1 class="rvps9"><a name="Top of page"></a>
+<span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="HeliostatTemplate.html#Heliostat%20Geometry">Heliostat Geometry</a></p>
+<p class="rvps2"><a class="rvts23" href="HeliostatTemplate.html#Heliostat%20Geometry">Heliostat Geometry</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="HeliostatTemplate.html#Focus%20Parameters">Focus Parameters</a></p>
+<p class="rvps2"><a class="rvts23" href="HeliostatTemplate.html#Focus%20Parameters">Focus Parameters</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="HeliostatTemplate.html#Optical%20Error%20Parameters">Optical Error Parameters</a></p>
+<p class="rvps2"><a class="rvts23" href="HeliostatTemplate.html#Optical%20Error%20Parameters">Optical Error Parameters</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="HeliostatTemplate.html#Mirror%20Performance%20Parameters">Mirror Performance Parameters</a></p>
+<p class="rvps2"><a class="rvts23" href="HeliostatTemplate.html#Mirror%20Performance%20Parameters">Mirror Performance Parameters</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Heliostat Geometry"></a>
-<span class="rvts0"><span class="rvts19">Heliostat Geometry</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="HeliostatTemplate.html#Top%20of%20page">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Heliostat Geometry"></a>
+<span class="rvts0"><span class="rvts22">Heliostat Geometry</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="HeliostatTemplate.html#Top%20of%20page">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Heliostat geometry includes macroscopic dimensions and parameters to specify heliostat facets. Relevant dimensions are shown in the following figure.</span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem158.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Structure Width</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Structure Width</span></span></h2>
 <p class="rvps2"><span class="rvts6">[m] Physical extent in the width direction of the heliostat structure. This value is the basis for calculating heliostat spacing and collision avoidance requirements. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Structure Height</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Structure Height</span></span></h2>
 <p class="rvps2"><span class="rvts6">[m] Physical extent in the height direction of the heliostat structure. This value is the basis for calculating heliostat spacing and collision avoidance requirements. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Heliostat Footprint Diameter</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Heliostat Footprint Diameter</span></span></h2>
 <p class="rvps2"><span class="rvts6">[m] The maximum physical extent of the heliostat. Equal to the diagonal length of the heliostat.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem153.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Use Multiple Panels</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Use Multiple Panels</span></span></h2>
 <p class="rvps2"><span class="rvts6">Model the heliostat using multiple facets (also known as "cant panels"). </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">No. Horizontal Panels</span></span></h3>
-<p class="rvps9"><span class="rvts6">The number of panel facets in the horizontal (width) dimension.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">No. Vertical Panels</span></span></h3>
-<p class="rvps9"><span class="rvts6">The number of panel facets in the vertical (height) dimension.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Cant Panel Horiz. Gap</span></span></h3>
-<p class="rvps9"><span class="rvts6">[m] Specified gap length between panels in the horizontal dimension.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Cant Panel Vert. Gap</span></span></h3>
-<p class="rvps9"><span class="rvts6">[m] Specified gap length between panels in the vertical dimension.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Heliostat Canting Method</span></span></h3>
-<p class="rvps9"><span class="rvts6">A heliostat can be composed of multiple mirror facets, each of which may be mounted on the heliostat structure at a particular preferred orientation to maximize optical performance. The practice of modifying the mounting orientation of each facet is known as "canting", and several techniques are available for determining the orientation of each facet. </span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">The purpose of the canting process is to better aim the reflected heliostat image from each facet at a desired target. Canting is often implemented such that the image reflected from the heliostat is ideally focused on the target for a particular heliostat tracking position or orientation. When the heliostat orientation differs from the position at which it was originally canted, the image distorts as a consequence of </span><span class="rvts28">astigmatism</span><span class="rvts6">, an effect illustrated below. Light that is reflected to a single focal point at the canting position is instead reflected to a focal region, diluting the concentrating effect of canting.</span></p>
-<p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem160.png"></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">Heliostat performance can be catered to particular sun positions or times of year in this way. If heliostats are canted such that the focal accuracy is maximized for a particular sun position, then overall field efficiency will tend to increase under those conditions. The following methods allow you to choose how to orient the facets.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps20"><span class="rvts0"><span class="rvts25">No Canting</span></span></h4>
-<p class="rvps9"><span class="rvts6">Facets are aligned in a plane containing the pivot point of the heliostat. The normal vector from each facet is parallel with the other facets and with the aiming vector of the heliostat.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps20"><span class="rvts0"><span class="rvts25">On-Axis at Slant</span></span></h4>
-<p class="rvps9"><span class="rvts6">Facets are aligned when the heliostat aiming vector is pointed directly at the tower. Each facet is adjusted such that the normal vector intercepts the receiver at the heliostat aim point. </span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps20"><span class="rvts0"><span class="rvts25">On-Axis, User Defined</span></span></h4>
-<p class="rvps9"><span class="rvts6">Facets are aligned such that their normal vector aims at a selected point along the heliostat normal vector. You can specify the canting aim point using the following settings.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps21"><span class="rvts0"><span class="rvts24">Canting Radius Factor</span></span></h3>
-<p class="rvps11"><span class="rvts6">If the cant radius scales with the tower height (Scale Cant Radius With Tower Height = TRUE), then the canting radius factor multiplied by the tower height gives the distance along the heliostat normal vector at which individual facets will be aimed. </span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><span class="rvts6">If the cant radius does not scale with the tower height (Scale Cant Radius With Tower Height = FALSE), then the canting radius factor indicates the distance in meters along the heliostat normal vector at which the individual facets will be aimed.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps21"><span class="rvts0"><span class="rvts24">Scale Cant Radius With Tower Height</span></span></h3>
-<p class="rvps11"><span class="rvts6">Choose whether the Canting Radius Factor is a distance relative to the tower height (TRUE) or whether the value is specified in meters (FALSE).</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps21"><span class="rvts0"><span class="rvts24">Canting Radius</span></span></h3>
-<p class="rvps11"><span class="rvts6">Calculated value indicating the distance along the heliostat normal vector at which the heliostat facets will be aimed. The normal vector from each heliostat facet will be aligned to pass through a point at this distance from the heliostat rotation point.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps20"><span class="rvts0"><span class="rvts25">Off-Axis, Day and Hour</span></span></h4>
-<p class="rvps9"><span class="rvts6">Off-axis canting methods align the heliostat facets such that the reflected images overlap on the receiver when the heliostat is in tracking mode. This method adjusts the facet alignment to minimize image size at the specified heliostat tracking position. The heliostat tracking position is calculated by SolarPILOT at an hour and day of the year that you specify.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps21"><span class="rvts0"><span class="rvts24">Canting Hour (Past Noon)</span></span></h3>
-<p class="rvps11"><span class="rvts6">Hour of the day relative to noon (+ is afternoon, - is morning) at which the heliostat tracking position is calculated. </span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps21"><span class="rvts0"><span class="rvts24">Canting Day of the Year</span></span></h3>
-<p class="rvps11"><span class="rvts6">Day of the year (1 ... 365) at which the heliostat tracking position is calculated.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps21"><span class="rvts0"><span class="rvts24">Sun Elevation at Canting</span></span></h3>
-<p class="rvps11"><span class="rvts6">Calculated value indicating the solar elevation angle above the horizon at the specified canting hour and day of the year.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps21"><span class="rvts0"><span class="rvts24">Sun Azimuth at Canting</span></span></h3>
-<p class="rvps9"><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6">Calculated value indicating the solar azimuth angle at the specified canting hour and day of the year.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps20"><span class="rvts0"><span class="rvts25">User-Defined Vector</span></span></h4>
-<p class="rvps9"><span class="rvts6">User-defined canting methods allow you to specify the point in space relative to the normal vector of the heliostat at which individual facets will point. </span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps21"><span class="rvts0"><span class="rvts24">Canting Vector Component</span></span></h3>
-<p class="rvps11"><span class="rvts6">Specify the x,y,z (i,j,k) components of the canting position vector. The vector is relative to the uncanted plane of the heliostat.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps21"><span class="rvts0"><span class="rvts24">Canting Vector Magnitude</span></span></h3>
-<p class="rvps11"><span class="rvts6">Specify the multiplier on the canting vector to determine the distance along the directional vector at which the individual facets will be aimed.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps21"><span class="rvts0"><span class="rvts24">Scale Vector With Slant Range</span></span></h3>
-<p class="rvps11"><span class="rvts6">Indicate whether to scale the canting vector components by the slant range of the heliostat (the slant range is the distance between the heliostat pivot point and the center of the receiver. If scaling is enabled, the vector components are multiplied by the slant range and the canting vector magnitude.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">No. Horizontal Panels</span></span></h3>
+<p class="rvps8"><span class="rvts6">The number of panel facets in the horizontal (width) dimension.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">No. Vertical Panels</span></span></h3>
+<p class="rvps8"><span class="rvts6">The number of panel facets in the vertical (height) dimension.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Cant Panel Horiz. Gap</span></span></h3>
+<p class="rvps8"><span class="rvts6">[m] Specified gap length between panels in the horizontal dimension.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Cant Panel Vert. Gap</span></span></h3>
+<p class="rvps8"><span class="rvts6">[m] Specified gap length between panels in the vertical dimension.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Heliostat Canting Method</span></span></h3>
+<p class="rvps8"><span class="rvts6">A heliostat can be composed of multiple mirror facets, each of which may be mounted on the heliostat structure at a particular preferred orientation to maximize optical performance. The practice of modifying the mounting orientation of each facet is known as "canting", and several techniques are available for determining the orientation of each facet. </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">The purpose of the canting process is to better aim the reflected heliostat image from each facet at a desired target. Canting is often implemented such that the image reflected from the heliostat is ideally focused on the target for a particular heliostat tracking position or orientation. When the heliostat orientation differs from the position at which it was originally canted, the image distorts as a consequence of </span><span class="rvts30">astigmatism</span><span class="rvts6">, an effect illustrated below. Light that is reflected to a single focal point at the canting position is instead reflected to a focal region, diluting the concentrating effect of canting.</span></p>
+<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem160.png"></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">Heliostat performance can be catered to particular sun positions or times of year in this way. If heliostats are canted such that the focal accuracy is maximized for a particular sun position, then overall field efficiency will tend to increase under those conditions. The following methods allow you to choose how to orient the facets.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps21"><span class="rvts0"><span class="rvts27">No Canting</span></span></h4>
+<p class="rvps8"><span class="rvts6">Facets are aligned in a plane containing the pivot point of the heliostat. The normal vector from each facet is parallel with the other facets and with the aiming vector of the heliostat.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps21"><span class="rvts0"><span class="rvts27">On-Axis at Slant</span></span></h4>
+<p class="rvps8"><span class="rvts6">Facets are aligned when the heliostat aiming vector is pointed directly at the tower. Each facet is adjusted such that the normal vector intercepts the receiver at the heliostat aim point. </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps21"><span class="rvts0"><span class="rvts27">On-Axis, User Defined</span></span></h4>
+<p class="rvps8"><span class="rvts6">Facets are aligned such that their normal vector aims at a selected point along the heliostat normal vector. You can specify the canting aim point using the following settings.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps22"><span class="rvts0"><span class="rvts26">Canting Radius Factor</span></span></h3>
+<p class="rvps12"><span class="rvts6">If the cant radius scales with the tower height (Scale Cant Radius With Tower Height = TRUE), then the canting radius factor multiplied by the tower height gives the distance along the heliostat normal vector at which individual facets will be aimed. </span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<p class="rvps12"><span class="rvts6">If the cant radius does not scale with the tower height (Scale Cant Radius With Tower Height = FALSE), then the canting radius factor indicates the distance in meters along the heliostat normal vector at which the individual facets will be aimed.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps22"><span class="rvts0"><span class="rvts26">Scale Cant Radius With Tower Height</span></span></h3>
+<p class="rvps12"><span class="rvts6">Choose whether the Canting Radius Factor is a distance relative to the tower height (TRUE) or whether the value is specified in meters (FALSE).</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps22"><span class="rvts0"><span class="rvts26">Canting Radius</span></span></h3>
+<p class="rvps12"><span class="rvts6">Calculated value indicating the distance along the heliostat normal vector at which the heliostat facets will be aimed. The normal vector from each heliostat facet will be aligned to pass through a point at this distance from the heliostat rotation point.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps21"><span class="rvts0"><span class="rvts27">Off-Axis, Day and Hour</span></span></h4>
+<p class="rvps8"><span class="rvts6">Off-axis canting methods align the heliostat facets such that the reflected images overlap on the receiver when the heliostat is in tracking mode. This method adjusts the facet alignment to minimize image size at the specified heliostat tracking position. The heliostat tracking position is calculated by SolarPILOT at an hour and day of the year that you specify.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps22"><span class="rvts0"><span class="rvts26">Canting Hour (Past Noon)</span></span></h3>
+<p class="rvps12"><span class="rvts6">Hour of the day relative to noon (+ is afternoon, - is morning) at which the heliostat tracking position is calculated. </span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps22"><span class="rvts0"><span class="rvts26">Canting Day of the Year</span></span></h3>
+<p class="rvps12"><span class="rvts6">Day of the year (1 ... 365) at which the heliostat tracking position is calculated.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps22"><span class="rvts0"><span class="rvts26">Sun Elevation at Canting</span></span></h3>
+<p class="rvps12"><span class="rvts6">Calculated value indicating the solar elevation angle above the horizon at the specified canting hour and day of the year.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps22"><span class="rvts0"><span class="rvts26">Sun Azimuth at Canting</span></span></h3>
+<p class="rvps8"><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6">Calculated value indicating the solar azimuth angle at the specified canting hour and day of the year.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps21"><span class="rvts0"><span class="rvts27">User-Defined Vector</span></span></h4>
+<p class="rvps8"><span class="rvts6">User-defined canting methods allow you to specify the point in space relative to the normal vector of the heliostat at which individual facets will point. </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps22"><span class="rvts0"><span class="rvts26">Canting Vector Component</span></span></h3>
+<p class="rvps12"><span class="rvts6">Specify the x,y,z (i,j,k) components of the canting position vector. The vector is relative to the uncanted plane of the heliostat.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps22"><span class="rvts0"><span class="rvts26">Canting Vector Magnitude</span></span></h3>
+<p class="rvps12"><span class="rvts6">Specify the multiplier on the canting vector to determine the distance along the directional vector at which the individual facets will be aimed.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps22"><span class="rvts0"><span class="rvts26">Scale Vector With Slant Range</span></span></h3>
+<p class="rvps12"><span class="rvts6">Indicate whether to scale the canting vector components by the slant range of the heliostat (the slant range is the distance between the heliostat pivot point and the center of the receiver. If scaling is enabled, the vector components are multiplied by the slant range and the canting vector magnitude.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Focus Parameters"></a>
-<span class="rvts0"><span class="rvts19">Focus Parameters</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="HeliostatTemplate.html#Top%20of%20page">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Focus Parameters"></a>
+<span class="rvts0"><span class="rvts22">Focus Parameters</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="HeliostatTemplate.html#Top%20of%20page">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Heliostat focusing type</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Heliostat focusing type</span></span></h2>
 <p class="rvps2"><span class="rvts6">Specify the focal point radius for the heliostat.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Flat</span></span></h3>
-<p class="rvps9"><span class="rvts6">The heliostat has no curvature (infinite radius) and is a flat, planar surface.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">At slant</span></span></h3>
-<p class="rvps9"><span class="rvts6">The heliostat focal length is equal to the distance between the heliostat pivot point and the receiver centroid.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Group average</span></span></h3>
-<p class="rvps9"><span class="rvts6">The heliostat focal length is equal to the average slant range of all heliostats that use the current template. </span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">User defined</span></span></h3>
-<p class="rvps9"><span class="rvts6">You can specify the focal length in both the horizontal (X) and vertical (Y) directions.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Use single focal length</span></span></h4>
-<p class="rvps11"><span class="rvts6">Choose whether to specify the focal length with a single value. If TRUE, then both X and Y focal lengths will share the same value. If FALSE, then you can specify the focal length for each dimension independently.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Focus in X</span></span></h4>
-<p class="rvps11"><span class="rvts6">Allow curvature in the horizontal direction. If FALSE, the heliostat will not have curvature in the horizontal direction.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Focus in Y</span></span></h4>
-<p class="rvps11"><span class="rvts6">Allow curvature in the vertical direction. If FALSE, the heliostat will not have curvature in the vertical direction.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Focal Length in X</span></span></h4>
-<p class="rvps11"><span class="rvts6">The focal length in the horizontal direction (assuming the heliostat normal vector is pointing toward the horizon).</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Focal Length in Y</span></span></h4>
-<p class="rvps11"><span class="rvts6">The focal length in the vertical direction (assuming the heliostat normal vector is pointing toward the horizon).</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Flat</span></span></h3>
+<p class="rvps8"><span class="rvts6">The heliostat has no curvature (infinite radius) and is a flat, planar surface.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">At slant</span></span></h3>
+<p class="rvps8"><span class="rvts6">The heliostat focal length is equal to the distance between the heliostat pivot point and the receiver centroid.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Group average</span></span></h3>
+<p class="rvps8"><span class="rvts6">The heliostat focal length is equal to the average slant range of all heliostats that use the current template. </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">User defined</span></span></h3>
+<p class="rvps8"><span class="rvts6">You can specify the focal length in both the horizontal (X) and vertical (Y) directions.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Use single focal length</span></span></h4>
+<p class="rvps12"><span class="rvts6">Choose whether to specify the focal length with a single value. If TRUE, then both X and Y focal lengths will share the same value. If FALSE, then you can specify the focal length for each dimension independently.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Focus in X</span></span></h4>
+<p class="rvps12"><span class="rvts6">Allow curvature in the horizontal direction. If FALSE, the heliostat will not have curvature in the horizontal direction.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Focus in Y</span></span></h4>
+<p class="rvps12"><span class="rvts6">Allow curvature in the vertical direction. If FALSE, the heliostat will not have curvature in the vertical direction.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Focal Length in X</span></span></h4>
+<p class="rvps12"><span class="rvts6">The focal length in the horizontal direction (assuming the heliostat normal vector is pointing toward the horizon).</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Focal Length in Y</span></span></h4>
+<p class="rvps12"><span class="rvts6">The focal length in the vertical direction (assuming the heliostat normal vector is pointing toward the horizon).</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Optical Error Parameters"></a>
-<span class="rvts0"><span class="rvts19">Optical Error Parameters</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="HeliostatTemplate.html#Top%20of%20page">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Optical Error Parameters"></a>
+<span class="rvts0"><span class="rvts22">Optical Error Parameters</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="HeliostatTemplate.html#Top%20of%20page">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Elevation pointing error</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Elevation pointing error</span></span></h2>
 <p class="rvps2"><span class="rvts6">The standard deviation of angular error in the elevation drive assuming a normal distribution.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Azimuth pointing error</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Azimuth pointing error</span></span></h2>
 <p class="rvps2"><span class="rvts6">The standard deviation of angular error in the azimuth drive assuming a normal distribution.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Surface slope error in X</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Surface slope error in X</span></span></h2>
 <p class="rvps2"><span class="rvts6">Standard deviation of angular displacement (waviness) of the heliostat surface in the horizontal direction assuming a normal distribution.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Surface slope error in Y</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Surface slope error in Y</span></span></h2>
 <p class="rvps2"><span class="rvts6">Standard deviation of angular displacement (waviness) of the heliostat surface in the vertical direction assuming a normal distribution.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Reflected beam error in X</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Reflected beam error in X</span></span></h2>
 <p class="rvps2"><span class="rvts6">Standard deviation of the specular reflection from the surface (specularity) in the horizontal direction assuming a normal distribution.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Reflected beam error in Y</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Reflected beam error in Y</span></span></h2>
 <p class="rvps2"><span class="rvts6">Standard deviation of the specular reflection from the surface (specularity) in the vertical direction assuming a normal distribution.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Total reflected image error</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Total reflected image error</span></span></h2>
 <p class="rvps2"><span class="rvts6">Calculated value indicating the effective standard deviation of the reflected image from the heliostat including all sources of error. The formula for calculating this value is:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem161.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<div class="rvps9"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem162.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps17"><span class="rvts6">rad</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">rad</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Elevation pointing error</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Elevation pointing error</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem163.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps17"><span class="rvts6">rad</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">rad</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Azimuthal pointing error</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Azimuthal pointing error</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem164.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps17"><span class="rvts6">rad</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">rad</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Surface slope error in X</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Surface slope error in X</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem165.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps17"><span class="rvts6">rad</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">rad</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Surface slope error in Y</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Surface slope error in Y</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem166.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps17"><span class="rvts6">rad</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">rad</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Reflected beam error in X</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Reflected beam error in X</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem167.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps17"><span class="rvts6">rad</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">rad</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Reflected beam error in Y</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Reflected beam error in Y</span></p>
 </td>
 </tr>
 </table>
 </div>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Note that the impact of the elevation, azimuth, and surface slope errors are 2</span><span class="rvts37">2</span><span class="rvts6">=4 times the impact of reflected beam error. This is due to the definitions of each error. For all but the reflected beam error, the angular error indicates deviation of the surface normal vector. The impact of an angular surface displacement is to double the angular displacement of the outgoing reflected light. In the case of the reflected beam error, the displacement is defined around the reflected vector that has already interacted with the surface. Therefore, by definition, the reflected beam error has 1/4th the impact of the surface errors. </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Note that the impact of the elevation, azimuth, and surface slope errors are 2</span><span class="rvts38">2</span><span class="rvts6">=4 times the impact of reflected beam error. This is due to the definitions of each error. For all but the reflected beam error, the angular error indicates deviation of the surface normal vector. The impact of an angular surface displacement is to double the angular displacement of the outgoing reflected light. In the case of the reflected beam error, the displacement is defined around the reflected vector that has already interacted with the surface. Therefore, by definition, the reflected beam error has 1/4th the impact of the surface errors. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">This concept is illustrated below. The surface normal errors are shown on the left, and the reflected beam (specular) errors are shown on the right.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem168.png"></p>
-<p class="rvps2"><span class="rvts28">Image NREL - Courtesy SolTrace documentation. T. Wendelin. </span></p>
+<p class="rvps2"><span class="rvts30">Image NREL - Courtesy SolTrace documentation. T. Wendelin. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Mirror Performance Parameters"></a>
-<span class="rvts0"><span class="rvts19">Mirror Performance Parameters</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="HeliostatTemplate.html#Top%20of%20page">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Mirror Performance Parameters"></a>
+<span class="rvts0"><span class="rvts22">Mirror Performance Parameters</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="HeliostatTemplate.html#Top%20of%20page">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Reflective surface ratio</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Reflective surface ratio</span></span></h2>
 <p class="rvps2"><span class="rvts6">The ratio of active reflective area to total structural area. The total structural area is equal to the Structure width multiplied by the Structure height. The power delivered by the heliostat is proportional to the reflective surface ratio.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Mirror reflectivity</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Mirror reflectivity</span></span></h2>
 <p class="rvps2"><span class="rvts6">The base surface reflectivity of the mirror in a pristine or clean state. The power delivered by the heliostat is proportional to the mirror reflectivity.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Soiling factor</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Soiling factor</span></span></h2>
 <p class="rvps2"><span class="rvts6">The fraction of light that is reflected after accounting for surface soiling. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Total optical reflectance</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Total optical reflectance</span></span></h2>
 <p class="rvps2"><span class="rvts6">The total reflectance of the heliostat after accounting for the Mirror reflectivity and the Soiling factor. The total optical reflectance is equal to the product of the mirror reflectivity and the soiling factor.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Total reflective aperture area</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Total reflective aperture area</span></span></h2>
 <p class="rvps2"><span class="rvts6">The effective reflective area (in the aperture plane) of the heliostat. The total reflective aperture area is equal to the product of the Structure width, Structure height, and Reflective surface ratio.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem170.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<div class="rvps9"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem171.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps17"><span class="rvts6">m</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">m</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Heliostat structure width</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Heliostat structure width</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem172.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps17"><span class="rvts6">m</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">m</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Heliostat structure height</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Heliostat structure height</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem173.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps17"><span class="rvts6">-</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">-</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Reflective surface ratio</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Reflective surface ratio</span></p>
 </td>
 </tr>
 </table>
@@ -349,14 +473,78 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p></p>
-</div>
-	
-	<div id="topic_footer">
+<p class="rvps4" style="clear: both;"><span class="rvts13">Created with the Personal Edition of HelpNDoc: </span><a class="rvts14" href="https://www.helpndoc.com/feature-tour/iphone-website-generation">Free iPhone documentation generator</a></p>
 
-			<div id="topic_footer_content">
-				Copyright &copy; 2013-2018, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div>
-		</div>
-	</body>
-	
+            </div>
+            
+            <div id="topic_footer"><div id="topic_footer_content">Copyright &copy; 2013-2018, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div></div>
+        </div>  <!-- /#topic-content -->
+    </article>
+
+    <footer></footer>
+
+  </div>  <!-- /#main -->
+
+  <div class="mask" data-toggle="sm-nav-expanded"></div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="hndModal" tabindex="-1" role="dialog" aria-labelledby="hndModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="hndModalLabel"></h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary modal-btn-close" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
+  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.18.9/uri.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
+  
+  <!-- Headroom -->
+  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
+  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+
+  <!-- JsTree -->
+  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+
+  <!-- HelpNDoc scripts -->
+  <script src="_translations.js"></script>
+  <script src="js/hndsd.min.js"></script>
+  <script src="js/hndse.min.js"></script>
+  <script src="js/app.min.js"></script>
+
+  <!-- Scripts -->
+  <script>
+    $(function() {
+      // Instanciate FastClick
+      Origami.fastclick(document.body);
+      // Create the app
+      var app = new Hnd.App();
+      // Update translations
+      hnd_ut(app);
+	  // Custom JS
+	  
+      // Boot the app
+      app.Boot();
+    });
+  </script>
+
+
+
+</body>
+
 </html>
 

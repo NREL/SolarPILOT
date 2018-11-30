@@ -1,106 +1,230 @@
-﻿<html>
-	
+
+
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-	<title>Field layout</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="generator" content="HelpNDoc Professional Edition 4.6.2.573">
-	<meta name="keywords" content="">
-	
-	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
-	<!--[if lte IE 8]>
-		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
-	<![endif]-->
-	<style type="text/css">
-		#topic_header
-		{
-			background-color: #EFEFEF;
-		}
-	</style>
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/hnd.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function()
-		{
-			if (top.frames.length == 0)
-			{
-				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
-				top.location.href = "SolarPILOT.html?" + sTopicUrl;
-			}
-			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
-			{
-				top.FrameTOC.SelectTocItem("Fieldlayout");
-			}
-		});
-	</script>
-	
-	</head>
 
-<body>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="generator" content="HelpNDoc Personal Edition 5.8.2.643">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.ico"/>
 
-<div id="topic_header">
-			<div id="topic_header_content">
-				<h1 id="topic_header_text">Field layout</h1>
-				
-				<div id="topic_breadcrumb">
-					<a href="InputPageReference.html">Input Page Reference</a> &rsaquo;&rsaquo; <a href="Simulationcontrol.html">Simulation control</a> &rsaquo;&rsaquo; </div>
-				</div>
-			<div id="topic_header_nav">
-				<a href="Simulationcontrol.html"><img src="img/arrow_up.png" alt="Parent"/></a>
-				
-				<a href="Simulationcontrol.html"><img src="img/arrow_left.png" alt="Previous"/></a>
-				
-				<a href="Performancesimulation.html"><img src="img/arrow_right.png" alt="Next"/></a>
-				
-				</div>
-			<div class="clear"></div>
-		</div>
-	<div id="topic_content">
-		
+  <title>Field layout</title>
+  <meta name="description" content="A Tool for Solar Power Tower Layout and Optimization" /> 
+  <meta name="keywords" content="">
+
+
+
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Field layout">
+  <meta name="twitter:description" content="A Tool for Solar Power Tower Layout and Optimization">
+
+  <!-- Open Graph data -->
+  <meta property="og:title" content="Field layout" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="A Tool for Solar Power Tower Layout and Optimization" />
+  <meta property="og:site_name" content="SolarPILOT User's Manual" /> 
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/respond-1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <!-- JsTree styles -->
+  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+
+  <!-- Hnd styles -->
+  <link href="css/layout.min.css" rel="stylesheet" />
+  <link href="css/effects.min.css" rel="stylesheet" />
+  <link href="css/theme-light-blue.min.css" rel="stylesheet" />
+  <link href="css/print.min.css" rel="stylesheet" media="print" />
+  <style type="text/css">nav { width: 350px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 350px} body.md-nav-expanded header { padding-left: 364px} }</style>
+
+  <!-- Content style -->
+  <link href="css/hnd.content.css" rel="stylesheet" />
+
+  
+
+
+
+</head>
+
+<body class="md-nav-expanded">
+
+
+
+  <div id="skip-link">
+    <a href="#main-content" class="element-invisible">Skip to main content</a>
+  </div>
+
+  <header class="headroom">
+    <button class="hnd-toggle btn btn-default">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>        
+    </button>
+    <h1>SolarPILOT User's Manual</h1>
+    
+  </header>
+
+  <nav class="md-nav-expanded">
+    <!-- Nav tabs -->
+    <ul class="tab-tabs nav nav-tabs" role="tablist">
+      <li id="nav-close"> 
+        <button class="hnd-toggle btn btn-default">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+      </li>
+      
+	  
+        <li role="presentation" class="tab active">
+            <a href="#contents" id="tab-contents" aria-controls="contents" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-list"></i>
+                Contents
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#index" id="tab-index" aria-controls="index" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-asterisk"></i>
+                Index
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#search" id="tab-search" aria-controls="search" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-search"></i>
+                Search
+            </a>
+        </li>
+      
+    </ul>  <!-- /Nav tabs -->
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+	  
+      <div role="tabpanel" class="tab-pane active" id="contents">
+        <div id="toc" class="tree-container unselectable"
+            data-url="_toc.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /contents-->
+      
+      <div role="tabpanel" class="tab-pane" id="index">
+        <div id="keywords" class="tree-container unselectable"
+            data-url="_keywords.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /index-->
+      
+      <div role="tabpanel" class="tab-pane" id="search">
+        <div class="search-content">
+          <div class="search-input">
+            <form id="search-form">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="input-search" name="input-search" placeholder="Search..." />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>  <!-- /search-input -->
+          <div class="search-result">
+            <div id="search-info"></div>
+            <div class="tree-container unselectable" id="search-tree"></div>
+          </div>  <!-- /search-result -->
+        </div>  <!-- /search-content -->
+      </div>  <!-- /search-->
+      
+    </div>  <!-- /Tab panes -->
+
+  </nav>
+
+  <div id="main">
+
+    <article>
+        <div id="topic-content" class="container-fluid" 
+		  data-hnd-id="Fieldlayout"
+		  data-hnd-context="11"
+		  data-hnd-title="Field layout"
+		>
+            
+                <div class="navigation">
+                    <ol class="breadcrumb">
+                        <li><a href="InputPageReference.html">Input Page Reference</a></li><li><a href="Simulationcontrol.html">Simulation control</a></li>
+                    </ol>
+                    <div class="nav-arrows">
+                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="Simulationcontrol.html" title="Simulation control" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="Simulationcontrol.html" title="Simulation control" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="Performancesimulation.html" title="Performance simulation" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                    </div>
+                </div> 
+            
+
+            <a id="main-content"></a>
+
+            <h2>Field layout</h2>
+
+            <div class="main-content">
+                
 <p></p>
-<h1 class="rvps6"><a name="top"></a>
-<span class="rvts0"><span class="rvts19">Page Overview</span></span></h1>
+<h1 class="rvps9"><a name="top"></a>
+<span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The Field Layout page provides the execution functions for layout and regeneration of the heliostat field. At the top of the page, you'll find buttons for executing a layout, regenerating geometry with the current layout, timers and progress bars, and the simulation log. Each of these items are covered in more detail below. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The following keyboard shortcuts are enabled for this page:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts28">F5</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28">Generate new layout</span></p>
-<p class="rvps2"><span class="rvts28">Alt+F5</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28">Regenerate current layout</span></p>
+<p class="rvps2"><span class="rvts30">F5</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">Generate new layout</span></p>
+<p class="rvps2"><span class="rvts30">Alt+F5</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">Regenerate current layout</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Fieldlayout.html#Generate%20New%20Layout">Generate New Layout</a></p>
+<p class="rvps2"><a class="rvts23" href="Fieldlayout.html#Generate%20New%20Layout">Generate New Layout</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Fieldlayout.html#Regenerate%20Current%20Layout">Regenerate Current Layout</a></p>
+<p class="rvps2"><a class="rvts23" href="Fieldlayout.html#Regenerate%20Current%20Layout">Regenerate Current Layout</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Fieldlayout.html#Simulation%20Timer">Simulation Timer</a></p>
+<p class="rvps2"><a class="rvts23" href="Fieldlayout.html#Simulation%20Timer">Simulation Timer</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Fieldlayout.html#Simulation%20Log">Simulation Log</a></p>
+<p class="rvps2"><a class="rvts23" href="Fieldlayout.html#Simulation%20Log">Simulation Log</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Fieldlayout.html#Field%20Layout">Field Layout</a></p>
+<p class="rvps2"><a class="rvts23" href="Fieldlayout.html#Field%20Layout">Field Layout</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Generate New Layout"></a>
-<span class="rvts0"><span class="rvts19">Generate New Layout</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Fieldlayout.html#top">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Generate New Layout"></a>
+<span class="rvts0"><span class="rvts22">Generate New Layout</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Fieldlayout.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem182.png"><span class="rvts6"> &nbsp;</span><img alt="" style="padding : 1px;" src="lib/NewItem183.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts28">Keyboard shortcut: </span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28">F5</span></p>
+<p class="rvps2"><span class="rvts30">Keyboard shortcut: </span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">F5</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">This button creates a new layout and generates the field geometry, receiver geometry, and other necessary data to define a power tower solar field. When executing a new layout, SolarPILOT collects all of the inputs that you've specified on the other input pages (Climate, Markets, Costs, Plant, Layout Setup, Heliostats, Receivers) and generates an appropriate solar field. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">To generate a new layout, SolarPILOT:</span></p>
-<ol style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: decimal;">
-<li value="1" class="rvps2"><span class="rvts29">Collects</span><span class="rvts6"> inputs and settings &nbsp;from the input pages. </span></li>
-<li value="2" class="rvps2"><span class="rvts29">Pre-processes</span><span class="rvts6"> the weather data or solar irradiance model to generate a set of simulation points for design evaluation. </span></li>
-<li value="3" class="rvps2"><span class="rvts29">Generates</span><span class="rvts6"> a list of all possible heliostat positions that fall within the land boundary that you specify. The positions are generated according to the layout rules that you choose on the Layout Setup page.</span></li>
-<li value="4" class="rvps2"><span class="rvts29">Simulates</span><span class="rvts6"> the performance of the field - including each possible heliostat in the layout from step (3) - over the set of simulation points generated in step (2). </span><span class="rvts28">Note that for systems with a large number of heliostats or a large set of simulation points, this step can require significant computation.</span><span class="rvts6"> The progress made by SolarPILOT is updated in the Simulation Timer progress bar and output text. Steps in the process are noted in the Simulation Log.</span></li>
-<li value="5" class="rvps2"><span class="rvts29">Sorts</span><span class="rvts6"> all possible heliostats by the performance metric that you specify in the Heliostat selection criteria field on the Layout Setup page. Typically, the heliostats are sorted from highest to lowest on the power that they produce over the simulation set. </span></li>
-<li value="6" class="rvps2"><span class="rvts29">Calculates</span><span class="rvts6"> the power delivered by each heliostat at the reference condition by running a single simulation using the reference values specified on the Layout Setup page. The simulation is evaluated at the Design-point DNI value and the Sun Location at Design Point.</span></li>
-<li value="7" class="rvps2"><span class="rvts29">Deletes heliostats</span><span class="rvts6"> in order of worst-performing to best-performing while the power delivered at the reference condition is still satisfied. Once the deletion of a heliostat would lead to a delivered power less than the design point (plus thermal losses), the deletion process terminates. </span></li>
+<ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;">
+<li value="1" class="rvps2"><span class="rvts21">Collects</span><span class="rvts6"> inputs and settings &nbsp;from the input pages. </span></li>
+<li value="2" class="rvps2"><span class="rvts21">Pre-processes</span><span class="rvts6"> the weather data or solar irradiance model to generate a set of simulation points for design evaluation. </span></li>
+<li value="3" class="rvps2"><span class="rvts21">Generates</span><span class="rvts6"> a list of all possible heliostat positions that fall within the land boundary that you specify. The positions are generated according to the layout rules that you choose on the Layout Setup page.</span></li>
+<li value="4" class="rvps2"><span class="rvts21">Simulates</span><span class="rvts6"> the performance of the field - including each possible heliostat in the layout from step (3) - over the set of simulation points generated in step (2). </span><span class="rvts30">Note that for systems with a large number of heliostats or a large set of simulation points, this step can require significant computation.</span><span class="rvts6"> The progress made by SolarPILOT is updated in the Simulation Timer progress bar and output text. Steps in the process are noted in the Simulation Log.</span></li>
+<li value="5" class="rvps2"><span class="rvts21">Sorts</span><span class="rvts6"> all possible heliostats by the performance metric that you specify in the Heliostat selection criteria field on the Layout Setup page. Typically, the heliostats are sorted from highest to lowest on the power that they produce over the simulation set. </span></li>
+<li value="6" class="rvps2"><span class="rvts21">Calculates</span><span class="rvts6"> the power delivered by each heliostat at the reference condition by running a single simulation using the reference values specified on the Layout Setup page. The simulation is evaluated at the Design-point DNI value and the Sun Location at Design Point.</span></li>
+<li value="7" class="rvps2"><span class="rvts21">Deletes heliostats</span><span class="rvts6"> in order of worst-performing to best-performing while the power delivered at the reference condition is still satisfied. Once the deletion of a heliostat would lead to a delivered power less than the design point (plus thermal losses), the deletion process terminates. </span></li>
 </ol>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The remaining heliostats form the field layout that is displayed on the Layout Results page. </span></p>
@@ -108,207 +232,271 @@
 <p class="rvps2"><span class="rvts6">While running, you can cancel the layout process by clicking the run button (which is displayed with the red cancel option). The layout process will be aborted.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Regenerate Current Layout"></a>
-<span class="rvts0"><span class="rvts19">Regenerate Current Layout</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Fieldlayout.html#top">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Regenerate Current Layout"></a>
+<span class="rvts0"><span class="rvts22">Regenerate Current Layout</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Fieldlayout.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem184.png"><img alt="" style="padding : 1px;" src="lib/NewItem185.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts28">Keyboard shortcut:</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28">Alt+F5</span></p>
-<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p class="rvps2"><span class="rvts30">Keyboard shortcut:</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">Alt+F5</span></p>
+<p class="rvps2"><span class="rvts30"><br/></span></p>
 <p class="rvps2"><span class="rvts6">It may be the case that you wish to modify the inputs or settings and apply the changes to an existing layout. The Regenerate Current Layout process is an option for regenerating the receiver and heliostat templates in memory without executing the heliostat field layout algorithm. If you have changed an input value and the values on the input pages no longer match the existing geometry that is stored in memory, the red warning symbol will appear next to the regenerate current layout button (shown above). When the specified input values match the solar field in memory, the warning icon will not appear.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Simulation Timer"></a>
-<span class="rvts0"><span class="rvts19">Simulation Timer</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Fieldlayout.html#top">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Simulation Timer"></a>
+<span class="rvts0"><span class="rvts22">Simulation Timer</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Fieldlayout.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The simulation timer indicates SolarPILOT's progress in evaluating the simulation points and generating a new field layout. The Elapsed Time text indicates the total clock time that has elapsed since the simulation was invoked. The Simulation text indicates the number of simulations that have been completed and the total number of simulations that must be completed.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Simulation Log"></a>
-<span class="rvts0"><span class="rvts19">Simulation Log</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Fieldlayout.html#top">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Simulation Log"></a>
+<span class="rvts0"><span class="rvts22">Simulation Log</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Fieldlayout.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The simulation log prints messages that appear during the calculation process. These include status updates that note when a particular step in the layout process has been completed. The messages appear with a time stamp in milliseconds that indicate the time elapsed when the message was issued.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Field Layout"></a>
-<span class="rvts0"><span class="rvts19">Field Layout</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Fieldlayout.html#top">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Field Layout"></a>
+<span class="rvts0"><span class="rvts22">Field Layout</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Fieldlayout.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The field layout group lists the heliostats in the field along with certain properties of interest. It also allows you to import or export custom layouts via text file.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Heliostat Count</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Heliostat Count</span></span></h2>
 <p class="rvps2"><span class="rvts6">The total number of heliostats in the layout.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Layout Import and Export</span></span></h2>
-<p class="rvps2"><span class="rvts6">SolarPILOT allows the user to export and import field layouts. </span><span class="rvts29">Exporting</span><span class="rvts6"> a field layout will generate information on the individual heliostat locations, focusing parameters, and aim points. The exported data is consistent with the data displayed on the Field Layout page in the layout dialog table. </span></p>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Layout Import and Export</span></span></h2>
+<p class="rvps2"><span class="rvts6">SolarPILOT allows the user to export and import field layouts. </span><span class="rvts21">Exporting</span><span class="rvts6"> a field layout will generate information on the individual heliostat locations, focusing parameters, and aim points. The exported data is consistent with the data displayed on the Field Layout page in the layout dialog table. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">An existing layout may be </span><span class="rvts29">imported</span><span class="rvts6"> into SolarPILOT, but must be of the following format:</span></p>
+<p class="rvps2"><span class="rvts6">An existing layout may be </span><span class="rvts21">imported</span><span class="rvts6"> into SolarPILOT, but must be of the following format:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<div class="rvps28"><table width="350" border="1" cellpadding="1" cellspacing="-1" style="border-width: 0px; border-collapse: collapse;">
+<div class="rvps29"><table width="350" border="1" cellpadding="1" cellspacing="-1" style="border-width: 0px; border-collapse: collapse;">
 <tr valign="top">
-<td width="100" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts53">Column</span></p>
+<td width="100" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts56">Column</span></p>
 </td>
-<td width="150" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts53">Description</span></p>
+<td width="150" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts56">Description</span></p>
 </td>
-<td width="94" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts53">Units</span></p>
+<td width="94" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts56">Units</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="100" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">1</span></p>
+<td width="100" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">1</span></p>
 </td>
-<td width="150" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">Template #</span></p>
+<td width="150" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">Template #</span></p>
 </td>
-<td width="94" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54"><br/></span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="100" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">2</span></p>
-</td>
-<td width="150" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">Heliostat is enabled</span></p>
-</td>
-<td width="94" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">-</span></p>
+<td width="94" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57"><br/></span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="100" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">3</span></p>
+<td width="100" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">2</span></p>
 </td>
-<td width="150" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">Heliostat at position</span></p>
+<td width="150" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">Heliostat is enabled</span></p>
 </td>
-<td width="94" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">-</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="100" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">4</span></p>
-</td>
-<td width="150" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">Location (x)</span></p>
-</td>
-<td width="94" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">m</span></p>
+<td width="94" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">-</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="100" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">5</span></p>
+<td width="100" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">3</span></p>
 </td>
-<td width="150" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">Location (y)</span></p>
+<td width="150" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">Heliostat at position</span></p>
 </td>
-<td width="94" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">m</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="100" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">6</span></p>
-</td>
-<td width="150" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">Location (z)</span></p>
-</td>
-<td width="94" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">m</span></p>
+<td width="94" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">-</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="100" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">7</span></p>
+<td width="100" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">4</span></p>
 </td>
-<td width="150" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">Focal length (x)</span></p>
+<td width="150" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">Location (x)</span></p>
 </td>
-<td width="94" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">m</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="100" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">8</span></p>
-</td>
-<td width="150" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">Focal length (y)</span></p>
-</td>
-<td width="94" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">m</span></p>
+<td width="94" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">m</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="100" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">9</span></p>
+<td width="100" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">5</span></p>
 </td>
-<td width="150" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">Cant vector (i)</span></p>
+<td width="150" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">Location (y)</span></p>
 </td>
-<td width="94" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">-</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="100" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">10</span></p>
-</td>
-<td width="150" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">Cant vector (j)</span></p>
-</td>
-<td width="94" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">-</span></p>
+<td width="94" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">m</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="100" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">11</span></p>
+<td width="100" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">6</span></p>
 </td>
-<td width="150" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">Cant vector (k)</span></p>
+<td width="150" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">Location (z)</span></p>
 </td>
-<td width="94" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">-</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="100" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">12</span></p>
-</td>
-<td width="150" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">Aim pt (x)</span></p>
-</td>
-<td width="94" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">m</span></p>
+<td width="94" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">m</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="100" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">13</span></p>
+<td width="100" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">7</span></p>
 </td>
-<td width="150" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">Aim pt (y)</span></p>
+<td width="150" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">Focal length (x)</span></p>
 </td>
-<td width="94" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">m</span></p>
+<td width="94" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">m</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="100" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">14</span></p>
+<td width="100" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">8</span></p>
 </td>
-<td width="150" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">Aim pt (z)</span></p>
+<td width="150" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">Focal length (y)</span></p>
 </td>
-<td width="94" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts54">m</span></p>
+<td width="94" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">m</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="100" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">9</span></p>
+</td>
+<td width="150" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">Cant vector (i)</span></p>
+</td>
+<td width="94" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">-</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="100" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">10</span></p>
+</td>
+<td width="150" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">Cant vector (j)</span></p>
+</td>
+<td width="94" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">-</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="100" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">11</span></p>
+</td>
+<td width="150" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">Cant vector (k)</span></p>
+</td>
+<td width="94" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">-</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="100" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">12</span></p>
+</td>
+<td width="150" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">Aim pt (x)</span></p>
+</td>
+<td width="94" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">m</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="100" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">13</span></p>
+</td>
+<td width="150" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">Aim pt (y)</span></p>
+</td>
+<td width="94" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">m</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="100" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">14</span></p>
+</td>
+<td width="150" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">Aim pt (z)</span></p>
+</td>
+<td width="94" height="21" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps5"><span class="rvts57">m</span></p>
 </td>
 </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps27"><span class="rvts55">Example:</span></p>
-<p class="rvps27"><span class="rvts6"><br/></span></p>
-<p class="rvps27"><span class="rvts31">0,1,1,732.296892,-735.801107,0.000000,NULL,NULL,NULL,NULL,NULL,5.466982,-5.493142,180.000000</span></p>
-<p class="rvps27"><span class="rvts31">0,1,1,-1320.513177,-15.868845,0.000000,NULL,NULL,NULL,NULL,NULL,-7.749440,-0.093126,180.000000</span></p>
-<p class="rvps27"><span class="rvts31">0,1,1,169.704325,857.480958,0.000000,NULL,NULL,NULL,NULL,NULL,1.504621,7.602540,180.000000</span></p>
-<p class="rvps27"><span class="rvts31">0,1,1,613.237346,-794.392813,0.000000,NULL,NULL,NULL,NULL,NULL,4.735760,-6.134743,180.000000</span></p>
-<p class="rvps27"><span class="rvts31">0,1,1,444.003720,-861.293357,0.000000,NULL,NULL,NULL,NULL,NULL,3.551105,-6.888552,180.000000</span></p>
-<p class="rvps27"><span class="rvts31">0,1,1,-419.793296,-873.349380,0.000000,NULL,NULL,NULL,NULL,NULL,-3.357472,-6.984976,180.000000</span></p>
-<p class="rvps27"><span class="rvts31">0,1,1,-542.013138,1107.710157,0.000000,NULL,NULL,NULL,NULL,NULL,-3.406242,6.961323,180.000000</span></p>
-<p class="rvps27"><span class="rvts31">0,1,1,-1042.348621,-489.295184,0.000000,NULL,NULL,NULL,NULL,NULL,-7.015510,-3.293193,180.000000</span></p>
-<p class="rvps27"><span class="rvts31">0,1,1,-613.237346,-794.392813,0.000000,NULL,NULL,NULL,NULL,NULL,-4.735760,-6.134743,180.000000</span></p>
-<p class="rvps27"><span class="rvts31">0,1,1,-66.681955,-934.302720,0.000000,NULL,NULL,NULL,NULL,NULL,-0.551720,-7.730337,180.000000</span></p>
-<p class="rvps27"><span class="rvts31">0,1,1,-732.296892,-735.801107,0.000000,NULL,NULL,NULL,NULL,NULL,-5.466982,-5.493142,180.000000</span></p>
-<p class="rvps27"><span class="rvts31">0,0,1,-1268.935142,-128.663910,0.000000,NULL,NULL,NULL,NULL,NULL,-7.710466,-0.781804,180.000000</span></p>
-<p class="rvps27"><span class="rvts31">0,0,1,-92.731045,-932.077791,0.000000,NULL,NULL,NULL,NULL,NULL,-0.767248,-7.711928,180.000000</span></p>
-<p class="rvps27"><span class="rvts31">0,0,0,467.868248,-848.566352,0.000000,NULL,NULL,NULL,NULL,NULL,3.741971,-6.786763,180.000000</span></p>
-<p class="rvps27"><span class="rvts31">...</span></p>
-<p class="rvps27"><span class="rvts31"><br/></span></p>
-<p class="rvps27"><span class="rvts31">________</span></p>
-<p class="rvps27"><span class="rvts31"><br/></span></p>
+<p class="rvps28"><span class="rvts58">Example:</span></p>
+<p class="rvps28"><span class="rvts6"><br/></span></p>
+<p class="rvps28"><span class="rvts32">0,1,1,732.296892,-735.801107,0.000000,NULL,NULL,NULL,NULL,NULL,5.466982,-5.493142,180.000000</span></p>
+<p class="rvps28"><span class="rvts32">0,1,1,-1320.513177,-15.868845,0.000000,NULL,NULL,NULL,NULL,NULL,-7.749440,-0.093126,180.000000</span></p>
+<p class="rvps28"><span class="rvts32">0,1,1,169.704325,857.480958,0.000000,NULL,NULL,NULL,NULL,NULL,1.504621,7.602540,180.000000</span></p>
+<p class="rvps28"><span class="rvts32">0,1,1,613.237346,-794.392813,0.000000,NULL,NULL,NULL,NULL,NULL,4.735760,-6.134743,180.000000</span></p>
+<p class="rvps28"><span class="rvts32">0,1,1,444.003720,-861.293357,0.000000,NULL,NULL,NULL,NULL,NULL,3.551105,-6.888552,180.000000</span></p>
+<p class="rvps28"><span class="rvts32">0,1,1,-419.793296,-873.349380,0.000000,NULL,NULL,NULL,NULL,NULL,-3.357472,-6.984976,180.000000</span></p>
+<p class="rvps28"><span class="rvts32">0,1,1,-542.013138,1107.710157,0.000000,NULL,NULL,NULL,NULL,NULL,-3.406242,6.961323,180.000000</span></p>
+<p class="rvps28"><span class="rvts32">0,1,1,-1042.348621,-489.295184,0.000000,NULL,NULL,NULL,NULL,NULL,-7.015510,-3.293193,180.000000</span></p>
+<p class="rvps28"><span class="rvts32">0,1,1,-613.237346,-794.392813,0.000000,NULL,NULL,NULL,NULL,NULL,-4.735760,-6.134743,180.000000</span></p>
+<p class="rvps28"><span class="rvts32">0,1,1,-66.681955,-934.302720,0.000000,NULL,NULL,NULL,NULL,NULL,-0.551720,-7.730337,180.000000</span></p>
+<p class="rvps28"><span class="rvts32">0,1,1,-732.296892,-735.801107,0.000000,NULL,NULL,NULL,NULL,NULL,-5.466982,-5.493142,180.000000</span></p>
+<p class="rvps28"><span class="rvts32">0,0,1,-1268.935142,-128.663910,0.000000,NULL,NULL,NULL,NULL,NULL,-7.710466,-0.781804,180.000000</span></p>
+<p class="rvps28"><span class="rvts32">0,0,1,-92.731045,-932.077791,0.000000,NULL,NULL,NULL,NULL,NULL,-0.767248,-7.711928,180.000000</span></p>
+<p class="rvps28"><span class="rvts32">0,0,0,467.868248,-848.566352,0.000000,NULL,NULL,NULL,NULL,NULL,3.741971,-6.786763,180.000000</span></p>
+<p class="rvps28"><span class="rvts32">...</span></p>
+<p class="rvps28"><span class="rvts32"><br/></span></p>
+<p class="rvps28"><span class="rvts32">________</span></p>
+<p class="rvps28"><span class="rvts32"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Data provided as NULL will be automatically calculated by SolarPILOT according to simulation settings. Heliostat and receiver geometry are determined by the inputs on their respective pages.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The </span><span class="rvts29">heliostat is enabled</span><span class="rvts6"> column indicates whether the heliostat is currently tracking and producing power, or whether it should be considered as part of the plant but not operational. The </span><span class="rvts29">heliostat in layout</span><span class="rvts6"> column indicates whether a heliostat should be placed at the specified location. If this column is not true (=1), the position will be available for placement of a heliostat, but none will be placed. In the example, the final row is specified as a position that is available in the layout, but no heliostat is present. The penultimate two rows have heliostats placed and included in the layout, but they are not operational.</span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts21">heliostat is enabled</span><span class="rvts6"> column indicates whether the heliostat is currently tracking and producing power, or whether it should be considered as part of the plant but not operational. The </span><span class="rvts21">heliostat in layout</span><span class="rvts6"> column indicates whether a heliostat should be placed at the specified location. If this column is not true (=1), the position will be available for placement of a heliostat, but none will be placed. In the example, the final row is specified as a position that is available in the layout, but no heliostat is present. The penultimate two rows have heliostats placed and included in the layout, but they are not operational.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p></p>
-</div>
-	
-	<div id="topic_footer">
+<p class="rvps4" style="clear: both;"><span class="rvts13">Created with the Personal Edition of HelpNDoc: </span><a class="rvts14" href="https://www.helpndoc.com/feature-tour/iphone-website-generation">iPhone web sites made easy</a></p>
 
-			<div id="topic_footer_content">
-				Copyright &copy; 2013-2018, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div>
-		</div>
-	</body>
-	
+            </div>
+            
+            <div id="topic_footer"><div id="topic_footer_content">Copyright &copy; 2013-2018, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div></div>
+        </div>  <!-- /#topic-content -->
+    </article>
+
+    <footer></footer>
+
+  </div>  <!-- /#main -->
+
+  <div class="mask" data-toggle="sm-nav-expanded"></div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="hndModal" tabindex="-1" role="dialog" aria-labelledby="hndModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="hndModalLabel"></h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary modal-btn-close" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
+  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.18.9/uri.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
+  
+  <!-- Headroom -->
+  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
+  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+
+  <!-- JsTree -->
+  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+
+  <!-- HelpNDoc scripts -->
+  <script src="_translations.js"></script>
+  <script src="js/hndsd.min.js"></script>
+  <script src="js/hndse.min.js"></script>
+  <script src="js/app.min.js"></script>
+
+  <!-- Scripts -->
+  <script>
+    $(function() {
+      // Instanciate FastClick
+      Origami.fastclick(document.body);
+      // Create the app
+      var app = new Hnd.App();
+      // Update translations
+      hnd_ut(app);
+	  // Custom JS
+	  
+      // Boot the app
+      app.Boot();
+    });
+  </script>
+
+
+
+</body>
+
 </html>
 

@@ -1,162 +1,286 @@
-﻿<html>
-	
+
+
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-	<title>Performance simulation</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="generator" content="HelpNDoc Professional Edition 4.6.2.573">
-	<meta name="keywords" content="">
-	
-	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
-	<!--[if lte IE 8]>
-		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
-	<![endif]-->
-	<style type="text/css">
-		#topic_header
-		{
-			background-color: #EFEFEF;
-		}
-	</style>
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/hnd.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function()
-		{
-			if (top.frames.length == 0)
-			{
-				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
-				top.location.href = "SolarPILOT.html?" + sTopicUrl;
-			}
-			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
-			{
-				top.FrameTOC.SelectTocItem("Performancesimulation");
-			}
-		});
-	</script>
-	
-	</head>
 
-<body>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="generator" content="HelpNDoc Personal Edition 5.8.2.643">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.ico"/>
 
-<div id="topic_header">
-			<div id="topic_header_content">
-				<h1 id="topic_header_text">Performance simulation</h1>
-				
-				<div id="topic_breadcrumb">
-					<a href="InputPageReference.html">Input Page Reference</a> &rsaquo;&rsaquo; <a href="Simulationcontrol.html">Simulation control</a> &rsaquo;&rsaquo; </div>
-				</div>
-			<div id="topic_header_nav">
-				<a href="Simulationcontrol.html"><img src="img/arrow_up.png" alt="Parent"/></a>
-				
-				<a href="Fieldlayout.html"><img src="img/arrow_left.png" alt="Previous"/></a>
-				
-				<a href="Parametrics.html"><img src="img/arrow_right.png" alt="Next"/></a>
-				
-				</div>
-			<div class="clear"></div>
-		</div>
-	<div id="topic_content">
-		
+  <title>Performance simulation</title>
+  <meta name="description" content="A Tool for Solar Power Tower Layout and Optimization" /> 
+  <meta name="keywords" content="">
+
+
+
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Performance simulation">
+  <meta name="twitter:description" content="A Tool for Solar Power Tower Layout and Optimization">
+
+  <!-- Open Graph data -->
+  <meta property="og:title" content="Performance simulation" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="A Tool for Solar Power Tower Layout and Optimization" />
+  <meta property="og:site_name" content="SolarPILOT User's Manual" /> 
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/respond-1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <!-- JsTree styles -->
+  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+
+  <!-- Hnd styles -->
+  <link href="css/layout.min.css" rel="stylesheet" />
+  <link href="css/effects.min.css" rel="stylesheet" />
+  <link href="css/theme-light-blue.min.css" rel="stylesheet" />
+  <link href="css/print.min.css" rel="stylesheet" media="print" />
+  <style type="text/css">nav { width: 350px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 350px} body.md-nav-expanded header { padding-left: 364px} }</style>
+
+  <!-- Content style -->
+  <link href="css/hnd.content.css" rel="stylesheet" />
+
+  
+
+
+
+</head>
+
+<body class="md-nav-expanded">
+
+
+
+  <div id="skip-link">
+    <a href="#main-content" class="element-invisible">Skip to main content</a>
+  </div>
+
+  <header class="headroom">
+    <button class="hnd-toggle btn btn-default">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>        
+    </button>
+    <h1>SolarPILOT User's Manual</h1>
+    
+  </header>
+
+  <nav class="md-nav-expanded">
+    <!-- Nav tabs -->
+    <ul class="tab-tabs nav nav-tabs" role="tablist">
+      <li id="nav-close"> 
+        <button class="hnd-toggle btn btn-default">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+      </li>
+      
+	  
+        <li role="presentation" class="tab active">
+            <a href="#contents" id="tab-contents" aria-controls="contents" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-list"></i>
+                Contents
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#index" id="tab-index" aria-controls="index" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-asterisk"></i>
+                Index
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#search" id="tab-search" aria-controls="search" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-search"></i>
+                Search
+            </a>
+        </li>
+      
+    </ul>  <!-- /Nav tabs -->
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+	  
+      <div role="tabpanel" class="tab-pane active" id="contents">
+        <div id="toc" class="tree-container unselectable"
+            data-url="_toc.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /contents-->
+      
+      <div role="tabpanel" class="tab-pane" id="index">
+        <div id="keywords" class="tree-container unselectable"
+            data-url="_keywords.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /index-->
+      
+      <div role="tabpanel" class="tab-pane" id="search">
+        <div class="search-content">
+          <div class="search-input">
+            <form id="search-form">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="input-search" name="input-search" placeholder="Search..." />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>  <!-- /search-input -->
+          <div class="search-result">
+            <div id="search-info"></div>
+            <div class="tree-container unselectable" id="search-tree"></div>
+          </div>  <!-- /search-result -->
+        </div>  <!-- /search-content -->
+      </div>  <!-- /search-->
+      
+    </div>  <!-- /Tab panes -->
+
+  </nav>
+
+  <div id="main">
+
+    <article>
+        <div id="topic-content" class="container-fluid" 
+		  data-hnd-id="Performancesimulation"
+		  data-hnd-context="12"
+		  data-hnd-title="Performance simulation"
+		>
+            
+                <div class="navigation">
+                    <ol class="breadcrumb">
+                        <li><a href="InputPageReference.html">Input Page Reference</a></li><li><a href="Simulationcontrol.html">Simulation control</a></li>
+                    </ol>
+                    <div class="nav-arrows">
+                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="Simulationcontrol.html" title="Simulation control" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="Fieldlayout.html" title="Field layout" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="Parametrics.html" title="Parametrics" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                    </div>
+                </div> 
+            
+
+            <a id="main-content"></a>
+
+            <h2>Performance simulation</h2>
+
+            <div class="main-content">
+                
 <p></p>
-<h1 class="rvps6"><a name="top"></a>
-<span class="rvts0"><span class="rvts19">Page Overview</span></span></h1>
+<h1 class="rvps9"><a name="top"></a>
+<span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The Performance Simulation page provides controls for calculating the optical and thermal performance of the current system geometry at a desired sun position. You can specify a heliostat aiming strategy, the simulation engine (analytical or ray-trace) and associated parameters, and the resolution of output data. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The following keyboard shortcuts are enabled for this page:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts28">F6</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28">Simulate Performance</span></p>
+<p class="rvps2"><span class="rvts30">F6</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">Simulate Performance</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Performancesimulation.html#Simulate%20Performance">Simulate Performance</a></p>
+<p class="rvps2"><a class="rvts23" href="Performancesimulation.html#Simulate%20Performance">Simulate Performance</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Performancesimulation.html#Sun%20Position">Sun Position</a></p>
+<p class="rvps2"><a class="rvts23" href="Performancesimulation.html#Sun%20Position">Sun Position</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Performancesimulation.html#Simulation%20Parameters">Simulation Parameters</a></p>
+<p class="rvps2"><a class="rvts23" href="Performancesimulation.html#Simulation%20Parameters">Simulation Parameters</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Performancesimulation.html#Clouds">Clouds</a></p>
+<p class="rvps2"><a class="rvts23" href="Performancesimulation.html#Clouds">Clouds</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Performancesimulation.html#Heliostat%20Selection%20Control">Heliostat Selection Control</a></p>
+<p class="rvps2"><a class="rvts23" href="Performancesimulation.html#Heliostat%20Selection%20Control">Heliostat Selection Control</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Simulate Performance"></a>
-<span class="rvts0"><span class="rvts19">Simulate Performance</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Performancesimulation.html#top">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Simulate Performance"></a>
+<span class="rvts0"><span class="rvts22">Simulate Performance</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Performancesimulation.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem182.png"><span class="rvts6"> &nbsp;</span><img alt="" style="padding : 1px;" src="lib/NewItem183.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts28">Keyboard shortcut: </span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28">F6</span></p>
+<p class="rvps2"><span class="rvts30">Keyboard shortcut: </span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">F6</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The Simulate Performance button allows you to execute or cancel a performance simulation. </span><span class="rvts29">A performance simulation cannot be executed until a field layout has been generated. </span></p>
+<p class="rvps2"><span class="rvts6">The Simulate Performance button allows you to execute or cancel a performance simulation. </span><span class="rvts21">A performance simulation cannot be executed until a field layout has been generated. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The performance simulation consists of evaluating the current heliostat field layout and receiver geometry for optical and thermal performance. SolarPILOT calculates the optical performance of each heliostat to determine the overall field performance. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">A simulation requires two steps:</span></p>
-<ol style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: decimal;">
-<li value="1" class="rvps2"><span class="rvts6">SolarPILOT generates aim points for each heliostat according to the method selected in the </span><a class="rvts20" href="Performancesimulation.html#Simulation%20Parameters">Simulation parameters</a><span class="rvts6"> group. </span></li>
+<ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;">
+<li value="1" class="rvps2"><span class="rvts6">SolarPILOT generates aim points for each heliostat according to the method selected in the </span><a class="rvts23" href="Performancesimulation.html#Simulation%20Parameters">Simulation parameters</a><span class="rvts6"> group. </span></li>
 <li value="2" class="rvps2"><span class="rvts6">SolarPILOT calculates the performance of each heliostat in the layout, and generates information on individual heliostat and total system performance. </span></li>
 </ol>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Simulation progress is reported using the progress bar and text updates. When running a Hermite (analytical) simulation, progress is reported by "Calculation", and the reported numbers correspond to (current heliostat evaluation / total heliostats to be evaluated). When running a SolTrace simulation, progress is reported by "Stage", where the first stage corresponds to the heliostat field and the second stage corresponds to the receiver. The progress bar tracks the number of rays traced divided by the total number of rays to be traced.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Sun Position"></a>
-<span class="rvts0"><span class="rvts19">Sun Position</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Performancesimulation.html#top">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Sun Position"></a>
+<span class="rvts0"><span class="rvts22">Sun Position</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Performancesimulation.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">This group allows you to choose the sun position at which performance will be evaluated. Sun position can be specified directly or using a calculator based on the date and time of day.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Simulation time specification method</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Simulation time specification method</span></span></h2>
 <p class="rvps2"><span class="rvts6">Choose whether to specify the sun position for the performance simulation directly or using calculated values by date and time.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Sun Position</span></span></h3>
-<p class="rvps9"><span class="rvts6">This option allows you to specify the simulation sun position directly.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Solar azimuth angle</span></span></h4>
-<p class="rvps11"><span class="rvts6">The solar azimuth angle used for the performance simulation. 0=North, 180=South, +90=East, -90=West. </span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Solar elevation angle</span></span></h4>
-<p class="rvps11"><span class="rvts6">The solar elevation angle above the horizon used for the performance simulation. 0=Horizon, 90=Zenith.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Hour/Day</span></span></h3>
-<p class="rvps9"><span class="rvts6">This option allows you to specify a day of the month, month of the year, and hour of the day at which to simulate performance. The sun position is calculated based on the inputs that you provide and the selected plant location.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Month of the year</span></span></h4>
-<p class="rvps11"><span class="rvts6">The month of the year used to calculate sun position. </span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Day of the month</span></span></h4>
-<p class="rvps11"><span class="rvts6">The day of the month used to calculate sun position.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Hour of the day</span></span></h4>
-<p class="rvps11"><span class="rvts6">The hour of the day used to calculate sun position. The specified hour may be fractional (e.g. 12.254). The hour should not include daylight savings time adjustments. Hourly time corresponds to local time, and "solar time" may differ depending on plant longitude.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Calculated solar azimuth angle</span></span></h4>
-<p class="rvps11"><span class="rvts6">The solar azimuth angle used for performance simulation. This value is calculated using the hour, day, month and plant location settings.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Calculated solar elevation angle</span></span></h4>
-<p class="rvps11"><span class="rvts6">The solar elevation angle used for performance simulation. This value is calculated using the hour, day, month and plant location settings.</span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Sun Position</span></span></h3>
+<p class="rvps8"><span class="rvts6">This option allows you to specify the simulation sun position directly.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Solar azimuth angle</span></span></h4>
+<p class="rvps12"><span class="rvts6">The solar azimuth angle used for the performance simulation. 0=North, 180=South, +90=East, -90=West. </span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Solar elevation angle</span></span></h4>
+<p class="rvps12"><span class="rvts6">The solar elevation angle above the horizon used for the performance simulation. 0=Horizon, 90=Zenith.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Hour/Day</span></span></h3>
+<p class="rvps8"><span class="rvts6">This option allows you to specify a day of the month, month of the year, and hour of the day at which to simulate performance. The sun position is calculated based on the inputs that you provide and the selected plant location.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Month of the year</span></span></h4>
+<p class="rvps12"><span class="rvts6">The month of the year used to calculate sun position. </span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Day of the month</span></span></h4>
+<p class="rvps12"><span class="rvts6">The day of the month used to calculate sun position.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Hour of the day</span></span></h4>
+<p class="rvps12"><span class="rvts6">The hour of the day used to calculate sun position. The specified hour may be fractional (e.g. 12.254). The hour should not include daylight savings time adjustments. Hourly time corresponds to local time, and "solar time" may differ depending on plant longitude.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Calculated solar azimuth angle</span></span></h4>
+<p class="rvps12"><span class="rvts6">The solar azimuth angle used for performance simulation. This value is calculated using the hour, day, month and plant location settings.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Calculated solar elevation angle</span></span></h4>
+<p class="rvps12"><span class="rvts6">The solar elevation angle used for performance simulation. This value is calculated using the hour, day, month and plant location settings.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Simulation Parameters"></a>
-<span class="rvts0"><span class="rvts19">Simulation Parameters</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Performancesimulation.html#top">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Simulation Parameters"></a>
+<span class="rvts0"><span class="rvts22">Simulation Parameters</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Performancesimulation.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Heliostat aim point method</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Heliostat aim point method</span></span></h2>
 <p class="rvps2"><span class="rvts6">The heliostat aim point method lets you choose how SolarPILOT determines an aiming strategy for each heliostat in the field. Heliostat aiming strategies are often implemented to reduce the peak flux incident on the receiver surface, but typically incur reduced optical efficiency due to spillage loss from the receiver. The methods implemented in SolarPILOT allow you to choose the balance between flux distribution over the surface of the receiver and optical efficiency loss. Each method is described in more detail below.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Simple aim points</span></span></h3>
-<p class="rvps9"><span class="rvts6">The simple aim point method focuses all heliostats at the centroid of the receiver as viewed from the heliostat. For flat plate receivers, the simple aim point is at the vertical and horizontal mid point. For cylindrical receivers, the simple aim point is at the vertical midpoint of the receiver at the circumferential point on the receiver nearest to the heliostat. The simple aim point method for cylindrical receivers forms a "belt" of flux around the receiver.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<div class="rvps9"><table border="1" cellpadding="0" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Simple aim points</span></span></h3>
+<p class="rvps8"><span class="rvts6">The simple aim point method focuses all heliostats at the centroid of the receiver as viewed from the heliostat. For flat plate receivers, the simple aim point is at the vertical and horizontal mid point. For cylindrical receivers, the simple aim point is at the vertical midpoint of the receiver at the circumferential point on the receiver nearest to the heliostat. The simple aim point method for cylindrical receivers forms a "belt" of flux around the receiver.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<div class="rvps8"><table border="1" cellpadding="0" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
 <tr valign="top">
-<td width="358" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts28">Cylindrical Receiver</span></p>
+<td width="358" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts30">Cylindrical Receiver</span></p>
 </td>
-<td width="355" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts28">Flat Plate Receiver</span></p>
+<td width="355" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts30">Flat Plate Receiver</span></p>
 </td>
 </tr>
 <tr valign="top">
@@ -168,59 +292,59 @@
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Sigma aiming</span></span></h3>
-<p class="rvps9"><span class="rvts6">The sigma aiming method is implemented only for </span><span class="rvts29">cylindrical</span><span class="rvts6"> receivers.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">The sigma aiming method positions heliostat images at a distance from the upper and lower receiver edges based on the vertical length of the image. Each heliostat image has a primary width and height value that SolarPILOT calculates using the Hermite analytical engine. The vertical length value for each heliostat is multiplied by the positioning cutoff value to determine the edge offset distance. The images are offset from the upper or lower edge in an alternating pattern (i.e. the first heliostat is offset from the upper edge, the second from the lower edge, the third from the upper, and so on). If the offset distance is more than half of the total receiver height, the heliostat is positioned at the vertical centerline of the receiver. </span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">The sigma aiming method is deterministic and yields the same flux distribution on repeated simulations.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Positioning cutoff (standard deviations)</span></span></h4>
-<p class="rvps11"><span class="rvts6">The positioning cutoff value is a multiplier on the standard deviation of the image size when approximated as a Gaussian distribution. The multiplier scales the total offset distance of each heliostat from the upper or lower edge of the receiver.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem188.png"></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25"><br/></span></span></h4>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Probability shift</span></span></h3>
-<p class="rvps9"><span class="rvts6">The probability shift aiming method is implemented only for </span><span class="rvts29">cylindrical</span><span class="rvts6"> receivers.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">The probability shift aiming method incorporates random sampling from a statistical distribution that you specify to determine the vertical displacement of each heliostat image. Each image is offset vertically from the centerline of the receiver, and the extent to which the image is offset is determined by the image's primary vertical length, the positioning cutoff factor, and a factor that has been randomly sampled from a distribution that you define. The allowable range for vertical displacement is restricted according to the vertical length of the image. Each aim point must be offset from the upper or lower receiver edge by at least a distance equal to the image's vertical standard deviation times the positioning cutoff factor. Within the remaining span, the aim point vertical position is determined by sampling from a statistical distribution. </span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">The following graphic illustrates the method. An image with standard deviation equal to </span><span class="rvts12">σ</span><span class="rvts50">y</span><span class="rvts6"> can be positioned within a window of </span><span class="rvts28">H</span><span class="rvts51">rec</span><span class="rvts28">/2 - 2</span><span class="rvts12">σ</span><span class="rvts50">y</span><span class="rvts6"> away from the receiver centerline. The final position within that window is determined by random sampling from a normal distribution (in this case). The positioning cutoff factor is equal to 2.0.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem194.png"></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">The probability shift aiming method is </span><span class="rvts29">probabilistic</span><span class="rvts6"> and may yield varying results on replicated runs.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Positioning cutoff (standard deviations)</span></span></h4>
-<p class="rvps11"><span class="rvts6">The positioning cutoff factor multiplies the primary vertical length of the image to scale the heliostat aiming position offset from the edges of the receiver. As the positioning cutoff value increases, the offset distance between the heliostat and edges increases. </span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Aim point distribution sampling</span></span></h4>
-<p class="rvps11"><span class="rvts6">The probability shift aiming method uses random sampling to assign heliostat vertical displacement. You can choose the shape of the distribution to be either triangular, normal, or uniform. &nbsp;</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<p class="rvps23"><span class="rvts56">Triangular</span><span class="rvts6"> </span></p>
-<p class="rvps23"><span class="rvts6">The triangular distribution has probability density equal to zero at the receiver centerline and a probability density of 1 at the maximum offset distance for each image. Images are therefore more likely to be placed close to the outer edges of the receiver.</span></p>
-<p class="rvps23"><span class="rvts6"><br/></span></p>
-<h4 class="rvps22"><span class="rvts0"><span class="rvts57">Normal</span></span><span class="rvts0"><span class="rvts25"> </span></span></h4>
-<p class="rvps23"><span class="rvts6">The normal distribution is centered at half the maximum offset distance for each image and has a characteristic width (standard deviation) equal to the Aiming distribution standard deviation that you specify. </span></p>
-<p class="rvps23"><span class="rvts6"><br/></span></p>
-<h6 class="rvps31"><span class="rvts0"><span class="rvts58">Aiming distribution standard dev.</span></span></h6>
-<p class="rvps30"><span class="rvts6">The standard deviation of the aiming random sampling distribution. The standard deviation magnitude is scaled relative to the size of the placement window.</span></p>
-<p class="rvps30"><span class="rvts6"><br/></span></p>
-<h5 class="rvps29"><span class="rvts0"><span class="rvts36">Uniform</span></span></h5>
-<p class="rvps23"><span class="rvts6">The uniform distribution has probability density equal to 1 at any point within the allowable placement window. The position of the aim point is random and unweighted within the allowable range.</span></p>
-<p class="rvps23"><span class="rvts6"><br/></span></p>
-<p class="rvps23"><span class="rvts6"><br/></span></p>
-<div class="rvps11"><table border="1" cellpadding="0" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Sigma aiming</span></span></h3>
+<p class="rvps8"><span class="rvts6">The sigma aiming method is implemented only for </span><span class="rvts21">cylindrical</span><span class="rvts6"> receivers.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">The sigma aiming method positions heliostat images at a distance from the upper and lower receiver edges based on the vertical length of the image. Each heliostat image has a primary width and height value that SolarPILOT calculates using the Hermite analytical engine. The vertical length value for each heliostat is multiplied by the positioning cutoff value to determine the edge offset distance. The images are offset from the upper or lower edge in an alternating pattern (i.e. the first heliostat is offset from the upper edge, the second from the lower edge, the third from the upper, and so on). If the offset distance is more than half of the total receiver height, the heliostat is positioned at the vertical centerline of the receiver. </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">The sigma aiming method is deterministic and yields the same flux distribution on repeated simulations.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Positioning cutoff (standard deviations)</span></span></h4>
+<p class="rvps12"><span class="rvts6">The positioning cutoff value is a multiplier on the standard deviation of the image size when approximated as a Gaussian distribution. The multiplier scales the total offset distance of each heliostat from the upper or lower edge of the receiver.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem188.png"></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27"><br/></span></span></h4>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Probability shift</span></span></h3>
+<p class="rvps8"><span class="rvts6">The probability shift aiming method is implemented only for </span><span class="rvts21">cylindrical</span><span class="rvts6"> receivers.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">The probability shift aiming method incorporates random sampling from a statistical distribution that you specify to determine the vertical displacement of each heliostat image. Each image is offset vertically from the centerline of the receiver, and the extent to which the image is offset is determined by the image's primary vertical length, the positioning cutoff factor, and a factor that has been randomly sampled from a distribution that you define. The allowable range for vertical displacement is restricted according to the vertical length of the image. Each aim point must be offset from the upper or lower receiver edge by at least a distance equal to the image's vertical standard deviation times the positioning cutoff factor. Within the remaining span, the aim point vertical position is determined by sampling from a statistical distribution. </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">The following graphic illustrates the method. An image with standard deviation equal to </span><span class="rvts12">σ</span><span class="rvts51">y</span><span class="rvts6"> can be positioned within a window of </span><span class="rvts30">H</span><span class="rvts52">rec</span><span class="rvts30">/2 - 2</span><span class="rvts12">σ</span><span class="rvts51">y</span><span class="rvts6"> away from the receiver centerline. The final position within that window is determined by random sampling from a normal distribution (in this case). The positioning cutoff factor is equal to 2.0.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem194.png"></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">The probability shift aiming method is </span><span class="rvts21">probabilistic</span><span class="rvts6"> and may yield varying results on replicated runs.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Positioning cutoff (standard deviations)</span></span></h4>
+<p class="rvps12"><span class="rvts6">The positioning cutoff factor multiplies the primary vertical length of the image to scale the heliostat aiming position offset from the edges of the receiver. As the positioning cutoff value increases, the offset distance between the heliostat and edges increases. </span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Aim point distribution sampling</span></span></h4>
+<p class="rvps12"><span class="rvts6">The probability shift aiming method uses random sampling to assign heliostat vertical displacement. You can choose the shape of the distribution to be either triangular, normal, or uniform. &nbsp;</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<p class="rvps24"><span class="rvts59">Triangular</span><span class="rvts6"> </span></p>
+<p class="rvps24"><span class="rvts6">The triangular distribution has probability density equal to zero at the receiver centerline and a probability density of 1 at the maximum offset distance for each image. Images are therefore more likely to be placed close to the outer edges of the receiver.</span></p>
+<p class="rvps24"><span class="rvts6"><br/></span></p>
+<h4 class="rvps23"><span class="rvts0"><span class="rvts60">Normal</span></span><span class="rvts0"><span class="rvts27"> </span></span></h4>
+<p class="rvps24"><span class="rvts6">The normal distribution is centered at half the maximum offset distance for each image and has a characteristic width (standard deviation) equal to the Aiming distribution standard deviation that you specify. </span></p>
+<p class="rvps24"><span class="rvts6"><br/></span></p>
+<h6 class="rvps32"><span class="rvts0"><span class="rvts61">Aiming distribution standard dev.</span></span></h6>
+<p class="rvps31"><span class="rvts6">The standard deviation of the aiming random sampling distribution. The standard deviation magnitude is scaled relative to the size of the placement window.</span></p>
+<p class="rvps31"><span class="rvts6"><br/></span></p>
+<h5 class="rvps30"><span class="rvts0"><span class="rvts37">Uniform</span></span></h5>
+<p class="rvps24"><span class="rvts6">The uniform distribution has probability density equal to 1 at any point within the allowable placement window. The position of the aim point is random and unweighted within the allowable range.</span></p>
+<p class="rvps24"><span class="rvts6"><br/></span></p>
+<p class="rvps24"><span class="rvts6"><br/></span></p>
+<div class="rvps12"><table border="1" cellpadding="0" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
 <tr valign="top">
-<td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts28">Normal distribution</span></p>
+<td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts30">Normal distribution</span></p>
 </td>
-<td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts28">Triangular distribution</span></p>
+<td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts30">Triangular distribution</span></p>
 </td>
-<td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts28">Uniform distribution</span></p>
+<td style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts30">Uniform distribution</span></p>
 </td>
 </tr>
 <tr valign="top">
@@ -233,39 +357,39 @@
 </tr>
 </table>
 </div>
-<p class="rvps23"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts28"> &nbsp; &nbsp;</span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Image size priority</span></span></h3>
-<p class="rvps9"><span class="rvts6">The image size priority aiming method is implemented for both flat plate and cylindrical receivers.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">The image size priority aiming method determines heliostat aim position by sequentially placing heliostats on the receiver at points of lowest flux. The order in which images are placed is determined by the size of the image as it appears on the receiver. Therefore, images with significant distortion or at long distance from the receiver are typically placed first. After each heliostat placement, SolarPILOT identifies a local minimum in the flux intensity and locates the subsequent heliostat at that position. </span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">Heliostats aim points are placed within an allowable region that is determined by the size of image and the positioning cutoff value. The allowable region is offset from the edges of the receiver equal to a distance that is the product of the image size standard deviation times the positioning cutoff factor. As the image size or positioning cutoff factor increases, the allowable placement region contracts.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Positioning cutoff (standard deviations)</span></span></h4>
-<p class="rvps11"><span class="rvts6">The positioning cutoff factor multiplies the primary vertical length of the image to scale the heliostat aiming position offset from the edges of the receiver. As the positioning cutoff value increases, the offset distance between the heliostat and edges increases. </span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Keep existing</span></span></h3>
-<p class="rvps9"><span class="rvts6">You can keep the existing aim points for a heliostat field by selecting this option. The aim point </span><span class="rvts28">on the receiver</span><span class="rvts6"> will remain unchanged as heliostat tracking position changes or as other non-layout geometrical changes are applied.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Freeze tracking</span></span></h3>
-<p class="rvps9"><span class="rvts6">This option allows you to keep the heliostat tracking position unchanged as </span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
+<p class="rvps24"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp;</span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Image size priority</span></span></h3>
+<p class="rvps8"><span class="rvts6">The image size priority aiming method is implemented for both flat plate and cylindrical receivers.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">The image size priority aiming method determines heliostat aim position by sequentially placing heliostats on the receiver at points of lowest flux. The order in which images are placed is determined by the size of the image as it appears on the receiver. Therefore, images with significant distortion or at long distance from the receiver are typically placed first. After each heliostat placement, SolarPILOT identifies a local minimum in the flux intensity and locates the subsequent heliostat at that position. </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">Heliostats aim points are placed within an allowable region that is determined by the size of image and the positioning cutoff value. The allowable region is offset from the edges of the receiver equal to a distance that is the product of the image size standard deviation times the positioning cutoff factor. As the image size or positioning cutoff factor increases, the allowable placement region contracts.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Positioning cutoff (standard deviations)</span></span></h4>
+<p class="rvps12"><span class="rvts6">The positioning cutoff factor multiplies the primary vertical length of the image to scale the heliostat aiming position offset from the edges of the receiver. As the positioning cutoff value increases, the offset distance between the heliostat and edges increases. </span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Keep existing</span></span></h3>
+<p class="rvps8"><span class="rvts6">You can keep the existing aim points for a heliostat field by selecting this option. The aim point </span><span class="rvts30">on the receiver</span><span class="rvts6"> will remain unchanged as heliostat tracking position changes or as other non-layout geometrical changes are applied.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Freeze tracking</span></span></h3>
+<p class="rvps8"><span class="rvts6">This option allows you to keep the heliostat tracking position unchanged as </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <div class="rvps2"><table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; background-color: #dfdfdf; border-spacing: 2px;">
 <tr valign="top">
 <td style="border-color: #c0c0c0; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><a name="Aim Point Strategies with SolTrace"></a>
 <span class="rvts8">Aim Point Strategies with SolTrace</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">SolarPILOT establishes aim points using elements from the </span><span class="rvts29">analytical</span><span class="rvts6"> model of the image shape for each heliostat. For this reason, it is not possible to implement aiming strategies using the SolTrace ray-tracing engine in which the image shape is not known until after the simulation has completed. However, it is still possible to simulate a heliostat field with an aiming strategy using the SolTrace engine by following the steps outlined below:</span></p>
+<p class="rvps2"><span class="rvts6">SolarPILOT establishes aim points using elements from the </span><span class="rvts21">analytical</span><span class="rvts6"> model of the image shape for each heliostat. For this reason, it is not possible to implement aiming strategies using the SolTrace ray-tracing engine in which the image shape is not known until after the simulation has completed. However, it is still possible to simulate a heliostat field with an aiming strategy using the SolTrace engine by following the steps outlined below:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">A) &nbsp;First, select the </span><span class="rvts28">Hermite (analytical)</span><span class="rvts6"> option in the </span><a class="rvts20" href="Performancesimulation.html#Simulation%20Parameters">Simulation parameters</a><span class="rvts6"> group. Choose an aiming method and set the appropriate parameters. </span></p>
+<p class="rvps2"><span class="rvts6">A) &nbsp;First, select the </span><span class="rvts30">Hermite (analytical)</span><span class="rvts6"> option in the </span><a class="rvts23" href="Performancesimulation.html#Simulation%20Parameters">Simulation parameters</a><span class="rvts6"> group. Choose an aiming method and set the appropriate parameters. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">B) &nbsp;Execute the performance simulation using the analytical engine. This will establish aim points for each heliostat. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">C) &nbsp;Change the selected heliostat aim point method to </span><span class="rvts28">Keep existing</span><span class="rvts6">. This option prevents any update to the heliostat aim points when running a performance simulation. </span></p>
+<p class="rvps2"><span class="rvts6">C) &nbsp;Change the selected heliostat aim point method to </span><span class="rvts30">Keep existing</span><span class="rvts6">. This option prevents any update to the heliostat aim points when running a performance simulation. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">D) Now select the </span><span class="rvts28">SolTrace</span><span class="rvts6"> option in the Simulation parameters group. Configure the ray-tracing parameters as needed, and run the simulation. SolTrace will evaluate performance using the aim points that are stored from the previous analytical run.</span></p>
+<p class="rvps2"><span class="rvts6">D) Now select the </span><span class="rvts30">SolTrace</span><span class="rvts6"> option in the Simulation parameters group. Configure the ray-tracing parameters as needed, and run the simulation. SolTrace will evaluate performance using the aim points that are stored from the previous analytical run.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 </td>
 </tr>
@@ -273,137 +397,137 @@
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Flux Simulation Model</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Flux Simulation Model</span></span></h2>
 <p class="rvps2"><span class="rvts6">The flux simulation model specifies the engine that is used to evaluate plant performance. You can use either the analytical Hermite polynomial model or the numerical SolTrace model. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The choice of simulation model affects the available aim point strategies. Refer to the </span><a class="rvts20" href="Performancesimulation.html#Aim%20Point%20Strategies%20with%20SolTrace">Aim Point Strategies with SolTrace</a><span class="rvts6"> discussion to learn more.</span></p>
+<p class="rvps2"><span class="rvts6">The choice of simulation model affects the available aim point strategies. Refer to the </span><a class="rvts23" href="Performancesimulation.html#Aim%20Point%20Strategies%20with%20SolTrace">Aim Point Strategies with SolTrace</a><span class="rvts6"> discussion to learn more.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Hermite (analytical)</span></span></h3>
-<p class="rvps9"><span class="rvts6">The Hermite (analytical) model estimates the distribution of reflected light from each heliostat using a modified Gaussian equation and a truncated polynomial Hermite series expansion. For more information on this modeling method, refer to: </span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
-<li style="margin-left: 0px" class="rvps11"><span class="rvts6">Walzel, M. D., Lipps, F. W., &amp; Vant-Hull. (1977). A solar flux density calculation for a solar tower concentrator using a two-dimensional Hermite function expansion. Solar Energy, 19, 239–256.</span></li>
-<li style="margin-left: 0px" class="rvps11"><span class="rvts6">Dellin, T. A. (1979). An improved Hermite expansion calculation of the flux distribution from heliostats: SAND79-8619. Livermore, CA: Sandia National Laboratory.</span></li>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Hermite (analytical)</span></span></h3>
+<p class="rvps8"><span class="rvts6">The Hermite (analytical) model estimates the distribution of reflected light from each heliostat using a modified Gaussian equation and a truncated polynomial Hermite series expansion. For more information on this modeling method, refer to: </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: circle;">
+<li style="margin-left: 0px" class="rvps12"><span class="rvts6">Walzel, M. D., Lipps, F. W., &amp; Vant-Hull. (1977). A solar flux density calculation for a solar tower concentrator using a two-dimensional Hermite function expansion. Solar Energy, 19, 239–256.</span></li>
+<li style="margin-left: 0px" class="rvps12"><span class="rvts6">Dellin, T. A. (1979). An improved Hermite expansion calculation of the flux distribution from heliostats: SAND79-8619. Livermore, CA: Sandia National Laboratory.</span></li>
 </ul></ul>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">The analytical engine's primary advantage is its computational efficiency but inherently has several limitations.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts59">Analytical Engine Limitations</span></p>
-<p class="rvps9"><span class="rvts6">1)</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6">Images are modeled using a 2-dimensional Gaussian equation and a Hermite polynomial series that modifies the Gaussian form. Although an infinite series polynomial can theoretically model any functional form, the truncated series includes 7 terms and thus is limited in the functional forms that can be replicated. Most image shapes can be reproduced accurately, but as images deviate from the Gaussian form, error may increase.</span></p>
-<p class="rvps9"><span class="rvts6">2)</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6">The </span><a class="rvts20" href="Climate.html#Sunshape%20model">sunshape model</a><span class="rvts6"> describes the intensity of solar irradiance as a function of the radial distance from the centroid of the sun. The sunshape profile includes a region of intense light, a region of rapidly diminishing intensity, and a region of minimal intensity. As user-specified sunshape profiles increase the fraction of light contained within the solar disc, the accuracy of the analytical model can decrease. </span></p>
-<p class="rvps9"><span class="rvts28"><br/></span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">SolTrace</span></span></h3>
-<p class="rvps9"><span class="rvts6">The SolTrace engine is a generalized Monte-Carlo ray tracing tool for solar applications. SolTrace models power tower systems by projecting rays from the sun onto the heliostat field and tracing the reflection. For more information on this modeling method, refer to:</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
-<li style="margin-left: 0px" class="rvps11"><span class="rvts6">Wendelin, T. (2003). SolTRACE: A New Optical Modeling Tool for Concentrating Solar Optics. ASME 2003 International Solar Energy Conference. Kohala Coast, HI.</span></li>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">The analytical engine's primary advantage is its computational efficiency but inherently has several limitations.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts62">Analytical Engine Limitations</span></p>
+<p class="rvps8"><span class="rvts6">1)</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6">Images are modeled using a 2-dimensional Gaussian equation and a Hermite polynomial series that modifies the Gaussian form. Although an infinite series polynomial can theoretically model any functional form, the truncated series includes 7 terms and thus is limited in the functional forms that can be replicated. Most image shapes can be reproduced accurately, but as images deviate from the Gaussian form, error may increase.</span></p>
+<p class="rvps8"><span class="rvts6">2)</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts6">The </span><a class="rvts23" href="Climate.html#Sunshape%20model">sunshape model</a><span class="rvts6"> describes the intensity of solar irradiance as a function of the radial distance from the centroid of the sun. The sunshape profile includes a region of intense light, a region of rapidly diminishing intensity, and a region of minimal intensity. As user-specified sunshape profiles increase the fraction of light contained within the solar disc, the accuracy of the analytical model can decrease. </span></p>
+<p class="rvps8"><span class="rvts30"><br/></span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">SolTrace</span></span></h3>
+<p class="rvps8"><span class="rvts6">The SolTrace engine is a generalized Monte-Carlo ray tracing tool for solar applications. SolTrace models power tower systems by projecting rays from the sun onto the heliostat field and tracing the reflection. For more information on this modeling method, refer to:</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: circle;">
+<li style="margin-left: 0px" class="rvps12"><span class="rvts6">Wendelin, T. (2003). SolTRACE: A New Optical Modeling Tool for Concentrating Solar Optics. ASME 2003 International Solar Energy Conference. Kohala Coast, HI.</span></li>
 </ul></ul>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">Although SolTrace is a general-purpose ray-tracing tool, SolarPILOT has adopted it for use in power tower systems. SolarPILOT automatically translates the input that you provide into model parameters and geometry in SolTrace. SolarPILOT follows the procedure outlined below to create and execute SolTrace simulations:</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<ol style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: decimal;"><ol style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: decimal;">
-<li value="1" style="margin-left: 0px" class="rvps11"><span class="rvts6">The sun shape distribution is tabulated to match the form specified in SolarPILOT. The table of irradiance intensity as a function of angular displacement from the center of the solar disc is passed to the SolTrace engine.</span></li>
-<li value="2" style="margin-left: 0px" class="rvps11"><span class="rvts6">The optical errors on the Heliostat page are separated into surface errors and normal vector errors. Surface errors include specularity in the </span><span class="rvts28">x</span><span class="rvts6"> and </span><span class="rvts28">y</span><span class="rvts6"> directions, and the total surface error is equal to:</span><br/><img alt="" style="padding : 1px;" src="lib/NewItem196.png"><br/><span class="rvts6">and the total normal vector error is equal to:</span><br/><img alt="" style="padding : 1px;" src="lib/NewItem197.png"><br/><span class="rvts6">where:</span><br/><span class="rvts6"><br/></span></li>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">Although SolTrace is a general-purpose ray-tracing tool, SolarPILOT has adopted it for use in power tower systems. SolarPILOT automatically translates the input that you provide into model parameters and geometry in SolTrace. SolarPILOT follows the procedure outlined below to create and execute SolTrace simulations:</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;"><ol style="text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: decimal;">
+<li value="1" style="margin-left: 0px" class="rvps12"><span class="rvts6">The sun shape distribution is tabulated to match the form specified in SolarPILOT. The table of irradiance intensity as a function of angular displacement from the center of the solar disc is passed to the SolTrace engine.</span></li>
+<li value="2" style="margin-left: 0px" class="rvps12"><span class="rvts6">The optical errors on the Heliostat page are separated into surface errors and normal vector errors. Surface errors include specularity in the </span><span class="rvts30">x</span><span class="rvts6"> and </span><span class="rvts30">y</span><span class="rvts6"> directions, and the total surface error is equal to:</span><br/><img alt="" style="padding : 1px;" src="lib/NewItem196.png"><br/><span class="rvts6">and the total normal vector error is equal to:</span><br/><img alt="" style="padding : 1px;" src="lib/NewItem197.png"><br/><span class="rvts6">where:</span><br/><span class="rvts6"><br/></span></li>
 </ol></ol>
-<div class="rvps11"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<div class="rvps12"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
 <tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem162.png"></p>
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem162.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps32"><span class="rvts6">rad</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps33"><span class="rvts6">rad</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Elevation pointing error</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Elevation pointing error</span></p>
 </td>
 </tr>
 <tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem163.png"></p>
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem163.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps32"><span class="rvts6">rad</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps33"><span class="rvts6">rad</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Azimuthal pointing error</span></p>
-</td>
-</tr>
-<tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem164.png"></p>
-</td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps32"><span class="rvts6">rad</span></p>
-</td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Surface slope error in X</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Azimuthal pointing error</span></p>
 </td>
 </tr>
 <tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem165.png"></p>
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem164.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps32"><span class="rvts6">rad</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps33"><span class="rvts6">rad</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Surface slope error in Y</span></p>
-</td>
-</tr>
-<tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem166.png"></p>
-</td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps32"><span class="rvts6">rad</span></p>
-</td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Reflected beam error in X</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Surface slope error in X</span></p>
 </td>
 </tr>
 <tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem167.png"></p>
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem165.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps32"><span class="rvts6">rad</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps33"><span class="rvts6">rad</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Reflected beam error in Y</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Surface slope error in Y</span></p>
+</td>
+</tr>
+<tr valign="middle">
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem166.png"></p>
+</td>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps33"><span class="rvts6">rad</span></p>
+</td>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Reflected beam error in X</span></p>
+</td>
+</tr>
+<tr valign="middle">
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem167.png"></p>
+</td>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps33"><span class="rvts6">rad</span></p>
+</td>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Reflected beam error in Y</span></p>
 </td>
 </tr>
 </table>
 </div>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<ol style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: decimal;"><ol style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: decimal;">
-<li value="3" style="margin-left: 0px" class="rvps11"><span class="rvts6">Heliostat geometry is created in "Stage 1" with orientation corresponding to the specified performance simulation sun position. </span></li>
-<li value="4" style="margin-left: 0px" class="rvps11"><span class="rvts6">Receiver geometry is created in "Stage 2".</span></li>
-<li value="5" style="margin-left: 0px" class="rvps11"><span class="rvts6">SolarPILOT invokes the SolTrace engine through an API and collects the ray intersection data from the simulation. </span></li>
-<li value="6" style="margin-left: 0px" class="rvps11"><span class="rvts6">SolarPILOT processes the ray data to determine the optical losses in the heliostat field and receiver, the flux intensity on the receiver, and the overall performance of the plant.</span></li>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;"><ol style="text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: decimal;">
+<li value="3" style="margin-left: 0px" class="rvps12"><span class="rvts6">Heliostat geometry is created in "Stage 1" with orientation corresponding to the specified performance simulation sun position. </span></li>
+<li value="4" style="margin-left: 0px" class="rvps12"><span class="rvts6">Receiver geometry is created in "Stage 2".</span></li>
+<li value="5" style="margin-left: 0px" class="rvps12"><span class="rvts6">SolarPILOT invokes the SolTrace engine through an API and collects the ray intersection data from the simulation. </span></li>
+<li value="6" style="margin-left: 0px" class="rvps12"><span class="rvts6">SolarPILOT processes the ray data to determine the optical losses in the heliostat field and receiver, the flux intensity on the receiver, and the overall performance of the plant.</span></li>
 </ol></ol>
 <p class="rvps2"><span class="rvts6"> </span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Desired number of ray intersections</span></span></h4>
-<p class="rvps11"><span class="rvts6">The number of rays that strike the receiver. This value determines the number of intersections that are required before the SolTrace simulation can terminate. For multi-threaded simulations, the number of rays may not exactly match the specified value.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Maximum number of generated rays</span></span></h4>
-<p class="rvps11"><span class="rvts6">The maximum number of sun rays that can be generated before the simulation is terminated.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Seed value (-1 for automatic selection)</span></span></h4>
-<p class="rvps11"><span class="rvts6">The seed value for randomization of the ray generation process. A value of -1 indicates that a random seed will be used. This implies that any two successive simulations will yield different results. As the number of rays increases, the effect of simulation randomization will converge to a single result. If a seed value other than -1 is specified, subsequent simulations are replicates.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Optical errors</span></span></h4>
-<p class="rvps11"><span class="rvts6">Specify whether to include sources of optical error in the SolTrace simulation. </span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps26"><span class="rvts0"><span class="rvts24">Include sun shape</span></span></h3>
-<p class="rvps23"><span class="rvts6">Specify whether sun shape effects should be included in the SolTrace simulation. If disabled, the sun is modeled as a point source and all generated sun rays are collimated.</span></p>
-<p class="rvps23"><span class="rvts6"><br/></span></p>
-<h3 class="rvps26"><span class="rvts0"><span class="rvts24">Include optical errors</span></span></h3>
-<p class="rvps23"><span class="rvts6">Specify whether heliostat optical errors should be included in the SolTrace simulation. If disabled, the reflected angle of an incident ray on a heliostat surface is equal to the incident angle.</span></p>
-<p class="rvps23"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Save all raytrace data</span></span></h4>
-<p class="rvps11"><span class="rvts6">Specify whether a data file containing all ray generation and intersection information should be saved to disk. </span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Export SolTrace .stinput file</span></span></h4>
-<p class="rvps11"><span class="rvts6">This button allows you to create a SolTrace input file (.stinput) that can be opened and modified by the SolTrace interface. When creating the file, SolarPILOT will automatically generate heliostat and receiver geometry with an orientation corresponding to the sun position specified on the Performance Simulation page, and the heliostat and receiver stages inherit the optical properties specified on the Heliostat and Receiver template pages. SolarPILOT generates a sunshape profile according to the settings on the Climate page.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Save heliostat stage ray data</span></span></h4>
-<p class="rvps11"><span class="rvts6">Specify whether rays that are reflected to the receiver by the heliostat stage are saved to a file. When this option is enabled, SolarPILOT will save all rays from the heliostat field to a file that can be re-used in future simulations without requiring simulation of the heliostat field. </span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Load existing heliostat ray data</span></span></h4>
-<p class="rvps11"><span class="rvts6">Specify whether rays saved using the "Save heliostat stage ray data" option should be loaded in place of a full solar field simulation. When using this option, SolarPILOT will load ray data and use it in place of a full heliostat field simulation. Receiver geometry for a simulation with loaded data does not need to correspond to receiver geometry from the simulation in which the rays were originally generated.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Ray data file</span></span></h4>
-<p class="rvps11"><span class="rvts6">Specify the location of the ray data file for the save or load operation.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Flux grid resolution - Horizontal </span></span></h2>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Desired number of ray intersections</span></span></h4>
+<p class="rvps12"><span class="rvts6">The number of rays that strike the receiver. This value determines the number of intersections that are required before the SolTrace simulation can terminate. For multi-threaded simulations, the number of rays may not exactly match the specified value.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Maximum number of generated rays</span></span></h4>
+<p class="rvps12"><span class="rvts6">The maximum number of sun rays that can be generated before the simulation is terminated.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Seed value (-1 for automatic selection)</span></span></h4>
+<p class="rvps12"><span class="rvts6">The seed value for randomization of the ray generation process. A value of -1 indicates that a random seed will be used. This implies that any two successive simulations will yield different results. As the number of rays increases, the effect of simulation randomization will converge to a single result. If a seed value other than -1 is specified, subsequent simulations are replicates.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Optical errors</span></span></h4>
+<p class="rvps12"><span class="rvts6">Specify whether to include sources of optical error in the SolTrace simulation. </span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps27"><span class="rvts0"><span class="rvts26">Include sun shape</span></span></h3>
+<p class="rvps24"><span class="rvts6">Specify whether sun shape effects should be included in the SolTrace simulation. If disabled, the sun is modeled as a point source and all generated sun rays are collimated.</span></p>
+<p class="rvps24"><span class="rvts6"><br/></span></p>
+<h3 class="rvps27"><span class="rvts0"><span class="rvts26">Include optical errors</span></span></h3>
+<p class="rvps24"><span class="rvts6">Specify whether heliostat optical errors should be included in the SolTrace simulation. If disabled, the reflected angle of an incident ray on a heliostat surface is equal to the incident angle.</span></p>
+<p class="rvps24"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Save all raytrace data</span></span></h4>
+<p class="rvps12"><span class="rvts6">Specify whether a data file containing all ray generation and intersection information should be saved to disk. </span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Export SolTrace .stinput file</span></span></h4>
+<p class="rvps12"><span class="rvts6">This button allows you to create a SolTrace input file (.stinput) that can be opened and modified by the SolTrace interface. When creating the file, SolarPILOT will automatically generate heliostat and receiver geometry with an orientation corresponding to the sun position specified on the Performance Simulation page, and the heliostat and receiver stages inherit the optical properties specified on the Heliostat and Receiver template pages. SolarPILOT generates a sunshape profile according to the settings on the Climate page.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Save heliostat stage ray data</span></span></h4>
+<p class="rvps12"><span class="rvts6">Specify whether rays that are reflected to the receiver by the heliostat stage are saved to a file. When this option is enabled, SolarPILOT will save all rays from the heliostat field to a file that can be re-used in future simulations without requiring simulation of the heliostat field. </span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Load existing heliostat ray data</span></span></h4>
+<p class="rvps12"><span class="rvts6">Specify whether rays saved using the "Save heliostat stage ray data" option should be loaded in place of a full solar field simulation. When using this option, SolarPILOT will load ray data and use it in place of a full heliostat field simulation. Receiver geometry for a simulation with loaded data does not need to correspond to receiver geometry from the simulation in which the rays were originally generated.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Ray data file</span></span></h4>
+<p class="rvps12"><span class="rvts6">Specify the location of the ray data file for the save or load operation.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Flux grid resolution - Horizontal </span></span></h2>
 <p class="rvps2"><span class="rvts6">The number of evaluation positions for flux intensity in the horizontal receiver direction. As this number increases, the resolution of flux evaluation increases. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">For ray trace simulations, increased resolution corresponds to increased uncertainty in reported local flux density.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Flux grid resolution - Vertical</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Flux grid resolution - Vertical</span></span></h2>
 <p class="rvps2"><span class="rvts6">The number of evaluation positions for flux intensity in the vertical receiver direction. As this number increases, the resolution of flux evaluation increases.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">For ray trace simulations, increased resolution corresponds to increased uncertainty in reported local flux density.</span></p>
@@ -411,26 +535,90 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Clouds"></a>
-<span class="rvts0"><span class="rvts19">Clouds</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Performancesimulation.html#top">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Clouds"></a>
+<span class="rvts0"><span class="rvts22">Clouds</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Performancesimulation.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Heliostat Selection Control"></a>
-<span class="rvts0"><span class="rvts19">Heliostat Selection Control</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Performancesimulation.html#top">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Heliostat Selection Control"></a>
+<span class="rvts0"><span class="rvts22">Heliostat Selection Control</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Performancesimulation.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p></p>
-</div>
-	
-	<div id="topic_footer">
+<p class="rvps4" style="clear: both;"><span class="rvts13">Created with the Personal Edition of HelpNDoc: </span><a class="rvts14" href="https://www.helpndoc.com/feature-tour/create-help-files-for-the-qt-help-framework">Create help files for the Qt Help Framework</a></p>
 
-			<div id="topic_footer_content">
-				Copyright &copy; 2013-2018, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div>
-		</div>
-	</body>
-	
+            </div>
+            
+            <div id="topic_footer"><div id="topic_footer_content">Copyright &copy; 2013-2018, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div></div>
+        </div>  <!-- /#topic-content -->
+    </article>
+
+    <footer></footer>
+
+  </div>  <!-- /#main -->
+
+  <div class="mask" data-toggle="sm-nav-expanded"></div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="hndModal" tabindex="-1" role="dialog" aria-labelledby="hndModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="hndModalLabel"></h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary modal-btn-close" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
+  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.18.9/uri.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
+  
+  <!-- Headroom -->
+  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
+  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+
+  <!-- JsTree -->
+  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+
+  <!-- HelpNDoc scripts -->
+  <script src="_translations.js"></script>
+  <script src="js/hndsd.min.js"></script>
+  <script src="js/hndse.min.js"></script>
+  <script src="js/app.min.js"></script>
+
+  <!-- Scripts -->
+  <script>
+    $(function() {
+      // Instanciate FastClick
+      Origami.fastclick(document.body);
+      // Create the app
+      var app = new Hnd.App();
+      // Update translations
+      hnd_ut(app);
+	  // Custom JS
+	  
+      // Boot the app
+      app.Boot();
+    });
+  </script>
+
+
+
+</body>
+
 </html>
 

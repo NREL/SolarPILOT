@@ -1,91 +1,215 @@
-﻿<html>
-	
+
+
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-	<title>Climate</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="generator" content="HelpNDoc Professional Edition 4.6.2.573">
-	<meta name="keywords" content="">
-	
-	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
-	<!--[if lte IE 8]>
-		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
-	<![endif]-->
-	<style type="text/css">
-		#topic_header
-		{
-			background-color: #EFEFEF;
-		}
-	</style>
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/hnd.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function()
-		{
-			if (top.frames.length == 0)
-			{
-				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
-				top.location.href = "SolarPILOT.html?" + sTopicUrl;
-			}
-			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
-			{
-				top.FrameTOC.SelectTocItem("Climate");
-			}
-		});
-	</script>
-	
-	</head>
 
-<body>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="generator" content="HelpNDoc Personal Edition 5.8.2.643">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.ico"/>
 
-<div id="topic_header">
-			<div id="topic_header_content">
-				<h1 id="topic_header_text">Climate</h1>
-				
-				<div id="topic_breadcrumb">
-					<a href="InputPageReference.html">Input Page Reference</a> &rsaquo;&rsaquo; </div>
-				</div>
-			<div id="topic_header_nav">
-				<a href="InputPageReference.html"><img src="img/arrow_up.png" alt="Parent"/></a>
-				
-				<a href="InputPageReference.html"><img src="img/arrow_left.png" alt="Previous"/></a>
-				
-				<a href="Markets.html"><img src="img/arrow_right.png" alt="Next"/></a>
-				
-				</div>
-			<div class="clear"></div>
-		</div>
-	<div id="topic_content">
-		
+  <title>Climate</title>
+  <meta name="description" content="A Tool for Solar Power Tower Layout and Optimization" /> 
+  <meta name="keywords" content="">
+
+
+
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Climate">
+  <meta name="twitter:description" content="A Tool for Solar Power Tower Layout and Optimization">
+
+  <!-- Open Graph data -->
+  <meta property="og:title" content="Climate" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="A Tool for Solar Power Tower Layout and Optimization" />
+  <meta property="og:site_name" content="SolarPILOT User's Manual" /> 
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/respond-1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <!-- JsTree styles -->
+  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+
+  <!-- Hnd styles -->
+  <link href="css/layout.min.css" rel="stylesheet" />
+  <link href="css/effects.min.css" rel="stylesheet" />
+  <link href="css/theme-light-blue.min.css" rel="stylesheet" />
+  <link href="css/print.min.css" rel="stylesheet" media="print" />
+  <style type="text/css">nav { width: 350px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 350px} body.md-nav-expanded header { padding-left: 364px} }</style>
+
+  <!-- Content style -->
+  <link href="css/hnd.content.css" rel="stylesheet" />
+
+  
+
+
+
+</head>
+
+<body class="md-nav-expanded">
+
+
+
+  <div id="skip-link">
+    <a href="#main-content" class="element-invisible">Skip to main content</a>
+  </div>
+
+  <header class="headroom">
+    <button class="hnd-toggle btn btn-default">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>        
+    </button>
+    <h1>SolarPILOT User's Manual</h1>
+    
+  </header>
+
+  <nav class="md-nav-expanded">
+    <!-- Nav tabs -->
+    <ul class="tab-tabs nav nav-tabs" role="tablist">
+      <li id="nav-close"> 
+        <button class="hnd-toggle btn btn-default">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+      </li>
+      
+	  
+        <li role="presentation" class="tab active">
+            <a href="#contents" id="tab-contents" aria-controls="contents" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-list"></i>
+                Contents
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#index" id="tab-index" aria-controls="index" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-asterisk"></i>
+                Index
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#search" id="tab-search" aria-controls="search" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-search"></i>
+                Search
+            </a>
+        </li>
+      
+    </ul>  <!-- /Nav tabs -->
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+	  
+      <div role="tabpanel" class="tab-pane active" id="contents">
+        <div id="toc" class="tree-container unselectable"
+            data-url="_toc.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /contents-->
+      
+      <div role="tabpanel" class="tab-pane" id="index">
+        <div id="keywords" class="tree-container unselectable"
+            data-url="_keywords.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /index-->
+      
+      <div role="tabpanel" class="tab-pane" id="search">
+        <div class="search-content">
+          <div class="search-input">
+            <form id="search-form">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="input-search" name="input-search" placeholder="Search..." />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>  <!-- /search-input -->
+          <div class="search-result">
+            <div id="search-info"></div>
+            <div class="tree-container unselectable" id="search-tree"></div>
+          </div>  <!-- /search-result -->
+        </div>  <!-- /search-content -->
+      </div>  <!-- /search-->
+      
+    </div>  <!-- /Tab panes -->
+
+  </nav>
+
+  <div id="main">
+
+    <article>
+        <div id="topic-content" class="container-fluid" 
+		  data-hnd-id="Climate"
+		  data-hnd-context="1"
+		  data-hnd-title="Climate"
+		>
+            
+                <div class="navigation">
+                    <ol class="breadcrumb">
+                        <li><a href="InputPageReference.html">Input Page Reference</a></li>
+                    </ol>
+                    <div class="nav-arrows">
+                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="InputPageReference.html" title="Input Page Reference" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="InputPageReference.html" title="Input Page Reference" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="Markets.html" title="Markets" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                    </div>
+                </div> 
+            
+
+            <a id="main-content"></a>
+
+            <h2>Climate</h2>
+
+            <div class="main-content">
+                
 <p></p>
-<h1 class="rvps6"><a name="Top of page"></a>
-<span class="rvts0"><span class="rvts19">Page Overview</span></span></h1>
+<h1 class="rvps9"><a name="Top of page"></a>
+<span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Define plant location, weather and atmospheric conditions, and properties of the sun's flux distribution on this page. The following input groups are discussed on this page: </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Climate.html#Choose%20Climate/Location">Choose Climate/Location</a></p>
+<p class="rvps2"><a class="rvts23" href="Climate.html#Choose%20Climate/Location">Choose Climate/Location</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Climate.html#Location%20Information">Location Information</a></p>
+<p class="rvps2"><a class="rvts23" href="Climate.html#Location%20Information">Location Information</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Climate.html#Atmospheric%20Conditions">Atmospheric Conditions</a></p>
+<p class="rvps2"><a class="rvts23" href="Climate.html#Atmospheric%20Conditions">Atmospheric Conditions</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Choose Climate/Location"></a>
-<span class="rvts0"><span class="rvts19">Choose Climate/Location</span></span></h1>
-<p class="rvps2"><a class="rvts22" href="Climate.html#Top%20of%20page">- Top of Page -</a></p>
+<h1 class="rvps9"><a name="Choose Climate/Location"></a>
+<span class="rvts0"><span class="rvts22">Choose Climate/Location</span></span></h1>
+<p class="rvps2"><a class="rvts25" href="Climate.html#Top%20of%20page">- Top of Page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Filter Locations By Name</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Filter Locations By Name</span></span></h2>
 <p class="rvps2"><span class="rvts6">Search the weather file list by text. The names that appear in the list are consolidated to match search text. This search box supports simple characters.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Weather File List</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Weather File List</span></span></h2>
 <p class="rvps2"><span class="rvts6">List of available weather files. The weather file serves as the basis of optimization when the Insolation Model is specified as "Weather File Data". The location specified in the selected weather file is used to calculate sun position. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Refresh List</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Refresh List</span></span></h2>
 <p class="rvps2"><span class="rvts6">Reload the list of weather files available in the weather file folder location.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Open Folder Location</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Open Folder Location</span></span></h2>
 <p class="rvps2"><span class="rvts6">Requests that the folder containing the weather files be opened. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">To add weather files to SolarPILOT, copy the file into the folder location opened by this command and refresh the list of folders. Supported weather files include TM2, TM3, EPW, SAM CSV, SMW.</span></p>
@@ -94,46 +218,46 @@
 <tr valign="top">
 <td style="border-color: #c0c0c0; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts8">Weather File Data</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">SolarPILOT supports several different weather file formats. This dialog provides more detailed information on the weather file formats and the data that they contain. This documentation was developed by Paul Gilman for NREL's </span><a class="rvts20" href="https://sam.nrel.gov" target="_blank">System Advisor Model</a><span class="rvts6"> software. </span></p>
-<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p class="rvps2"><span class="rvts6">SolarPILOT supports several different weather file formats. This dialog provides more detailed information on the weather file formats and the data that they contain. This documentation was developed by Paul Gilman for NREL's </span><a class="rvts23" href="https://sam.nrel.gov" target="_blank">System Advisor Model</a><span class="rvts6"> software. </span></p>
+<p class="rvps2"><span class="rvts30"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<p class="rvps2"><span class="rvts28"><br/></span></p>
+<p class="rvps2"><span class="rvts30"><br/></span></p>
 <p class="rvps2"><span class="rvts6">SolarPILOT can read a weather file in one of these formats that contains data from any source, as long as it is correctly formatted. You can use a spreadsheet program or other software create your own weather file in the SAM CSV format with data from a resource measurement program or meteorological stations.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">SAM CSV</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">SAM CSV</span></span></h2>
 <p class="rvps2"><span class="rvts6">The SAM CSV format is a comma-separated text format for SAM's solar performance models. It uses a standard CSV format that you can edit in any spreadsheet program, text editor, or other software. SolarPILOT recognizes the weather file's time resolution based on the number of data rows in the weather file. A file with 8,670 data rows is recognized as an hourly data file. By default, SAM calculates sun position angles at the mid-point of the time step. However, if you specify an optional minute column, SolarPILOT will calculate the sun position at the minute indicated in that column. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">SolarPILOT requires a valid value for all time steps for each data element. It does not fill data gaps. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts30">Header</span></span></h3>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts31">Header</span></span></h3>
 <p class="rvps2"><span class="rvts6">The three header rows provide location information and metadata, and identify the data columns.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts29">Row 1</span></p>
-<p class="rvps9"><span class="rvts6">Row 1 contains labels for the location and metadata values in Row 2:</span></p>
-<p class="rvps9"><span class="rvts6">Source,Location ID,City,State,Country,Latitude,Longitude,Time Zone,Elevation</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts29">Row 2</span></p>
-<p class="rvps9"><span class="rvts6">Row 2 contains the data identified in Row 1.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">The source, location ID, city, state, and country are text values (strings) that provide information about the data, but are not used in calculations. They do not need to be enclosed in quotes.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">The latitude, longitude, time zone, and elevation are values that SAM uses in sun position calculations during simulations. For example valid values for Latitude,Longitude,Time Zone,Elevation for Phoenix, Arizona in the United States are:</span></p>
-<p class="rvps9"><span class="rvts31">33.433333,-112.016667,-7,339</span></p>
-<p class="rvps9"><span class="rvts31"><br/></span></p>
-<p class="rvps2"><span class="rvts29">Row 3</span></p>
-<p class="rvps9"><span class="rvts6">Labels identifying the data columns. SAM uses the labels to identify the columns, so they can be in any order:</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts31">Year,Month,Day,Hour,GHI,DNI,DHI,Tdry,Tdew,RH,Pres,Wspd,Wdir,Snow Depth</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts29">Row 4-8,760 (for hourly data, more rows for sub-hourly data)</span></p>
-<p class="rvps9"><span class="rvts6">Data identified in Row 3. For example:</span></p>
-<p class="rvps9"><span class="rvts31">1988,1,1,0,0,0,0,5.6,-3.3,53,983,2.1,200,0</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts24">Data Units</span></span></h3>
+<p class="rvps2"><span class="rvts21">Row 1</span></p>
+<p class="rvps8"><span class="rvts6">Row 1 contains labels for the location and metadata values in Row 2:</span></p>
+<p class="rvps8"><span class="rvts6">Source,Location ID,City,State,Country,Latitude,Longitude,Time Zone,Elevation</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts21">Row 2</span></p>
+<p class="rvps8"><span class="rvts6">Row 2 contains the data identified in Row 1.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">The source, location ID, city, state, and country are text values (strings) that provide information about the data, but are not used in calculations. They do not need to be enclosed in quotes.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">The latitude, longitude, time zone, and elevation are values that SAM uses in sun position calculations during simulations. For example valid values for Latitude,Longitude,Time Zone,Elevation for Phoenix, Arizona in the United States are:</span></p>
+<p class="rvps8"><span class="rvts32">33.433333,-112.016667,-7,339</span></p>
+<p class="rvps8"><span class="rvts32"><br/></span></p>
+<p class="rvps2"><span class="rvts21">Row 3</span></p>
+<p class="rvps8"><span class="rvts6">Labels identifying the data columns. SAM uses the labels to identify the columns, so they can be in any order:</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts32">Year,Month,Day,Hour,GHI,DNI,DHI,Tdry,Tdew,RH,Pres,Wspd,Wdir,Snow Depth</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts21">Row 4-8,760 (for hourly data, more rows for sub-hourly data)</span></p>
+<p class="rvps8"><span class="rvts6">Data identified in Row 3. For example:</span></p>
+<p class="rvps8"><span class="rvts32">1988,1,1,0,0,0,0,5.6,-3.3,53,983,2.1,200,0</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts26">Data Units</span></span></h3>
 <p class="rvps2"><span class="rvts6">SolarPILOT assumes that the weather data uses the following units.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">(Note. The format does not require leading zeros in one-digit numbers.) </span></p>
-<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
 <li class="rvps2"><span class="rvts6">Year: Four-digit number (1988) </span></li>
 <li class="rvps2"><span class="rvts6">Month: One- or two-digit number (1=January, 11=November) </span></li>
 <li class="rvps2"><span class="rvts6">Day: One- or two-digit number indicating the day of month. </span></li>
@@ -151,26 +275,26 @@
 </ul>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">TMY3</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">TMY3</span></span></h2>
 <p class="rvps2"><span class="rvts6">The TMY3 file format is a comma-delimited text format with the extension .csv. The first row of a TMY3 file stores data describing the location's name, and the geographic coordinates, time zone, and elevation above sea level data required for sun angle calculations. The second row stores the column headings showing units for each data element. Rows 3-8762 store weather data elements used by SolarPILOT's layout model. Many of the data elements are not used by SolarPILOT.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Note. Opening and saving a TMY3 file in Excel can cause formatting changes that renders the file unreadable by SolarPILOT's weather file reader. Use a text-based data viewer to explore the data without modifying it.</span></p>
-<p class="rvps2"><span class="rvts6">For a complete description of the TMY3 file format, see the TMY3 user's manual (</span><a class="rvts20" href="http://www.nrel.gov/docs/fy07osti/41364.pdf">PDF 1.7 MB</a><span class="rvts6">) Tables 1-1 and 1-2 (p 3) describe the header data, and Table 1-3 (p 4-7) describes the weather data elements.</span></p>
+<p class="rvps2"><span class="rvts6">For a complete description of the TMY3 file format, see the TMY3 user's manual (</span><a class="rvts23" href="http://www.nrel.gov/docs/fy07osti/41364.pdf">PDF 1.7 MB</a><span class="rvts6">) Tables 1-1 and 1-2 (p 3) describe the header data, and Table 1-3 (p 4-7) describes the weather data elements.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">TMY2</span></span></h2>
-<p class="rvps2"><span class="rvts6">The TMY2 file format is a text format with the extension .tm2. The TMY2 format is not delimited, which makes the data in the text file difficult to read. For a description of the data elements in the TMY2 format, see the </span><a class="rvts20" href="http://rredc.nrel.gov/solar/pubs/NSRDB/">TMY2 user's manual</a><span class="rvts6">. The header elements are described in </span><a class="rvts20" href="http://rredc.nrel.gov/solar/pubs/NSRDB/3-1.html">Table 3-1</a><span class="rvts6">, and the weather data elements are described in </span><a class="rvts20" href="http://rredc.nrel.gov/solar/pubs/NSRDB/3-2.html">Table 3-2</a><span class="rvts6">.</span></p>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">TMY2</span></span></h2>
+<p class="rvps2"><span class="rvts6">The TMY2 file format is a text format with the extension .tm2. The TMY2 format is not delimited, which makes the data in the text file difficult to read. For a description of the data elements in the TMY2 format, see the </span><a class="rvts23" href="http://rredc.nrel.gov/solar/pubs/NSRDB/">TMY2 user's manual</a><span class="rvts6">. The header elements are described in </span><a class="rvts23" href="http://rredc.nrel.gov/solar/pubs/NSRDB/3-1.html">Table 3-1</a><span class="rvts6">, and the weather data elements are described in </span><a class="rvts23" href="http://rredc.nrel.gov/solar/pubs/NSRDB/3-2.html">Table 3-2</a><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">EPW</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">EPW</span></span></h2>
 <p class="rvps2"><span class="rvts6">The EPW file format was developed for the U.S. Department of Energy's EnergyPlus building simulation model. EPW files store comma-delimited data, and use the extension .epw.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The first eight rows of a file in EPW format stores header data. SolarPILOT's models use only the latitude, longitude, elevation, and time zone data from the header to calculate solar angles. The remaining 8,760 rows store weather data used by the SAM performance models and other data describing the quality of the data that SolarPILOT ignores.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">For more details about the EPW format see the </span><a class="rvts20" href="http://apps1.eere.energy.gov/buildings/energyplus/weatherdata_format.cfm">Weather Data Format Definition</a><span class="rvts6"> page of the </span><a class="rvts20" href="http://apps1.eere.energy.gov/buildings/energyplus/">EnergyPlus Simulation Software</a><span class="rvts6"> website.</span></p>
+<p class="rvps2"><span class="rvts6">For more details about the EPW format see the </span><a class="rvts23" href="http://apps1.eere.energy.gov/buildings/energyplus/weatherdata_format.cfm">Weather Data Format Definition</a><span class="rvts6"> page of the </span><a class="rvts23" href="http://apps1.eere.energy.gov/buildings/energyplus/">EnergyPlus Simulation Software</a><span class="rvts6"> website.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">SMW</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">SMW</span></span></h2>
 <p class="rvps2"><span class="rvts6">The SMW format is a comma-delimited format with the extension .smw. The SMW format allows you to use weather data in different time steps. The SMW weather file format differs from the standard TMY2 and TMY3 weather file formats in the following ways:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
 <li class="rvps2"><span class="rvts6">It contains only the weather data elements used by SolarPILOT's models.</span></li>
 <li class="rvps2"><span class="rvts6">It can contain weather data in time steps of one second or greater.</span></li>
 <li class="rvps2"><span class="rvts6">All weather data values represent an instantaneous value at the mid-point of the time step. (For the standard TMY formats, the solar radiation values are totals over the hour, and temperature, wind speed, and other values are instantaneous at the end of the hour.)</span></li>
@@ -179,24 +303,24 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Here's what the first four rows of an SMW file with hourly data might look like:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts31">723860,"Clark/El Dorado",NV,-8.0,35.796245,-114.974334,548.64,3600.,2010,0:30:00</span></p>
-<p class="rvps2"><span class="rvts31">5.15,-4.7,-999.,46.4225,0.65,295.0,941.97,0.0,0.016517,0.0,0.23,-999.</span></p>
-<p class="rvps2"><span class="rvts31">3.85,-4.1,-999.,54.1635,0.35,245.0,944.99,0.0,0.008,0.0,0.23,-999.</span></p>
-<p class="rvps2"><span class="rvts31">2.95,-3.85,-999.,58.752,0.3,225.0,945.785,0.0,0.08555,0.0,0.23,-999.</span></p>
+<p class="rvps2"><span class="rvts32">723860,"Clark/El Dorado",NV,-8.0,35.796245,-114.974334,548.64,3600.,2010,0:30:00</span></p>
+<p class="rvps2"><span class="rvts32">5.15,-4.7,-999.,46.4225,0.65,295.0,941.97,0.0,0.016517,0.0,0.23,-999.</span></p>
+<p class="rvps2"><span class="rvts32">3.85,-4.1,-999.,54.1635,0.35,245.0,944.99,0.0,0.008,0.0,0.23,-999.</span></p>
+<p class="rvps2"><span class="rvts32">2.95,-3.85,-999.,58.752,0.3,225.0,945.785,0.0,0.08555,0.0,0.23,-999.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts30">Header</span></span></h3>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts31">Header</span></span></h3>
 <p class="rvps2"><span class="rvts6">The first row of an SMW file contains the header with the ten elements described in the table below separated by commas, and ending with a comma. The header columns cannot be separated by spaces or tabs.</span></p>
 <p class="rvps2"><span class="rvts6">The data in columns 1, 2, 3, 7, and 9 are not used by the current version of the physical trough model.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <div class="rvps2"><table border="0" cellpadding="1" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
 <tr valign="top">
-<td width="66" valign="middle" style="padding: 1px;"><p class="rvps5"><span class="rvts29">Column </span></p>
+<td width="66" valign="middle" style="padding: 1px;"><p class="rvps5"><span class="rvts21">Column </span></p>
 </td>
-<td width="292" valign="middle" style="padding: 1px;"><p class="rvps5"><span class="rvts29">Entry </span></p>
+<td width="292" valign="middle" style="padding: 1px;"><p class="rvps5"><span class="rvts21">Entry </span></p>
 </td>
-<td width="82" valign="middle" style="padding: 1px;"><p class="rvps5"><span class="rvts29">Units </span></p>
+<td width="82" valign="middle" style="padding: 1px;"><p class="rvps5"><span class="rvts21">Units </span></p>
 </td>
-<td width="183" valign="middle" style="padding: 1px;"><p class="rvps5"><span class="rvts29">Example </span></p>
+<td width="183" valign="middle" style="padding: 1px;"><p class="rvps5"><span class="rvts21">Example </span></p>
 </td>
 </tr>
 <tr valign="top">
@@ -304,7 +428,7 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">*The start year has been included to make it possible to model calendar irregularities or holiday schedules, but is not used by the current version of SAM's SMW file reader.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts30">Weather Data</span></span></h3>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts31">Weather Data</span></span></h3>
 <p class="rvps2"><span class="rvts6">The second row of an SMW file contains weather data for the first time step, indicated by column 8 of the header row. The number of weather data rows depends on the time step. For example, for a 3600 second time step, the file would contain 8,760 weather data rows.</span></p>
 <p class="rvps2"><span class="rvts6">Unlike the header information which must be comma-separated, the weather data columns can be separated by commas, tabs, or spaces. Each row may end with a separator character or not.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -315,11 +439,11 @@
 <p class="rvps2"><span class="rvts6">Table: Weather data record format by column number. </span></p>
 <div class="rvps2"><table border="0" cellpadding="0" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
 <tr valign="top">
-<td width="90" valign="middle" style="padding: 0px;"><p class="rvps5"><span class="rvts29">Column </span></p>
+<td width="90" valign="middle" style="padding: 0px;"><p class="rvps5"><span class="rvts21">Column </span></p>
 </td>
-<td width="207" valign="middle" style="padding: 0px;"><p class="rvps5"><span class="rvts29">Entry </span></p>
+<td width="207" valign="middle" style="padding: 0px;"><p class="rvps5"><span class="rvts21">Entry </span></p>
 </td>
-<td width="79" valign="middle" style="padding: 0px;"><p class="rvps5"><span class="rvts29">Units </span></p>
+<td width="79" valign="middle" style="padding: 0px;"><p class="rvps5"><span class="rvts21">Units </span></p>
 </td>
 </tr>
 <tr valign="top">
@@ -427,297 +551,297 @@
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Location Information"></a>
-<span class="rvts0"><span class="rvts19">Location Information</span></span></h1>
-<p class="rvps2"><a class="rvts22" href="Climate.html#Top%20of%20page">- Top of Page -</a></p>
+<h1 class="rvps9"><a name="Location Information"></a>
+<span class="rvts0"><span class="rvts22">Location Information</span></span></h1>
+<p class="rvps2"><a class="rvts25" href="Climate.html#Top%20of%20page">- Top of Page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Location values loaded from the selected weather file.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">City</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">City</span></span></h2>
 <p class="rvps2"><span class="rvts6">City name specified in the selected weather file.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">State</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">State</span></span></h2>
 <p class="rvps2"><span class="rvts6">State name specified in the selected weather file.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Timezone</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Timezone</span></span></h2>
 <p class="rvps2"><span class="rvts6">Time zone specified in the selected weather file. Time zone "0" corresponds to 0-GMT, (-) time zones are west of GMT, (+) time zones are east of GMT (generally speaking). The time zone indicates the hour offset for the selected location.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Elevation</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Elevation</span></span></h2>
 <p class="rvps2"><span class="rvts6">The site elevation above sea level for the selected weather file.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Latitude</span></span></h2>
-<p class="rvps2"><span class="rvts6">The site latitude for the selected weather file. Latitude is (+) in the northern hemisphere and (-) in the southern hemisphere. Latitude must be between -90</span><span class="rvts27">°</span><span class="rvts6"> and +90</span><span class="rvts27">°</span><span class="rvts6">.</span></p>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Latitude</span></span></h2>
+<p class="rvps2"><span class="rvts6">The site latitude for the selected weather file. Latitude is (+) in the northern hemisphere and (-) in the southern hemisphere. Latitude must be between -90</span><span class="rvts29">°</span><span class="rvts6"> and +90</span><span class="rvts29">°</span><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Longitude</span></span></h2>
-<p class="rvps2"><span class="rvts6">The site longitude for the selected weather file. Longitude is (-) in the western hemisphere and (+) in the eastern hemisphere. The magnitude of the longitude value increases as the distance from the prime meridian increases. Valid longitude values lie between -180</span><span class="rvts27">°</span><span class="rvts6"> and +180</span><span class="rvts27">°</span><span class="rvts6">.</span></p>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Longitude</span></span></h2>
+<p class="rvps2"><span class="rvts6">The site longitude for the selected weather file. Longitude is (-) in the western hemisphere and (+) in the eastern hemisphere. The magnitude of the longitude value increases as the distance from the prime meridian increases. Valid longitude values lie between -180</span><span class="rvts29">°</span><span class="rvts6"> and +180</span><span class="rvts29">°</span><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Atmospheric Conditions"></a>
-<span class="rvts0"><span class="rvts19">Atmospheric Conditions</span></span></h1>
-<p class="rvps2"><a class="rvts22" href="Climate.html#Top%20of%20page">- Top of Page -</a></p>
+<h1 class="rvps9"><a name="Atmospheric Conditions"></a>
+<span class="rvts0"><span class="rvts22">Atmospheric Conditions</span></span></h1>
+<p class="rvps2"><a class="rvts25" href="Climate.html#Top%20of%20page">- Top of Page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Jump to Sunshape model; Insolation model; Atmospheric Attenuation Model</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Specify properties of the sun shape, choose the model for solar insolation as a function of sun position, and specify the model for atmospheric attenuation loss.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><a name="Sunshape model"></a>
-<span class="rvts0"><span class="rvts23">Sunshape model</span></span></h2>
+<h2 class="rvps6"><a name="Sunshape model"></a>
+<span class="rvts0"><span class="rvts20">Sunshape model</span></span></h2>
 <p class="rvps2"><span class="rvts6">Choose the model for sun shape. The apparent shape of the sun is more technically described as the profile of flux intensity as a function of angular displacement from the center of the sun's disc. In other words, a measurement device with a vanishingly narrow acceptance window that views the sun at the center of the solar disc will see maximum relative intensity. As the device sweeps away from the center point, the measured intensity will decrease until only ambient scattered light is visible. The profile of intensity measurement as a function of displacement angle is called "sun shape". The following figure from Buie (2003, Fig 3) illustrates this concept, as a large number of measured sun shapes are overlaid on a single plot. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem53.png"></p>
-<p class="rvps2"><span class="rvts32">(Credit: Buie, D., Monger, A., &amp; Dey, C. (2003). Sunshape distributions for terrestrial solar simulations. Solar Energy, 74(March 2003), 113–122.)</span></p>
+<p class="rvps2"><span class="rvts33">(Credit: Buie, D., Monger, A., &amp; Dey, C. (2003). Sunshape distributions for terrestrial solar simulations. Solar Energy, 74(March 2003), 113–122.)</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Sun shape is an extrinsic property that depends on local atmospheric conditions, including atmospheric depth, precipitable water, aerosol content, and incidence angle of the sunlight through the atmosphere. SolarPILOT includes several different modeling approaches for sun shape, including an option for user-definition.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The radius of the solar disc is typically in the range of 4.60-4.75 mrad (0.263</span><span class="rvts27">°</span><span class="rvts6">-0.273</span><span class="rvts27">°</span><span class="rvts6">), with </span><span class="rvts29">4.65 mrad</span><span class="rvts6"> offered as a typical value.</span></p>
+<p class="rvps2"><span class="rvts6">The radius of the solar disc is typically in the range of 4.60-4.75 mrad (0.263</span><span class="rvts29">°</span><span class="rvts6">-0.273</span><span class="rvts29">°</span><span class="rvts6">), with </span><span class="rvts21">4.65 mrad</span><span class="rvts6"> offered as a typical value.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Pillbox Sun</span></span></h3>
-<p class="rvps9"><span class="rvts6">The "pillbox" sun shape (also known as the "square wave" sun shape) is a simple binary distribution in which flux is assumed to be equally distributed within a specified disc. The region outside the disc is modeled with zero flux intensity. This is an idealized case but may be useful for certain analyses.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Sunshape Angular Extent</span></span></h4>
-<p class="rvps11"><span class="rvts6">The maximum radius of the solar disc. The region within this disc emits irradiation of uniform intensity. The complement of this region emits no irradiation.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Gaussian Sun</span></span></h3>
-<p class="rvps9"><span class="rvts6">The Gaussian sun shape is a Gaussian (standard normal) distribution centered on the centroid of the solar disc with standard deviation equal to the Sunshape Angular Extent Value. This model is an approximation with limited accuracy, but is useful for parametrically considering the impact of sun shape on designs of interest.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Sunshape Angular Extent</span></span></h4>
-<p class="rvps11"><span class="rvts6">The standard deviation of the Gaussian distribution. </span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><span class="rvts6">As the standard deviation decreases, the fraction of power emitted near the centroid of the solar disc increases. Conversely, an increase in standard deviation "spreads" the sun shape profile, and an increasing proportion of irradiation is emitted away from the disc centroid.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Limb-Darkened Sun</span></span></h3>
-<p class="rvps9"><span class="rvts6">Selects the Limb-Darkened Sun option. This model specifies sun intensity as a function of angular distance from the centroid of the sun disc, as shown in the following equation:</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem65.png"></p>
-<p class="rvps9"><span class="rvts6">where</span></p>
-<div class="rvps9"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Pillbox Sun</span></span></h3>
+<p class="rvps8"><span class="rvts6">The "pillbox" sun shape (also known as the "square wave" sun shape) is a simple binary distribution in which flux is assumed to be equally distributed within a specified disc. The region outside the disc is modeled with zero flux intensity. This is an idealized case but may be useful for certain analyses.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Sunshape Angular Extent</span></span></h4>
+<p class="rvps12"><span class="rvts6">The maximum radius of the solar disc. The region within this disc emits irradiation of uniform intensity. The complement of this region emits no irradiation.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Gaussian Sun</span></span></h3>
+<p class="rvps8"><span class="rvts6">The Gaussian sun shape is a Gaussian (standard normal) distribution centered on the centroid of the solar disc with standard deviation equal to the Sunshape Angular Extent Value. This model is an approximation with limited accuracy, but is useful for parametrically considering the impact of sun shape on designs of interest.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Sunshape Angular Extent</span></span></h4>
+<p class="rvps12"><span class="rvts6">The standard deviation of the Gaussian distribution. </span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<p class="rvps12"><span class="rvts6">As the standard deviation decreases, the fraction of power emitted near the centroid of the solar disc increases. Conversely, an increase in standard deviation "spreads" the sun shape profile, and an increasing proportion of irradiation is emitted away from the disc centroid.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Limb-Darkened Sun</span></span></h3>
+<p class="rvps8"><span class="rvts6">Selects the Limb-Darkened Sun option. This model specifies sun intensity as a function of angular distance from the centroid of the sun disc, as shown in the following equation:</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem65.png"></p>
+<p class="rvps8"><span class="rvts6">where</span></p>
+<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem61.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Intensity profile of the sun as a function of displacement angle</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Intensity profile of the sun as a function of displacement angle</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem62.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Displacement angle from the centroid of the solar disc</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Displacement angle from the centroid of the solar disc</span></p>
 </td>
 </tr>
 </table>
 </div>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Point Sun</span></span></h3>
-<p class="rvps9"><span class="rvts6">The sun is represented as a single point. Normalized intensity at the sun position is equal to 1.0 and is equal to 0.0 in all other locations. This models incoming irradiation as uniform and parallel.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Buie CSR Sun</span></span></h3>
-<p class="rvps9"><span class="rvts6">The sun is modeled using the profile described in </span><a class="rvts20" href="References.html#Buie,%20D.,%20Monger,%20A.,%20&amp;amp;%20Dey,%20C.%20(2003)">Buie, Monger, &amp; Dey (2003)</a><span class="rvts6"> and </span><a class="rvts20" href="References.html#Buie,%20D.,%20Dey,%20C.,%20&amp;amp;%20Bosi,%20S.%20(2003)">Buie, Dey, &amp; Bosi (2003)</a><span class="rvts6">. The model determines the sun shape profile with a parameter called the "circumsolar ratio". </span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Circumsolar Ratio</span></span></h4>
-<p class="rvps11"><span class="rvts6">The circumsolar ratio (CSR) determines the extent to which the pillbox distribution of the sun's intensity profile is distorted and scattered. A CSR of 0 indicates a pillbox sun shape. </span></p>
-<p class="rvps11"><span class="rvts6">The CSR is defined as the radiant flux contained within the circumsolar region of the sky divided by the incident radiant flux from the direct beam and aureole. </span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><img alt="" style="padding : 1px;" src="lib/NewItem66.png"></p>
-<p class="rvps11"><img alt="" style="padding : 1px;" src="lib/NewItem67.png"></p>
-<p class="rvps11"><img alt="" style="padding : 1px;" src="lib/NewItem68.png"></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Point Sun</span></span></h3>
+<p class="rvps8"><span class="rvts6">The sun is represented as a single point. Normalized intensity at the sun position is equal to 1.0 and is equal to 0.0 in all other locations. This models incoming irradiation as uniform and parallel.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Buie CSR Sun</span></span></h3>
+<p class="rvps8"><span class="rvts6">The sun is modeled using the profile described in </span><span class="rvts23">Buie, Monger, &amp; Dey (2003)</span><span class="rvts6"> and </span><span class="rvts23">Buie, Dey, &amp; Bosi (2003)</span><span class="rvts6">. The model determines the sun shape profile with a parameter called the "circumsolar ratio". </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Circumsolar Ratio</span></span></h4>
+<p class="rvps12"><span class="rvts6">The circumsolar ratio (CSR) determines the extent to which the pillbox distribution of the sun's intensity profile is distorted and scattered. A CSR of 0 indicates a pillbox sun shape. </span></p>
+<p class="rvps12"><span class="rvts6">The CSR is defined as the radiant flux contained within the circumsolar region of the sky divided by the incident radiant flux from the direct beam and aureole. </span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem66.png"></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem67.png"></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem68.png"></p>
 <p class="rvps3"><span class="rvts6">where</span></p>
 <p class="rvps3"><span class="rvts6"><br/></span></p>
-<div class="rvps11"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<div class="rvps12"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
 <tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps13"><img alt="" style="padding : 1px;" src="lib/NewItem61.png"></p>
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps14"><img alt="" style="padding : 1px;" src="lib/NewItem61.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Intensity profile of the sun as a function of displacement angle</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Intensity profile of the sun as a function of displacement angle</span></p>
 </td>
 </tr>
 <tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps13"><img alt="" style="padding : 1px;" src="lib/NewItem62.png"></p>
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps14"><img alt="" style="padding : 1px;" src="lib/NewItem62.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Displacement angle from the centroid of the solar disc</span></p>
-</td>
-</tr>
-<tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps13"><img alt="" style="padding : 1px;" src="lib/NewItem63.png"></p>
-</td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Radial angular bound of the direct beam region</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Displacement angle from the centroid of the solar disc</span></p>
 </td>
 </tr>
 <tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps13"><img alt="" style="padding : 1px;" src="lib/NewItem64.png"></p>
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps14"><img alt="" style="padding : 1px;" src="lib/NewItem63.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Radial angular bound of the circumsolar region</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Radial angular bound of the direct beam region</span></p>
+</td>
+</tr>
+<tr valign="middle">
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps14"><img alt="" style="padding : 1px;" src="lib/NewItem64.png"></p>
+</td>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Radial angular bound of the circumsolar region</span></p>
 </td>
 </tr>
 </table>
 </div>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><span class="rvts6">The angular limit for the direct beam region depends on the DNI measurement device (pyroheliometer), but typically ranges between 5° and 7°. For highly scattered sun shapes, the circumsolar region may extend beyond the acceptance window of the pyroheliometer. However, irradiation at higher incidence angles is unlikely to be useful for tower systems where the focal length between the heliostat and receiver is quite large. The angular limit for the circumsolar region is typically 4.65 mrad or 0.266°, though it varies slightly with Earth's orbital position.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">User Sun</span></span></h3>
-<p class="rvps9"><span class="rvts6">The user sun option allows specification of a sun intensity profile as a function of radial angular position away from the centroid of the solar disc. SolarPILOT assumes the intensity profile to be rotationally symmetric. </span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">Specify the normalized solar intensity profile in each table row along with the radial angular position in units of milliradians. The first entry in the table should be at 0 mrad, and the angular position must increase monotonically. The angular step size does not need to be constant. </span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">Normalize the solar intensity profile such that the peak solar intensity has a value of 1.0. </span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><span class="rvts26">Rows</span><span class="rvts6"> </span></p>
-<p class="rvps11"><span class="rvts6">Specify the number of entries in the user sun shape table. The number of rows is automatically determined when importing a data table from file. The table may have up to 1000 entries, though 100 entries is the recommended maximum.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><span class="rvts26">Import</span><span class="rvts6"> </span></p>
-<p class="rvps11"><span class="rvts6">Import an existing sun profile from a file. The file may have extension *.sun, *.txt, *.dat, *.csv and be delimited by space, tab, semicolon, or comma. Each angle and intensity data point should be on a unique line.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><span class="rvts6">When importing, SolarPILOT will automatically populate the table with the entries in the file. Any file header or blank lines should be removed before importing.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Export</span></span></h4>
-<p class="rvps11"><span class="rvts6">Saves the contents of the sun shape table to a file. You may choose the location and name of the file to be exported.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">User Sun Position Table</span></span></h4>
-<p class="rvps11"><span class="rvts6">The sun position table contains all data entries. Entry values may be altered by modifying the values in the table manually.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><a name="Insolation Model"></a>
-<span class="rvts0"><span class="rvts23">Insolation Model</span></span></h2>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<p class="rvps12"><span class="rvts6">The angular limit for the direct beam region depends on the DNI measurement device (pyroheliometer), but typically ranges between 5° and 7°. For highly scattered sun shapes, the circumsolar region may extend beyond the acceptance window of the pyroheliometer. However, irradiation at higher incidence angles is unlikely to be useful for tower systems where the focal length between the heliostat and receiver is quite large. The angular limit for the circumsolar region is typically 4.65 mrad or 0.266°, though it varies slightly with Earth's orbital position.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">User Sun</span></span></h3>
+<p class="rvps8"><span class="rvts6">The user sun option allows specification of a sun intensity profile as a function of radial angular position away from the centroid of the solar disc. SolarPILOT assumes the intensity profile to be rotationally symmetric. </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">Specify the normalized solar intensity profile in each table row along with the radial angular position in units of milliradians. The first entry in the table should be at 0 mrad, and the angular position must increase monotonically. The angular step size does not need to be constant. </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">Normalize the solar intensity profile such that the peak solar intensity has a value of 1.0. </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps12"><span class="rvts28">Rows</span><span class="rvts6"> </span></p>
+<p class="rvps12"><span class="rvts6">Specify the number of entries in the user sun shape table. The number of rows is automatically determined when importing a data table from file. The table may have up to 1000 entries, though 100 entries is the recommended maximum.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<p class="rvps12"><span class="rvts28">Import</span><span class="rvts6"> </span></p>
+<p class="rvps12"><span class="rvts6">Import an existing sun profile from a file. The file may have extension *.sun, *.txt, *.dat, *.csv and be delimited by space, tab, semicolon, or comma. Each angle and intensity data point should be on a unique line.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<p class="rvps12"><span class="rvts6">When importing, SolarPILOT will automatically populate the table with the entries in the file. Any file header or blank lines should be removed before importing.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Export</span></span></h4>
+<p class="rvps12"><span class="rvts6">Saves the contents of the sun shape table to a file. You may choose the location and name of the file to be exported.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">User Sun Position Table</span></span></h4>
+<p class="rvps12"><span class="rvts6">The sun position table contains all data entries. Entry values may be altered by modifying the values in the table manually.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h2 class="rvps6"><a name="Insolation Model"></a>
+<span class="rvts0"><span class="rvts20">Insolation Model</span></span></h2>
 <p class="rvps2"><span class="rvts6">SolarPILOT determines the intensity of DNI and other weather values during layout simulations using the specified Insolation Model. Several different weather data models are included in SolarPILOT. The most straightforward model is the weather file data in which actual weather data (either continuous or in typical meteorological form) is provided. Other options involve approximations for daily sunlight intensity as a function of site location and elevation, atmospheric moisture, and/or atmospheric pressure. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Several insolation models including Meinel, Hottel, Allen, and Moon were transposed from DELSOL3 unchanged. See the </span><a class="rvts20" href="References.html#Kistler,%20B.%20L.%20(1986)">DELSOL3 User Manual</a><span class="rvts6"> for more detailed information on cited literature. This discussion focuses on usage requirements for each model. </span></p>
+<p class="rvps2"><span class="rvts6">Several insolation models including Meinel, Hottel, Allen, and Moon were transposed from DELSOL3 unchanged. See the </span><span class="rvts23">DELSOL3 User Manual</span><span class="rvts6"> for more detailed information on cited literature. This discussion focuses on usage requirements for each model. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Several models make use of the extraterrestrial solar radiation. This quantity varies by location and throughout the year and is calculated as follows:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem69.png"></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
-<div class="rvps9"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem70.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Extraterrestrial radiation intensity (kW/m2)</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Extraterrestrial radiation intensity (kW/m2)</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem71.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Day number of the year</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Day number of the year</span></p>
 </td>
 </tr>
 </table>
 </div>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The various models are shown for an altitude of 0.65 km and 1 atm as a function of solar position. </span></p>
 <p class="rvps5"><img width="498" height="381" alt="" style="padding : 1px;" src="lib/NewItem95.png"></p>
-<p class="rvps5"><span class="rvts33">(Credit: Kistler, 1986, Fig III-1)</span></p>
+<p class="rvps5"><span class="rvts34">(Credit: Kistler, 1986, Fig III-1)</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Weather File Data</span></span></h3>
-<p class="rvps9"><span class="rvts6">Use hourly weather data from the selected weather file to determine insolation and atmospheric conditions for layout simulations. The weather data file option is the only insolation model that accounts for site-specific weather variability and local weather trends throughout the year, and so is best suited to determine the optimal layout for sites with asymmetric daily insolation profiles.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Meinel Model</span></span></h3>
-<p class="rvps9"><span class="rvts6">The Meinel model calculates solar intensity as a function of extraterrestrial radiation, site altitude, and solar zenith angle.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem72.png"></p>
-<p class="rvps9"><span class="rvts6">where:</span></p>
-<div class="rvps11"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Weather File Data</span></span></h3>
+<p class="rvps8"><span class="rvts6">Use hourly weather data from the selected weather file to determine insolation and atmospheric conditions for layout simulations. The weather data file option is the only insolation model that accounts for site-specific weather variability and local weather trends throughout the year, and so is best suited to determine the optimal layout for sites with asymmetric daily insolation profiles.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Meinel Model</span></span></h3>
+<p class="rvps8"><span class="rvts6">The Meinel model calculates solar intensity as a function of extraterrestrial radiation, site altitude, and solar zenith angle.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem72.png"></p>
+<p class="rvps8"><span class="rvts6">where:</span></p>
+<div class="rvps12"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
 <tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem73.png"></p>
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem73.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Radiation intensity (kW/m2)</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Radiation intensity (kW/m2)</span></p>
 </td>
 </tr>
 <tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem74.png"></p>
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem74.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Site altitude (km)</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Site altitude (km)</span></p>
 </td>
 </tr>
 <tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem75.png"></p>
+<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem75.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Solar zenith angle (rad)</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Solar zenith angle (rad)</span></p>
 </td>
 </tr>
 </table>
 </div>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Hottel &nbsp;Model</span></span></h3>
-<p class="rvps9"><span class="rvts6">The Hottel model calculates solar intensity as a function of extraterrestrial radiation, site altitude, and solar zenith angle. This model uses three regression terms that depend on altitude.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem83.png"></p>
-<p class="rvps9"><span class="rvts6">where:</span></p>
-<p class="rvps11"><img alt="" style="padding : 1px;" src="lib/NewItem82.png"></p>
-<p class="rvps11"><img alt="" style="padding : 1px;" src="lib/NewItem81.png"></p>
-<p class="rvps11"><img alt="" style="padding : 1px;" src="lib/NewItem80.png"></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Hottel &nbsp;Model</span></span></h3>
+<p class="rvps8"><span class="rvts6">The Hottel model calculates solar intensity as a function of extraterrestrial radiation, site altitude, and solar zenith angle. This model uses three regression terms that depend on altitude.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem83.png"></p>
+<p class="rvps8"><span class="rvts6">where:</span></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem82.png"></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem81.png"></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem80.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">Remaining equation terms are defined as described in the Meinel Model.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Constant Value</span></span></h3>
-<p class="rvps9"><span class="rvts6">DNI is assigned a constant value for all layout simulations, with solar field delivered power depending only on the optical efficiency impact of changing sun position.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Constant DNI for Layout Calculations</span></span></h4>
-<p class="rvps11"><span class="rvts6">Specify the constant DNI value used during layout calculations. This value will not impact the final layout, but does impact the ranking metric value. The ranking metric value is shown on the Layout Results page by selecting Ranking Metric in the Plot Display dropdown.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Allen Model</span></span></h3>
-<p class="rvps9"><span class="rvts6">The Allen model calculates insolation as a function of extraterrestrial radiation, air mass correction factor, precipitable water, and atmospheric pressure.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem84.png"></p>
-<p class="rvps9"><span class="rvts6">where:</span></p>
-<p class="rvps11"><img alt="" style="padding : 1px;" src="lib/NewItem85.png"></p>
-<p class="rvps11"><img alt="" style="padding : 1px;" src="lib/NewItem86.png"></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><img alt="" style="padding : 1px;" src="lib/NewItem87.png"></p>
-<p class="rvps9"><span class="rvts6">and: </span></p>
-<div class="rvps11"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<p class="rvps8"><span class="rvts6">Remaining equation terms are defined as described in the Meinel Model.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Constant Value</span></span></h3>
+<p class="rvps8"><span class="rvts6">DNI is assigned a constant value for all layout simulations, with solar field delivered power depending only on the optical efficiency impact of changing sun position.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Constant DNI for Layout Calculations</span></span></h4>
+<p class="rvps12"><span class="rvts6">Specify the constant DNI value used during layout calculations. This value will not impact the final layout, but does impact the ranking metric value. The ranking metric value is shown on the Layout Results page by selecting Ranking Metric in the Plot Display dropdown.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Allen Model</span></span></h3>
+<p class="rvps8"><span class="rvts6">The Allen model calculates insolation as a function of extraterrestrial radiation, air mass correction factor, precipitable water, and atmospheric pressure.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem84.png"></p>
+<p class="rvps8"><span class="rvts6">where:</span></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem85.png"></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem86.png"></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<p class="rvps12"><img alt="" style="padding : 1px;" src="lib/NewItem87.png"></p>
+<p class="rvps8"><span class="rvts6">and: </span></p>
+<div class="rvps12"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
 <tr valign="middle">
 <td width="75" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem88.png"></p>
 </td>
-<td width="511" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Angular correction factor</span></p>
+<td width="511" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Angular correction factor</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="75" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem89.png"></p>
 </td>
-<td width="511" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Overhead precipitable water (mm)</span></p>
+<td width="511" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Overhead precipitable water (mm)</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="75" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem90.png"></p>
 </td>
-<td width="511" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps11"><span class="rvts6">Atmospheric pressure</span></p>
+<td width="511" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps12"><span class="rvts6">Atmospheric pressure</span></p>
 </td>
 </tr>
 </table>
 </div>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Atmospheric Precipitable Water</span></span></h4>
-<p class="rvps11"><span class="rvts6">The depth of precipitable water along a vector from the site location to zenith. This value is an indication of the absolute humidity.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Ambient Pressure</span></span></h4>
-<p class="rvps11"><span class="rvts6">An average ambient atmospheric pressure for the site.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">Moon Model</span></span></h3>
-<p class="rvps9"><span class="rvts6">The Moon model is similar to the Allen model, but uses an alternate regression form. </span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><img alt="" style="padding : 1px;" src="lib/NewItem91.png"></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts6">Refer to the Allen model definition for additional equation terms.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Ambient Pressure</span></span></h4>
-<p class="rvps11"><span class="rvts6">An average ambient atmospheric pressure for the site.</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><a name="Atmospheric Attenuation Model"></a>
-<span class="rvts0"><span class="rvts23">Atmospheric Attenuation Model</span></span></h2>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Atmospheric Precipitable Water</span></span></h4>
+<p class="rvps12"><span class="rvts6">The depth of precipitable water along a vector from the site location to zenith. This value is an indication of the absolute humidity.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Ambient Pressure</span></span></h4>
+<p class="rvps12"><span class="rvts6">An average ambient atmospheric pressure for the site.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Moon Model</span></span></h3>
+<p class="rvps8"><span class="rvts6">The Moon model is similar to the Allen model, but uses an alternate regression form. </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem91.png"></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6">Refer to the Allen model definition for additional equation terms.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Ambient Pressure</span></span></h4>
+<p class="rvps12"><span class="rvts6">An average ambient atmospheric pressure for the site.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h2 class="rvps6"><a name="Atmospheric Attenuation Model"></a>
+<span class="rvts0"><span class="rvts20">Atmospheric Attenuation Model</span></span></h2>
 <p class="rvps2"><span class="rvts6">The atmospheric attenuation model determines the fraction of energy that is lost from each heliostat by atmospheric scattering. Attenuation is expressed as a fractional loss as a function of straight-line distance between an individual heliostat and the focal plane of the receiver (slant range).</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The attenuation options specify equation coefficients, and three options are available - discussed below. The attenuation equation is a single-dimensional polynomial.</span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem92.png"></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
-<div class="rvps9"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
 <tr valign="middle">
 <td width="75" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem93.png"></p>
 </td>
-<td width="511" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Attenuation coefficient </span><span class="rvts28">i, </span><span class="rvts6">where </span><span class="rvts28">i</span><span class="rvts6"> is in the range of 0-3</span></p>
+<td width="511" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Attenuation coefficient </span><span class="rvts30">i, </span><span class="rvts6">where </span><span class="rvts30">i</span><span class="rvts6"> is in the range of 0-3</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="75" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem94.png"></p>
 </td>
-<td width="511" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Distance between the heliostat and the receiver (slant range)</span></p>
+<td width="511" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Distance between the heliostat and the receiver (slant range)</span></p>
 </td>
 </tr>
 </table>
@@ -726,7 +850,7 @@
 <p class="rvps2"><span class="rvts6">The following plot from Kistler (1986) shows typical clear and hazy day from Barstow, CA. These curves are implemented as the "DELSOL3 Clear Day" and "DELSOL3 Hazy Day", respectively.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps5"><img width="461" height="340" alt="" style="padding : 1px;" src="lib/NewItem96.png"></p>
-<p class="rvps5"><span class="rvts33">(Credit Kistler 1986, Fig. III-2)</span></p>
+<p class="rvps5"><span class="rvts34">(Credit Kistler 1986, Fig. III-2)</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <div class="rvps2"><table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; background-color: #dfdfdf; border-spacing: 2px;">
 <tr valign="top">
@@ -734,17 +858,17 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">SolarPILOT provides sample cases for "clear" and "hazy" days in Barstow, CA, based on measurements taken several decades ago near the Solar Two project site. NREL recommends potential plant locations be screened for atmospheric aerosol and water vapor conditions for a period of time before final design and productivity analyses are completed. Uncertainty and variability in attenuation behavior should be thoroughly understood and incorporated into technology models as part of the design process.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Existing literature is inconclusive on the best way to predictively model ground-level attenuation, as local environmental factors, geographical features, proximity to human development, time of day and year, and other factors can all impact the optical properties of air. First-principle models for attenuation are therefore complex and expansive, and their general reliability for all potential power tower applications has not yet been demonstrated. The SolarPILOT attenuation model is contrastingly simplistic, and the user is encouraged to </span><span class="rvts29">approach this optical loss conservatively</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Existing literature is inconclusive on the best way to predictively model ground-level attenuation, as local environmental factors, geographical features, proximity to human development, time of day and year, and other factors can all impact the optical properties of air. First-principle models for attenuation are therefore complex and expansive, and their general reliability for all potential power tower applications has not yet been demonstrated. The SolarPILOT attenuation model is contrastingly simplistic, and the user is encouraged to </span><span class="rvts21">approach this optical loss conservatively</span><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The loss incurred from the point of reflection to the receiver is usually significant, especially at the outer reaches of the heliostat field. Attenuation loss is similar to intercept factor loss in that it increases with distance. However, unlike intercept loss, attenuation loss cannot be counterbalanced by altering the receiver geometry. Attenuation behavior can ultimately determine the viability of a power tower technology for a given site. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">For relevant literature, see:</span></p>
-<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
 <li class="rvps2"><span class="rvts6">Vittitoe, C. N., &amp; Biggs, F. (1978). Terrestrial propagation loss. Presented at the American Section of the International Solar Energy Society, Denver, CO.</span></li>
 <li class="rvps2"><span class="rvts6">Ballestrín, J., &amp; Marzo, A. (2012). Solar radiation attenuation in solar tower plants. Solar Energy, 86(1), 388–392. </span></li>
-<ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
-<li style="margin-left: 0px" class="rvps9"><span class="rvts6">Gueymard, C. a. (2012). Visibility, aerosol conditions, and irradiance attenuation close to the ground—Comments on “Solar radiation attenuation in solar tower plants” by J. Ballestrin and A. Marzo, Solar Energy (2012). Solar Energy, 86(5), 1667–1668.</span></li>
-<li style="margin-left: 0px" class="rvps9"><span class="rvts6">Ballestrín, J. (2012). Comments on “Visibility, aerosol conditions, and irradiance attenuation close to the ground” by Christian A. Gueymard, Solar Energy (2012). Solar Energy, 86(5), 1669–1670.</span></li>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: circle;">
+<li style="margin-left: 0px" class="rvps8"><span class="rvts6">Gueymard, C. a. (2012). Visibility, aerosol conditions, and irradiance attenuation close to the ground—Comments on “Solar radiation attenuation in solar tower plants” by J. Ballestrin and A. Marzo, Solar Energy (2012). Solar Energy, 86(5), 1667–1668.</span></li>
+<li style="margin-left: 0px" class="rvps8"><span class="rvts6">Ballestrín, J. (2012). Comments on “Visibility, aerosol conditions, and irradiance attenuation close to the ground” by Christian A. Gueymard, Solar Energy (2012). Solar Energy, 86(5), 1669–1670.</span></li>
 </ul>
 <li class="rvps2"><span class="rvts6">Sengupta, M., &amp; Wagner, M. (2012). Estimating Atmospheric Attenuation in Central Receiver Systems. In Proceedings of the ASME 2012 6th International Conference on Energy Sustainability &amp; 10th Fuel Cell Science, Engineering and Technology Conference (pp. 1–5). San Diego, CA.</span></li>
 <li class="rvps2"><span class="rvts6">Sengupta, M., &amp; Wagner, M. (2012). Atmospheric attenuation in central receiver systems from DNI measurements. In Proceedings of the 2012 ASES World Renewable Energy Forum. Denver, CO.</span></li>
@@ -756,38 +880,102 @@
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">DELSOL3 Clear Day</span></span></h3>
-<p class="rvps9"><span class="rvts6">Use the clear day profile (visibility 5 km). </span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">DELSOL3 Hazy Day</span></span></h3>
-<p class="rvps9"><span class="rvts6">Use the hazy day profile (visibility 23 km).</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h3 class="rvps8"><span class="rvts0"><span class="rvts24">User-Defined</span></span></h3>
-<p class="rvps9"><span class="rvts6">Manually specify coefficient values for the attenuation loss polynomial.</span></p>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">0th Order Coefficient</span></span></h4>
-<p class="rvps11"><span class="rvts6">Polynomial constant term [-].</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">1st Order Coefficient</span></span></h4>
-<p class="rvps11"><span class="rvts6">Polynomial linear term [1/km]</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">2nd Order Coefficient</span></span></h4>
-<p class="rvps11"><span class="rvts6">Polynomial quadratic term [1/km2]</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">3rd Order Coefficient</span></span></h4>
-<p class="rvps11"><span class="rvts6">Polynomial cubic term [1/km3]</span></p>
-<p class="rvps11"><span class="rvts6"><br/></span></p>
-<h4 class="rvps10"><span class="rvts0"><span class="rvts25">Attenuation at 4 Tower Heights</span></span></h4>
-<p class="rvps11"><span class="rvts6">The polynomial evaluated at a radial distance of 4 times the tower height. This value provides an indication of the typical average attenuation loss in the solar field and is provided as reference only. Attenuation is evaluated during simulation for each heliostat individually.</span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">DELSOL3 Clear Day</span></span></h3>
+<p class="rvps8"><span class="rvts6">Use the clear day profile (visibility 5 km). </span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">DELSOL3 Hazy Day</span></span></h3>
+<p class="rvps8"><span class="rvts6">Use the hazy day profile (visibility 23 km).</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">User-Defined</span></span></h3>
+<p class="rvps8"><span class="rvts6">Manually specify coefficient values for the attenuation loss polynomial.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">0th Order Coefficient</span></span></h4>
+<p class="rvps12"><span class="rvts6">Polynomial constant term [-].</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">1st Order Coefficient</span></span></h4>
+<p class="rvps12"><span class="rvts6">Polynomial linear term [1/km]</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">2nd Order Coefficient</span></span></h4>
+<p class="rvps12"><span class="rvts6">Polynomial quadratic term [1/km2]</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">3rd Order Coefficient</span></span></h4>
+<p class="rvps12"><span class="rvts6">Polynomial cubic term [1/km3]</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Attenuation at 4 Tower Heights</span></span></h4>
+<p class="rvps12"><span class="rvts6">The polynomial evaluated at a radial distance of 4 times the tower height. This value provides an indication of the typical average attenuation loss in the solar field and is provided as reference only. Attenuation is evaluated during simulation for each heliostat individually.</span></p>
 <p></p>
-</div>
-	
-	<div id="topic_footer">
+<p class="rvps4" style="clear: both;"><span class="rvts13">Created with the Personal Edition of HelpNDoc: </span><a class="rvts14" href="https://www.helpndoc.com/feature-tour">Easily create EPub books</a></p>
 
-			<div id="topic_footer_content">
-				Copyright &copy; 2013-2018, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div>
-		</div>
-	</body>
-	
+            </div>
+            
+            <div id="topic_footer"><div id="topic_footer_content">Copyright &copy; 2013-2018, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div></div>
+        </div>  <!-- /#topic-content -->
+    </article>
+
+    <footer></footer>
+
+  </div>  <!-- /#main -->
+
+  <div class="mask" data-toggle="sm-nav-expanded"></div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="hndModal" tabindex="-1" role="dialog" aria-labelledby="hndModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="hndModalLabel"></h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary modal-btn-close" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
+  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.18.9/uri.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
+  
+  <!-- Headroom -->
+  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
+  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+
+  <!-- JsTree -->
+  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+
+  <!-- HelpNDoc scripts -->
+  <script src="_translations.js"></script>
+  <script src="js/hndsd.min.js"></script>
+  <script src="js/hndse.min.js"></script>
+  <script src="js/app.min.js"></script>
+
+  <!-- Scripts -->
+  <script>
+    $(function() {
+      // Instanciate FastClick
+      Origami.fastclick(document.body);
+      // Create the app
+      var app = new Hnd.App();
+      // Update translations
+      hnd_ut(app);
+	  // Custom JS
+	  
+      // Boot the app
+      app.Boot();
+    });
+  </script>
+
+
+
+</body>
+
 </html>
 

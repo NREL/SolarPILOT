@@ -1,123 +1,247 @@
-﻿<html>
-	
+
+
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-	<title>Costs</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="generator" content="HelpNDoc Professional Edition 4.6.2.573">
-	<meta name="keywords" content="">
-	
-	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
-	<!--[if lte IE 8]>
-		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
-	<![endif]-->
-	<style type="text/css">
-		#topic_header
-		{
-			background-color: #EFEFEF;
-		}
-	</style>
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/hnd.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function()
-		{
-			if (top.frames.length == 0)
-			{
-				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
-				top.location.href = "SolarPILOT.html?" + sTopicUrl;
-			}
-			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
-			{
-				top.FrameTOC.SelectTocItem("Costs");
-			}
-		});
-	</script>
-	
-	</head>
 
-<body>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="generator" content="HelpNDoc Personal Edition 5.8.2.643">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.ico"/>
 
-<div id="topic_header">
-			<div id="topic_header_content">
-				<h1 id="topic_header_text">Costs</h1>
-				
-				<div id="topic_breadcrumb">
-					<a href="InputPageReference.html">Input Page Reference</a> &rsaquo;&rsaquo; </div>
-				</div>
-			<div id="topic_header_nav">
-				<a href="InputPageReference.html"><img src="img/arrow_up.png" alt="Parent"/></a>
-				
-				<a href="Markets.html"><img src="img/arrow_left.png" alt="Previous"/></a>
-				
-				<a href="LayoutSetup.html"><img src="img/arrow_right.png" alt="Next"/></a>
-				
-				</div>
-			<div class="clear"></div>
-		</div>
-	<div id="topic_content">
-		
+  <title>Costs</title>
+  <meta name="description" content="A Tool for Solar Power Tower Layout and Optimization" /> 
+  <meta name="keywords" content="">
+
+
+
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Costs">
+  <meta name="twitter:description" content="A Tool for Solar Power Tower Layout and Optimization">
+
+  <!-- Open Graph data -->
+  <meta property="og:title" content="Costs" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="A Tool for Solar Power Tower Layout and Optimization" />
+  <meta property="og:site_name" content="SolarPILOT User's Manual" /> 
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/respond-1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <!-- JsTree styles -->
+  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+
+  <!-- Hnd styles -->
+  <link href="css/layout.min.css" rel="stylesheet" />
+  <link href="css/effects.min.css" rel="stylesheet" />
+  <link href="css/theme-light-blue.min.css" rel="stylesheet" />
+  <link href="css/print.min.css" rel="stylesheet" media="print" />
+  <style type="text/css">nav { width: 350px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 350px} body.md-nav-expanded header { padding-left: 364px} }</style>
+
+  <!-- Content style -->
+  <link href="css/hnd.content.css" rel="stylesheet" />
+
+  
+
+
+
+</head>
+
+<body class="md-nav-expanded">
+
+
+
+  <div id="skip-link">
+    <a href="#main-content" class="element-invisible">Skip to main content</a>
+  </div>
+
+  <header class="headroom">
+    <button class="hnd-toggle btn btn-default">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>        
+    </button>
+    <h1>SolarPILOT User's Manual</h1>
+    
+  </header>
+
+  <nav class="md-nav-expanded">
+    <!-- Nav tabs -->
+    <ul class="tab-tabs nav nav-tabs" role="tablist">
+      <li id="nav-close"> 
+        <button class="hnd-toggle btn btn-default">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+      </li>
+      
+	  
+        <li role="presentation" class="tab active">
+            <a href="#contents" id="tab-contents" aria-controls="contents" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-list"></i>
+                Contents
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#index" id="tab-index" aria-controls="index" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-asterisk"></i>
+                Index
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#search" id="tab-search" aria-controls="search" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-search"></i>
+                Search
+            </a>
+        </li>
+      
+    </ul>  <!-- /Nav tabs -->
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+	  
+      <div role="tabpanel" class="tab-pane active" id="contents">
+        <div id="toc" class="tree-container unselectable"
+            data-url="_toc.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /contents-->
+      
+      <div role="tabpanel" class="tab-pane" id="index">
+        <div id="keywords" class="tree-container unselectable"
+            data-url="_keywords.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /index-->
+      
+      <div role="tabpanel" class="tab-pane" id="search">
+        <div class="search-content">
+          <div class="search-input">
+            <form id="search-form">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="input-search" name="input-search" placeholder="Search..." />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>  <!-- /search-input -->
+          <div class="search-result">
+            <div id="search-info"></div>
+            <div class="tree-container unselectable" id="search-tree"></div>
+          </div>  <!-- /search-result -->
+        </div>  <!-- /search-content -->
+      </div>  <!-- /search-->
+      
+    </div>  <!-- /Tab panes -->
+
+  </nav>
+
+  <div id="main">
+
+    <article>
+        <div id="topic-content" class="container-fluid" 
+		  data-hnd-id="Costs"
+		  data-hnd-context="3"
+		  data-hnd-title="Costs"
+		>
+            
+                <div class="navigation">
+                    <ol class="breadcrumb">
+                        <li><a href="InputPageReference.html">Input Page Reference</a></li>
+                    </ol>
+                    <div class="nav-arrows">
+                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="InputPageReference.html" title="Input Page Reference" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="Markets.html" title="Markets" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="LayoutSetup.html" title="Layout Setup" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                    </div>
+                </div> 
+            
+
+            <a id="main-content"></a>
+
+            <h2>Costs</h2>
+
+            <div class="main-content">
+                
 <p></p>
-<h1 class="rvps6"><a name="Page Overview"></a>
-<span class="rvts0"><span class="rvts19">Page Overview</span></span></h1>
+<h1 class="rvps9"><a name="Page Overview"></a>
+<span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Costs.html#Direct%20Capital%20Costs">Direct Capital Costs</a></p>
+<p class="rvps2"><a class="rvts23" href="Costs.html#Direct%20Capital%20Costs">Direct Capital Costs</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Costs.html#Indirect%20Capital%20Costs">Indirect Capital Costs</a></p>
+<p class="rvps2"><a class="rvts23" href="Costs.html#Indirect%20Capital%20Costs">Indirect Capital Costs</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Costs.html#Total%20Installed%20Costs">Total Installed Costs</a></p>
+<p class="rvps2"><a class="rvts23" href="Costs.html#Total%20Installed%20Costs">Total Installed Costs</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Direct Capital Costs"></a>
-<span class="rvts0"><span class="rvts19">Direct Capital Costs</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Costs.html#Page%20Overview">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Direct Capital Costs"></a>
+<span class="rvts0"><span class="rvts22">Direct Capital Costs</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Costs.html#Page%20Overview">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Direct Capital Costs include expenditures related to capital equipment including the tower, receiver, heliostat field, power plant, and thermal storage systems. These costs are calculated and aggregated </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Fixed Tower Cost</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Fixed Tower Cost</span></span></h2>
 <p class="rvps2"><span class="rvts6">The fixed tower cost determines base value for cost scaling of the tower with overall height. [$]</span></p>
 <p class="rvps2"><span class="rvts6">Although this value may be thought of as "fixed cost", it simply serves as a constant multiplier on an exponential term that is a function of the tower cost scaling exponent and the tower height. See "Tower Cost" below for the functional form</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Tower Cost Scaling Exponent</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Tower Cost Scaling Exponent</span></span></h2>
 <p class="rvps2"><span class="rvts6">A constant multiplier that determines how quickly the tower cost scales with tower height. [-] See "Tower Cost" below for the functional form.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Tower Cost</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Tower Cost</span></span></h2>
 <p class="rvps2"><span class="rvts6">Calculated total tower cost. [$]</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem99.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
-<div class="rvps9"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem100.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Fixed tower cost [$]</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Fixed tower cost [$]</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem101.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Tower cost scaling exponent</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Tower cost scaling exponent</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem102.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Tower height [m] (distance between receiver vertical center and rotation point of the heliostats</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Tower height [m] (distance between receiver vertical center and rotation point of the heliostats</span></p>
 </td>
 </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver Reference Cost</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Receiver Reference Cost</span></span></h2>
 <p class="rvps2"><span class="rvts6">The total cost of a receiver of surface area equal to the Receiver Reference Area.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver Reference Area</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Receiver Reference Area</span></span></h2>
 <p class="rvps2"><span class="rvts6">The total receiver surface area that corresponds to the Receiver Reference Cost. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">For a cylindrical receiver:</span></p>
@@ -125,86 +249,86 @@
 <p class="rvps2"><span class="rvts6">For a flat plate receiver:</span></p>
 <p class="rvps3"><img alt="" style="padding : 1px;" src="lib/NewItem104.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver Cost Scaling Exponent</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Receiver Cost Scaling Exponent</span></span></h2>
 <p class="rvps2"><span class="rvts6">Receiver cost is calculated using a scaling formula. You can specify the cost scaling exponent using this value. The cost calculation equation is provided in the Receiver Cost description below.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Receiver Cost</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Receiver Cost</span></span></h2>
 <p class="rvps2"><span class="rvts6">Total receiver cost is calculated by scaling a reference cost according to the ratio of current receiver area to reference receiver area, with the ratio subject to a scaling exponent. Cost is equal to:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem105.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
-<div class="rvps9"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem106.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Receiver reference cost [$]</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Receiver reference cost [$]</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem107.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Receiver reference area [m</span><span class="rvts37">2</span><span class="rvts6">]</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Receiver reference area [m</span><span class="rvts38">2</span><span class="rvts6">]</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem108.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Receiver cost scaling exponent [-]</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Receiver cost scaling exponent [-]</span></p>
 </td>
 </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Total Solar Field Area</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Total Solar Field Area</span></span></h2>
 <p class="rvps2"><span class="rvts6">[m2] The total reflective area of the heliostats in the field. Equal to the summation of reflective area contributed by each heliostat, with area calculated according to the formula provided on the Heliostat page.</span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23"><br/></span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20"><br/></span></span></h2>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem110.png"></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
-<div class="rvps9"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem111.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Area of heliostat [m</span><span class="rvts37">2</span><span class="rvts6">]</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Area of heliostat [m</span><span class="rvts38">2</span><span class="rvts6">]</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts6">i</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Subscript indicating heliostat </span><span class="rvts28">i </span><span class="rvts6">in the set of all heliostats in the field layout</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Subscript indicating heliostat </span><span class="rvts30">i </span><span class="rvts6">in the set of all heliostats in the field layout</span></p>
 </td>
 </tr>
 </table>
 </div>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23"><br/></span></span></h2>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Site Improvements </span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20"><br/></span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Site Improvements </span></span></h2>
 <p class="rvps2"><span class="rvts6">[$/m2] Cost of land improvement per square meter of heliostat reflective area. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Site Improvements Cost</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Site Improvements Cost</span></span></h2>
 <p class="rvps2"><span class="rvts6">[$] Calculated total cost of site improvements. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem109.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Heliostat Field</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Heliostat Field</span></span></h2>
 <p class="rvps2"><span class="rvts6">[$/m2] Cost of the heliostat per square meter of heliostat reflective area.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Heliostat Field Cost</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Heliostat Field Cost</span></span></h2>
 <p class="rvps2"><span class="rvts6">[$] Calculated total heliostat cost.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem112.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Wiring Specific Cost</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Wiring Specific Cost</span></span></h2>
 <p class="rvps2"><span class="rvts6">[$/m2] Wiring cost in the heliostat field per square meter of heliostat reflective area.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Wiring Cost</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Wiring Cost</span></span></h2>
 <p class="rvps2"><span class="rvts6">[$] Calculated total wiring cost in the heliostat field.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem113.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Fixed Cost</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Fixed Cost</span></span></h2>
 <p class="rvps2"><span class="rvts6">Fixed costs associated with the plant, solar field, or other taxable items.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Total Direct Cost</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Total Direct Cost</span></span></h2>
 <p class="rvps2"><span class="rvts6">Calculated total direct cost of the plant.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img width="424" height="48" alt="" style="padding : 1px;" src="lib/NewItem212.png"></p>
@@ -212,22 +336,22 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Indirect Capital Costs"></a>
-<span class="rvts0"><span class="rvts19">Indirect Capital Costs</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Costs.html#Page%20Overview">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Indirect Capital Costs"></a>
+<span class="rvts0"><span class="rvts22">Indirect Capital Costs</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Costs.html#Page%20Overview">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Land Cost Per Acre </span></span></h2>
-<p class="rvps2"><span class="rvts6">[$/acre] Cost of land occupied by the plant, per acre. 1 acre = 4,046.86 m</span><span class="rvts37">2</span><span class="rvts6">.</span></p>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Land Cost Per Acre </span></span></h2>
+<p class="rvps2"><span class="rvts6">[$/acre] Cost of land occupied by the plant, per acre. 1 acre = 4,046.86 m</span><span class="rvts38">2</span><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Non-Solar Field Land Area</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Non-Solar Field Land Area</span></span></h2>
 <p class="rvps2"><span class="rvts6">[acre] Fixed land area that is calculated as part of the land area cost but not directly related to heliostat field land area.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Land Area Multiplier</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Land Area Multiplier</span></span></h2>
 <p class="rvps2"><span class="rvts6">[-] Factor that multiplies the Solar Field Land Area to increase the total land area associated with the plant.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Solar Field Land Area</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Solar Field Land Area</span></span></h2>
 <p class="rvps2"><span class="rvts6">[acre] Calculated land area occupied by the heliostat field. This calculation identifies the area of the smallest possible convex polygon (convex hull) that contains all heliostat points in the layout. &nbsp;The following figures illustrate heliostat field layouts and their convex hull shape. The convex hull is a polygon with vertices overlapping the set of most distant heliostat positions at any given azimuthal angle.</span></p>
-<p class="rvps15"><span class="rvts38"><br/></span></p>
+<p class="rvps16"><span class="rvts39"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem126.png"><img alt="" style="padding : 1px;" src="lib/NewItem127.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The area is calculated with the following formula:</span></p>
@@ -235,88 +359,152 @@
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem128.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
-<div class="rvps9"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem137.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Coordinate position of a vertex of the convex hull</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Coordinate position of a vertex of the convex hull</span></p>
 </td>
 </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Total Land Area</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Total Land Area</span></span></h2>
 <p class="rvps2"><span class="rvts6">[acre] The total land area of the facility. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem138.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
-<div class="rvps9"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem139.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Land area multiplier</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Land area multiplier</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem140.png"></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Non-solar field land area [acre]</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Non-solar field land area [acre]</span></p>
 </td>
 </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Land Cost</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Land Cost</span></span></h2>
 <p class="rvps2"><span class="rvts6">[$] Calculated total land cost. Equal to total land area multiplied by land cost per acre.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Contingency</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Contingency</span></span></h2>
 <p class="rvps2"><span class="rvts6">[%] Contingency rate against the total direct costs. This value increases the direct cost of the plant by the specified percentage to account for potential construction cost overruns, replacement equipment, or other unforeseen direct costs.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Contingency Cost</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Contingency Cost</span></span></h2>
 <p class="rvps2"><span class="rvts6">[$] Calculated contingency cost. Equal to the contingency rate multiplied by the total direct cost.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Sales Tax Rate</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Sales Tax Rate</span></span></h2>
 <p class="rvps2"><span class="rvts6">[%] Sales tax rate that is applied to direct plant costs. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Sales Tax Rate Portion</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Sales Tax Rate Portion</span></span></h2>
 <p class="rvps2"><span class="rvts6">[%] Fraction of total direct costs plus contingency cost that is subject to sales tax.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Sales Tax Cost</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Sales Tax Cost</span></span></h2>
 <p class="rvps2"><span class="rvts6">[$] Calculated sales tax cost. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem142.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Total Indirect Cost</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Total Indirect Cost</span></span></h2>
 <p class="rvps2"><span class="rvts6">[$] Calculated total indirect cost of the plant. Equal to the Sales Tax Cost plus the Land Cost.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Total Installed Costs"></a>
-<span class="rvts0"><span class="rvts19">Total Installed Costs</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Costs.html#Page%20Overview">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Total Installed Costs"></a>
+<span class="rvts0"><span class="rvts22">Total Installed Costs</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Costs.html#Page%20Overview">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The total installed cost represents the expected cost incurred to construct the plant. This cost omits financing, construction loan, and operation &amp; maintenance costs. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Total Installed Cost</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Total Installed Cost</span></span></h2>
 <p class="rvps2"><span class="rvts6">[$] Total installed cost is the sum of the total direct cost and the total indirect cost, as defined above. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><span class="rvts0"><span class="rvts23">Estimated Cost Per Capacity</span></span></h2>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Estimated Cost Per Capacity</span></span></h2>
 <p class="rvps2"><span class="rvts6">[$] The total estimated cost per capacity is equal to the total installed cost divided by the Solar Field Design Power from the Layout Setup page divided by 1,000. </span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p></p>
-</div>
-	
-	<div id="topic_footer">
+<p class="rvps4" style="clear: both;"><span class="rvts13">Created with the Personal Edition of HelpNDoc: </span><a class="rvts14" href="https://www.helpndoc.com/feature-tour/create-ebooks-for-amazon-kindle">Free Kindle producer</a></p>
 
-			<div id="topic_footer_content">
-				Copyright &copy; 2013-2018, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div>
-		</div>
-	</body>
-	
+            </div>
+            
+            <div id="topic_footer"><div id="topic_footer_content">Copyright &copy; 2013-2018, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div></div>
+        </div>  <!-- /#topic-content -->
+    </article>
+
+    <footer></footer>
+
+  </div>  <!-- /#main -->
+
+  <div class="mask" data-toggle="sm-nav-expanded"></div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="hndModal" tabindex="-1" role="dialog" aria-labelledby="hndModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="hndModalLabel"></h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary modal-btn-close" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
+  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.18.9/uri.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
+  
+  <!-- Headroom -->
+  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
+  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+
+  <!-- JsTree -->
+  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+
+  <!-- HelpNDoc scripts -->
+  <script src="_translations.js"></script>
+  <script src="js/hndsd.min.js"></script>
+  <script src="js/hndse.min.js"></script>
+  <script src="js/app.min.js"></script>
+
+  <!-- Scripts -->
+  <script>
+    $(function() {
+      // Instanciate FastClick
+      Origami.fastclick(document.body);
+      // Create the app
+      var app = new Hnd.App();
+      // Update translations
+      hnd_ut(app);
+	  // Custom JS
+	  
+      // Boot the app
+      app.Boot();
+    });
+  </script>
+
+
+
+</body>
+
 </html>
 

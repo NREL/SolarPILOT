@@ -1,138 +1,262 @@
-﻿<html>
-	
+
+
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-	<title>Optimization</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="generator" content="HelpNDoc Professional Edition 4.6.2.573">
-	<meta name="keywords" content="">
-	
-	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
-	<!--[if lte IE 8]>
-		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
-	<![endif]-->
-	<style type="text/css">
-		#topic_header
-		{
-			background-color: #EFEFEF;
-		}
-	</style>
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/hnd.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function()
-		{
-			if (top.frames.length == 0)
-			{
-				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
-				top.location.href = "SolarPILOT.html?" + sTopicUrl;
-			}
-			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
-			{
-				top.FrameTOC.SelectTocItem("Optimization");
-			}
-		});
-	</script>
-	
-	</head>
 
-<body>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="generator" content="HelpNDoc Personal Edition 5.8.2.643">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.ico"/>
 
-<div id="topic_header">
-			<div id="topic_header_content">
-				<h1 id="topic_header_text">Optimization</h1>
-				
-				<div id="topic_breadcrumb">
-					<a href="InputPageReference.html">Input Page Reference</a> &rsaquo;&rsaquo; <a href="Simulationcontrol.html">Simulation control</a> &rsaquo;&rsaquo; </div>
-				</div>
-			<div id="topic_header_nav">
-				<a href="Simulationcontrol.html"><img src="img/arrow_up.png" alt="Parent"/></a>
-				
-				<a href="Parametrics.html"><img src="img/arrow_left.png" alt="Previous"/></a>
-				
-				<a href="Results.html"><img src="img/arrow_right.png" alt="Next"/></a>
-				
-				</div>
-			<div class="clear"></div>
-		</div>
-	<div id="topic_content">
-		
+  <title>Optimization</title>
+  <meta name="description" content="A Tool for Solar Power Tower Layout and Optimization" /> 
+  <meta name="keywords" content="">
+
+
+
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Optimization">
+  <meta name="twitter:description" content="A Tool for Solar Power Tower Layout and Optimization">
+
+  <!-- Open Graph data -->
+  <meta property="og:title" content="Optimization" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="A Tool for Solar Power Tower Layout and Optimization" />
+  <meta property="og:site_name" content="SolarPILOT User's Manual" /> 
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/respond-1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <!-- JsTree styles -->
+  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+
+  <!-- Hnd styles -->
+  <link href="css/layout.min.css" rel="stylesheet" />
+  <link href="css/effects.min.css" rel="stylesheet" />
+  <link href="css/theme-light-blue.min.css" rel="stylesheet" />
+  <link href="css/print.min.css" rel="stylesheet" media="print" />
+  <style type="text/css">nav { width: 350px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 350px} body.md-nav-expanded header { padding-left: 364px} }</style>
+
+  <!-- Content style -->
+  <link href="css/hnd.content.css" rel="stylesheet" />
+
+  
+
+
+
+</head>
+
+<body class="md-nav-expanded">
+
+
+
+  <div id="skip-link">
+    <a href="#main-content" class="element-invisible">Skip to main content</a>
+  </div>
+
+  <header class="headroom">
+    <button class="hnd-toggle btn btn-default">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>        
+    </button>
+    <h1>SolarPILOT User's Manual</h1>
+    
+  </header>
+
+  <nav class="md-nav-expanded">
+    <!-- Nav tabs -->
+    <ul class="tab-tabs nav nav-tabs" role="tablist">
+      <li id="nav-close"> 
+        <button class="hnd-toggle btn btn-default">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+      </li>
+      
+	  
+        <li role="presentation" class="tab active">
+            <a href="#contents" id="tab-contents" aria-controls="contents" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-list"></i>
+                Contents
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#index" id="tab-index" aria-controls="index" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-asterisk"></i>
+                Index
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#search" id="tab-search" aria-controls="search" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-search"></i>
+                Search
+            </a>
+        </li>
+      
+    </ul>  <!-- /Nav tabs -->
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+	  
+      <div role="tabpanel" class="tab-pane active" id="contents">
+        <div id="toc" class="tree-container unselectable"
+            data-url="_toc.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /contents-->
+      
+      <div role="tabpanel" class="tab-pane" id="index">
+        <div id="keywords" class="tree-container unselectable"
+            data-url="_keywords.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /index-->
+      
+      <div role="tabpanel" class="tab-pane" id="search">
+        <div class="search-content">
+          <div class="search-input">
+            <form id="search-form">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="input-search" name="input-search" placeholder="Search..." />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>  <!-- /search-input -->
+          <div class="search-result">
+            <div id="search-info"></div>
+            <div class="tree-container unselectable" id="search-tree"></div>
+          </div>  <!-- /search-result -->
+        </div>  <!-- /search-content -->
+      </div>  <!-- /search-->
+      
+    </div>  <!-- /Tab panes -->
+
+  </nav>
+
+  <div id="main">
+
+    <article>
+        <div id="topic-content" class="container-fluid" 
+		  data-hnd-id="Optimization"
+		  data-hnd-context="29"
+		  data-hnd-title="Optimization"
+		>
+            
+                <div class="navigation">
+                    <ol class="breadcrumb">
+                        <li><a href="InputPageReference.html">Input Page Reference</a></li><li><a href="Simulationcontrol.html">Simulation control</a></li>
+                    </ol>
+                    <div class="nav-arrows">
+                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="Simulationcontrol.html" title="Simulation control" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="Parametrics.html" title="Parametrics" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="Results.html" title="Results" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                    </div>
+                </div> 
+            
+
+            <a id="main-content"></a>
+
+            <h2>Optimization</h2>
+
+            <div class="main-content">
+                
 <p></p>
-<h1 class="rvps6"><a name="top"></a>
-<span class="rvts0"><span class="rvts19">Page Overview</span></span></h1>
+<h1 class="rvps9"><a name="top"></a>
+<span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The Optimization page allows you to select design parameters and optimize their value with respect to expected plant productivity over the year. Before running the optimization tool, you will need to add and configure optimization variables in the Variable Table. After running an optimization, you can choose whether to apply the optimized values shown in the Optimization Log by clicking the Apply to inputs button.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">SolarPILOT uses the </span><a class="rvts20" href="http://ab-initio.mit.edu/wiki/index.php/NLopt_Algorithms" target="_blank">COBYLA</a><span class="rvts6"> algorithm (part of the NLOpt library) to optimize the selected variables. This algorithm represents the objective function as a multi-dimensional linear surface within a local trust region, and incorporates nonlinear constraints using a linear approximation of the constraint boundary. In this case, the </span><span class="rvts29">Allowable peak flux</span><span class="rvts6"> on the Receiver page serves as an upper bound, and SolarPILOT calculates the actual peak flux for a given design and compares it with this value. A peak flux exceeding the limit is deemed to be an infeasible solution, and the algorithm responds by attempting to return to feasibility with modifications to the optimization variables. Note that because the optimization algorithm uses a linear approximation of both the objective function and the constraints, the actual peak flux of the optimal design may exceed the maximum limit that you specify. </span><span class="rvts46">Be sure to check the optimized system to ensure that it meets common-sense criteria for a layout and does not substantially violate peak flux requirements</span><span class="rvts29">. </span><span class="rvts6">The optimization wizard should be used as a tool for gaining information, and is not to be understood as an exhaustive and infallible design optimizer!</span></p>
+<p class="rvps2"><span class="rvts6">SolarPILOT uses the </span><a class="rvts23" href="http://ab-initio.mit.edu/wiki/index.php/NLopt_Algorithms" target="_blank">COBYLA</a><span class="rvts6"> algorithm (part of the NLOpt library) to optimize the selected variables. This algorithm represents the objective function as a multi-dimensional linear surface within a local trust region, and incorporates nonlinear constraints using a linear approximation of the constraint boundary. In this case, the </span><span class="rvts21">Allowable peak flux</span><span class="rvts6"> on the Receiver page serves as an upper bound, and SolarPILOT calculates the actual peak flux for a given design and compares it with this value. A peak flux exceeding the limit is deemed to be an infeasible solution, and the algorithm responds by attempting to return to feasibility with modifications to the optimization variables. Note that because the optimization algorithm uses a linear approximation of both the objective function and the constraints, the actual peak flux of the optimal design may exceed the maximum limit that you specify. </span><span class="rvts47">Be sure to check the optimized system to ensure that it meets common-sense criteria for a layout and does not substantially violate peak flux requirements</span><span class="rvts21">. </span><span class="rvts6">The optimization wizard should be used as a tool for gaining information, and is not to be understood as an exhaustive and infallible design optimizer!</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">For more information on the COBYLA algorithm, please refer to the </span><a class="rvts20" href="http://ab-initio.mit.edu/wiki/index.php/NLopt_Algorithms" target="_blank">NLOpt documentation wiki</a><span class="rvts6">. The algorithm is used in this setting for several reasons: first, it is capable of non-linear objective function optimization. A problem is non-linear if either the objective function or the constraints respond to changes in variable values in a way that cannot be represented by the summation of linear (variable times coefficient) terms. Any variable-to-variable interaction, or response modeled as a variable to a non-unity power, implies nonlinear behavior. Integer or discrete variables are also nonlinear. Secondly, the algorithm allows for derivative-free, "black box" optimization, wherein the objective function and constraint derivatives are not attainable via a closed-form or explicit formula. Objective function derivatives are required to identify directions of fastest improvement, and these derivatives can only be estimated in this case by evaluating the objective function multiple times at different combinations of variable values, then numerically calculating derivatives. Lastly, COBYLA is one of only a handful of non-linear, derivative-free optimization algorithms that can accommodate constraints of the same classification. Each time SolarPILOT provides an objective function to COBYLA, it also calculates the peak receiver flux using the reference condition that you specify on the Layout Setup page and sends the information to COBYLA to determine whether the constraint has been satisfied, and in which direction the variable values can move while maintaining feasibility.</span></p>
+<p class="rvps2"><span class="rvts6">For more information on the COBYLA algorithm, please refer to the </span><a class="rvts23" href="http://ab-initio.mit.edu/wiki/index.php/NLopt_Algorithms" target="_blank">NLOpt documentation wiki</a><span class="rvts6">. The algorithm is used in this setting for several reasons: first, it is capable of non-linear objective function optimization. A problem is non-linear if either the objective function or the constraints respond to changes in variable values in a way that cannot be represented by the summation of linear (variable times coefficient) terms. Any variable-to-variable interaction, or response modeled as a variable to a non-unity power, implies nonlinear behavior. Integer or discrete variables are also nonlinear. Secondly, the algorithm allows for derivative-free, "black box" optimization, wherein the objective function and constraint derivatives are not attainable via a closed-form or explicit formula. Objective function derivatives are required to identify directions of fastest improvement, and these derivatives can only be estimated in this case by evaluating the objective function multiple times at different combinations of variable values, then numerically calculating derivatives. Lastly, COBYLA is one of only a handful of non-linear, derivative-free optimization algorithms that can accommodate constraints of the same classification. Each time SolarPILOT provides an objective function to COBYLA, it also calculates the peak receiver flux using the reference condition that you specify on the Layout Setup page and sends the information to COBYLA to determine whether the constraint has been satisfied, and in which direction the variable values can move while maintaining feasibility.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The objective function used by SolarPILOT is:</span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem204.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">where</span></p>
-<div class="rvps9"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem206.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps17"><span class="rvts6">$</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">$</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Total installed cost</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Total installed cost</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem207.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps17"><span class="rvts6">MWh</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">MWh</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Expected simulation power production (energy generated during field layout sample days)</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Expected simulation power production (energy generated during field layout sample days)</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem208.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps17"><span class="rvts6">MWt</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">MWt</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Power produced by the field at the reference condition</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Power produced by the field at the reference condition</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem209.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps17"><span class="rvts6">MWt</span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">MWt</span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Specified solar field power production on the Layout Setup page</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Specified solar field power production on the Layout Setup page</span></p>
 </td>
 </tr>
 <tr valign="middle">
 <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem210.png"></p>
 </td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps17"><span class="rvts6"><br/></span></p>
+<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6"><br/></span></p>
 </td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps9"><span class="rvts6">Penalty factor for under-design power output from the Optimization page</span></p>
+<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Penalty factor for under-design power output from the Optimization page</span></p>
 </td>
 </tr>
 </table>
 </div>
-<p class="rvps9"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Optimization.html#Setting">Settings</a></p>
+<p class="rvps2"><a class="rvts23" href="Optimization.html#Setting">Settings</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Optimization.html#Variable%20table">Variable Table</a></p>
+<p class="rvps2"><a class="rvts23" href="Optimization.html#Variable%20table">Variable Table</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a class="rvts20" href="Optimization.html#Optimization%20log">Optimization Log</a></p>
+<p class="rvps2"><a class="rvts23" href="Optimization.html#Optimization%20log">Optimization Log</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Setting"></a>
-<span class="rvts0"><span class="rvts19">Settings</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Optimization.html#top">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Setting"></a>
+<span class="rvts0"><span class="rvts22">Settings</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Optimization.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The settings parameters allow you to configure the optimization algorithm by managing (default) initial step size, maximum iterations, convergence tolerance, and a penalty for systems that cannot deliver the specified thermal power output.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts24">Initial step size</span></span></h3>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts26">Initial step size</span></span></h3>
 <p class="rvps2"><span class="rvts6">The (default) initial step size provides a guess to SolarPILOT for specifying the relative amount to vary each optimization variable on the first step. The Initial step size value multiplies the current value of each parameter to add to the Variable table to provide a step size. For example, if you add tower optical height to the variable table, and if the current value specified in the interface is 180 [m], the resulting initial step size for that variable would equal (initial step size -- say 0.06) * (180 [m]) = 10.8 [m].</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">After adding parameters to the variable table, you can modify the initial step size and other limits as needed. </span></p>
@@ -143,7 +267,7 @@
 <td style="border-color: #c0c0c0; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts8">Choosing initial step size values</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The initial step size provides the optimization algorithm with a test point to determine how to subsequently improve the objective function. Step size may differ for each variable that you optimize. Criteria for choosing the best step size include the following:</span></p>
-<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
 <li class="rvps2"><span class="rvts6">Step size should be sufficiently large that the resulting variable change is likely to have a non-trivial impact on the objective function</span></li>
 <li class="rvps2"><span class="rvts6">Step size should be sufficiently small that the modified variable value does not result in an infeasible system or nonsensical (e.g., negative dimension) value</span></li>
 <li class="rvps2"><span class="rvts6">When optimizing a system for the first time, relatively larger step sizes (e.g., ~10% of the variable value) may be needed to avoid optimizing to a local, suboptimal point</span></li>
@@ -156,64 +280,128 @@
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts24">Maximum iterations</span></span></h3>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts26">Maximum iterations</span></span></h3>
 <p class="rvps2"><span class="rvts6">The maximum number of iterations (field layout and performance calculation runs) allowed before forcing algorithm termination. Additional iterations will typically allow SolarPILOT to further improve the objective function, but requires more computational time. Consider increasing the maximum iterations as the number of optimized variables increases, as increased problem dimensionality also increases the difficulty of finding an optimal solution.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts24">Convergence tolerance</span></span></h3>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts26">Convergence tolerance</span></span></h3>
 <p class="rvps2"><span class="rvts6">The convergence tolerance indicates the minimum observed change in the objective function from iteration to iteration before the algorithm terminates. A smaller tolerance will require more iterations to complete, while a relaxed tolerance will solve more quickly, but may yield inferior variable values.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts24">Power shortage penalty</span></span></h3>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts26">Power shortage penalty</span></span></h3>
 <p class="rvps2"><span class="rvts6">Systems that do not produce the specified Solar field design power on the Layout Setup page are penalized according to the extent &nbsp;to which they are under power, with the difference being multiplied by the power shortage penalty. See the objective function description at the top of this page for mathematical context. For example, a power shortage penalty of 0.5 with a 500 MWt Solar field design power on a layout that produces only 250 MWt would result in an objective function penalty that is 125% of the unpenalized objective.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Variable table"></a>
-<span class="rvts0"><span class="rvts19">Variable Table</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Optimization.html#top">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Variable table"></a>
+<span class="rvts0"><span class="rvts22">Variable Table</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Optimization.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts24">Add</span></span></h3>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts26">Add</span></span></h3>
 <p class="rvps2"><span class="rvts6">Launch a dialog in which you can select design parameters for optimization. To add parameters, check the associated box, and they will appear in the Variable Table.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts24">Remove</span></span></h3>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts26">Remove</span></span></h3>
 <p class="rvps2"><span class="rvts6">Remove the selected variable(s) from the table. Select variables by left-clicking the row label, or select multiple rows by Shift+left click (select range) or Ctrl+left click (specific rows).</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts24">Variable</span></span></h3>
-<p class="rvps2"><span class="rvts6">The variable indicates the coded name for the SolarPILOT input value. You can modify this string to change the variable, if desired. To view coded names, navigate to the Simulation Variable Table on the Parametrics page and click </span><span class="rvts29">Variables...</span></p>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts26">Variable</span></span></h3>
+<p class="rvps2"><span class="rvts6">The variable indicates the coded name for the SolarPILOT input value. You can modify this string to change the variable, if desired. To view coded names, navigate to the Simulation Variable Table on the Parametrics page and click </span><span class="rvts21">Variables...</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts24">Lower Bound</span></span></h3>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts26">Lower Bound</span></span></h3>
 <p class="rvps2"><span class="rvts6">The minimum allowable value that the variable can assume. If no lower limit, use 'none'.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts24">Upper Bound</span></span></h3>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts26">Upper Bound</span></span></h3>
 <p class="rvps2"><span class="rvts6">The maximum allowable value that the variable can assume. If no upper limit, use 'none'.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts24">Initial Step</span></span></h3>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts26">Initial Step</span></span></h3>
 <p class="rvps2"><span class="rvts6">The initial step size to use for the optimization algorithm. See above for more information on choosing initial step size.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps6"><a name="Optimization log"></a>
-<span class="rvts0"><span class="rvts19">Optimization Log</span></span></h1>
-<p class="rvps2"><a class="rvts34" href="Optimization.html#top">- Top of page -</a></p>
+<h1 class="rvps9"><a name="Optimization log"></a>
+<span class="rvts0"><span class="rvts22">Optimization Log</span></span></h1>
+<p class="rvps2"><a class="rvts35" href="Optimization.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The optimization log provides a history of variable values, objective function values, peak flux, and plant cost for each iteration that is considered.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts24">Clear Log</span></span></h3>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts26">Clear Log</span></span></h3>
 <p class="rvps2"><span class="rvts6">Clear the contents of the optimization log.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts24">Save Log</span></span></h3>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts26">Save Log</span></span></h3>
 <p class="rvps2"><span class="rvts6">Save the contents of the optimization log to a file.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps12"><span class="rvts0"><span class="rvts24">Apply to Inputs</span></span></h3>
+<h3 class="rvps13"><span class="rvts0"><span class="rvts26">Apply to Inputs</span></span></h3>
 <p class="rvps2"><span class="rvts6">After running the optimization routine, you can apply the optimized variable values to the SolarPILOT interface inputs. After clicking this button, the input values will take on the optimized value. You will need to regenerate the heliostat field layout after taking this action.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p></p>
-</div>
-	
-	<div id="topic_footer">
+<p class="rvps4" style="clear: both;"><span class="rvts13">Created with the Personal Edition of HelpNDoc: </span><a class="rvts14" href="https://www.helpndoc.com">Free EBook and documentation generator</a></p>
 
-			<div id="topic_footer_content">
-				Copyright &copy; 2013-2018, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div>
-		</div>
-	</body>
-	
+            </div>
+            
+            <div id="topic_footer"><div id="topic_footer_content">Copyright &copy; 2013-2018, Trademark SolarPILOT&trade; 2015 by National Renewable Energy Laboratory. All Rights Reserved.</div></div>
+        </div>  <!-- /#topic-content -->
+    </article>
+
+    <footer></footer>
+
+  </div>  <!-- /#main -->
+
+  <div class="mask" data-toggle="sm-nav-expanded"></div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="hndModal" tabindex="-1" role="dialog" aria-labelledby="hndModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="hndModalLabel"></h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary modal-btn-close" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
+  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.18.9/uri.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
+  
+  <!-- Headroom -->
+  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
+  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+
+  <!-- JsTree -->
+  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+
+  <!-- HelpNDoc scripts -->
+  <script src="_translations.js"></script>
+  <script src="js/hndsd.min.js"></script>
+  <script src="js/hndse.min.js"></script>
+  <script src="js/app.min.js"></script>
+
+  <!-- Scripts -->
+  <script>
+    $(function() {
+      // Instanciate FastClick
+      Origami.fastclick(document.body);
+      // Create the app
+      var app = new Hnd.App();
+      // Update translations
+      hnd_ut(app);
+	  // Custom JS
+	  
+      // Boot the app
+      app.Boot();
+    });
+  </script>
+
+
+
+</body>
+
 </html>
 
