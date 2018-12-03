@@ -24,8 +24,8 @@ The desktop version of SolarPILOT for Windows or Linux builds from the following
 
 For detailed build instructions see the [wiki](https://github.com/NREL/SolarPILOT/wiki), with specific instructions for:
 
-* [Windows](https://github.com/NREL/SolarPILOT/wiki/Windows-Build)
-* [Linux](https://github.com/NREL/SolarPILOT/wiki/Linux-Build)
+* [Windows](https://github.com/NREL/SolarPILOT/wiki/build-windows)
+* [Linux](https://github.com/NREL/SolarPILOT/wiki/build-linux)
 
 These are the general quick steps you need to follow to set up your computer for developing SolarPILOT:
 
