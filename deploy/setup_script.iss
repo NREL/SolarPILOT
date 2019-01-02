@@ -26,8 +26,8 @@ ArchitecturesInstallIn64BitMode=x64
 
 
 ; UPDATE THESE TO MATCH THE VERSION
-AppVerName=SolarPILOT 1.2.1
-DefaultDirName={pf}\SolarPILOT\1.2.1
+AppVerName=SolarPILOT 1.3.1
+DefaultDirName={pf}\SolarPILOT\1.3.1
 
 AppPublisher=National Renewable Energy Laboratory
 AppPublisherURL=http://www.nrel.gov/csp/solarpilot.html
