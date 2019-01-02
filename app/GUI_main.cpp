@@ -264,7 +264,7 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
     //Set the version tag
 	_version_major = 1;
 	_version_minor = 3;
-	_version_patch = 1;
+	_version_patch = 2;
 
     _software_version = my_to_string(_version_major) + "." + my_to_string(_version_minor) + "." + my_to_string(_version_patch);
     _contact_info = "solarpilot.support@nrel.gov";
