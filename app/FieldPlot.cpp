@@ -1609,7 +1609,7 @@ void FieldPlot::HeliostatAnnotation(Heliostat *H)
     //--manage adding and removing based on selection state
     ptrdiff_t pos = std::find(_helios_select.begin(), _helios_select.end(), H) - _helios_select.begin();
 
-    if( pos >= _helios_select.size() ) 
+    if( pos >= (ptrdiff_t)_helios_select.size() ) 
         //Add the heliostat only if it's not already in the stored vector
         _helios_select.push_back(H);
     else

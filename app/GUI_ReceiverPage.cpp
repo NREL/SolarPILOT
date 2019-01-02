@@ -212,24 +212,14 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
         *aperture_type = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].aperture_type),
         *rec_cav_rad = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_cav_rad),
         *rec_cav_cdepth = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_cav_cdepth),
-        *accept_ang_type = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].accept_ang_type),
-        *accept_ang_x = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].accept_ang_x),
-        *accept_ang_y = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].accept_ang_y),
         *span_min = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].span_min),
-        *span_max = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].span_max),
-        *rec_azimuth = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_azimuth),
-        *rec_elevation = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_elevation);
+        *span_max = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].span_max);
 
     panel_rec_cav_s->Add(aperture_type);
     panel_rec_cav_s->Add(rec_cav_rad);
     panel_rec_cav_s->Add(rec_cav_cdepth);
-    panel_rec_cav_s->Add(accept_ang_type);
-    panel_rec_cav_s->Add(accept_ang_x);
-    panel_rec_cav_s->Add(accept_ang_y);
     panel_rec_cav_s->Add(span_min);
     panel_rec_cav_s->Add(span_max);
-    panel_rec_cav_s->Add(rec_azimuth);
-    panel_rec_cav_s->Add(rec_elevation);
     
     string msg = "For non-planar receivers, the receiver will be oriented such that the\n"
                  "primary parent with the specified azimuth angle will be tilted at the\n"
@@ -248,6 +238,20 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     
     sbs0->Add(panel_rec_ext);
     sbs0->Add(panel_rec_cav);
+
+    InputControl
+        *accept_ang_type = new InputControl(parent, wxID_ANY, _variables.recs[id].accept_ang_type),
+        *accept_ang_x = new InputControl(parent, wxID_ANY, _variables.recs[id].accept_ang_x),
+        *accept_ang_y = new InputControl(parent, wxID_ANY, _variables.recs[id].accept_ang_y),
+        *rec_azimuth = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_azimuth),
+        *rec_elevation = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_elevation);
+
+    sbs0->Add(accept_ang_type);
+    sbs0->Add(accept_ang_x);
+    sbs0->Add(accept_ang_y);
+    sbs0->Add(rec_azimuth);
+    sbs0->Add(rec_elevation);
+
     sbs0->Add(rec_aspect);
     sbs0->Add(absorber_area);
     {
@@ -256,8 +260,8 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     }
 
     {
-		wxWindow* dsibs[] = {span_min, span_max};
-		rec_type->setDisabledSiblings("External cylindrical", 2, dsibs);
+		wxWindow* dsibs[] = {span_min, span_max, accept_ang_type, accept_ang_y, rec_elevation};
+		rec_type->setDisabledSiblings("External cylindrical", 5, dsibs);
     }
 
 
@@ -1211,8 +1215,6 @@ void SPFrame::OnUserFluxNx(wxCommandEvent &evt)
     {
         grid->AppendCols(nspin-ngrid);
 
-        int nc = grid->GetNumberCols();
-
         //set the new column values to equal the last previously existing column
         for (size_t j = ngrid; j < nspin; j++)
             for (size_t i = 0; i < grid->GetNumberRows(); i++)
@@ -1242,8 +1244,6 @@ void SPFrame::OnUserFluxNy(wxCommandEvent &evt)
 
     wxGrid* grid = _user_flux_objects[recid].gridptr;
 
-    int nc = grid->GetNumberCols();
-
     int nspin = spin->GetValue();
     int ngrid = grid->GetNumberRows();
 
@@ -1252,8 +1252,6 @@ void SPFrame::OnUserFluxNy(wxCommandEvent &evt)
     else if (nspin > ngrid)
     {
         grid->AppendRows(nspin-ngrid);
-
-        int nr = grid->GetNumberRows();
 
         //set the new column values to equal the last previously existing column
         for (size_t j = ngrid; j < nspin; j++)

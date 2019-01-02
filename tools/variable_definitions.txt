@@ -214,7 +214,7 @@ parametric	user_par_values	IN	STRING		none	FALSE				User parametric values	User 
 parametric	sam_grid_format	IN	STRING	0	none	FALSE	combo	Auto spacing=0;Even grid=1		SAM data grid format	SAM data grid format
 receiver	absorptance	IN	DOUBLE	0.94	none	TRUE				Receiver thermal absorptance	Energy absorbed by the receiver surface before accounting for radiation/convection losses
 receiver	accept_ang_type	IN	STRING	0	none	TRUE	combo	Rectangular=0;Elliptical=1		Receiver acceptance angles shape	Receiver angular acceptance window defines angles about the aperture normal, can be rectangular or elliptical shape
-receiver	accept_ang_x	IN	DOUBLE	180	deg	TRUE				Receiver horizontal acceptance angle	Acceptance angle of the receiver in the horizontal direction (in aperture coordinates)
+receiver	accept_ang_x	IN	DOUBLE	360	deg	TRUE				Receiver horizontal acceptance angle	Acceptance angle of the receiver in the horizontal direction (in aperture coordinates)
 receiver	accept_ang_y	IN	DOUBLE	180	deg	TRUE				Receiver vertical acceptance angle	Acceptance angle of the receiver in the vertical direction (in aperture coordinates)
 receiver	aperture_type	IN	STRING	0		TRUE	combo	Rectangular=0		Aperture geometry shape	The shape of the receiver aperture
 receiver	cbdata	IN	VOIDPTR	0	none	FALSE				Data pointer for UI page	Data pointer for UI page
