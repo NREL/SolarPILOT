@@ -1968,6 +1968,9 @@ void SPFrame::FluxProgressBase(int n_complete, int n_tot, wxGauge *active_gauge,
     //Refresh (mark as dirty) and force update. Note that wxYield* variants cause the window to hang on linux here.
     active_gauge->Refresh();
     active_gauge->Update();
+#ifdef _WIN32
+    wxYield();
+#endif
 
 }
 

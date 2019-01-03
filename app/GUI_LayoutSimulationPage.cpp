@@ -274,7 +274,16 @@ void SPFrame::SimProgressUpdate(simulation_info* siminfo)
     }
     else
     {    
-        FluxProgressBase(csim, ntot, chooseProgressGauge(), chooseProgressText());
+        wxString msg;
+        if (siminfo->getSimulationNotices()->empty())
+            msg = "Calculation";
+        else
+        {
+            msg =  *siminfo->getSimulationNotices();
+            msg.Replace("\n", " | ");
+        }
+
+        FluxProgressBase(csim, ntot, chooseProgressGauge(), chooseProgressText(), msg);
     }
         
     siminfo->clearSimulationNotices();
