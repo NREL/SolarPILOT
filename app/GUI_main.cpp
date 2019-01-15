@@ -264,7 +264,7 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
     //Set the version tag
 	_version_major = 1;
 	_version_minor = 3;
-	_version_patch = 2;
+	_version_patch = 3;
 
     _software_version = my_to_string(_version_major) + "." + my_to_string(_version_minor) + "." + my_to_string(_version_patch);
     _contact_info = "solarpilot.support@nrel.gov";
@@ -1047,19 +1047,19 @@ void SPFrame::Open(wxString file_in, bool quiet)
 
     //is there data for a solar field layout?
     
+    //Create a progress dialog
+    wxProgressDialog *pdlg=0; //initialize null
+    if(!quiet) pdlg = new wxProgressDialog(wxT("File import progress..."), wxEmptyString, 1000, this, wxPD_SMOOTH|wxPD_AUTO_HIDE);
+    if(!quiet) pdlg->Show();
+    wxYieldIfNeeded();
+    //Initialize the solar field geometry
+    if(!quiet) pdlg->Update(100, "Initializing solar field");
+    _SF.Create(_variables);
+    if(!quiet) _layout_gauge->SetValue(100);
+    if(!quiet) _layout_gauge->GetParent()->Refresh();
+
     if(!_variables.sf.layout_data.val.empty())
     {
-        //Create a progress dialog
-        wxProgressDialog *pdlg=0; //initialize null
-        if(!quiet) pdlg = new wxProgressDialog(wxT("File import progress..."), wxEmptyString, 1000, this, wxPD_SMOOTH|wxPD_AUTO_HIDE);
-        if(!quiet) pdlg->Show();
-        wxYieldIfNeeded();
-        //Initialize the solar field geometry
-        if(!quiet) pdlg->Update(100, "Initializing solar field");
-        _SF.Create(_variables);
-        if(!quiet) _layout_gauge->SetValue(100);
-        if(!quiet) _layout_gauge->GetParent()->Refresh();
-
         if(!quiet) pdlg->Update(400, "Generating heliostat geometry");
         _SF.PrepareFieldLayout(_SF, 0, true);    //Run the layout method in refresh_only mode
 
@@ -1069,10 +1069,10 @@ void SPFrame::Open(wxString file_in, bool quiet)
         _SF.calcHeliostatShadows(sun);
 
         if(!quiet) pdlg->Update(1000);
-        if(!quiet) pdlg->Destroy();
-        if(!quiet) _layout_gauge->SetValue(0);
-        
     }
+        
+    if(!quiet) pdlg->Destroy();
+    if(!quiet) _layout_gauge->SetValue(0);
 
     //Destroy the notebook and recreate
     //this needs to come after we've created the solar field stuff
