@@ -18,9 +18,12 @@
                 "${workspaceRoot}/../ssc/solarpilot",
                 "${workspaceRoot}/../wex/include",
                 "${workspaceRoot}/../SolTrace/coretrace"
-
             ],
-            "defines": ["SP_USE_SOLTRACE","SP_STANDALONE","SP_USE_THREADS"],
+            "defines": [
+                "SP_USE_SOLTRACE",
+                "SP_STANDALONE",
+                "SP_USE_THREADS"
+            ],
             "intelliSenseMode": "clang-x64",
             "browse": {
                 "path": [
@@ -38,12 +41,12 @@
                     "${workspaceRoot}/../lk/include",
                     "${workspaceRoot}/../ssc/solarpilot",
                     "${workspaceRoot}/../wex/include",
-                    "${workspaceRoot}/../SolTrace/coretrace"                    
+                    "${workspaceRoot}/../SolTrace/coretrace"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
             }
         }
     ],
-    "version": 3
+    "version": 4
 }
