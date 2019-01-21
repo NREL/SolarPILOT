@@ -415,7 +415,7 @@ void InputControl::OnCheck( wxCommandEvent &event)
 
 }
 
-void InputControl::OnFile( wxCommandEvent &WXUNUSED(event))
+void InputControl::OnFile( wxCommandEvent &)
 {
     wxFileDialog *fdlg = new wxFileDialog(this, "Select file path", wxEmptyString, _value);
     if( fdlg->ShowModal() == wxID_OK )
@@ -423,6 +423,7 @@ void InputControl::OnFile( wxCommandEvent &WXUNUSED(event))
         _need_update = true;
         _value = (string)fdlg->GetPath();
         _varobj->set_from_string( _value.c_str() );
+        tc->SetValue(_value);
     }
 }
 

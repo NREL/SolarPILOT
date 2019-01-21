@@ -882,7 +882,7 @@ static void _optimize( lk::invoke_t &cxt )
         SFopt_MT->Setup(*V, true);
             
         //run the optimization
-        SFopt_MT->Optimize(V->opt.algorithm.mapval(), optvars, upper, lower, stepsize, &names);
+        SFopt_MT->Optimize(optvars, upper, lower, stepsize, &names);
 
         //get resulting info
         SFopt_MT->GetOptimizationObject()->getOptimizationSimulationHistory( eval_points, obj_vals, flux_vals );
@@ -910,7 +910,7 @@ static void _optimize( lk::invoke_t &cxt )
         SFopt_S->Setup(*V, true);
             
         //run the optimization
-        SFopt_S->Optimize(V->opt.algorithm.mapval(), optvars, upper, lower, stepsize, &names);
+        SFopt_S->Optimize(optvars, upper, lower, stepsize, &names);
 
         //get resulting info
         SFopt_S->GetOptimizationObject()->getOptimizationSimulationHistory( eval_points, obj_vals, flux_vals );
