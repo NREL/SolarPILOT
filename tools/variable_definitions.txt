@@ -194,6 +194,8 @@ optimize	multirec_opt_timeout	IN	DOUBLE	60	sec	FALSE				Multi-receiver optimizat
 optimize	multirec_screen_mult	IN	DOUBLE	1.25	none	FALSE				Multi-receiver heliostat screen fraction	The number of heliostats required to meet this value times the design power of each receiver are considered for layout
 optimize	aspect_display	OUT	DOUBLE		none	FALSE				Current receiver aspect ratio (H/W)	Current receiver aspect ratio (H/W)
 optimize	gs_refine_ratio	OUT	DOUBLE		none	FALSE			X	Refinement relative bounding box	The relative step size of the refined area during refinement simulations. More iterations will allow greater refinement
+optimize	is_log_to_file	IN	BOOL	TRUE	none	0	checkbox			Echo log to file	Write log messages to a file on disk during optimization iterations
+optimize	log_file_path	IN	STRING	optimization_log.txt	none	0	path			Log file location	Log file location
 parametric	class_name	IN	STRING	Parametric Simulation	none	FALSE				Class name	Class name
 parametric	eff_file_name	IN	STRING	eff_array.csv		FALSE				Efficiency file name	Name of the output file containing the efficiency matrix
 parametric	flux_file_name	IN	STRING	fluxmap.csv		FALSE				Fluxmap file name	Name of the output file containing the fluxmap data

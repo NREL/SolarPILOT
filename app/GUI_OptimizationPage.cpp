@@ -100,11 +100,14 @@ void SPFrame::CreateOptimizationPage(wxScrolledWindow *parent)
             *max_gs_iter = new InputControl(parent, wxID_ANY, _variables.opt.max_gs_iter),
             *flux_penalty = new InputControl(parent, wxID_ANY, _variables.opt.flux_penalty),
             *power_penalty = new InputControl(parent, wxID_ANY, _variables.opt.power_penalty),
-            *algorithm = new InputControl(parent, wxID_ANY, _variables.opt.algorithm);
+            *algorithm = new InputControl(parent, wxID_ANY, _variables.opt.algorithm),
+            *is_log_to_file = new InputControl(parent, wxID_ANY, _variables.opt.is_log_to_file),
+            *log_file_path = new InputControl(parent, wxID_ANY, _variables.opt.log_file_path);
+            
         OutputControl
             *gs_refine_ratio = new OutputControl(parent, wxID_ANY, _variables.opt.gs_refine_ratio, "%.3f");
 
-        
+         is_log_to_file->setDisabledSiblings("false", log_file_path);
 
         // ------------ variable box
         wxButton *opt_add_var = new wxButton(parent, wxID_ANY, wxT("Add"));
@@ -136,6 +139,8 @@ void SPFrame::CreateOptimizationPage(wxScrolledWindow *parent)
         sbs_2->Add(gs_refine_ratio);
         sbs_2->Add(flux_penalty);
         sbs_2->Add(power_penalty);
+        sbs_2->Add(is_log_to_file);
+        sbs_2->Add(log_file_path);
 
         wxBoxSizer *main_sizer = new wxBoxSizer(wxVERTICAL);
         
@@ -184,7 +189,7 @@ void SPFrame::CreateOptimizationPage(wxScrolledWindow *parent)
 
         //Add any input or output controls
         InputControl *inputs[] = {max_step, max_iter, converge_tol, max_desc_iter, max_gs_iter, flux_penalty,
-            power_penalty, algorithm, NULL};
+            power_penalty, algorithm, is_log_to_file, log_file_path, NULL};
         int i=0;
         while(inputs[i] != NULL)
         {
@@ -263,6 +268,15 @@ void SPFrame::OnDoOptimizationSimulation( wxCommandEvent &event )
         _optimize_detail_gauge->SetRange(1000);
         _optimize_summary_gauge->SetRange(1000);
         
+        //initialize and clear the optimization log, if needed
+         if(_variables.opt.is_log_to_file.val)
+         {
+             FILE *fp = fopen(_variables.opt.log_file_path.as_string().c_str(), "w");
+             if(!fp)
+                 throw spexception("Could not open the optimization log file for writing. Please ensure a valid path and that the file is not already open.");
+
+             fclose(fp);
+         }
         
         SetSimulationStatus(true, _in_optimize_simulation, (wxBitmapButton*)event.GetEventObject());
         StartSimTimer();
@@ -332,7 +346,7 @@ void SPFrame::OnDoOptimizationSimulation( wxCommandEvent &event )
                 _SFopt_MT->SetDetailCallbackStatus(false);
 
             //run the optimization
-            _SFopt_MT->Optimize(V.opt.algorithm.mapval(), optvars, upper, lower, stepsize, &names);
+            _SFopt_MT->Optimize(optvars, upper, lower, stepsize, &names);
 
 
             _n_threads_active = 0;
@@ -370,7 +384,7 @@ void SPFrame::OnDoOptimizationSimulation( wxCommandEvent &event )
                 _SFopt_S->SetDetailCallbackStatus(false);
 
             //run the optimization
-            _SFopt_S->Optimize(V.opt.algorithm.mapval(), optvars, upper, lower, stepsize, &names);
+            _SFopt_S->Optimize(optvars, upper, lower, stepsize, &names);
 
 
             try
@@ -388,7 +402,7 @@ void SPFrame::OnDoOptimizationSimulation( wxCommandEvent &event )
         for(int i=0; i<optvars.size(); i++)
             _best_opt_result.push_back( *optvars.at(i) );
         
-        _optimize_log->AppendText( "\n" + _optimize_elapsed->GetLabel() );
+        OptimizeLogMessage("\n" + _optimize_elapsed->GetLabel());
 
         StopSimTimer();
         SetSimulationStatus(false, _in_optimize_simulation, (wxBitmapButton*)event.GetEventObject());
@@ -432,7 +446,7 @@ void SPFrame::OptimizeProgressSummaryUpdate(simulation_info *siminfo)
     _optimize_elapsed->SetLabel( wxString::Format("Elapsed Time: %0d:%02d", mins, secs) );
     
     string msg = *siminfo->getSimulationNotices();
-    _optimize_log->AppendText( msg + (msg.size() > 0 ? "\n" : "") );
+    OptimizeLogMessage( msg + (msg.size() > 0 ? "\n" : "") );
     siminfo->clearSimulationNotices();
 
     wxYieldIfNeeded();
@@ -453,6 +467,31 @@ void SPFrame::OptimizeProgressDetailUpdate(simulation_info *siminfo)
     _optimize_elapsed->SetLabel( wxString::Format("Elapsed Time: %0d:%02d", mins, secs) );
     
     wxYieldIfNeeded();
+}
+
+void SPFrame::OptimizeLogMessage(std::string message)
+{
+    OptimizeLogMessage(message.c_str());
+}
+
+void SPFrame::OptimizeLogMessage(const char* message)
+{
+    /* 
+    Update the optimization log with a message. Also, save log to file, if option is enabled
+    */
+
+    _optimize_log->AppendText(message);
+
+    if(!_variables.opt.is_log_to_file.val )
+        return;
+
+     FILE *fp = fopen(_variables.opt.log_file_path.as_string().c_str(), "a");
+     if(!fp)
+         throw spexception("Specified optimization log file could not be opened for writing.");
+
+     fprintf(fp, "%s", message);
+    
+     fclose(fp);
 }
 
 void SPFrame::OnClearOptimizationLog( wxCommandEvent &WXUNUSED(evt))

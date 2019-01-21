@@ -757,6 +757,8 @@ public:
     void SimErrorHandler(simulation_error *simerror);
     void OptimizeProgressSummaryUpdate(simulation_info *siminfo);
     void OptimizeProgressDetailUpdate(simulation_info *siminfo);
+    void OptimizeLogMessage(const char* message);
+    void OptimizeLogMessage(std::string message);
     void OptReloadVariableList();
     void CheckOptGridRange();
 
