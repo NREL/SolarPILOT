@@ -297,7 +297,7 @@ void SPFrame::OnDoOptimizationSimulation( wxCommandEvent &event )
             spvar<double> *varptr = static_cast<spvar<double>*>( V._varptrs.at( _opt_data.at(i).varname ) );
             optvars.at(i) = &varptr->val;
             vector<string> namedat = split(_opt_data.at(i).varname, ".");
-            names.at(i) = namedat.back();
+            names.at(i) = namedat.back() + "." + namedat.at(1);
             //bounds
             if( _opt_data.at(i).selections.at(0) == "none" )
                 lower.at(i) = -HUGE_VAL;

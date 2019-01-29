@@ -863,7 +863,8 @@ static void _optimize( lk::invoke_t &cxt )
     int n_threads = F.GetThreadCount();
     ArrayString *local_wfdat = F.GetLocalWeatherDataObject();
     lk::vardata_t iter_vec;
-    std::vector< double > flux_vals, obj_vals;
+    std::vector< double > obj_vals;
+    std::vector< std::vector<double> > flux_vals;
     std::vector< std::vector< double > > eval_points;
 
     if(n_threads > 1)
@@ -952,11 +953,17 @@ static void _optimize( lk::invoke_t &cxt )
             iter_vec.vec()->at(i).vec_append( eval_points.at(i).at(j) );
         }
         iter_vec.vec()->at(i).vec_append( obj_vals.at(i) );
-        iter_vec.vec()->at(i).vec_append( flux_vals.at(i) );
+        for(size_t j=0; j<flux_vals.front().size(); j++)
+            iter_vec.vec()->at(i).vec_append( flux_vals.at(i).at(j) );
     }
 
+    lk::vardata_t fluxresult;
+    fluxresult.empty_vector();
+    for (size_t j = 0; j < flux_vals.back().size(); j++)
+        fluxresult.vec_append(flux_vals.back().at(j));
+
     cxt.result().hash_item( "objective", obj_vals.back() );
-    cxt.result().hash_item( "flux", flux_vals.back() );
+    cxt.result().hash_item( "flux", fluxresult);
     cxt.result().hash_item( "iterations", iter_vec );
 
 }
