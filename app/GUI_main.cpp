@@ -629,7 +629,6 @@ void SPFrame::CreateInputPages(wxWindow *parent, PagePanel *pagepanel)
     _input_map.clear();
     _output_map.clear();
     //----
-    
     wxYieldIfNeeded();
 
     //Climate page
@@ -707,7 +706,6 @@ void SPFrame::CreateInputPages(wxWindow *parent, PagePanel *pagepanel)
 
     //Bind all of the input objects to handle changes in values
     bindControls();
-    
 }
 
 
@@ -1177,7 +1175,6 @@ void SPFrame::NewFile()
     //Set the change flag to false
     SetGeomState(false);
     _inputs_modified = false;
-
 
     //Notify the user
     PopMessage("New file created");
