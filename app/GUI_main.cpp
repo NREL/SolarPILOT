@@ -3302,7 +3302,7 @@ void SPFrame::ParametricSimulate( parametric &P )
             return;
         }
     }
-    if(save_field || save_summary || save_field_img || save_flux_img)
+    if(save_field || save_summary || save_field_img || save_flux_img || save_flux_dat)
     {
         //If the current file is not associated with a directory, prompt the user to select a directory
         if(!_open_file.FileExists())
@@ -3713,27 +3713,33 @@ void SPFrame::ParametricSimulate( parametric &P )
                     }
 
                 }
-                //save flux image
-                if(save_flux_img && !sim_cancelled)
+                //save flux image and data
+                if((save_flux_img || save_flux_dat ) && !sim_cancelled)
                 {
-                    wxString fname;
-                    fname.Printf("%s/param_flux-plot_%d.png", save_field_dir.c_str(), nsim+1);
-                    wxClientDC pdc(this);
-                    _flux_frame->SetPlotData(_par_SF, *_par_SF.getHeliostats(), 0);
-                    _flux_frame->DoPaint(pdc);
-                    wxBitmap *bitmap = _flux_frame->GetBitmap();
-                    wxImage image = bitmap->ConvertToImage();
-                    image.SaveFile( fname, wxBITMAP_TYPE_PNG );
-
+                    for (size_t i = 0; i < _rec_select->GetCount(); i++)
+                    {
+                        wxString recname = _rec_select->GetString(i);
+                        wxClientDC pdc(this);
+                        _flux_frame->SetPlotData(_par_SF, *_par_SF.getHeliostats(), i);
+                        if (save_flux_img)
+                        {
+                            wxString fname;
+                            fname.Printf("%s/param_flux-plot_%s_%d.png", save_field_dir.c_str(), recname.ToStdString().c_str(), nsim + 1);
+                            _flux_frame->DoPaint(pdc);
+                            wxBitmap *bitmap = _flux_frame->GetBitmap();
+                            wxImage image = bitmap->ConvertToImage();
+                            image.SaveFile(fname, wxBITMAP_TYPE_PNG);
+                        }
+                        if (save_flux_dat)
+                        {
+                            wxString fname;
+                            fname.Printf("%s/param_flux-data_%s_%d.csv", save_field_dir.c_str(), recname.ToStdString().c_str(), nsim+1);
+                            wxString cdelim = ",";
+                            _flux_frame->SaveDataTable(fname, cdelim);
+                        }
+                    }
                 }
-                //save flux data
-                if(save_flux_dat && !sim_cancelled)
-                {
-                    wxString fname;
-                    fname.Printf("%s/param_flux-data_%d.csv", save_field_dir.c_str(), nsim+1);
-                    wxString cdelim = ",";
-                    _flux_frame->SaveDataTable(fname, cdelim);
-                }
+                
                 if(_par_SF.CheckCancelStatus() || sim_cancelled) break; //break if the simulation has been cancelled
             }
         }
