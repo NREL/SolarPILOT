@@ -94,6 +94,7 @@ fluxsim	sigma_limit_x	IN	DOUBLE	2		TRUE				Min. image offset from receiver edge 
 fluxsim	sigma_limit_y	IN	DOUBLE	2	none	TRUE				Min. image offset from receiver edge - Y	Minimum distance (std. dev.) between optical center of heliostat image and the receiver edge in the receiver-Y direction
 fluxsim	x_res	IN	INT	25	none	FALSE				Flux grid resolution - Horizontal	Number of flux test points per panel (maximum) in the vertical direction for the flux simulation
 fluxsim	y_res	IN	INT	25	none	FALSE				Flux grid resolution - Vertical	Number of flux test points per panel (maximum) in the horizontal direction for the flux simulation
+fluxsim	multi_rec_aim_rand	IN	DOUBLE	0	none	TRUE				Multi-receiver aimpoint randomization	Factor from 0-1 indicating extent of random sampling in assigning heliostats to receivers. 1=completely random.
 fluxsim	flux_solar_az	OUT	DOUBLE	180	deg	FALSE				Calculated solar azimuth angle	Solar azimuth angle to use for the flux simulation
 fluxsim	flux_solar_el	OUT	DOUBLE	85	deg	FALSE				Calculated solar elevation angle	Solar elevation angle to use for the flux simulation
 heliostat	cant_day	IN	INT	82	day	TRUE				Canting day of the year	Day of the year used for canting the heliostats (1-365)

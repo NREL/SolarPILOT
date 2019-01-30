@@ -105,11 +105,15 @@ void SPFrame::CreateMasterReceiverPage(wxScrolledWindow *parent)
     wxStaticBoxSizer *sbsopt = new wxStaticBoxSizer(sbopt, wxVERTICAL);
     InputControl *multirec_opt_timeout = new InputControl(parent, wxID_ANY, _variables.opt.multirec_opt_timeout);
     InputControl *multirec_screen_mult = new InputControl(parent, wxID_ANY, _variables.opt.multirec_screen_mult);
+    InputControl *multi_rec_aim_rand = new InputControl(parent, wxID_ANY, _variables.flux.multi_rec_aim_rand);
+
     sbsopt->Add(multirec_opt_timeout);
     sbsopt->Add(multirec_screen_mult);
+    sbsopt->Add(multi_rec_aim_rand);
+
     _input_map[multirec_opt_timeout->getVarObject()] = multirec_opt_timeout;
     _input_map[multirec_screen_mult->getVarObject()] = multirec_screen_mult;
-
+    _input_map[multi_rec_aim_rand->getVarObject()] = multi_rec_aim_rand;
 
     //create objects for specifying the receiver power fractions
     _rec_power_fractions = new wxGrid(parent, wxID_ANY, wxDefaultPosition);
