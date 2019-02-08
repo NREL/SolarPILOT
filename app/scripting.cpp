@@ -400,6 +400,78 @@ static void _sp_var( lk::invoke_t &cxt )
     }
 }
 
+static void _update_geometry(lk::invoke_t &cxt)
+{
+    LK_DOC("update_geometry",
+        "Refresh the solar field, receiver, or ambient condition settings based on the current parameter settings.",
+        "(void):boolean");
+
+    SPFrame &F = SPFrame::Instance();
+    SolarField *SF = F.GetSolarFieldObject();
+    if (SF->getHeliostats()->size() == 0)
+    {
+        //no layout exists, so we should be calling the 'run_layout' method instead
+        EditorOutput("No layout exists, so the 'update_geometry' function cannot be executed. Please first create or import a layout using 'run_layout'.");
+        cxt.result().assign(0.);
+        return;
+    }
+
+    var_map *V = SF->getVarMap();
+
+    wxString weatherfile = V->amb.weather_file.val;
+    F.UpdateClimateFile(weatherfile, *V, true);
+
+    //Update the design method box.. this actually updates both the map values and GUI. Probably should fix this sometime..
+    F.UpdateDesignSelect(V->sf.des_sim_detail.mapval(), *V);
+
+    //Set up the solar field
+    SF->Clean();
+    SF->Create(*V);
+
+    try
+    {
+        SolarField::PrepareFieldLayout(*SF, 0, true);    
+        
+        if (SF->ErrCheck())
+        {
+            EditorOutput("An error occurred when preparing the updated field geometry in the call 'update_geometry'.");
+            cxt.result().assign(0.);
+            return;
+        }
+
+        SF->calcHeliostatArea();
+        SF->updateAllCalculatedParameters(*V);
+
+        double azzen[2];
+        SF->CalcDesignPtSunPosition(V->sf.sun_loc_des.mapval(), azzen[0], azzen[1]);
+        Vect sun = Ambient::calcSunVectorFromAzZen(azzen[0] * D2R, azzen[1] * D2R);
+
+        SF->updateAllTrackVectors(sun);    
+        
+        if (SF->ErrCheck())
+        {
+            EditorOutput("An error occurred when preparing the updated field geometry in the call 'update_geometry'.");
+            cxt.result().assign(0.);
+            return;
+        }
+    }
+    catch (std::exception &e)
+    {
+        EditorOutput("An error occurred when preparing the updated field geometry in the call 'update_geometry'. Error:\n");
+        EditorOutput(e.what());
+        cxt.result().assign(0.);
+        return;
+    }
+    catch (...)
+    {
+        EditorOutput("Unknown error when executing 'update_geometry'.");
+        cxt.result().assign(0.);
+        return;
+    }
+
+    cxt.result().assign(1.);
+    return;
+}
 
 static void _generate_layout( lk::invoke_t &cxt )
 {
@@ -450,9 +522,9 @@ static void _generate_layout( lk::invoke_t &cxt )
         else
             options = &cxt.arg(0);
 
-        
-        if( options->hash()->find( "nthreads" ) != options->hash()->end() )
-            F.SetThreadCount( options->hash()->at( "nthreads" )->as_integer() );
+        if(options)
+            if( options->hash()->find( "nthreads" ) != options->hash()->end() )
+                F.SetThreadCount( options->hash()->at( "nthreads" )->as_integer() );
     }
 
     wxString v=(wxString)V->amb.weather_file.val;
@@ -1674,6 +1746,7 @@ static lk::fcall_t *solarpilot_functions()
 {
     static lk::fcall_t st[] = {
         _generate_layout,
+        _update_geometry,
         
         _add_receiver,
         _drop_receiver,
