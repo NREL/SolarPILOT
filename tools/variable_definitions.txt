@@ -18,6 +18,7 @@ ambient	time_zone	IN	DOUBLE	-8	hr	FALSE				Time zone	Time zone
 ambient	user_sun	IN	MATRIX_T		[deg,deg]	FALSE				user_sun	Array of intensity at various angles from the centroid of the sun
 ambient	weather_file	IN	STRING	USA CA Daggett (TMY2).csv	none	TRUE				Weather file	Weather file to use for analysis
 ambient	wf_data	IN	WEATHERDATA		none	FALSE				wf_data	Data entries in the weather file
+ambient	sun_csr_adj	OUT	DOUBLE	0	none	FALSE				Corrected circumsolar ratio	Correction of circumsolar ratio based on energy balance
 ambient	atm_atten_est	OUT	DOUBLE	0	%	FALSE				Average attenuation	Average solar field attenuation due to atmospheric scattering
 ambient	sim_time_step	OUT	DOUBLE	0	sec	FALSE				Simulation weather data time step	Simulation weather data time step
 financial	class_name	IN	STRING	Financial	none	FALSE				Class name	Class name

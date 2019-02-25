@@ -142,12 +142,11 @@ void FluxPlot::DoPaint(wxDC &_pdc)
     _dc.SelectObject( _pbit );
     wxGCDC gdc(_dc);
     
-    //Create polygons of the land inclusions and exclusions
     Receiver *rec = _SF->getReceivers()->at(_receiver);    //This is the receiver to use
     var_receiver *vrec = rec->getVarMap();
     int rgeom = rec->getGeometryType();
+    
     wxSize parsize = this->GetClientSize();
-
     parsize.x = parsize.x < 100 ? 1024 : parsize.x;
     parsize.y = parsize.y < 100 ? 711 : parsize.y;
 
