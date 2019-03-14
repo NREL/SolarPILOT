@@ -671,7 +671,7 @@ static void _summary_results( lk::invoke_t &cxt )
     lk::vardata_t &r = cxt.result();
     r.empty_hash();
 
-    for(int i=0; i<table.GetNumberRows(); i++)
+    for (int i = 0; i < table.GetNumberRows(); i++)
         r.hash_item( table.GetRowLabelValue(i), table.GetCellValue(i, 1) );
 
     return;
