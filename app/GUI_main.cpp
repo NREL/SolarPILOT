@@ -3775,8 +3775,8 @@ void SPFrame::CreateResultsTable(sim_result &result, grid_emulator &table)
 {
     try
     {
-        //table.CreateGrid(result.is_soltrace ? 18 : 18, 6);
-        table.CreateGrid(18, 6);
+		//table.CreateGrid(result.is_soltrace ? 18 : 19, 6);
+		table.CreateGrid(18, 6);
         
         table.SetColLabelValue(0, "Units");
         table.SetColLabelValue(1, "Value");
@@ -3831,7 +3831,7 @@ void SPFrame::CreateResultsTable(sim_result &result, grid_emulator &table)
                     100.*result.eff_cosine.min,
                     100.*result.eff_cosine.max,
                     100.*result.eff_cosine.stdev);
-            table.AddRow(id++, "Reflection efficiency", "%", 
+			table.AddRow(id++, "Reflection efficiency", "%",
                     100.*result.eff_reflect.wtmean, 2,
                     100.*result.eff_reflect.ave, 
                     100.*result.eff_reflect.min, 

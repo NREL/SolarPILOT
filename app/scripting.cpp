@@ -674,6 +674,43 @@ static void _summary_results( lk::invoke_t &cxt )
     for (int i = 0; i < table.GetNumberRows(); i++)
         r.hash_item( table.GetRowLabelValue(i), table.GetCellValue(i, 1) );
 
+	//add a few more summary results
+	if (r.hash()->find("Shadowing and Cosine efficiency") != r.hash()->end())
+	{
+		//soltrace
+		r.hash_item("Shading efficiency", 1.);
+		r.hash_item("Cosine efficiency", 1.);
+	}
+	else
+	{
+		//hermite
+		r.hash_item("Shadowing and Cosine efficiency", 
+			r.hash()->at("Shading efficiency")->as_number()
+			*r.hash()->at("Cosine efficiency")->as_number());
+	}
+	double Qwf;
+	double Qin = Qwf = r.hash()->at( "Power incident on field" )->as_number();
+	double eta_s = r.hash()->at("Shading efficiency")->as_number();
+	Qwf *= eta_s;
+	r.hash_item("Shading loss", Qin*(1. - eta_s));
+	double eta_c = r.hash()->at("Cosine efficiency")->as_number();
+	r.hash_item("Cosine loss", Qwf*(1 - eta_c));
+	Qwf *= eta_c;
+	double eta_sc = r.hash()->at( "Shadowing and Cosine efficiency" )->as_number();
+	Qwf *= eta_sc;
+	r.hash_item("Shadowing and Cosine loss", Qin - Qwf);
+	double eta_r = r.hash()->at( "Reflection efficiency" )->as_number();
+	r.hash_item("Reflection loss", Qwf * (1. - eta_r));
+	Qwf *= eta_r;
+	double eta_b = r.hash()->at( "Blocking efficiency" )->as_number();
+	r.hash_item("Blocking loss", Qwf*(1. - eta_b));
+	Qwf *= eta_b;
+	double eta_i = r.hash()->at( "Image intercept efficiency" )->as_number();
+	r.hash_item("Image intercept loss", Qwf*(1. - eta_i));
+	Qwf *= eta_i;
+	double eta_a = r.hash()->at( "Absorption efficiency" )->as_number();
+	r.hash_item("Absorption loss", Qwf*(1. - eta_a));
+
     return;
 }
 
@@ -690,7 +727,8 @@ static void _detail_results( lk::invoke_t &cxt )
     */
 
     LK_DOC("get_detail_results", 
-        "Return an array with detailed heliostat-by-heliostat results from a simulation. "
+        "[Only valid for Hermite (analytical) simulation engine.]\n"
+		"Return an array with detailed heliostat-by-heliostat results from a simulation. "
         "Each entry in the array is a table with entries as follows:\n"
         "{ id(integer), location (array), aimpoint (array), tracking_vector (array), "
         "layout_metric (double), "
