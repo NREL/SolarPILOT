@@ -13,16 +13,11 @@ AppName=SolarPILOT
 ;ArchitecturesAllowed=x86 x64 ia64
 ;ArchitecturesInstallIn64BitMode=x64 ia64
 
-; 32-bit and 64-bit installer
+; 64-bit installer
 ; "ArchitecturesInstallIn64BitMode=x64" requests that the install be
 ; done in "64-bit mode" on x64, meaning it should use the native
 ; 64-bit Program Files directory and the 64-bit view of the registry.
-; On all other architectures it will install in "32-bit mode".
 ArchitecturesInstallIn64BitMode=x64
-; Note: We don't set ProcessorsAllowed because we want this
-; installation to run on all architectures (including Itanium,
-; since it's capable of running 32-bit code too).
-
 
 
 ; UPDATE THESE TO MATCH THE VERSION
@@ -54,16 +49,6 @@ Source: "samples/*"; DestDir: "{app}/samples"; Excludes: ".svn,*.map"; Flags: ig
 Source: "exelib/*"; DestDir: "{app}/exelib"; Excludes: ".svn,\custom"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "climate_files/*"; DestDir: "{app}/climate_files"; Excludes: ".svn"; Flags: ignoreversion recursesubdirs createallsubdirs
 
-Source: "win32/ssleay32.dll"; DestDir: "{app}/win32"; Excludes: ".svn,*.map"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "win32/msvcr120.dll"; DestDir: "{app}/win32"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "win32/msvcp120.dll"; DestDir: "{app}/win32"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "win32/dbghelp.dll"; DestDir: "{app}/win32"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "win32/libssh2.dll"; DestDir: "{app}/win32"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "win32/libeay32.dll"; DestDir: "{app}/win32"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "win32/libcurl.dll"; DestDir: "{app}/win32"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "win32/solarpilot.exe"; DestDir: "{app}/win32"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
-;Source: "win32/solarpilot.pdb"; DestDir: "{app}/win32"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
-
 Source: "x64/ssleay32.dll"; DestDir: "{app}/x64"; Excludes: ".svn,*.map"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "x64/msvcr120.dll"; DestDir: "{app}/x64"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "x64/msvcp120.dll"; DestDir: "{app}/x64"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
@@ -77,10 +62,8 @@ Source: "x64/solarpilot.exe"; DestDir: "{app}/x64"; Excludes: ".svn,*.map";  Fla
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 [Icons]
-Name: "{group}\SolarPILOT"; Filename: "{app}\win32\solarpilot.exe" ; Check: not Is64BitInstallMode
 Name: "{group}\SolarPILOT"; Filename: "{app}\x64\solarpilot.exe"  ; Check: Is64BitInstallMode
 ;
-Name: "{commondesktop}\SolarPILOT (win32)"; Filename: "{app}\win32\solarpilot.exe"; Tasks: desktopicon ; Check: not Is64BitInstallMode
 Name: "{commondesktop}\SolarPILOT (x64)"; Filename: "{app}\x64\solarpilot.exe"; Tasks: desktopicon; Check: Is64BitInstallMode
 
 [Registry]
@@ -90,21 +73,16 @@ Root: HKCR; Subkey: "Applications\solarpilot.exe"; ValueType: none; ValueName: ;
 ; 12/4/08 for admin privileges -see Documentation\InnoSetup\AdminPrivileges
 Root: HKCR; Subkey: ".sam"; ValueType: string; ValueName: ; ValueData: "NREL.SolarPILOT"; Flags: uninsdeletevalue; Check: IsAdminLoggedOn
 Root: HKCR; Subkey: "NREL.SolarPILOT"; ValueType: string; ValueName: ; ValueData: "SolarPILOT Project File"; Flags: uninsdeletekey; Check: IsAdminLoggedOn         
-Root: HKCR; Subkey: "NREL.SolarPILOT\DefaultIcon"; ValueType: string; ValueName: ; ValueData: "{app}\win32\solarpilot.exe,0"; Check: IsAdminLoggedOn and not Is64BitInstallMode
-Root: HKCR; Subkey: "NREL.SolarPILOT\shell\open\command"; ValueType: string; ValueName: ; ValueData: """{app}\win32\solarpilot.exe"" ""%1"""; Check: IsAdminLoggedOn and not Is64BitInstallMode
 Root: HKCR; Subkey: "NREL.SolarPILOT\DefaultIcon"; ValueType: string; ValueName: ; ValueData: "{app}\x64\solarpilot.exe,0"; Check: IsAdminLoggedOn  and Is64BitInstallMode
 Root: HKCR; Subkey: "NREL.SolarPILOT\shell\open\command"; ValueType: string; ValueName: ; ValueData: """{app}\x64\solarpilot.exe"" ""%1"""; Check: IsAdminLoggedOn  and Is64BitInstallMode
 
 ; 12/4/08 for non-admin privileges -see Documentation\InnoSetup\AdminPrivileges
 Root: HKCU; Subkey: "Software\Classes\.sam"; ValueType: string; ValueName: ; ValueData: "NREL.SolarPILOT"; Flags: uninsdeletevalue; Check: not IsAdminLoggedOn
 Root: HKCU; Subkey: "Software\Classes\NREL.SolarPILOT"; ValueType: string; ValueName: ; ValueData: "SolarPILOT Project File"; Flags: uninsdeletekey; Check: not IsAdminLoggedOn            
-Root: HKCU; Subkey: "Software\Classes\NREL.SolarPILOT\DefaultIcon"; ValueType: string; ValueName: ; ValueData: "{app}\win32\solarpilot.exe,0"; Check: not IsAdminLoggedOn  and not Is64BitInstallMode
-Root: HKCU; Subkey: "Software\Classes\NREL.SolarPILOT\shell\open\command"; ValueType: string; ValueName: ; ValueData: """{app}\win32\solarpilot.exe"" ""%1"""; Check: not IsAdminLoggedOn  and not Is64BitInstallMode
 Root: HKCU; Subkey: "Software\Classes\NREL.SolarPILOT\DefaultIcon"; ValueType: string; ValueName: ; ValueData: "{app}\x64\solarpilot.exe,0"; Check: not IsAdminLoggedOn  and Is64BitInstallMode
 Root: HKCU; Subkey: "Software\Classes\NREL.SolarPILOT\shell\open\command"; ValueType: string; ValueName: ; ValueData: """{app}\x64\solarpilot.exe"" ""%1"""; Check: not IsAdminLoggedOn  and Is64BitInstallMode
 
 [Run]
-Filename: "{app}\win32\solarpilot.exe"; Flags: postinstall skipifsilent unchecked; Description: "{cm:LaunchProgram,SolarPILOT}"; Check: not Is64BitInstallMode
 Filename: "{app}\x64\solarpilot.exe"; Flags: postinstall skipifsilent unchecked; Description: "{cm:LaunchProgram,SolarPILOT}"; Check: Is64BitInstallMode
 
 
