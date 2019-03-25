@@ -675,40 +675,52 @@ static void _summary_results( lk::invoke_t &cxt )
         r.hash_item( table.GetRowLabelValue(i), table.GetCellValue(i, 1) );
 
 	//add a few more summary results
-	if (r.hash()->find("Shadowing and Cosine efficiency") != r.hash()->end())
+	bool is_soltrace = r.hash()->find("Shadowing and Cosine efficiency") != r.hash()->end();
+	
+	double Qwf;
+	double Qin = Qwf = r.hash()->at("Power incident on field")->as_number();
+	
+	if (is_soltrace)
 	{
-		//soltrace
-		r.hash_item("Shading efficiency", 1.);
-		r.hash_item("Cosine efficiency", 1.);
+		/*
+		soltrace
+		for this option, the "Shadowing and Cosine efficiency" is already calculated by the 
+		program. Just make sure the Shading and Cosine efficiencies aren't double counted.
+		*/
+		r.hash_item("Shading efficiency", 100.);
+		r.hash_item("Cosine efficiency", 100.);
+		r.hash_item("Shading loss", 0.);
+		r.hash_item("Cosine loss", 0.);
+
+		double eta_sc = r.hash()->at( "Shadowing and Cosine efficiency" )->as_number() / 100.;
+		Qwf *= eta_sc;
 	}
 	else
 	{
 		//hermite
 		r.hash_item("Shadowing and Cosine efficiency", 
 			r.hash()->at("Shading efficiency")->as_number()
-			*r.hash()->at("Cosine efficiency")->as_number());
+			*r.hash()->at("Cosine efficiency")->as_number()/100.);
+		
+		double eta_s = r.hash()->at("Shading efficiency")->as_number()/100.;
+		Qwf *= eta_s;
+		r.hash_item("Shading loss", Qin*(1. - eta_s));
+		double eta_c = r.hash()->at("Cosine efficiency")->as_number() / 100.;
+		r.hash_item("Cosine loss", Qwf*(1 - eta_c));
+		Qwf *= eta_c;
 	}
-	double Qwf;
-	double Qin = Qwf = r.hash()->at( "Power incident on field" )->as_number();
-	double eta_s = r.hash()->at("Shading efficiency")->as_number();
-	Qwf *= eta_s;
-	r.hash_item("Shading loss", Qin*(1. - eta_s));
-	double eta_c = r.hash()->at("Cosine efficiency")->as_number();
-	r.hash_item("Cosine loss", Qwf*(1 - eta_c));
-	Qwf *= eta_c;
-	double eta_sc = r.hash()->at( "Shadowing and Cosine efficiency" )->as_number();
-	Qwf *= eta_sc;
 	r.hash_item("Shadowing and Cosine loss", Qin - Qwf);
-	double eta_r = r.hash()->at( "Reflection efficiency" )->as_number();
+
+	double eta_r = r.hash()->at( "Reflection efficiency" )->as_number() / 100.;
 	r.hash_item("Reflection loss", Qwf * (1. - eta_r));
 	Qwf *= eta_r;
-	double eta_b = r.hash()->at( "Blocking efficiency" )->as_number();
+	double eta_b = r.hash()->at( "Blocking efficiency" )->as_number() / 100.;
 	r.hash_item("Blocking loss", Qwf*(1. - eta_b));
 	Qwf *= eta_b;
-	double eta_i = r.hash()->at( "Image intercept efficiency" )->as_number();
+	double eta_i = r.hash()->at( "Image intercept efficiency" )->as_number() / 100.;
 	r.hash_item("Image intercept loss", Qwf*(1. - eta_i));
 	Qwf *= eta_i;
-	double eta_a = r.hash()->at( "Absorption efficiency" )->as_number();
+	double eta_a = r.hash()->at( "Absorption efficiency" )->as_number() / 100.;
 	r.hash_item("Absorption loss", Qwf*(1. - eta_a));
 
     return;
