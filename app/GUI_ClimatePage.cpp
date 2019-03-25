@@ -123,12 +123,16 @@ void SPFrame::CreateClimatePage(wxScrolledWindow *parent)
     InputControl 
         *sun_rad_limit = new InputControl(input_sun_panel1, wxID_ANY,  _variables.amb.sun_rad_limit),
         *sun_csr = new InputControl(input_sun_panel2, wxID_ANY,  _variables.amb.sun_csr);
+    OutputControl
+        *sun_csr_adj = new OutputControl(input_sun_panel2, wxID_ANY, _variables.amb.sun_csr_adj, "%.4f");
+
     input_sun_panels1->Add(sun_rad_limit);
     input_sun_panel1->SetSizer(input_sun_panels1);
     sun_type->setPanelObject("Pillbox sun", *input_sun_panel1);
     sun_type->setPanelObject("Gaussian sun", *input_sun_panel1);
 
     input_sun_panels2->Add(sun_csr);
+    input_sun_panels2->Add(sun_csr_adj);
     input_sun_panel2->SetSizer(input_sun_panels2);
     sun_type->setPanelObject("Buie CSR", *input_sun_panel2);
     
@@ -239,7 +243,9 @@ void SPFrame::CreateClimatePage(wxScrolledWindow *parent)
     _input_map[&_variables.amb.del_h2o] = del_h2o;
     _input_map[&_variables.amb.dpres] = dpres;
     _input_map[&_variables.amb.dni_layout] = dni_layout;
+
     _output_map[&_variables.amb.atm_atten_est] = atm_atten_est;
+    _output_map[&_variables.amb.sun_csr_adj] = sun_csr_adj;
 
     sbs_2->Add(sun_type);
     sbs_2->Add(input_sun_panel1);

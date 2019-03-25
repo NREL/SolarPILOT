@@ -400,6 +400,78 @@ static void _sp_var( lk::invoke_t &cxt )
     }
 }
 
+static void _update_geometry(lk::invoke_t &cxt)
+{
+    LK_DOC("update_geometry",
+        "Refresh the solar field, receiver, or ambient condition settings based on the current parameter settings.",
+        "(void):boolean");
+
+    SPFrame &F = SPFrame::Instance();
+    SolarField *SF = F.GetSolarFieldObject();
+    if (SF->getHeliostats()->size() == 0)
+    {
+        //no layout exists, so we should be calling the 'run_layout' method instead
+        EditorOutput("No layout exists, so the 'update_geometry' function cannot be executed. Please first create or import a layout using 'run_layout'.");
+        cxt.result().assign(0.);
+        return;
+    }
+
+    var_map *V = SF->getVarMap();
+
+    wxString weatherfile = V->amb.weather_file.val;
+    F.UpdateClimateFile(weatherfile, *V, true);
+
+    //Update the design method box.. this actually updates both the map values and GUI. Probably should fix this sometime..
+    F.UpdateDesignSelect(V->sf.des_sim_detail.mapval(), *V);
+
+    //Set up the solar field
+    SF->Clean();
+    SF->Create(*V);
+
+    try
+    {
+        SolarField::PrepareFieldLayout(*SF, 0, true);    
+        
+        if (SF->ErrCheck())
+        {
+            EditorOutput("An error occurred when preparing the updated field geometry in the call 'update_geometry'.");
+            cxt.result().assign(0.);
+            return;
+        }
+
+        SF->calcHeliostatArea();
+        SF->updateAllCalculatedParameters(*V);
+
+        double azzen[2];
+        SF->CalcDesignPtSunPosition(V->sf.sun_loc_des.mapval(), azzen[0], azzen[1]);
+        Vect sun = Ambient::calcSunVectorFromAzZen(azzen[0] * D2R, azzen[1] * D2R);
+
+        SF->updateAllTrackVectors(sun);    
+        
+        if (SF->ErrCheck())
+        {
+            EditorOutput("An error occurred when preparing the updated field geometry in the call 'update_geometry'.");
+            cxt.result().assign(0.);
+            return;
+        }
+    }
+    catch (std::exception &e)
+    {
+        EditorOutput("An error occurred when preparing the updated field geometry in the call 'update_geometry'. Error:\n");
+        EditorOutput(e.what());
+        cxt.result().assign(0.);
+        return;
+    }
+    catch (...)
+    {
+        EditorOutput("Unknown error when executing 'update_geometry'.");
+        cxt.result().assign(0.);
+        return;
+    }
+
+    cxt.result().assign(1.);
+    return;
+}
 
 static void _generate_layout( lk::invoke_t &cxt )
 {
@@ -450,9 +522,9 @@ static void _generate_layout( lk::invoke_t &cxt )
         else
             options = &cxt.arg(0);
 
-        
-        if( options->hash()->find( "nthreads" ) != options->hash()->end() )
-            F.SetThreadCount( options->hash()->at( "nthreads" )->as_integer() );
+        if(options)
+            if( options->hash()->find( "nthreads" ) != options->hash()->end() )
+                F.SetThreadCount( options->hash()->at( "nthreads" )->as_integer() );
     }
 
     wxString v=(wxString)V->amb.weather_file.val;
@@ -599,8 +671,57 @@ static void _summary_results( lk::invoke_t &cxt )
     lk::vardata_t &r = cxt.result();
     r.empty_hash();
 
-    for(int i=0; i<table.GetNumberRows(); i++)
+    for (int i = 0; i < table.GetNumberRows(); i++)
         r.hash_item( table.GetRowLabelValue(i), table.GetCellValue(i, 1) );
+
+	//add a few more summary results
+	bool is_soltrace = r.hash()->find("Shadowing and Cosine efficiency") != r.hash()->end();
+	
+	double Qwf;
+	double Qin = Qwf = r.hash()->at("Power incident on field")->as_number();
+	
+	if (is_soltrace)
+	{
+		/*
+		soltrace
+		for this option, the "Shadowing and Cosine efficiency" is already calculated by the 
+		program. Just make sure the Shading and Cosine efficiencies aren't double counted.
+		*/
+		r.hash_item("Shading efficiency", 100.);
+		r.hash_item("Cosine efficiency", 100.);
+		r.hash_item("Shading loss", 0.);
+		r.hash_item("Cosine loss", 0.);
+
+		double eta_sc = r.hash()->at( "Shadowing and Cosine efficiency" )->as_number() / 100.;
+		Qwf *= eta_sc;
+	}
+	else
+	{
+		//hermite
+		r.hash_item("Shadowing and Cosine efficiency", 
+			r.hash()->at("Shading efficiency")->as_number()
+			*r.hash()->at("Cosine efficiency")->as_number()/100.);
+		
+		double eta_s = r.hash()->at("Shading efficiency")->as_number()/100.;
+		Qwf *= eta_s;
+		r.hash_item("Shading loss", Qin*(1. - eta_s));
+		double eta_c = r.hash()->at("Cosine efficiency")->as_number() / 100.;
+		r.hash_item("Cosine loss", Qwf*(1 - eta_c));
+		Qwf *= eta_c;
+	}
+	r.hash_item("Shadowing and Cosine loss", Qin - Qwf);
+
+	double eta_r = r.hash()->at( "Reflection efficiency" )->as_number() / 100.;
+	r.hash_item("Reflection loss", Qwf * (1. - eta_r));
+	Qwf *= eta_r;
+	double eta_b = r.hash()->at( "Blocking efficiency" )->as_number() / 100.;
+	r.hash_item("Blocking loss", Qwf*(1. - eta_b));
+	Qwf *= eta_b;
+	double eta_i = r.hash()->at( "Image intercept efficiency" )->as_number() / 100.;
+	r.hash_item("Image intercept loss", Qwf*(1. - eta_i));
+	Qwf *= eta_i;
+	double eta_a = r.hash()->at( "Absorption efficiency" )->as_number() / 100.;
+	r.hash_item("Absorption loss", Qwf*(1. - eta_a));
 
     return;
 }
@@ -618,7 +739,8 @@ static void _detail_results( lk::invoke_t &cxt )
     */
 
     LK_DOC("get_detail_results", 
-        "Return an array with detailed heliostat-by-heliostat results from a simulation. "
+        "[Only valid for Hermite (analytical) simulation engine.]\n"
+		"Return an array with detailed heliostat-by-heliostat results from a simulation. "
         "Each entry in the array is a table with entries as follows:\n"
         "{ id(integer), location (array), aimpoint (array), tracking_vector (array), "
         "layout_metric (double), "
@@ -1674,6 +1796,7 @@ static lk::fcall_t *solarpilot_functions()
 {
     static lk::fcall_t st[] = {
         _generate_layout,
+        _update_geometry,
         
         _add_receiver,
         _drop_receiver,
