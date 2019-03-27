@@ -310,9 +310,10 @@ private:
     wxGrid *_temp_bounds;
 
     //Objects for the master receiver page
-    wxButton 
+    wxButton
         *_rec_add,
         *_rec_del,
+        *_rec_duplicate,
         *_rec_state,
         *_rec_rename;
     wxListCtrl *_rec_config;
@@ -578,6 +579,7 @@ protected:
     void OnReceiverDel( wxCommandEvent &event);
     void OnReceiverState( wxCommandEvent &event);
     void OnReceiverRename( wxCommandEvent &event);
+    void OnReceiverColor( wxCommandEvent &event);
     void OnReceiverSelect( wxListEvent &event);
     void OnReceiverDeselect( wxListEvent &event);
     void OnReceiverPowerGridEdit( wxGridEvent &event );

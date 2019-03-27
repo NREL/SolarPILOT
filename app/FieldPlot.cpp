@@ -1073,9 +1073,15 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                     wxColour gc;
                     if (_option == FIELD_PLOT::RECEIVER)
                     {
-                        PlotBase::ColorGradientRainbow(gc, (plot_vals[i] - valmin) / (valmax+1 - valmin));
+                        var_receiver* rv = H->getWhichReceiver()->getVarMap();
+
+                        if (rv->map_color.val == "random")
+                            PlotBase::ColorGradientRainbow(gc, (plot_vals[i] - valmin) / (valmax + 1 - valmin));
+                        else
+                            gc = wxColour(rv->map_color.val);   //should be a hex
+
                         //keep track of which receiver is assigned to which color
-                        receiver_color_map[H->getWhichReceiver()->getVarMap()->rec_name.val] = gc;
+                        receiver_color_map[rv->rec_name.val] = gc;
                     }
                     else
                         ColorGradientHotCold( gc, (plot_vals[i]-valmin)/(valmax - valmin) );
