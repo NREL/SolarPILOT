@@ -1163,54 +1163,67 @@ void SPFrame::OnUserFluxImport(wxCommandEvent &evt)
         //Try opening the file
         if (ioutil::file_exists(info.c_str()))
         {
-            std::string
-                files,
-                fnames = (std::string)info,
-                eol;
-            ioutil::read_file(fnames, files, eol);
-            wxString file(files), fname(fnames);
-            std::vector<std::string> entries = split(file.ToStdString(), eol);
-            int nlines = entries.size();
+			try
+			{
+				std::string
+					files,
+					fnames = (std::string)info,
+					eol;
+				ioutil::read_file(fnames, files, eol);
+				wxString file(files), fname(fnames);
+				std::vector<std::string> entries = split(file.ToStdString(), eol);
+				int nlines = entries.size();
 
-            //determine the delimiter
-            std::vector<std::string> data;
+				//determine the delimiter
+				std::vector<std::string> data;
 
-            //Find the type of delimiter
-            std::vector<std::string> delims;
-            delims.push_back(",");
-            delims.push_back(" ");
-            delims.push_back("\t");
-            delims.push_back(";");
-            std::string delim = "\t";    //initialize
-            unsigned int  ns = 0;
-            for (unsigned int i = 0; i < delims.size(); i++)
-            {
-                data = split(entries.at(0), delims.at(i));
-                if (data.size() > ns)
-                {
-                    delim = delims.at(i); ns = data.size();
-                }    //pick the delimiter that returns the most entries
-            }
-            data.clear();
+				//Find the type of delimiter
+				std::vector<std::string> delims;
+				delims.push_back(",");
+				delims.push_back(" ");
+				delims.push_back("\t");
+				delims.push_back(";");
+				std::string delim = "\t";    //initialize
+				unsigned int  ns = 0;
+				for (unsigned int i = 0; i < delims.size(); i++)
+				{
+					data = split(entries.at(0), delims.at(i));
+					if (data.size() > ns)
+					{
+						delim = delims.at(i); ns = data.size();
+					}    //pick the delimiter that returns the most entries
+				}
+				data.clear();
 
-            wxFormatString fmt = "%f,%f;";
-            wxString stemp;
-            matrix_t<double> *vval = &_variables.recs[recid].user_flux_profile.val;
+				wxFormatString fmt = "%f,%f;";
+				wxString stemp;
+				matrix_t<double> *vval = &_variables.recs[recid].user_flux_profile.val;
 
-            vval->clear();    //Clear
-            vval->resize(nlines, ns);
+				vval->clear();    //Clear
+				vval->resize(nlines, ns);
 
-            //Process all of the entries
-            for (int i = 0; i < nlines; i++)
-            {
-                data = split(entries.at(i), delim);
+				//Process all of the entries
+				for (int i = 0; i < nlines; i++)
+				{
+					data = split(entries.at(i), delim);
 
-                for (unsigned int j = 0; j < ns; j++)
-                    to_double(data.at(j), &vval->at(i,j));
+					for (unsigned int j = 0; j < ns; j++)
+						to_double(data.at(j), &vval->at(i, j));
 
-            }
-            //Call to the function that sets the data
-            UpdateUserFluxGrid(recid);
+				}
+				//Call to the function that sets the data
+				UpdateUserFluxGrid(recid);
+			}
+			catch (std::exception &e)
+			{
+				std::stringstream ss;
+				ss << "The specified file could not be loaded. " << e.what();
+				PopMessage(ss.str(), "Error");
+			}
+			catch (...)
+			{
+				PopMessage("The specified file could not be loaded: Unknown error.", "Error");
+			}
         }
         else
         {
