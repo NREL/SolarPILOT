@@ -53,9 +53,12 @@
 #include "GUI_main.h"
 #include "IOUtil.h"
 #include <fstream>
+#include <wx/colordlg.h>
+#include <wx/dc.h>
+#include <wx/dcgraph.h>
+#include <wx/dcbuffer.h>
 
 using namespace std;
-
 
 void SPFrame::CreateMasterReceiverPage(wxScrolledWindow *parent)
 {
@@ -70,18 +73,24 @@ void SPFrame::CreateMasterReceiverPage(wxScrolledWindow *parent)
 
     _rec_add = new wxButton(parent, wxID_ANY, wxT("Add new"));
     _rec_del = new wxButton(parent, wxID_ANY, wxT("Delete"));
+    _rec_duplicate = new wxButton(parent, wxID_ANY, wxT("Copy As.."));
+    _rec_duplicate->Disable();
     _rec_state = new wxButton(parent, wxID_ANY, wxT("Disable"));
     _rec_state->Disable();
     _rec_rename = new wxButton(parent, wxID_ANY, wxT("Rename"));
     _rec_rename->Disable();
+    wxButton *rec_color = new wxButton(parent, wxID_ANY, "Color..");
+
     
     wxBoxSizer *but_sizer = new wxBoxSizer(wxHORIZONTAL);
     but_sizer->Add(_rec_add, 0, wxRIGHT, 5);
     but_sizer->Add(_rec_del, 0, wxRIGHT, 5);
+    but_sizer->Add(_rec_duplicate, 0, wxRIGHT, 5);
     but_sizer->Add(_rec_state, 0, wxRIGHT, 5);
-    but_sizer->Add(_rec_rename, 0, 0, 0);
+    but_sizer->Add(_rec_rename, 0, wxRIGHT, 5);
+    but_sizer->Add(rec_color);
 
-    _rec_config = new wxListCtrl(parent, wxID_ANY, wxDefaultPosition, wxSize(300,150), wxLC_REPORT|wxLC_SINGLE_SEL);
+    _rec_config = new wxListCtrl(parent, wxID_ANY, wxDefaultPosition, wxSize(400,150), wxLC_REPORT|wxLC_SINGLE_SEL);
     //set up the columns in the listctrl
     wxListItem col0, col1, col2;
     col0.SetText(wxT("Name"));
@@ -92,9 +101,15 @@ void SPFrame::CreateMasterReceiverPage(wxScrolledWindow *parent)
     col1.SetId(1);
     col1.SetWidth(65);
     _rec_config->InsertColumn(1, col1);
-        
+    col2.SetText("Color");
+    col2.SetId(3);
+    col2.SetWidth(100);
+    _rec_config->InsertColumn(2, col2);
+            
     sbs->Add(but_sizer, 0, wxALL, 5);
     sbs->Add(_rec_config, 0, wxALL, 5);
+    
+    //sbs->Add(new wxColourPickerCtrl(parent, wxID_ANY));
 
     wxString msg = wxT("Note: Each enabled receiver template will be used in the simulation.");
     wxStaticText *htext = new wxStaticText(parent, wxID_ANY, msg);
@@ -146,7 +161,9 @@ void SPFrame::CreateMasterReceiverPage(wxScrolledWindow *parent)
     _rec_add->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnReceiverAdd), NULL, this);
     _rec_del->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnReceiverDel), NULL, this);
     _rec_state->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnReceiverState), NULL, this);
+    _rec_duplicate->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnReceiverAdd), NULL, this);
     _rec_rename->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnReceiverRename), NULL, this);
+    rec_color->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnReceiverColor), NULL, this);
     _rec_config->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( SPFrame::OnReceiverSelect), NULL, this);
     _rec_config->Connect(wxEVT_COMMAND_LIST_ITEM_DESELECTED, wxListEventHandler( SPFrame::OnReceiverDeselect), NULL, this);
     _rec_power_fractions->Connect(wxEVT_GRID_CELL_CHANGED, wxGridEventHandler( SPFrame::OnReceiverPowerGridEdit), NULL, this);
@@ -491,7 +508,7 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     return;
 }
 
-void SPFrame::OnReceiverAdd( wxCommandEvent &WXUNUSED(event))
+void SPFrame::OnReceiverAdd( wxCommandEvent& evt )
 {
     try
     {
@@ -540,6 +557,27 @@ void SPFrame::OnReceiverAdd( wxCommandEvent &WXUNUSED(event))
 
                 //Add a receiver
                 _variables.add_receiver(ind);
+
+                if (static_cast<wxButton*>(evt.GetEventObject())->GetLabelText().Find("Add") < 0)
+                {
+                    //this is a copy event
+                    int sel = -1;
+                    sel = _rec_config->GetNextItem(sel, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+                    if (sel < 0) return;
+
+					//assign all values by copying from reference
+					for (unordered_map<std::string, spbase*>::iterator
+						vit = _variables.recs.back()._local_varptrs.begin();
+						vit != _variables.recs.back()._local_varptrs.end();
+						vit++)
+					{
+						std::stringstream varname;
+						varname << "receiver." << sel <<"." << split(vit->first, ".").back();
+						
+						vit->second->set_from_string( _variables.recs[sel]._local_varptrs[varname.str()]->as_string().c_str() );
+					}
+                }
+
                 _variables.recs[ind].rec_name.val = tname;
                 
             }
@@ -651,6 +689,7 @@ void SPFrame::UpdateReceiverUITemplates()
 
     //Update the display in the listctrl and in the selection combo
     _rec_config->DeleteAllItems();
+    
     for(int i=0; i<ntemp; i++)
     {
         wxListItem row;
@@ -658,6 +697,7 @@ void SPFrame::UpdateReceiverUITemplates()
         _rec_config->InsertItem(i, row);
         _rec_config->SetItem(i, 0, _variables.recs.at(i).rec_name.val );
         _rec_config->SetItem(i, 1, _variables.recs.at(i).is_enabled.val ? "Enabled" : "Disabled" );
+        _rec_config->SetItem(i, 2, _variables.recs.at(i).map_color.val);
     }
 
     UpdateReceiverPowerGrid();
@@ -957,6 +997,33 @@ void SPFrame::OnReceiverRename( wxCommandEvent &WXUNUSED(event))
     UpdateReceiverUITemplates();
 }
 
+void SPFrame::OnReceiverColor(wxCommandEvent&)
+{
+    int sel = -1;
+    sel = _rec_config->GetNextItem(sel, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+    if (sel < 0) return;
+    
+    var_receiver* rv = &_variables.recs.at(sel);
+
+    wxColourData cdat;
+    if (rv->map_color.val == "random")
+        cdat.SetColour(wxColour("BLACK"));
+    else
+        cdat.SetColour(wxColour(rv->map_color.val));
+    
+    cdat.SetChooseFull(true);
+
+    wxColourDialog* dlg = new wxColourDialog(this, &cdat);
+    if (dlg->ShowModal() == wxID_OK)
+    {
+        std::string cname = dlg->GetColourData().GetColour().GetAsString(wxC2S_HTML_SYNTAX);
+        if (cname == "#FFFFFF")
+            cname = "random";
+        rv->map_color.set_from_string( cname.c_str() );
+        UpdateReceiverUITemplates();
+    }
+}
+
 void SPFrame::OnReceiverSelect( wxListEvent &event)
 {
     /* 
@@ -967,6 +1034,7 @@ void SPFrame::OnReceiverSelect( wxListEvent &event)
     if(! _rec_state->IsEnabled() ) {
         _rec_state->Enable();
         _rec_rename->Enable();
+        _rec_duplicate->Enable();
     }
     
     //check the data array to see the state of the item, and update the state button accordingly
@@ -988,6 +1056,7 @@ void SPFrame::OnReceiverDeselect( wxListEvent &event)
     if(_rec_config->GetSelectedItemCount() == 0) {
         _rec_state->Disable();
         _rec_rename->Disable();
+        _rec_duplicate->Disable();
     }
     event.Skip();
 
@@ -1104,54 +1173,67 @@ void SPFrame::OnUserFluxImport(wxCommandEvent &evt)
         //Try opening the file
         if (ioutil::file_exists(info.c_str()))
         {
-            std::string
-                files,
-                fnames = (std::string)info,
-                eol;
-            ioutil::read_file(fnames, files, eol);
-            wxString file(files), fname(fnames);
-            std::vector<std::string> entries = split(file.ToStdString(), eol);
-            int nlines = entries.size();
+			try
+			{
+				std::string
+					files,
+					fnames = (std::string)info,
+					eol;
+				ioutil::read_file(fnames, files, eol);
+				wxString file(files), fname(fnames);
+				std::vector<std::string> entries = split(file.ToStdString(), eol);
+				int nlines = entries.size();
 
-            //determine the delimiter
-            std::vector<std::string> data;
+				//determine the delimiter
+				std::vector<std::string> data;
 
-            //Find the type of delimiter
-            std::vector<std::string> delims;
-            delims.push_back(",");
-            delims.push_back(" ");
-            delims.push_back("\t");
-            delims.push_back(";");
-            std::string delim = "\t";    //initialize
-            unsigned int  ns = 0;
-            for (unsigned int i = 0; i < delims.size(); i++)
-            {
-                data = split(entries.at(0), delims.at(i));
-                if (data.size() > ns)
-                {
-                    delim = delims.at(i); ns = data.size();
-                }    //pick the delimiter that returns the most entries
-            }
-            data.clear();
+				//Find the type of delimiter
+				std::vector<std::string> delims;
+				delims.push_back(",");
+				delims.push_back(" ");
+				delims.push_back("\t");
+				delims.push_back(";");
+				std::string delim = "\t";    //initialize
+				unsigned int  ns = 0;
+				for (unsigned int i = 0; i < delims.size(); i++)
+				{
+					data = split(entries.at(0), delims.at(i));
+					if (data.size() > ns)
+					{
+						delim = delims.at(i); ns = data.size();
+					}    //pick the delimiter that returns the most entries
+				}
+				data.clear();
 
-            wxFormatString fmt = "%f,%f;";
-            wxString stemp;
-            matrix_t<double> *vval = &_variables.recs[recid].user_flux_profile.val;
+				wxFormatString fmt = "%f,%f;";
+				wxString stemp;
+				matrix_t<double> *vval = &_variables.recs[recid].user_flux_profile.val;
 
-            vval->clear();    //Clear
-            vval->resize(nlines, ns);
+				vval->clear();    //Clear
+				vval->resize(nlines, ns);
 
-            //Process all of the entries
-            for (int i = 0; i < nlines; i++)
-            {
-                data = split(entries.at(i), delim);
+				//Process all of the entries
+				for (int i = 0; i < nlines; i++)
+				{
+					data = split(entries.at(i), delim);
 
-                for (unsigned int j = 0; j < ns; j++)
-                    to_double(data.at(j), &vval->at(i,j));
+					for (unsigned int j = 0; j < ns; j++)
+						to_double(data.at(j), &vval->at(i, j));
 
-            }
-            //Call to the function that sets the data
-            UpdateUserFluxGrid(recid);
+				}
+				//Call to the function that sets the data
+				UpdateUserFluxGrid(recid);
+			}
+			catch (std::exception &e)
+			{
+				std::stringstream ss;
+				ss << "The specified file could not be loaded. " << e.what();
+				PopMessage(ss.str(), "Error");
+			}
+			catch (...)
+			{
+				PopMessage("The specified file could not be loaded: Unknown error.", "Error");
+			}
         }
         else
         {
