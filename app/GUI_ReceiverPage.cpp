@@ -565,7 +565,17 @@ void SPFrame::OnReceiverAdd( wxCommandEvent& evt )
                     sel = _rec_config->GetNextItem(sel, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
                     if (sel < 0) return;
 
-                    _variables.recs.back() = _variables.recs.at(sel);
+					//assign all values by copying from reference
+					for (unordered_map<std::string, spbase*>::iterator
+						vit = _variables.recs.back()._local_varptrs.begin();
+						vit != _variables.recs.back()._local_varptrs.end();
+						vit++)
+					{
+						std::stringstream varname;
+						varname << "receiver." << sel <<"." << split(vit->first, ".").back();
+						
+						vit->second->set_from_string( _variables.recs[sel]._local_varptrs[varname.str()]->as_string().c_str() );
+					}
                 }
 
                 _variables.recs[ind].rec_name.val = tname;
