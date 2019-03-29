@@ -119,6 +119,13 @@ fdh.write( \
     #define D2R %.20f
 #endif
 
+struct _vartable_base
+{
+public:
+	unordered_map<std::string, spbase*> _local_varptrs;
+	virtual void addptrs(unordered_map<std::string, spbase*>&) = 0;
+};
+
 """%(pi, 180./pi, pi/180.)
 )
 
@@ -128,7 +135,7 @@ domains.sort()
 for domain in domains:
     fdh.write("\n\n")
     
-    fdh.write("struct var_"+domain + "\n{\n")
+    fdh.write("struct var_"+domain + " : public _vartable_base\n{\n")
     
     #sort each domain by inout type then variable name
     dmap[domain].sort(key = lambda x: x[1])    
@@ -383,11 +390,14 @@ for domain in domains:
         
     for var in dmap[domain]:
 #        if var[2] == "IN":
-        fdc.write("\tpmap[\"{}{}{}\"] = &{};\n".format(var[0], sep, var[1], var[1] ))
+        fdc.write("\t_local_varptrs[\"{}{}{}\"] = &{};\n".format(var[0], sep, var[1], var[1] ))
     
-    fdc.write("}\n")
-        
-    fdc.write("\n")
+    fdc.write(\
+"""
+	for (unordered_map<std::string, spbase*>::iterator it = _local_varptrs.begin(); it != _local_varptrs.end(); it++)
+		pmap[it->first] = it->second;
+}\n\n
+""")
 
 fdc.write(\
 """
