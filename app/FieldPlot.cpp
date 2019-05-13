@@ -526,7 +526,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         //estimate the number of divisions
         etsy = my_to_string( int(-fieldsize[1]/2.));
         etssy = _dc.GetTextExtent( etsy );
-        int ndivy = min(int(plotsize[0]*_zoom_fact/ (etssy.GetHeight()*2. )), (int)(_zoom_fact*20));
+        int ndivy = min(int(plotsize[0]*_zoom_fact/ (etssy.GetHeight()*3. )), (int)(_zoom_fact*20));
         double yscale = calcScale(fieldsize[1], ndivy);
 
         double
@@ -705,7 +705,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         //estimate the number of divisions
         etsy = my_to_string(int(-fieldsize[1] / 2.));
         etssy = _dc.GetTextExtent(etsy);
-        int ndivy = min(int(plotsize[0] * _zoom_fact / (etssy.GetHeight()*2.)), (int)(_zoom_fact * 20));
+        int ndivy = min(int(plotsize[0] * _zoom_fact / (etssy.GetHeight()*3.)), (int)(_zoom_fact * 20));
         double yscale = calcScale(fieldsize[1], ndivy);
 
         double
@@ -1422,7 +1422,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         //estimate the number of divisions
         etsy = my_to_string( int(-fieldsize[1]/2.));
         etssy = _dc.GetTextExtent( etsy );
-        int ndivy = min(int(plotsize[0]*_zoom_fact/ (etssy.GetHeight() )), (int)(_zoom_fact*20));
+        int ndivy = min(int(plotsize[0]*_zoom_fact/ (etssy.GetHeight()*3. )), (int)(_zoom_fact*20));
         double yscale = calcScale(fieldsize[1], ndivy);
 
         //To the top

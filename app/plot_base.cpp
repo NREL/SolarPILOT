@@ -639,7 +639,7 @@ void PlotBase::AxesSetup(wxMemoryDC &dc, double minval, double maxval)
     //estimate the number of divisions
     etsy = my_to_string( int(-yaxspan/2.));
     etssy = dc.GetTextExtent( etsy );
-    int ndivy = min(int(_drawsize[0]/ (etssy.GetHeight() )), 20);
+    int ndivy = min(int(_drawsize[0]/ (etssy.GetHeight()*1.3 )), 20);
     double yscale = calcScale(yaxspan, ndivy);
         
     double
