@@ -703,15 +703,15 @@ void SPFrame::OnLayoutExport( wxCommandEvent &WXUNUSED(event))
             //Note -- removed the header since the import function no longer expects this
             
             //write the header
-            string labs[] = {"Template", "Loc. X", "Loc. Y", "Loc. Z","X focus","Y focus",
+            string labs[] = {"Template", "In layout", "Enabled", "Loc. X", "Loc. Y", "Loc. Z","X focus","Y focus",
                              "Cant vect.","Cant vect.","Cant vect.", "Aim pt. X","Aim pt. Y","Aim pt. Z"};
-            string units[] = {"", "[m]","[m]","[m]","[m]","[m]","<i>","<j>","<k>","[m]","[m]","[m]"};
-            for(int i=0; i<12; i++)
+            string units[] = {"", "", "", "[m]","[m]","[m]","[m]","[m]","<i>","<j>","<k>","[m]","[m]","[m]"};
+            for(int i=0; i<14; i++)
             {
                 fprintf(file,"%s,",labs[i].c_str());
             }
             fprintf(file,"\n");
-            for(int i=0; i<12; i++)
+            for(int i=0; i<14; i++)
             {
                 fprintf(file, "%s,", units[i].c_str());
             }
