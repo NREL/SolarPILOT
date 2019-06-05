@@ -1830,7 +1830,14 @@ SolarPILOTScriptWindow::SolarPILOTScriptWindow( wxWindow *parent, int id )
     : wxLKScriptWindow( parent, id )
 {
     GetEditor()->RegisterLibrary( solarpilot_functions(), "SolarPILOT Functions");
-    SPFrame::Instance().GetSolarFieldObject()->getSimInfoObject()->setCallbackFunction(LKInfoCallback, (void*)this);
+	//when creating a new script window, we'll usurp the callback function and then reset it if the window is closed later.
+	simulation_info *sim = SPFrame::Instance().GetSolarFieldObject()->getSimInfoObject();
+	
+	_ui_default_callback = static_cast<bool (*)(simulation_info*, void*)>( sim->getCallbackFunction() );
+	_ui_default_data = sim->getCallbackData();
+
+    sim->setCallbackFunction(LKInfoCallback, (void*)this);
+
     this->AddOutput("\nTip: Use the 'Help' button to look up and add variables to the script.");
 }
 
@@ -1838,6 +1845,9 @@ SolarPILOTScriptWindow::~SolarPILOTScriptWindow()
 {
     if(! SPFrame::Destroyed() )
         SPFrame::Instance().SetScriptWindowPointer(0);
+	
+	SPFrame::Instance().GetSolarFieldObject()->getSimInfoObject()->setCallbackFunction(_ui_default_callback, _ui_default_data);
+
 }
 
 void SolarPILOTScriptWindow::ScriptOutput(const char *msg)

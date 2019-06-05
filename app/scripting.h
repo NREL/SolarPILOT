@@ -78,6 +78,8 @@ protected:
     virtual void OnScriptStopped();
     virtual void OnHelp();
 
+	bool (*_ui_default_callback)(simulation_info*, void*);
+	void* _ui_default_data;
 };
 
 #endif
