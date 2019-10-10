@@ -264,7 +264,7 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
     //Set the version tag
 	_version_major = 1;
 	_version_minor = 3;
-	_version_patch = 7;
+	_version_patch = 8;
 
     _software_version = my_to_string(_version_major) + "." + my_to_string(_version_minor) + "." + my_to_string(_version_patch);
     _contact_info = "solarpilot.support@nrel.gov";
@@ -3455,11 +3455,31 @@ void SPFrame::ParametricSimulate( parametric &P )
         {
 
             //Run a check to see whether the sun position is above the horizon
-            if(varpar.flux.flux_solar_el.Val() < 0.)
+            bool sunpos_ok = true;
+            if (varpar.flux.flux_time_type.mapval() == var_fluxsim::FLUX_TIME_TYPE::SUN_POSITION) {	//Sun position specified
+                if (varpar.flux.flux_solar_el.Val() < 0.)
+                    sunpos_ok = false;
+            }
+            else {
+                //day and time specified
+
+                int flux_day = varpar.flux.flux_day.val;
+                double flux_hour = varpar.flux.flux_hour.val;
+                int flux_month = varpar.flux.flux_month.val;
+                DateTime DT;
+                Ambient::setDateTime(DT, flux_hour, DT.GetDayOfYear(2011, flux_month, flux_day));
+                double az, zen;
+                Ambient::calcSunPosition(varpar, DT, &az, &zen);
+                if (zen > 90.)
+                    sunpos_ok = false;
+            }
+            
+            if(!sunpos_ok)
             {
             
                 //push back an empty simulation result
                 _results.push_back(sim_result());
+                _results.back().zero();
         
                 //reset the sim type to parametric
                 _results.back().sim_type = 3;
