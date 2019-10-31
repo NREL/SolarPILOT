@@ -653,7 +653,8 @@ static void _simulate( lk::invoke_t &cxt )
 
 static void _summary_results( lk::invoke_t &cxt )
 {
-    LK_DOC("get_summary_results", "Return a table with summary results from a simulation", "(void):table");
+    LK_DOC("get_summary_results", "Return an array of tables with summary results from each simulation. "
+                                  "The array length is greater than 1 for multiple-receiver simulations.", "(void):array");
 
     SPFrame &F = SPFrame::Instance();
 
@@ -666,62 +667,73 @@ static void _summary_results( lk::invoke_t &cxt )
         return;
     }
 
-    F.CreateResultsTable(results->front(), table);
 
-    lk::vardata_t &r = cxt.result();
-    r.empty_hash();
+    lk::vardata_t &rt = cxt.result();
+    rt.empty_vector();
+    rt.vec()->resize(results->size());
 
-    for (int i = 0; i < table.GetNumberRows(); i++)
-        r.hash_item( table.GetRowLabelValue(i), table.GetCellValue(i, 1) );
+    for (size_t i = 0; i < results->size(); i++)
+    {
+        lk::vardata_t &r = rt.vec()->at(i);
 
-	//add a few more summary results
-	bool is_soltrace = r.hash()->find("Shadowing and Cosine efficiency") != r.hash()->end();
-	
-	double Qwf;
-	double Qin = Qwf = r.hash()->at("Power incident on field")->as_number();
-	
-	if (is_soltrace)
-	{
-		/*
-		soltrace
-		for this option, the "Shadowing and Cosine efficiency" is already calculated by the 
-		program. Just make sure the Shading and Cosine efficiencies aren't double counted.
-		*/
-		r.hash_item("Shading efficiency", 100.);
-		r.hash_item("Cosine efficiency", 100.);
-		r.hash_item("Shading loss", 0.);
-		r.hash_item("Cosine loss", 0.);
+        F.CreateResultsTable(results->at(i), table);
 
-		double eta_sc = r.hash()->at( "Shadowing and Cosine efficiency" )->as_number() / 100.;
-		Qwf *= eta_sc;
-	}
-	else
-	{
-		//hermite
-		r.hash_item("Shadowing and Cosine efficiency", 
-			r.hash()->at("Shading efficiency")->as_number()
-			*r.hash()->at("Cosine efficiency")->as_number()/100.);
-		
-		double eta_s = r.hash()->at("Shading efficiency")->as_number()/100.;
-		Qwf *= eta_s;
-		r.hash_item("Shading loss", Qin*(1. - eta_s));
-		double eta_c = r.hash()->at("Cosine efficiency")->as_number() / 100.;
-		r.hash_item("Cosine loss", Qwf*(1 - eta_c));
-		Qwf *= eta_c;
-	}
-	r.hash_item("Shadowing and Cosine loss", Qin - Qwf);
+        r.empty_hash();
 
-	double eta_r = r.hash()->at( "Reflection efficiency" )->as_number() / 100.;
-	r.hash_item("Reflection loss", Qwf * (1. - eta_r));
-	Qwf *= eta_r;
-	double eta_b = r.hash()->at( "Blocking efficiency" )->as_number() / 100.;
-	r.hash_item("Blocking loss", Qwf*(1. - eta_b));
-	Qwf *= eta_b;
-	double eta_i = r.hash()->at( "Image intercept efficiency" )->as_number() / 100.;
-	r.hash_item("Image intercept loss", Qwf*(1. - eta_i));
-	Qwf *= eta_i;
-	double eta_a = r.hash()->at( "Absorption efficiency" )->as_number() / 100.;
-	r.hash_item("Absorption loss", Qwf*(1. - eta_a));
+        for (int i = 0; i < table.GetNumberRows(); i++)
+            r.hash_item(table.GetRowLabelValue(i), table.GetCellValue(i, 1));
+
+        //add a few more summary results
+        bool is_soltrace = r.hash()->find("Shadowing and Cosine efficiency") != r.hash()->end();
+
+        double Qwf;
+        double Qin = Qwf = r.hash()->at("Power incident on field")->as_number();
+
+        if (is_soltrace)
+        {
+            /*
+            soltrace
+            for this option, the "Shadowing and Cosine efficiency" is already calculated by the
+            program. Just make sure the Shading and Cosine efficiencies aren't double counted.
+            */
+            r.hash_item("Shading efficiency", 100.);
+            r.hash_item("Cosine efficiency", 100.);
+            r.hash_item("Shading loss", 0.);
+            r.hash_item("Cosine loss", 0.);
+
+            double eta_sc = r.hash()->at("Shadowing and Cosine efficiency")->as_number() / 100.;
+            Qwf *= eta_sc;
+        }
+        else
+        {
+            //hermite
+            r.hash_item("Shadowing and Cosine efficiency",
+                r.hash()->at("Shading efficiency")->as_number()
+                *r.hash()->at("Cosine efficiency")->as_number() / 100.);
+
+            double eta_s = r.hash()->at("Shading efficiency")->as_number() / 100.;
+            Qwf *= eta_s;
+            r.hash_item("Shading loss", Qin*(1. - eta_s));
+            double eta_c = r.hash()->at("Cosine efficiency")->as_number() / 100.;
+            r.hash_item("Cosine loss", Qwf*(1 - eta_c));
+            Qwf *= eta_c;
+        }
+        r.hash_item("Shadowing and Cosine loss", Qin - Qwf);
+
+        double eta_r = r.hash()->at("Reflection efficiency")->as_number() / 100.;
+        r.hash_item("Reflection loss", Qwf * (1. - eta_r));
+        Qwf *= eta_r;
+        double eta_b = r.hash()->at("Blocking efficiency")->as_number() / 100.;
+        r.hash_item("Blocking loss", Qwf*(1. - eta_b));
+        Qwf *= eta_b;
+        double eta_i = r.hash()->at("Image intercept efficiency")->as_number() / 100.;
+        r.hash_item("Image intercept loss", Qwf*(1. - eta_i));
+        Qwf *= eta_i;
+        double eta_a = r.hash()->at("Absorption efficiency")->as_number() / 100.;
+        r.hash_item("Absorption loss", Qwf*(1. - eta_a));
+
+        r.hash_item("Receiver name", i == 0 ? "All receivers" : results->at(i).receiver_names.front());
+    }
 
     return;
 }
@@ -1752,7 +1764,7 @@ static void _dump_varmap( lk::invoke_t &cxt )
 
 static void _open_from_script( lk::invoke_t &cxt )
 {
-    LK_DOC("open", "Open a SolarPILOT .spt case file. Returns true if successful. Updates the interface.", "(string:path):boolean");
+    LK_DOC("open_project", "Open a SolarPILOT .spt case file. Returns true if successful. Updates the interface.", "(string:path):boolean");
 
     std::string fname = cxt.arg(0).as_string();
     if(! ioutil::dir_exists( ioutil::path_only(fname).c_str() ) )
