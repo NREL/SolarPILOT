@@ -72,6 +72,8 @@ public:
     SolarPILOTScriptWindow( wxWindow *parent, int id = wxID_ANY );
     ~SolarPILOTScriptWindow();
     void ScriptOutput(const char *msg);
+    void EnableScriptWindowReporting(bool enabled=true);
+    bool IsReportingEnabled();
     
 protected:
     virtual void OnScriptStarted();
@@ -80,6 +82,7 @@ protected:
 
 	bool (*_ui_default_callback)(simulation_info*, void*);
 	void* _ui_default_data;
+    bool _reporting_enabled;
 };
 
 #endif
