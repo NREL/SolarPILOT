@@ -97,9 +97,9 @@ public:
 
 };
 
-class grid_emulator
+class grid_emulator : public grid_emulator_base
 {
-    std::vector<std::vector<wxString> > data;
+ /*   std::vector<std::vector<wxString> > data;
     std::vector<wxString> rowlabs;
     std::vector<wxString> collabs;
 
@@ -123,7 +123,7 @@ public:
 	wxString GetRowLabelValue(int row);
 	wxString GetColLabelValue(int col);
 	wxString GetCellValue(int row, int col);
-
+*/
     void GetPrintableTable(wxArrayStr &printable, wxString eol = "\n");
     void MapToWXGrid(wxGrid *wxgrid);
 };

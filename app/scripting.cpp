@@ -532,7 +532,7 @@ static void _generate_layout( lk::invoke_t &cxt )
     F.UpdateDesignSelect( V->sf.des_sim_detail.mapval(), *V );
     SF->Clean();
     SF->Create(*V);
-    bool ok = F.DoManagedLayout(*SF, *V);        //Returns TRUE if successful
+    bool ok = interop::DoManagedLayout(*F.GetSimControlObject(), *SF, *V, F.GetLayoutSimThreadObject());        //Returns TRUE if successful
 
     cxt.result().assign( ok );
 
@@ -625,12 +625,13 @@ static void _simulate( lk::invoke_t &cxt )
 
     F.StartSimTimer();
 
+    sim_results* res = F.GetResultsObject();
     //Which type of simulation?
     bool ok;
     switch(simtype)
     {
     case var_fluxsim::FLUX_MODEL::HERMITE_ANALYTICAL:
-        ok = F.HermiteFluxSimulationHandler(*SF, *helios);
+        ok = interop::HermiteFluxSimulationHandler(*res, *SF, *helios);
         break;
     case var_fluxsim::FLUX_MODEL::SOLTRACE:
         ok = F.SolTraceFluxSimulation(*SF, *V, *helios);
@@ -680,8 +681,8 @@ static void _summary_results( lk::invoke_t &cxt )
 
         r.empty_hash();
 
-        for (int i = 0; i < table.GetNumberRows(); i++)
-            r.hash_item(table.GetRowLabelValue(i), table.GetCellValue(i, 1));
+        for (int j = 0; j < table.GetNumberRows(); j++)
+            r.hash_item(table.GetRowLabelValue(j), table.GetCellValue(j, 1));
 
         //add a few more summary results
         bool is_soltrace = r.hash()->find("Shadowing and Cosine efficiency") != r.hash()->end();
@@ -758,7 +759,9 @@ static void _detail_results( lk::invoke_t &cxt )
         "layout_metric (double), "
         "power_to_receiver (double), "
         "power_reflected (double), "
-        "efficiency (double), "
+        "energy (double),"
+        "annual efficiency (double),"
+        "total efficiency (double), "
         "cosine (double), "
         "intercept (double), "
         "reflectance (double), "

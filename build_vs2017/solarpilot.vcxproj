@@ -14,6 +14,7 @@
     <ClInclude Include="..\..\ssc\solarpilot\Ambient.h" />
     <ClInclude Include="..\..\ssc\solarpilot\API_structures.h" />
     <ClInclude Include="..\..\ssc\solarpilot\AutoPilot_API.h" />
+    <ClInclude Include="..\..\ssc\solarpilot\CoPilot_API.h" />
     <ClInclude Include="..\..\ssc\solarpilot\definitions.h" />
     <ClInclude Include="..\..\ssc\solarpilot\exceptions.hpp" />
     <ClInclude Include="..\..\ssc\solarpilot\Financial.h" />
@@ -46,6 +47,7 @@
     <ClCompile Include="..\..\ssc\solarpilot\Ambient.cpp" />
     <ClCompile Include="..\..\ssc\solarpilot\API_structures.cpp" />
     <ClCompile Include="..\..\ssc\solarpilot\AutoPilot_API.cpp" />
+    <ClCompile Include="..\..\ssc\solarpilot\CoPilot_API.cpp" />
     <ClCompile Include="..\..\ssc\solarpilot\definitions.cpp" />
     <ClCompile Include="..\..\ssc\solarpilot\Financial.cpp" />
     <ClCompile Include="..\..\ssc\solarpilot\Flux.cpp" />
@@ -71,19 +73,19 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{CBA0DB61-80B0-4FCE-B4DA-1B4054582F87}</ProjectGuid>
     <RootNamespace>solarpilot</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>

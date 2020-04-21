@@ -349,12 +349,15 @@ void SPFrame::UpdateClimateFile( wxString &file,  var_map &V, bool mapval_only )
     weather_header hdr;
     wf.header(&hdr);
     
-    _loc_city->setValue(hdr.city);
-    _loc_state->setValue( hdr.state);
-    _loc_timezone->setValue( hdr.tz );
-    _loc_elevation->setValue( hdr.elev );
-    _loc_latitude->setValue( hdr.lat );
-    _loc_longitude->setValue( hdr.lon );
+    if (!mapval_only)
+    {
+        _loc_city->setValue(hdr.city);
+        _loc_state->setValue(hdr.state);
+        _loc_timezone->setValue(hdr.tz);
+        _loc_elevation->setValue(hdr.elev);
+        _loc_latitude->setValue(hdr.lat);
+        _loc_longitude->setValue(hdr.lon);
+    }
 
     //Set the variable map weather file
     V.amb.weather_file.val = file;

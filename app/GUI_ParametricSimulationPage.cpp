@@ -779,10 +779,10 @@ void SPFrame::OnParametricSimulate( wxCommandEvent &WXUNUSED(event))
         {
             //cancel the method if necessary
             _cancel_simulation = true;
-            if(_is_mt_simulation && _simthread != 0)
+            if(_sim_control._is_mt_simulation && _simthread != 0)
             {
                 //For a multithreaded simulation, cancel all of the threads
-                for(int i=0; i<_n_threads_active; i++)
+                for(int i=0; i< _sim_control._n_threads_active; i++)
                 {
                     _simthread[i].CancelSimulation();
                 }
@@ -800,8 +800,8 @@ void SPFrame::OnParametricSimulate( wxCommandEvent &WXUNUSED(event))
         {
             StopSimTimer();
             SetSimulationStatus(false, _in_param_simulation, _par_button);
-            _is_mt_simulation = false;    //False by default
-            _n_threads_active = _n_threads;
+            _sim_control._is_mt_simulation = false;    //False by default
+            _sim_control._n_threads_active = _sim_control._n_threads;
             return;
         }
 
@@ -829,8 +829,8 @@ void SPFrame::OnParametricSimulate( wxCommandEvent &WXUNUSED(event))
 
     StopSimTimer();
     SetSimulationStatus(false, _in_param_simulation, _par_button);
-    _is_mt_simulation = false;    //False by default
-    _n_threads_active = _n_threads;
+    _sim_control._is_mt_simulation = false;    //False by default
+    _sim_control._n_threads_active = _sim_control._n_threads;
 
 }
 
@@ -1103,10 +1103,10 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
         {
             //cancel the method if necessary
             _cancel_simulation = true;
-            if(_is_mt_simulation && _simthread != 0)
+            if(_sim_control._is_mt_simulation && _simthread != 0)
             {
                 //For a multithreaded simulation, cancel all of the threads
-                for(int i=0; i<_n_threads_active; i++)
+                for(int i=0; i< _sim_control._n_threads_active; i++)
                     _simthread[i].CancelSimulation();
             }
             else
@@ -1316,7 +1316,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
 
             if(full_layout)
             {
-                sim_cancelled = sim_cancelled || !DoManagedLayout(_par_SF, vset);
+                sim_cancelled = sim_cancelled || !interop::DoManagedLayout(_sim_control, _par_SF, vset, _simthread);
             }
             else
             {

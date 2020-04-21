@@ -166,6 +166,7 @@ class LayoutSimThread;
 class STSimThread;
 class STSimThread;
 class SolarPILOTScriptWindow;
+class SimControl;
 
 struct ST_FluxObj;
 struct ST_System;
@@ -210,8 +211,10 @@ private:
     gui_settings _gui_settings;
     PageNames pageNames;
     //Default themes and sizings
-    int _tool_tip_delay, _n_threads, _n_threads_active, _nrecent_max, _trial_days;
+    int _tool_tip_delay,  _nrecent_max, _trial_days; //_n_threads, _n_threads_active,
     wxDateTime _trial_start;
+
+    SimControl _sim_control; // 
 
 	int 
 		_version_major,
@@ -237,7 +240,7 @@ private:
         _in_optimize_simulation,    //Flag indicating whether an optimization simulation is currently running
         _in_param_simulation,    //Flag indicating whether a parametric simulation is currently running
         _in_user_param_simulation, //Flag indicating whether a user-parametric simulation is currently running
-        _is_mt_simulation,    //Is the current simulation multithreaded?
+        //_is_mt_simulation,    //Is the current simulation multithreaded?
         _cancel_simulation; //Flag indicating whether the user wants to cancel the simulation
     std::string 
         _contact_info;    //String containing contact info for bugs, etc. Used in crash messages.
@@ -685,6 +688,8 @@ public:
     SolarField *GetSolarFieldObject();
     var_map *GetVariablesObject();
     sim_results *GetResultsObject();
+    SimControl *GetSimControlObject();
+    LayoutSimThread* GetLayoutSimThreadObject();
     void SetThreadCount(int nthread);
     int GetThreadCount();
     ArrayString *GetLocalWeatherDataObject();
@@ -764,11 +769,10 @@ public:
     void OptReloadVariableList();
     void CheckOptGridRange();
 
-    bool DoManagedLayout(SolarField &SF, var_map &vset);
+    //bool DoManagedLayout(SolarField &SF, var_map &vset);
     bool DoPerformanceSimulation(SolarField &SF, var_map &vset, Hvector &helios);
     bool SolTraceFluxSimulation(SolarField &SF, var_map &vset, Hvector &helios);
     bool SolTraceFluxBinning(SolarField &SF);
-    bool HermiteFluxSimulationHandler(SolarField &SF, Hvector &helios);
     void UpdateFluxLC(int sortkey=0);
     int SolTraceProgressUpdate(st_uint_t ntracedtotal, st_uint_t ntraced, st_uint_t ntotrace, st_uint_t curstage, st_uint_t nstages, void *data);
     void SolTraceFileExport(std::string fname);
