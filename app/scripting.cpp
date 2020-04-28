@@ -1932,11 +1932,12 @@ SolarPILOTScriptWindow::SolarPILOTScriptWindow( wxWindow *parent, int id )
 
 SolarPILOTScriptWindow::~SolarPILOTScriptWindow()
 {
-    if(! SPFrame::Destroyed() )
+    if (!SPFrame::Destroyed())
+    {
         SPFrame::Instance().SetScriptWindowPointer(0);
-	
-	SPFrame::Instance().GetSolarFieldObject()->getSimInfoObject()->setCallbackFunction(_ui_default_callback, _ui_default_data);
 
+	    SPFrame::Instance().GetSolarFieldObject()->getSimInfoObject()->setCallbackFunction(_ui_default_callback, _ui_default_data);
+    }
 }
 
 void SolarPILOTScriptWindow::ScriptOutput(const char *msg)
