@@ -11,79 +11,79 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ssc\solarpilot\Ambient.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\API_structures.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\AutoPilot_API.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\definitions.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\exceptions.hpp" />
-    <ClInclude Include="..\..\ssc\solarpilot\Financial.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\Flux.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\fluxsim.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\heliodata.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\Heliostat.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\interop.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\IOUtil.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\Land.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\LayoutSimulateThread.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\mod_base.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\MultiRecOptimize.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\OpticalMesh.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\optimize.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\rapidxml.hpp" />
-    <ClInclude Include="..\..\ssc\solarpilot\rapidxml_iterators.hpp" />
-    <ClInclude Include="..\..\ssc\solarpilot\rapidxml_print.hpp" />
-    <ClInclude Include="..\..\ssc\solarpilot\rapidxml_utils.hpp" />
-    <ClInclude Include="..\..\ssc\solarpilot\Receiver.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\SolarField.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\solpos00.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\sort_method.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\STObject.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\string_util.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\STSimulateThread.h" />
-    <ClInclude Include="..\..\ssc\solarpilot\Toolbox.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\Ambient.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\API_structures.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\AutoPilot_API.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\definitions.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\exceptions.hpp" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\Financial.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\Flux.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\fluxsim.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\heliodata.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\Heliostat.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\interop.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\IOUtil.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\Land.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\LayoutSimulateThread.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\mod_base.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\MultiRecOptimize.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\OpticalMesh.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\optimize.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\rapidxml.hpp" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\rapidxml_iterators.hpp" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\rapidxml_print.hpp" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\rapidxml_utils.hpp" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\Receiver.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\SolarField.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\solpos00.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\sort_method.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\STObject.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\string_util.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\STSimulateThread.h" />
+    <ClInclude Include="$(SSCDIR)\solarpilot\Toolbox.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ssc\solarpilot\Ambient.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\API_structures.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\AutoPilot_API.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\definitions.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\Financial.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\Flux.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\fluxsim.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\heliodata.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\Heliostat.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\interop.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\IOUtil.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\Land.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\LayoutSimulateThread.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\mod_base.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\MultiRecOptimize.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\OpticalMesh.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\optimize.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\Receiver.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\SolarField.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\solpos.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\STObject.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\string_util.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\STSimulateThread.cpp" />
-    <ClCompile Include="..\..\ssc\solarpilot\Toolbox.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\Ambient.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\API_structures.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\AutoPilot_API.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\definitions.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\Financial.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\Flux.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\fluxsim.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\heliodata.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\Heliostat.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\interop.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\IOUtil.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\Land.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\LayoutSimulateThread.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\mod_base.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\MultiRecOptimize.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\OpticalMesh.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\optimize.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\Receiver.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\SolarField.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\solpos.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\STObject.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\string_util.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\STSimulateThread.cpp" />
+    <ClCompile Include="$(SSCDIR)\solarpilot\Toolbox.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{CBA0DB61-80B0-4FCE-B4DA-1B4054582F87}</ProjectGuid>
     <RootNamespace>solarpilot</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -129,6 +129,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(CORETRACEDIR)/build_vs2017/$(Platform)/$(Configuration);$(SSCDIR)\build_vs2017\$(Platform)\$(Configuration);$(SSCDIR)\lpsolve;$(SSCDIR)\nlopt;$(SSCDIR)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>coretrace.lib;lpsolve.lib;nlopt.lib;shared.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

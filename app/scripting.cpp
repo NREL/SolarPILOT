@@ -71,7 +71,7 @@ static void EditorOutput(const char *msg)
 static bool LKInfoCallback(simulation_info *siminfo, void *data)
 {
     SolarPILOTScriptWindow *frame = static_cast<SolarPILOTScriptWindow*>( data );
-    if(frame != NULL) 
+    if(frame != NULL && frame->IsReportingEnabled()) 
     {
         int current = siminfo->getCurrentSimulation();
         int total = siminfo->getTotalSimulationCount();
@@ -272,14 +272,30 @@ static void _sp_var( lk::invoke_t &cxt )
             {
             case SP_INT:
             {
-                spvar<int> *v = static_cast< spvar<int>* >( var );
-                cxt.result().assign( (double)v->val );
+                if (var->is_output)
+                {
+                    spout<int>* v = static_cast<spout<int>*>(var);
+                    cxt.result().assign((double)v->Val());
+                }
+                else
+                {
+                    spvar<int> *v = static_cast< spvar<int>* >( var );
+                    cxt.result().assign( (double)v->val );
+                }
                 return;
             }
             case SP_DOUBLE:
             {
-                spvar<double> *v = static_cast< spvar<double>* >( var );
-                cxt.result().assign( v->val );
+                if (var->is_output)
+                {
+                    spout<double>* v = static_cast<spout<double>*>(var);
+                    cxt.result().assign(v->Val());
+                }
+                else
+                {
+                    spvar<double> *v = static_cast< spvar<double>* >( var );
+                    cxt.result().assign( v->val );
+                }
                 return;
             }
             case SP_STRING:
@@ -287,8 +303,16 @@ static void _sp_var( lk::invoke_t &cxt )
                 return;
             case SP_BOOL:
             {
-                spvar<bool> *v = static_cast< spvar<bool>* >( var );
-                cxt.result().assign( v->val ? 1. : 0. );
+                if (var->is_output)
+                {
+                    spout<bool>* v = static_cast<spout<bool>*>(var);
+                    cxt.result().assign(v->Val() ? 1. : 0.);
+                }
+                else
+                {
+                    spvar<bool> *v = static_cast< spvar<bool>* >( var );
+                    cxt.result().assign( v->val ? 1. : 0. );
+                }
                 return;
             }
             case SP_MATRIX_T:
@@ -477,12 +501,15 @@ static void _generate_layout( lk::invoke_t &cxt )
 {
     
     LK_DOC2("run_layout", 
-        "Create a solar field layout. Options include 'nthreads':integer (default All),'save_detail':boolean (default True)", 
+        "Create a solar field layout. Options include 'nthreads':integer (default All),'save_detail':boolean (default True), 'show_progress':boolean (default True)", 
         //run layout without specified positions
         "SolarPILOT generates layout positions", "([table:options]):boolean",
         //run layout with specified positions
         "User specifies layout positions in the following format, where first 4 columns are required:\n"
-        "<template (int)> <location X> <location Y> <location Z> <x focal length> <y focal length> <cant i> <cant j> <cant k> <aim X> <aim Y> <aim Z>", "(array:positions):boolean"
+        "0				1			2			3			4			5				6				7			   8		9		10		11		12	     13\n"
+        "< template (int) > <enabled> <in layout> <location X> <location Y> <location Z> <x focal length> <y focal length> <cant i> <cant j> <cant k> <aim X> <aim Y> <aim Z>"
+        //"<template (int)> <location X> <location Y> <location Z> <x focal length> <y focal length> <cant i> <cant j> <cant k> <aim X> <aim Y> <aim Z>"
+        , "(array:positions):boolean"
         );
         
 
@@ -490,6 +517,7 @@ static void _generate_layout( lk::invoke_t &cxt )
     SolarField *SF = F.GetSolarFieldObject();
     var_map *V = SF->getVarMap();
 
+    bool current_script_reporting_status = F.GetScriptWindowPointer()->IsReportingEnabled();
 
     if( cxt.arg_count() > 0 )
     {
@@ -522,9 +550,13 @@ static void _generate_layout( lk::invoke_t &cxt )
         else
             options = &cxt.arg(0);
 
-        if(options)
+        if (options)
+        {
             if( options->hash()->find( "nthreads" ) != options->hash()->end() )
                 F.SetThreadCount( options->hash()->at( "nthreads" )->as_integer() );
+            if (options->hash()->find("show_progress") != options->hash()->end())
+                F.GetScriptWindowPointer()->EnableScriptWindowReporting(options->hash()->at("show_progress")->as_boolean());
+        }
     }
 
     wxString v=(wxString)V->amb.weather_file.val;
@@ -534,11 +566,47 @@ static void _generate_layout( lk::invoke_t &cxt )
     SF->Create(*V);
     bool ok = F.DoManagedLayout(*SF, *V);        //Returns TRUE if successful
 
+    sim_results& results = *F.GetResultsObject();
+    //Process the simulation results
+    results.clear();
+    results.resize(1);
+    double azzen[2];
+    SF->CalcDesignPtSunPosition(V->sf.sun_loc_des.mapval(), azzen[0], azzen[1]);
+
+    sim_params P;
+    P.dni = V->sf.dni_des.val;
+
+    results.at(0).process_analytical_simulation(*SF, P, 0, azzen);
+
+    //Load the results in the grid
+    F.UpdateLayoutGrid();
+
+
+    //Redraw the plots
+    F.GetFieldPlotObject()->SetPlotData(*SF, FIELD_PLOT::EFF_TOT);
+    //update the selection combo
+    F.UpdateFieldPlotSelections();
+    //update the receiver flux map selection combo
+    F.UpdateFluxPlotSelections();
+
+    F.DoResultsPage();
+
+    F.UpdateCalculatedGUIValues();
+    F.SetGeomState(false);
+    //F._inputs_modified = true;    //Any time the layout is run, flag for save on exit
+
+    //clear the flux heliostat list control
+    /*_flux_lc->ClearAll();
+    _flcsort.clear();*/
+    //UpdateFluxLC(-1);
+
     cxt.result().assign( ok );
 
-    F.UpdateLayoutGrid();
+    //F.UpdateLayoutGrid();
     F.GetFieldPlotObject()->SetPlotData( *SF, FIELD_PLOT::EFF_TOT ); 
     F.GetFieldPlotObject()->Update();
+
+    F.GetScriptWindowPointer()->EnableScriptWindowReporting(current_script_reporting_status);
 
     return;
 }
@@ -580,13 +648,16 @@ static void _get_layout_info( lk::invoke_t &cxt )
 static void _simulate( lk::invoke_t &cxt )
 {
     LK_DOC("run_performance", "Calculate heliostat field performance. Options include 'nthreads':integer (default All), "
-                              "'save_detail':boolean (default True), 'update_aimpoints':boolean (default True)", "([table:options]):boolean");
+                              "'save_detail':boolean (default True), 'update_aimpoints':boolean (default True), 'show_progress':boolean (default True)", 
+                              "([table:options]):boolean");
 
 
     SPFrame &F = SPFrame::Instance();
     SolarField *SF = F.GetSolarFieldObject();
     var_map *V = SF->getVarMap();
-    
+
+    bool current_script_reporting_status = F.GetScriptWindowPointer()->IsReportingEnabled();
+
     if( cxt.arg_count() > 0 )
     {
         lk::vardata_t &v = cxt.arg(0);
@@ -596,6 +667,8 @@ static void _simulate( lk::invoke_t &cxt )
         if( v.hash()->find( "update_aimpoints" ) != v.hash()->end() )
             if( !v.hash()->at( "update_aimpoints" )->as_boolean() )
                 V->flux.aim_method.combo_select( "Keep existing" );
+        if (v.hash()->find("show_progress") != v.hash()->end())
+            F.GetScriptWindowPointer()->EnableScriptWindowReporting(v.hash()->at("show_progress")->as_boolean());
     }
 
     //Which type of simulation is this?
@@ -647,6 +720,8 @@ static void _simulate( lk::invoke_t &cxt )
     F.GetFieldPlotObject()->SetPlotData( *SF, FIELD_PLOT::EFF_TOT ); 
     
     cxt.result().assign( ok ? 1. : 0. );
+
+    F.GetScriptWindowPointer()->EnableScriptWindowReporting(current_script_reporting_status);
 
     return;
 }
@@ -1850,16 +1925,19 @@ SolarPILOTScriptWindow::SolarPILOTScriptWindow( wxWindow *parent, int id )
 
     sim->setCallbackFunction(LKInfoCallback, (void*)this);
 
+    _reporting_enabled = true;
+
     this->AddOutput("\nTip: Use the 'Help' button to look up and add variables to the script.");
 }
 
 SolarPILOTScriptWindow::~SolarPILOTScriptWindow()
 {
-    if(! SPFrame::Destroyed() )
+    if (!SPFrame::Destroyed())
+    {
         SPFrame::Instance().SetScriptWindowPointer(0);
-	
-	SPFrame::Instance().GetSolarFieldObject()->getSimInfoObject()->setCallbackFunction(_ui_default_callback, _ui_default_data);
 
+	    SPFrame::Instance().GetSolarFieldObject()->getSimInfoObject()->setCallbackFunction(_ui_default_callback, _ui_default_data);
+    }
 }
 
 void SolarPILOTScriptWindow::ScriptOutput(const char *msg)
@@ -1868,6 +1946,16 @@ void SolarPILOTScriptWindow::ScriptOutput(const char *msg)
     fmsg.Append(wxT("\n"));
 
     this->AddOutput(msg);
+}
+
+void SolarPILOTScriptWindow::EnableScriptWindowReporting(bool enabled)
+{
+    _reporting_enabled = enabled;
+}
+
+bool SolarPILOTScriptWindow::IsReportingEnabled()
+{
+    return _reporting_enabled;
 }
 
 static std::string join(std::vector<std::string> &items, std::string sep)
@@ -1884,7 +1972,7 @@ void SolarPILOTScriptWindow::OnHelp( )
     wxFileName fn = SPFrame::Instance().GetImageDir();
 
     par_variables_dialog *dlg = new par_variables_dialog(this, wxID_ANY, fn.GetPath(true), false, wxT("Variable lookup"));
-    dlg->SetItems(V);
+    dlg->SetItems(V, -1, true); 
     
     dlg->SetSize(450, 550);
 

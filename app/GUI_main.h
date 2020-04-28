@@ -693,6 +693,7 @@ public:
     parametric *GetParametricDataObject();
     optimization *GetOptimizationDataObject();
     void  SetScriptWindowPointer(SolarPILOTScriptWindow *p);
+    SolarPILOTScriptWindow* GetScriptWindowPointer();
     std::string GetVersionInfo();
     wxFileName GetImageDir();
 
