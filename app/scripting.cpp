@@ -1972,7 +1972,7 @@ void SolarPILOTScriptWindow::OnHelp( )
     wxFileName fn = SPFrame::Instance().GetImageDir();
 
     par_variables_dialog *dlg = new par_variables_dialog(this, wxID_ANY, fn.GetPath(true), false, wxT("Variable lookup"));
-    dlg->SetItems(V);
+    dlg->SetItems(V, -1, true); 
     
     dlg->SetSize(450, 550);
 

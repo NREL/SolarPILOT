@@ -105,7 +105,7 @@ public:
         long style=wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP|wxRESIZE_BORDER);
     
     void UpdateTree();
-    void SetItems(var_map *V, int type_filter = -1);
+    void SetItems(var_map *V, int type_filter = -1, bool with_outputs = false);
     void SetItems(const wxArrayStr &names, const wxArrayStr &labels, const wxArrayStr &contexts);
     wxArrayStr GetCheckedNames();
     int GetVarOptimizationType();

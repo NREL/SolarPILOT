@@ -167,7 +167,7 @@ void par_variables_dialog::UpdateTree()
 
 }
 
-void par_variables_dialog::SetItems(var_map *V, int type_filter)
+void par_variables_dialog::SetItems(var_map *V, int type_filter, bool with_outputs)
 {
     
     m_items.clear();
@@ -205,7 +205,7 @@ void par_variables_dialog::SetItems(var_map *V, int type_filter)
     //populate lists
     for( unordered_map<string, spbase*>::iterator var=V->_varptrs.begin(); var != V->_varptrs.end(); var++)
     {
-        if( ! var->second->is_param || var->second->is_disabled || var->second->short_desc.empty() )
+        if( !(var->second->is_param || (var->second->is_output && with_outputs)) || var->second->is_disabled || var->second->short_desc.empty() )
             continue;
         string cname = (split(var->first, ".")).at(0);
         
@@ -229,7 +229,7 @@ void par_variables_dialog::SetItems(var_map *V, int type_filter)
     {
         spbase* var = V->_varptrs[all_names[i]];
 
-        if( ! var->is_param || var->short_desc.empty() || var->is_disabled)
+        if( ! (var->is_param || (var->is_output && with_outputs)) || var->short_desc.empty() || var->is_disabled)
             continue;
 
         if( type_filter != -1 )
@@ -239,7 +239,7 @@ void par_variables_dialog::SetItems(var_map *V, int type_filter)
         m_items.push_back(item_info());
         m_items.back().tree_id = 0;
         m_items.back().name = all_names[i];
-        m_items.back().label = var->short_desc;
+        m_items.back().label = var->short_desc + ((with_outputs && var->is_output) ? " [Output]" : "");
         m_items.back().shown = true;
         m_items.back().context = class_map[ (split(all_names[i], ".")).at(0) ];
         m_items.back().checked = false;
