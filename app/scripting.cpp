@@ -566,9 +566,43 @@ static void _generate_layout( lk::invoke_t &cxt )
     SF->Create(*V);
     bool ok = F.DoManagedLayout(*SF, *V);        //Returns TRUE if successful
 
+    sim_results& results = *F.GetResultsObject();
+    //Process the simulation results
+    results.clear();
+    results.resize(1);
+    double azzen[2];
+    SF->CalcDesignPtSunPosition(V->sf.sun_loc_des.mapval(), azzen[0], azzen[1]);
+
+    sim_params P;
+    P.dni = V->sf.dni_des.val;
+
+    results.at(0).process_analytical_simulation(*SF, P, 0, azzen);
+
+    //Load the results in the grid
+    F.UpdateLayoutGrid();
+
+
+    //Redraw the plots
+    F.GetFieldPlotObject()->SetPlotData(*SF, FIELD_PLOT::EFF_TOT);
+    //update the selection combo
+    F.UpdateFieldPlotSelections();
+    //update the receiver flux map selection combo
+    F.UpdateFluxPlotSelections();
+
+    F.DoResultsPage();
+
+    F.UpdateCalculatedGUIValues();
+    F.SetGeomState(false);
+    //F._inputs_modified = true;    //Any time the layout is run, flag for save on exit
+
+    //clear the flux heliostat list control
+    /*_flux_lc->ClearAll();
+    _flcsort.clear();*/
+    //UpdateFluxLC(-1);
+
     cxt.result().assign( ok );
 
-    F.UpdateLayoutGrid();
+    //F.UpdateLayoutGrid();
     F.GetFieldPlotObject()->SetPlotData( *SF, FIELD_PLOT::EFF_TOT ); 
     F.GetFieldPlotObject()->Update();
 
