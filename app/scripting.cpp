@@ -272,14 +272,30 @@ static void _sp_var( lk::invoke_t &cxt )
             {
             case SP_INT:
             {
-                spvar<int> *v = static_cast< spvar<int>* >( var );
-                cxt.result().assign( (double)v->val );
+                if (var->is_output)
+                {
+                    spout<int>* v = static_cast<spout<int>*>(var);
+                    cxt.result().assign((double)v->Val());
+                }
+                else
+                {
+                    spvar<int> *v = static_cast< spvar<int>* >( var );
+                    cxt.result().assign( (double)v->val );
+                }
                 return;
             }
             case SP_DOUBLE:
             {
-                spvar<double> *v = static_cast< spvar<double>* >( var );
-                cxt.result().assign( v->val );
+                if (var->is_output)
+                {
+                    spout<double>* v = static_cast<spout<double>*>(var);
+                    cxt.result().assign(v->Val());
+                }
+                else
+                {
+                    spvar<double> *v = static_cast< spvar<double>* >( var );
+                    cxt.result().assign( v->val );
+                }
                 return;
             }
             case SP_STRING:
@@ -287,8 +303,16 @@ static void _sp_var( lk::invoke_t &cxt )
                 return;
             case SP_BOOL:
             {
-                spvar<bool> *v = static_cast< spvar<bool>* >( var );
-                cxt.result().assign( v->val ? 1. : 0. );
+                if (var->is_output)
+                {
+                    spout<bool>* v = static_cast<spout<bool>*>(var);
+                    cxt.result().assign(v->Val() ? 1. : 0.);
+                }
+                else
+                {
+                    spvar<bool> *v = static_cast< spvar<bool>* >( var );
+                    cxt.result().assign( v->val ? 1. : 0. );
+                }
                 return;
             }
             case SP_MATRIX_T:
