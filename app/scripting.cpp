@@ -1217,9 +1217,9 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
     std::string system = cxt.arg(0).as_string();
 
     //which return data type?
-    bool is_returnloc = false;
+    /*bool is_returnloc = false;
     if( cxt.arg_count() == 3 )
-        is_returnloc = lower_case( cxt.arg(2).as_string().ToStdString() ) == "location";
+        is_returnloc = lower_case( cxt.arg(2).as_string().ToStdString() ) == "location";*/
     
     cxt.result().empty_vector();
     
@@ -1232,18 +1232,14 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
     {
         for(size_t i=0; i<helios->size(); i++)
         {
-            if( is_returnloc )
-            {
-                lk::vardata_t pv;
-                pv.empty_vector();
-                pv.vec_append( helios->at(i)->getLocation()->x );
-                pv.vec_append( helios->at(i)->getLocation()->y );
-                pv.vec_append( helios->at(i)->getLocation()->z );
+            lk::vardata_t pv;
+            pv.empty_vector();
+            pv.vec_append((double)helios->at(i)->getId());
+            pv.vec_append( helios->at(i)->getLocation()->x );
+            pv.vec_append( helios->at(i)->getLocation()->y );
+            pv.vec_append( helios->at(i)->getLocation()->z );
 
-                cxt.result().vec()->push_back( pv );
-            }
-            else
-                cxt.result().vec_append( (double)helios->at(i)->getId() );
+            cxt.result().vec()->push_back( pv );
         }
     }
     else if( lower_case(system) == "cylindrical" )
@@ -1254,29 +1250,26 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
         azmin = cxt.arg(1).vec()->at(2).as_number()-delta;
         azmax = cxt.arg(1).vec()->at(3).as_number()+delta;
 
-        for(size_t i=0; i<helios->size(); i++)
+        for (size_t i = 0; i < helios->size(); i++)
         {
             double rpos = helios->at(i)->getRadialPos();
             double apos = helios->at(i)->getAzimuthalPos();
 
-            if( rpos > rmin )
-                if( rpos < rmax )
-                    if( apos > azmin )
-                        if( apos < azmax )
-                            if( is_returnloc )
-                            {
-                                lk::vardata_t pv;
-                                pv.empty_vector();
-                                pv.vec_append( helios->at(i)->getLocation()->x );
-                                pv.vec_append( helios->at(i)->getLocation()->y );
-                                pv.vec_append( helios->at(i)->getLocation()->z );
+            if (rpos > rmin)
+                if (rpos < rmax)
+                    if (apos > azmin)
+                        if (apos < azmax)
+                        {
+                            lk::vardata_t pv;
+                            pv.empty_vector();
+                            pv.vec_append((double)helios->at(i)->getId());
+                            pv.vec_append(helios->at(i)->getLocation()->x);
+                            pv.vec_append(helios->at(i)->getLocation()->y);
+                            pv.vec_append(helios->at(i)->getLocation()->z);
 
-                                cxt.result().vec()->push_back( pv );
-                            }
-                            else
-                                cxt.result().vec_append( (double)helios->at(i)->getId() );
+                            cxt.result().vec()->push_back(pv);
+                        }
         }
-
     }
     else if( lower_case(system) == "cartesian" )
     {
@@ -1307,18 +1300,16 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
                         if(loc->y < ymax)
                             if(loc->z > zmin)
                                 if(loc->z < zmax)
-                                    if( is_returnloc )
-                                    {
-                                        lk::vardata_t pv;
-                                        pv.empty_vector();
-                                        pv.vec_append( helios->at(i)->getLocation()->x );
-                                        pv.vec_append( helios->at(i)->getLocation()->y );
-                                        pv.vec_append( helios->at(i)->getLocation()->z );
+                                {
+                                    lk::vardata_t pv;
+                                    pv.empty_vector();
+                                    pv.vec_append((double)helios->at(i)->getId());
+                                    pv.vec_append( helios->at(i)->getLocation()->x );
+                                    pv.vec_append( helios->at(i)->getLocation()->y );
+                                    pv.vec_append( helios->at(i)->getLocation()->z );
 
-                                        cxt.result().vec()->push_back( pv );
-                                    }
-                                    else
-                                        cxt.result().vec_append( (double)helios->at(i)->getId() );
+                                    cxt.result().vec()->push_back( pv );
+                                }
         }
     }
     else if( lower_case(system) == "polygon" )
@@ -1334,18 +1325,16 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
         for(size_t i=0; i<helios->size(); i++)
         {
             if( Toolbox::pointInPolygon( polygon,  *helios->at(i)->getLocation() ) )
-                if( is_returnloc )
-                {
-                    lk::vardata_t pv;
-                    pv.empty_vector();
-                    pv.vec_append( helios->at(i)->getLocation()->x );
-                    pv.vec_append( helios->at(i)->getLocation()->y );
-                    pv.vec_append( helios->at(i)->getLocation()->z );
+            {
+                lk::vardata_t pv;
+                pv.empty_vector();
+                pv.vec_append((double)helios->at(i)->getId());
+                pv.vec_append( helios->at(i)->getLocation()->x );
+                pv.vec_append( helios->at(i)->getLocation()->y );
+                pv.vec_append( helios->at(i)->getLocation()->z );
 
-                    cxt.result().vec()->push_back( pv );
-                }
-                else
-                    cxt.result().vec_append( (double)helios->at(i)->getId() );
+                cxt.result().vec()->push_back( pv );
+            }
         }
 
     }
@@ -1482,26 +1471,20 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
 
                 if( Toolbox::pointInPolygon( *polygon,  *loc ) )
                 {
-                        if( is_returnloc )
-                        {
-                            lk::vardata_t pv;
-                            pv.empty_vector();
-                            pv.vec_append( loc->x );
-                            pv.vec_append( loc->y );
-                            pv.vec_append( loc->z );
+                    lk::vardata_t pv;
+                    pv.empty_vector();
+                    pv.vec_append((double)helios->at(i)->getId());
+                    pv.vec_append( loc->x );
+                    pv.vec_append( loc->y );
+                    pv.vec_append( loc->z );
 
-                            cxt.result().vec()->push_back( pv );
-                        }
-                        else
-                            cxt.result().vec_append( (double)helios->at(i)->getId() );
+                    cxt.result().vec()->push_back( pv );
 
-                        //if included, don't need to check other polygons
-                        break;
+                    //if included, don't need to check other polygons
+                    break;
                 }
             }
         }
-
-
     }
     else
     {

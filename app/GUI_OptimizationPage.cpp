@@ -245,7 +245,7 @@ void SPFrame::OnDoOptimizationSimulation( wxCommandEvent &event )
             if( _variables.flux.flux_model.mapval() == var_fluxsim::FLUX_MODEL::SOLTRACE )
             {
                 //Cancel the SolTrace simulation
-                _cancel_simulation = true; 
+                _sim_control._cancel_simulation = true;
             }
             else
             {

@@ -778,7 +778,7 @@ void SPFrame::OnParametricSimulate( wxCommandEvent &WXUNUSED(event))
         else
         {
             //cancel the method if necessary
-            _cancel_simulation = true;
+            _sim_control._cancel_simulation = true;
             if(_sim_control._is_mt_simulation && _simthread != 0)
             {
                 //For a multithreaded simulation, cancel all of the threads
@@ -1102,7 +1102,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
         else
         {
             //cancel the method if necessary
-            _cancel_simulation = true;
+            _sim_control._cancel_simulation = true;
             if(_sim_control._is_mt_simulation && _simthread != 0)
             {
                 //For a multithreaded simulation, cancel all of the threads
@@ -1487,7 +1487,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
 
             //------------------------------------------------------------------
         
-            if(_par_SF.CheckCancelStatus() || _cancel_simulation) break;
+            if(_par_SF.CheckCancelStatus() || _sim_control._cancel_simulation) break;
         }
         UserParProgressUpdate(0, 0);
         _user_single_gauge->SetValue(0);

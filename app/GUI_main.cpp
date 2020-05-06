@@ -318,7 +318,7 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
     _in_flux_simulation = false;
     _in_param_simulation = false;
     _in_user_param_simulation = false;
-    _cancel_simulation = false;
+    _sim_control._cancel_simulation = false;
     _sim_control._is_mt_simulation = false;
     _in_optimize_simulation = false;
     _enable_detail_update_gauge = true;
@@ -2003,7 +2003,7 @@ int SPFrame::SolTraceProgressUpdate(st_uint_t ntracedtotal, st_uint_t ntraced, s
     */
     
     //Check if the simulation has been cancelled
-    if(_cancel_simulation) 
+    if(_sim_control._cancel_simulation)
         return 0;    //Code for coretrace to quit
     
     //Update the gui
@@ -2287,7 +2287,7 @@ bool SPFrame::SolTraceFluxSimulation(SolarField &SF, var_map &vset, Hvector &hel
             SolTraceProgressUpdate(ntotal, ntraced, ntotrace, stagenum, nstages, (void*)NULL);
             
             // if dialog's cancel button was pressed, send cancel signal to all threads
-            if (_cancel_simulation)
+            if (_sim_control._cancel_simulation)
             {
                 for (int i=0;i< _sim_control._n_threads;i++)
                     _stthread[i].CancelTrace();
@@ -2354,9 +2354,9 @@ bool SPFrame::SolTraceFluxSimulation(SolarField &SF, var_map &vset, Hvector &hel
         return false;
     }
     //Was the simulation cancelled during st_sim_run()?
-    if(_cancel_simulation)
+    if(_sim_control._cancel_simulation)
     {
-        _cancel_simulation = false; //reset
+        _sim_control._cancel_simulation = false; //reset
         return false;
     }
     
@@ -2658,7 +2658,7 @@ void SPFrame::SetSimulationStatus(bool in_sim, bool &sim_type_flag, wxBitmapButt
         button->SetToolTip("Cancel"); 
 
         sim_type_flag = true;
-        _cancel_simulation = false;
+        _sim_control._cancel_simulation = false;
         
     }
     else
@@ -2671,7 +2671,7 @@ void SPFrame::SetSimulationStatus(bool in_sim, bool &sim_type_flag, wxBitmapButt
         button->SetToolTip("Run"); 
 
         sim_type_flag = false;
-        _cancel_simulation = false;
+        _sim_control._cancel_simulation = false;
         _sim_control._is_mt_simulation = false;    //Reset
         PostSimulation();
     }
