@@ -215,9 +215,9 @@ private:
     wxDateTime _trial_start;
 
     SimControl _sim_control; // 
-    bool _cancel_simulation; //Flag indicating whether the user wants to cancel the simulation
-    STSimThread* _stthread;
-    ST_System* _STSim;
+    //bool _cancel_simulation; //Flag indicating whether the user wants to cancel the simulation
+    //STSimThread* _stthread;
+    //ST_System* _STSim;
 
 	int 
 		_version_major,
