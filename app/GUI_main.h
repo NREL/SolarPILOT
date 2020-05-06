@@ -219,6 +219,7 @@ private:
     //STSimThread* _stthread;
     //ST_System* _STSim;
 
+
 	int 
 		_version_major,
 		_version_minor,
@@ -793,7 +794,7 @@ public:
     void WriteVariablesToFile(wxTextFile &tfile, var_map &vset);
     void LogFileVariableDump(var_map &vset);
     void LogFileVariableDump(var_map &vset, wxArrayStr &messages);
-    int PopMessage(wxString message, wxString title = wxEmptyString, long style = wxOK|wxICON_INFORMATION);
+    int PopMessage(wxString message, wxString title = wxEmptyString, long style = wxOK | wxICON_INFORMATION);
     void ScriptMessageOutput(const char *msg);
     
 };
@@ -808,5 +809,7 @@ extern void SolarFieldErrorCallback(simulation_error *simerror, void *data);
 extern bool SolarFieldOptimizeSummaryCallback(simulation_info *siminfo, void *data);
 
 extern bool SolarFieldOptimizeDetailCallback(simulation_info *siminfo, void *data);
+
+extern int PopMessageHandler(const char* message, void* data);
 
 #endif

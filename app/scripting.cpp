@@ -634,7 +634,8 @@ static void _simulate( lk::invoke_t &cxt )
         ok = interop::HermiteFluxSimulationHandler(*res, *SF, *helios);
         break;
     case var_fluxsim::FLUX_MODEL::SOLTRACE:
-        ok = F.SolTraceFluxSimulation(*SF, *V, *helios);
+        ok = interop::SolTraceFluxSimulation(*F.GetSimControlObject(),*res,*SF, *V, *helios);
+        //ok = F.SolTraceFluxSimulation(*SF, *V, *helios);
         break;
     default:
         ok = false;
