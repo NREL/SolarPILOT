@@ -911,7 +911,7 @@ static void _optimize( lk::invoke_t &cxt )
 {
     LK_DOC("run_optimization","Execute an optimization run, returning the optimized result and iteration information. "
         "Variables to be optimized are passed in a vector, with each row containing a table specifying "
-        "{variable, step, upbound, lowbound, inital}. The table must include the variable key, others are optional. "
+        "{variable, step, upbound, lowbound, initial}. The table must include the variable key, others are optional. "
         "The return table includes the following: 'result':table of variable names and associated optimized values, "
         "'objective':number, 'flux':number, 'iterations':array of evaluation point, objective, flux. "
         "Optional arguments include maxiterations/tolerance/defaultstep/powerpenalty/nthreads.",
