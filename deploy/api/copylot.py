@@ -1,4 +1,4 @@
-import string, sys, os
+import sys
 import pandas as pd
 from ctypes import *
 c_number = c_double   #must be either c_double or c_float depending on copilot.h definition
@@ -6,17 +6,21 @@ c_number = c_double   #must be either c_double or c_float depending on copilot.h
 
 @CFUNCTYPE(c_int, c_number, c_char_p)
 def api_callback(fprogress, msg):
-    if fprogress == 0:
+    newline = False
+    if fprogress != 0:
+        print("Progress is {:.2f} %".format(fprogress*100))
+        newline = True
+    if msg.decode() != '':
+        if newline:
+            print("\n")
         print("C++ API message -> {:s}".format(msg.decode()))
-    else:
-        print("Progress is {:f}\nC++ API message -> {:s}".format(fprogress,msg.decode()))
     return 1
 
 class CoPylot:
     def __init__(self):
         if sys.platform == 'win32' or sys.platform == 'cygwin':
-            self.pdll = CDLL("C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/build_vs2017/build/Debug/x64/solarpilot.dll")
-            #self.pdll = CDLL("./solarpilot.dll")
+            #self.pdll = CDLL("C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/build_vs2017/build/Debug/x64/solarpilot.dll")
+            self.pdll = CDLL("./solarpilot.dll")
         elif sys.platform == 'darwin':
             self.pdll = CDLL("./solarpilot.dylib")
         elif sys.platform == 'linux2':
@@ -27,7 +31,7 @@ class CoPylot:
     def api_callback_create(self,p_data):
         self.pdll.sp_set_callback(c_void_p(p_data), api_callback)
 
-        # TODO: Add this function into C++ side of API
+        # TODO: Should this be done? 
     def version(self):
         self.pdll.sp_version.restype = c_int
         return self.pdll.sp_version()
@@ -51,9 +55,9 @@ class CoPylot:
         arr[:] = parr # set all at once
         return self.pdll.sp_set_array(c_void_p(p_data), c_char_p(name), pointer(arr), c_int(count))
 
-    #Sets array using csv - TODO: test to see if it works
+    # Set array variable through a csv file
     def data_set_array_from_csv(self, p_data, name, fn):
-        f = open(fn, 'r')
+        f = open(fn, 'r', encoding="utf-8-sig")
         data = []
         for line in f:
             data.extend([n for n in map(float, line.split(','))])
@@ -177,15 +181,13 @@ class CoPylot:
             mat.append(row)
         return mat
 
-    #SPEXPORT bool sp_simulate(sp_data_t p_data, int nthreads = 1, bool save_detail = true, bool update_aimpoints = true)
-    def simulate(self, p_data, nthreads = 1, save_detail = True, update_aimpoints = True):
-        # TODO: Test function
+    #SPEXPORT bool sp_simulate(sp_data_t p_data, int nthreads = 1, bool update_aimpoints = true)
+    def simulate(self, p_data, nthreads = 1, update_aimpoints = True):
         self.pdll.sp_simulate.restype = c_bool
-        return self.pdll.sp_simulate( c_void_p(p_data), c_int(nthreads), c_bool(save_detail), c_bool(update_aimpoints))
+        return self.pdll.sp_simulate( c_void_p(p_data), c_int(nthreads), c_bool(update_aimpoints))
 
     #SPEXPORT const char *sp_summary_results(sp_data_t p_data)
     def summary_results(self, p_data, save_dict = False):
-        # TODO: Test function
         self.pdll.sp_summary_results.restype = c_char_p
         ret = self.pdll.sp_summary_results( c_void_p(p_data)).decode()
         # save result table to dictionary
@@ -220,7 +222,7 @@ class CoPylot:
         res_arr = self.pdll.sp_detail_results( c_void_p(p_data), byref(nrows), byref(ncols), pointer(arr), c_int(nselhel))
         # Get header
         self.pdll.sp_detail_results_header.restype = c_char_p
-        header = self.pdll.sp_detail_results_header().decode()
+        header = self.pdll.sp_detail_results_header( c_void_p(p_data)).decode()
         header = header.split(',')
         if restype.lower().startswith("mat"):
             # output matrix
@@ -283,7 +285,6 @@ class CoPylot:
     #                                                sp_number_t* arguments = NULL, int* len_arg = NULL,
     #                                                const char* svgfname_data = NULL, sp_number_t* svg_opt_tab = NULL);
     def heliostats_by_region(self, p_data, coor_sys = b'all', **kwargs):
-        # TODO: test function
         """
         Returns heliostats that fall within a region. Options are:\n
             >> all (no additional arguments),\n
@@ -360,7 +361,6 @@ class CoPylot:
 
     #SPEXPORT bool sp_modify_heliostats(sp_data_t p_data, sp_number_t* helio_data, int* nhel, int* ncols, const char* table_hdr)
     def modify_heliostats(self, p_data, helio_dict):
-        # TODO: set-up and test function
         ## helio_data is a dictionary using a subset of the following keys
         """
             'id',               - Required
@@ -404,165 +404,3 @@ class CoPylot:
         self.pdll.sp_dump_varmap.restype = c_bool
         return self.pdll.sp_dump_varmap( c_void_p(p_data), c_char_p(sp_fname))
     
-#-----------------------------------------------------------------
-if __name__ == "__main__":
-
-    cp = CoPylot()
-
-    print('Process ID: ', os.getpid())
-
-    r = cp.data_create()
-    cp.api_callback_create(r)
-
-    ## Testing set and get number - DONE
-    if False:
-        cp.data_set_number(r, b"solarfield.0.dni_des", 1111.)
-        print ( cp.data_get_number(r, b"solarfield.0.dni_des"))
-
-    ## Testing set and get string - TODO
-    if False:
-        cp.data_set_string(r, b"ambient.0.loc_state", b"Mind")  #- Working
-        print ( cp.data_get_string(r, b"ambient.0.loc_state")) #- Working TODO: Talk to Mike about strdup()
-        # TODO: had to also add it to summary_results
-
-    ## Testing set and get array - DONE
-    if False:
-        cp.data_set_array(r, b"financial.0.pmt_factors", [1.,2.,3.,4.,5.,6.,7.,8.,9.])
-        print( cp.data_get_array(r, b"financial.0.pmt_factors"))
-
-    ## Testing set and get matrix - DONE
-    if False:
-        cp.data_set_matrix(r, b"ambient.0.atm_coefs", [[1,1,1,1],[2,2,2,2],[3,3,3,3]])
-        #cp.data_set_matrix_from_csv(r, b"ambient.0.atm_coefs", "test.csv")
-        print( cp.data_get_matrix(r, b"ambient.0.atm_coefs"))
-
-    ## Testing variable reset - DONE
-    if False:
-        cp.reset_vars(r)
-        print ( cp.data_get_number(r, b"solarfield.0.dni_des"))
-        print( cp.data_get_array(r, b"financial.0.pmt_factors"))
-        print( cp.data_get_matrix(r, b"ambient.0.atm_coefs"))
-
-    ## Testing add and drop receiver - DONE
-    if False:
-        print( cp.add_receiver(r, b"test_rec"))
-        print( cp.add_receiver(r, b"test_rec"))
-        print( cp.drop_receiver(r, b"test_rec"))
-        print( cp.drop_receiver(r, b"test_re"))
-
-    ## Testing add and drop heliostat template - DONE
-    if False:
-        print( cp.add_heliostat_template(r, b"test_helio"))
-        print( cp.add_heliostat_template(r, b"test_helio"))
-        print( cp.drop_heliostat_template(r, b"test_helio"))
-        print( cp.drop_heliostat_template(r, b"test_heli"))
-
-    ## Testing setting and getting Combo variables - TODO - We should improve this function
-            # are all combos strings?
-    if False:
-        print (cp.data_get_string(r, b"ambient.0.sun_type"))
-        cp.data_set_string(r, b"ambient.0.sun_type" , b'Gaussian su') # - Working now
-        print (cp.data_get_string(r, b"ambient.0.sun_type"))
-
-    ## Testing generate, assign - DONE, and update layout - TODO:
-    if True:
-        cp.reset_vars(r)
-
-        # generate
-        if True:
-            cp.data_set_string(r, b"solarfield.0.des_sim_detail", b"Do not filter heliostats")
-            ## Requires setting heliostat template to use for field generation
-            cp.data_set_string(r, b"solarfield.0.temp_which", b"Template 1")
-            print( cp.generate_layout(r))  # - Poor field design
-
-        # assign
-        if True:
-            # pulling in heliostat locations
-            import csv
-            helio_data = []
-            with open('test_field.csv') as csvDataFile:
-                csvReader = csv.reader(csvDataFile)
-                for row in csvReader:
-                    helio_data.append([float(i) for i in row])
-        
-            print( cp.assign_layout(r, helio_data)) # Works
-
-            # trying soltrace simulation
-            #cp.data_set_string(r, b"fluxsim.0.flux_model", b"SolTrace")
-                    # nthreads does not work with SolTrace
-            
-            cp.data_set_number(r, b'fluxsim.0.x_res', 45)
-            cp.data_set_number(r, b'fluxsim.0.y_res', 30)
-            print( cp.simulate(r)) # seems to work
-
-            if False:
-                res = cp.summary_results(r, save_dict=True)                 # Testing - DONE
-                #res, header = cp.detail_results(r, restype = 'matrix')     # returns (matrix, header) - DONE
-                #res = cp.detail_results(r, restype = 'matrix')             # returns (matrix, header) - DONE
-                #res = cp.detail_results(r, restype = 'dictionary')         # returns dictionary - DONE
-                res = cp.detail_results(r, selhel = [ 3, 33, 333, 3333])    # returns dataframe - DONE
-                res = cp.heliostats_by_region(r, coor_sys=b'polygon', arguments = [[500,500], [1000,1000], [500,1000]]) # tested all, cylindrical, cartesian, and polygon - DONE
-
-        # update field
-        if True:
-            cp.data_set_string(r, b"ambient.0.weather_file", b"C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/deploy/climate_files/USA CA Daggett (TMY2).csv")
-            cp.data_set_string(r, b"solarfield.0.des_sim_detail", b"Single simulation point")
-            ##check = cp.add_land(r, b'exclus', [[1000, 1000],[500,1000], [500,500], [1000, 500]]) # - Testing - DONE
-            if True:
-                helio_dict = {}
-                helio_dict['id'] = [3,33]
-                helio_dict['location-x'] = [1500, -1500]
-                helio_dict['location-y'] = [1500, 1500]
-                helio_dict['soiling'] = [ 0.5, 0.3]
-                helio_dict['reflectivity'] = [0.2, 0.8]
-                helio_dict['enabled'] = [1, 0]
-                check = cp.modify_heliostats(r, helio_dict) # TODO: doesn't seem to modify the field
-            
-            
-            print( cp.update_geometry(r))
-            ## _sim_error (line 1485) SolarField.cpp -> "Representive profiles"
-            ## _heliostat object does not get set up correctly SolarField.cpp (line 3965)
-
-        # Pulling field data
-        field = cp.get_layout_info(r) # Tested
-
-        #cp.clear_land(r, clear_type=b'inclusion') # Testing - DONE
-
-        import matplotlib.pyplot as plt
-        # Plotting solarfield layout
-        if True:
-            x = []
-            y = []
-            for i in range(len(field)):
-                x.append(field[i][1])
-                y.append(field[i][2])
-            plt.scatter(x,y,s=0.5)
-            plt.tight_layout()
-            plt.show()
-
-        flux = cp.get_fluxmap(r) # Tested
-        # Plotting flux map
-        if False:
-            im = plt.imshow(flux)
-            plt.colorbar(im)
-            plt.tight_layout()
-            plt.show()
-            
-
-
-    # Testing dump_varmap and save_from script - DONE
-    if False:
-        import os
-        cwd = os.getcwd()
-        print( cp.dump_varmap_tofile(r, b"C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/deploy/api/varmap_dump.csv") )
-        print( cp.dump_varmap_tofile(r, b"varmap_dump_v2.csv") ) # This does not work - must provide full path
-        print( cp.dump_varmap_tofile(r, (cwd + '\\varmap_dump_v3.csv').encode()) ) # This works
-
-        print( cp.save_from_script(r, b"C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/deploy/api/case_study.spt") )
-        print( cp.save_from_script(r, (cwd + '\\case_study_v2.spt').encode()) ) # This works
-
-
-
-
-
-
