@@ -21,8 +21,8 @@ def api_callback(fprogress, msg):
 class CoPylot:
     def __init__(self):
         if sys.platform == 'win32' or sys.platform == 'cygwin':
-            self.pdll = CDLL("C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/build_vs2017/build/Debug/x64/solarpilot.dll")
-            #self.pdll = CDLL("./solarpilot.dll")
+            #self.pdll = CDLL("C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/build_vs2017/build/Debug/x64/solarpilot.dll")
+            self.pdll = CDLL("./solarpilot.dll")
         elif sys.platform == 'darwin':
             self.pdll = CDLL("./solarpilot.dylib")
         elif sys.platform == 'linux2':
@@ -40,6 +40,9 @@ class CoPylot:
     def data_create(self):
         self.pdll.sp_data_create.restype = c_void_p
         return self.pdll.sp_data_create()
+
+    def data_free(self, p_data):
+        self.pdll.sp_data_free(c_void_p(p_data))
 
     #SPEXPORT void sp_set_number(sp_data_t p_data, const char* name, sp_number_t v);
     def data_set_number(self, p_data, name, value):

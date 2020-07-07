@@ -208,3 +208,4 @@ if False:
     print(cp.save_from_script( r, b"C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/deploy/api/case_study.spt"))
     print(cp.save_from_script(r, (cwd + "\\case_study_v2.spt").encode()))  # This works
 
+cp.data_free(r) # Works - free memory
