@@ -3,7 +3,6 @@ import pandas as pd
 from ctypes import *
 c_number = c_double   #must be either c_double or c_float depending on copilot.h definition
 
-
 @CFUNCTYPE(c_int, c_number, c_char_p)
 def api_callback(fprogress, msg):
     newline = False
@@ -16,11 +15,14 @@ def api_callback(fprogress, msg):
         print("C++ API message -> {:s}".format(msg.decode()))
     return 1
 
+# TODO: Can build both dll and lib file using a post processing step
+# https://stackoverflow.com/questions/376296/building-both-dll-and-static-libs-from-the-same-project#:~:text=There%20is%20an%20easy%20way,lib%20versions%20in%20one%20project.&text=Then%2C%20in%20your%20project%2C%20add,the%20command%20just%20runs%20the%20.&text=Then%2C%20you%20will%20always%20get,dll%20and%20a%20static%20lib.
+
 class CoPylot:
     def __init__(self):
         if sys.platform == 'win32' or sys.platform == 'cygwin':
-            #self.pdll = CDLL("C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/build_vs2017/build/Debug/x64/solarpilot.dll")
-            self.pdll = CDLL("./solarpilot.dll")
+            self.pdll = CDLL("C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/build_vs2017/build/Debug/x64/solarpilot.dll")
+            #self.pdll = CDLL("./solarpilot.dll")
         elif sys.platform == 'darwin':
             self.pdll = CDLL("./solarpilot.dylib")
         elif sys.platform == 'linux2':
@@ -31,10 +33,9 @@ class CoPylot:
     def api_callback_create(self,p_data):
         self.pdll.sp_set_callback(c_void_p(p_data), api_callback)
 
-        # TODO: Should this be done? 
-    def version(self):
-        self.pdll.sp_version.restype = c_int
-        return self.pdll.sp_version()
+    def version(self, p_data):
+        self.pdll.sp_version.restype = c_char_p
+        return self.pdll.sp_version(c_void_p(p_data) ).decode()
 
     def data_create(self):
         self.pdll.sp_data_create.restype = c_void_p
@@ -375,7 +376,7 @@ class CoPylot:
             'enabled'
         """
         ncols = len(helio_dict.keys())
-        nhel = len(helio_dict['id'])
+        nhel = len(helio_dict[next(iter(helio_dict))])
         table_hdr = ""
         for key in helio_dict.keys():
             table_hdr += key
