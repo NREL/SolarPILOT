@@ -1,4 +1,4 @@
-import sys
+import sys, os
 import pandas as pd
 from ctypes import *
 c_number = c_double   #must be either c_double or c_float depending on copilot.h definition
@@ -20,13 +20,14 @@ def api_callback(fprogress, msg):
 
 class CoPylot:
     def __init__(self):
+        cwd = os.getcwd()
         if sys.platform == 'win32' or sys.platform == 'cygwin':
-            #self.pdll = CDLL("C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/build_vs2017/build/Debug/x64/solarpilot.dll")
-            self.pdll = CDLL("./solarpilot.dll")
+            #self.pdll = CDLL("C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/build_vs2017/build/Debug/x64/solarpilot.dll") # for debugging
+            self.pdll = CDLL(cwd + "/solarpilot.dll")
         elif sys.platform == 'darwin':
-            self.pdll = CDLL("./solarpilot.dylib")
+            self.pdll = CDLL(cwd + "/solarpilot.dylib")
         elif sys.platform == 'linux2':
-            self.pdll = CDLL("./solarpilot.so")
+            self.pdll = CDLL(cwd +"/solarpilot.so")
         else:
             print( 'Platform not supported ', sys.platform)
 
