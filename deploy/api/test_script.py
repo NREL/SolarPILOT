@@ -11,6 +11,7 @@ print("Process ID: ", os.getpid())
 r = cp.data_create()
 print(cp.version(r))
 cp.api_callback_create(r)
+#cp.api_disable_callback(r) - tested
 
 ## Testing set and get number - DONE
 if False:

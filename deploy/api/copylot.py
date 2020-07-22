@@ -34,6 +34,9 @@ class CoPylot:
     def api_callback_create(self,p_data):
         self.pdll.sp_set_callback(c_void_p(p_data), api_callback)
 
+    def api_disable_callback(self,p_data):
+        self.pdll.sp_disable_callback(c_void_p(p_data))
+
     def version(self, p_data):
         self.pdll.sp_version.restype = c_char_p
         return self.pdll.sp_version(c_void_p(p_data) ).decode()
