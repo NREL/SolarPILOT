@@ -17,6 +17,10 @@ cp.api_callback_create(r)
 if False:
     cp.data_set_number(r, b"solarfield.0.dni_des", 1111.0)
     print(cp.data_get_number(r, b"solarfield.0.dni_des"))
+    ## Testing set and get boolean - DONE
+    print(cp.data_get_number(r, b"solarfield.0.is_sliprow_skipped"))
+    cp.data_set_number(r, b"solarfield.0.is_sliprow_skipped", True)         # Works with 1, 0, True, and False
+    print(cp.data_get_number(r, b"solarfield.0.is_sliprow_skipped"))
 
 ## Testing set and get string - DONE
 if False:
@@ -66,7 +70,7 @@ if False:
 ## Testing generate - DONE, assign - DONE, and update layout
 if True:
     cp.reset_vars(r)
-    cp.data_set_number(r, b"solarfield.0.q_des", 100)
+    cp.data_set_number(r, b"solarfield.0.q_des", 100)       # Small field for debugging
     cp.data_set_string(r, b"receiver.0.rec_type", b"Flat plate")
     cp.data_set_string(
         r,
@@ -77,6 +81,8 @@ if True:
     # generate - DONE
     if True:
         cp.data_set_string( r, b"solarfield.0.des_sim_detail", b"Single simulation point")  # to speed up solution time for testing
+        cp.data_set_number(r, b"solarfield.0.is_sliprow_skipped", True)
+        cp.data_set_number(r, b"solarfield.0.slip_plane_blocking", 0.0)
         ## If you add a another template and do not choose a temp_which -> ERROR
         # print( cp.add_heliostat_template(r, b"test_helio"))
         ## Requires setting heliostat template to use for field generation
@@ -154,7 +160,7 @@ if True:
             flux = cp.get_fluxmap(r)
             maxflux_aftu = max(max(flux))
             
-    if True:
+    if False:
         res1 = cp.summary_results(r, save_dict=True)  # Testing - DONE
         # res, header = cp.detail_results(r, restype = 'matrix')     # returns (matrix, header) - DONE
         # res = cp.detail_results(r, restype = 'matrix')             # returns (matrix, header) - DONE
