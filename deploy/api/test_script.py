@@ -160,7 +160,7 @@ if True:
             flux = cp.get_fluxmap(r)
             maxflux_aftu = max(max(flux))
             
-    if False:
+    if True:
         res1 = cp.summary_results(r, save_dict=True)  # Testing - DONE
         # res, header = cp.detail_results(r, restype = 'matrix')     # returns (matrix, header) - DONE
         # res = cp.detail_results(r, restype = 'matrix')             # returns (matrix, header) - DONE
