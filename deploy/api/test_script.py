@@ -118,6 +118,7 @@ if True:
         # cp.data_set_string(r, b"fluxsim.0.flux_model", b"SolTrace") # Tested
         cp.data_set_number(r, b"fluxsim.0.x_res", 45)
         cp.data_set_number(r, b"fluxsim.0.y_res", 30)
+        
         print(cp.simulate(r))  # Testing - DONE
         flux = cp.get_fluxmap(r)  # Testing - DONE
 
@@ -165,7 +166,7 @@ if True:
         # res, header = cp.detail_results(r, restype = 'matrix')     # returns (matrix, header) - DONE
         # res = cp.detail_results(r, restype = 'matrix')             # returns (matrix, header) - DONE
         # res = cp.detail_results(r, restype = 'dictionary')         # returns dictionary - DONE
-        res2 = cp.detail_results(r)  # returns dataframe - DONE
+        res2 = cp.detail_results(r, get_corners=True)  # returns dataframe - DONE
         res3 = cp.heliostats_by_region(r, coor_sys=b"polygon", arguments=[[500, 500], [1000, 1000], [500, 1000]])  # tested all, cylindrical, cartesian, and polygon - DONE
 
         if True:
@@ -180,7 +181,7 @@ if True:
             print(cp.simulate(r))  # Testing - DONE
 
     # Pulling field data
-    field = cp.get_layout_info(r)  # Testing - DONE
+    field,header = cp.get_layout_info(r, get_corners=True, restype="matrix")  # Testing - DONE
 
     # cp.clear_land(r, clear_type=b'inclusion') # Testing - DONE
 

@@ -175,19 +175,39 @@ class CoPylot:
         self.pdll.sp_assign_layout.restype = c_bool
         return self.pdll.sp_assign_layout( c_void_p(p_data), pointer(arr), c_int(nrows), c_int(ncols), c_int(nthreads))
 
-    #SPEXPORT sp_number_t* sp_get_layout_info(sp_data_t p_data, int* nhelio, int* ncol)
-    def get_layout_info(self, p_data):
+    #SPEXPORT sp_number_t* sp_get_layout_info(sp_data_t p_data, int* nhelio, int* ncol, bool get_corners = false)
+    def get_layout_info(self, p_data, get_corners = False, restype = "dataframe"):
         nrows = c_int()
         ncols = c_int()
+        # Get data
         self.pdll.sp_get_layout_info.restype = POINTER(c_number)
-        parr = self.pdll.sp_get_layout_info( c_void_p(p_data), byref(nrows), byref(ncols) )
-        mat = []
-        for r in range(nrows.value):
-            row = []
-            for c in range(ncols.value):
-                row.append( float(parr[ncols.value * r + c]))
-            mat.append(row)
-        return mat
+        parr = self.pdll.sp_get_layout_info( c_void_p(p_data), byref(nrows), byref(ncols),  c_bool(get_corners))
+        # Get header
+        self.pdll.sp_get_layout_header.restype = c_char_p
+        header = self.pdll.sp_get_layout_header( c_void_p(p_data), c_bool(get_corners)).decode()
+        header = header.split(',')
+        if restype.lower().startswith("mat"):
+            # output matrix
+            mat = []
+            for r in range(nrows.value):
+                row = []
+                for c in range(ncols.value):
+                    row.append( float(parr[ncols.value * r + c]))
+                mat.append(row)
+            return mat, header
+        elif restype.lower().startswith("dic") or restype.lower().startswith("dat"):
+            # output dictionary
+            ret = {}
+            for c,key in enumerate(header):
+                ret[key] = []
+                for r in range(nrows.value):
+                    ret[key].append( float(parr[ncols.value * r + c]))
+            if restype.lower().startswith("dic"):
+                return ret
+            else:
+                df = pd.DataFrame(ret)
+                df.set_index(header[0])
+                return df
 
     #SPEXPORT bool sp_simulate(sp_data_t p_data, int nthreads = 1, bool update_aimpoints = true)
     def simulate(self, p_data, nthreads = 1, update_aimpoints = True):
@@ -213,7 +233,7 @@ class CoPylot:
             return print(ret)
 
     #SPEXPORT sp_number_t* sp_detail_results(sp_data_t p_data, int* nrows, int* ncols, sp_number_t* selhel = NULL, int nselhel = 0)
-    def detail_results(self, p_data, selhel = None, restype = "dataframe"):
+    def detail_results(self, p_data, selhel = None, restype = "dataframe", get_corners = False):
         # handling selected heliostats
         if selhel == None:
             nselhel = 0
@@ -227,33 +247,36 @@ class CoPylot:
         ncols = c_int()
         # Get data
         self.pdll.sp_detail_results.restype = POINTER(c_number)
-        res_arr = self.pdll.sp_detail_results( c_void_p(p_data), byref(nrows), byref(ncols), pointer(arr), c_int(nselhel))
-        # Get header
-        self.pdll.sp_detail_results_header.restype = c_char_p
-        header = self.pdll.sp_detail_results_header( c_void_p(p_data)).decode()
-        header = header.split(',')
-        if restype.lower().startswith("mat"):
-            # output matrix
-            mat = []
-            for r in range(nrows.value):
-                row = []
-                for c in range(ncols.value):
-                    row.append( float(res_arr[ncols.value * r + c]))
-                mat.append(row)
-            return mat, header
-        elif restype.lower().startswith("dic") or restype.lower().startswith("dat"):
-            # output dictionary
-            ret = {}
-            for c,key in enumerate(header):
-                ret[key] = []
+        res_arr = self.pdll.sp_detail_results( c_void_p(p_data), byref(nrows), byref(ncols), pointer(arr), c_int(nselhel), c_bool(get_corners))
+        try:
+            # Get header
+            self.pdll.sp_detail_results_header.restype = c_char_p
+            header = self.pdll.sp_detail_results_header( c_void_p(p_data), c_bool(get_corners)).decode()
+            header = header.split(',')
+            if restype.lower().startswith("mat"):
+                # output matrix
+                mat = []
                 for r in range(nrows.value):
-                    ret[key].append( float(res_arr[ncols.value * r + c]))
-            if restype.lower().startswith("dic"):
-                return ret
-            else:
-                df = pd.DataFrame(ret)
-                df.set_index(header[0])
-                return df
+                    row = []
+                    for c in range(ncols.value):
+                        row.append( float(res_arr[ncols.value * r + c]))
+                    mat.append(row)
+                return mat, header
+            elif restype.lower().startswith("dic") or restype.lower().startswith("dat"):
+                # output dictionary
+                ret = {}
+                for c,key in enumerate(header):
+                    ret[key] = []
+                    for r in range(nrows.value):
+                        ret[key].append( float(res_arr[ncols.value * r + c]))
+                if restype.lower().startswith("dic"):
+                    return ret
+                else:
+                    df = pd.DataFrame(ret)
+                    df.set_index(header[0])
+                    return df
+        except:
+            print("Detailed results API called failed to return correct information.")
 
     #SPEXPORT sp_number_t* sp_get_fluxmap(sp_data_t p_data, int* nrows, int* ncols, int rec_id = 0)
     def get_fluxmap(self, p_data, rec_id = 0):
