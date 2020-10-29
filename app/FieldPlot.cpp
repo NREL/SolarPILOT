@@ -565,8 +565,6 @@ void FieldPlot::DoPaint(wxDC &_pdc)
         if( mesh.size() == 0)
         {
             SetPlotOption(FIELD_PLOT::LAND);
-            wxPaintEvent evt(this->GetId());
-            ProcessEvent( evt );
             return;
         }
 
