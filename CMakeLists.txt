@@ -18,15 +18,13 @@ endif()
 #
 #####################################################################################################################
 
-Project(SolarPILOT)
+Project(SolarPILOT-UI)
 
 if ( NOT APPLE)
 	set(CURL_DIR build_resources/libcurl_ssl_x64)
 endif()
 
-#include_directories(. $ENV{WEXDIR}/include $ENV{LKDIR}/include ../ssc ../shared ../splinter)
-include_directories(. $ENV{WEXDIR}/include $ENV{LKDIR}/include $ENV{SSCDIR}/shared $ENV{SSCDIR}/lpsolve $ENV{SSCDIR}/nlopt $ENV{CORETRACEDIR} $ENV{SSCDIR}/solarpilot $ENV{SSCDIR})
-
+include_directories(. $ENV{WEXDIR}/include $ENV{LKDIR}/include $ENV{CORETRACEDIR} $ENV{SSCDIR}/shared $ENV{SSCDIR}/solarpilot)
 
 set(SOLARPILOT_SRC
 	app/FieldPlot.cpp
@@ -150,10 +148,10 @@ set_target_properties(SolarPILOT
 	MINSIZEREL_POSTFIX "min"
 	RELWITHDEBINFO_POSTFIX "rdbg"
 	PREFIX ""
-	RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_BINARY_DIR}/../deploy/x64
-	RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_BINARY_DIR}/../deploy/x64
-	RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${CMAKE_CURRENT_BINARY_DIR}/../deploy/x64
-	RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_CURRENT_BINARY_DIR}/../deploy/x64
+	RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/deploy/x64
+	RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_SOURCE_DIR}/deploy/x64
+	RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${CMAKE_CURRENT_SOURCE_DIR}/deploy/x64
+	RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_CURRENT_SOURCE_DIR}/deploy/x64
 	)
 
 if (APPLE)
@@ -172,70 +170,24 @@ endif()
 # Link Libraries and Options
 #
 #####################################################################################################################
+target_link_libraries(SolarPILOT lk wex lpsolve nlopt shared solarpilot_core)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug" OR MSVC)
-	unset(WEXD_LIB CACHE)
-	unset(LKD_LIB CACHE)
-	unset(LPSOLVED_LIB CACHE)
-	unset(NLOPTD_LIB CACHE)
-	unset(SHAREDD_LIB CACHE)
-	unset(SOLARPILOTD_LIB CACHE)
 	unset(CORETRACED_LIB CACHE)
-	find_library( WEXD_LIB
-			NAMES wexd.a wexd.lib
-			PATHS $ENV{WEXDIR}/build $ENV{WEXDIR}/build/Debug)
-	find_library( LKD_LIB
-			NAMES lkd.a lkd.lib
-			PATHS $ENV{LKDIR}/build $ENV{LKDIR}/build/Debug)
-	find_library( LPSOLVED_LIB
-			NAMES lpsolved.a lpsolved.lib
-			PATHS $ENV{SSCDIR}/build/lpsolve $ENV{SSCDIR}/build/lpsolve/Debug)
-	find_library( NLOPTD_LIB
-			NAMES nloptd.a nloptd.lib
-			PATHS $ENV{SSCDIR}/build/nlopt $ENV{SSCDIR}/build/nlopt/Debug)
-	find_library( SHAREDD_LIB
-			NAMES sharedd.a sharedd.lib
-			PATHS $ENV{SSCDIR}/build/shared $ENV{SSCDIR}/build/shared/Debug)
-	find_library( SOLARPILOTD_LIB
-			NAMES solarpilotd.a solarpilotd.lib
-			PATHS $ENV{SSCDIR}/build/solarpilot $ENV{SSCDIR}/build/solarpilot/Debug)
 	find_library( CORETRACED_LIB
 			NAMES coretrace.a coretrace.lib
 			PATHS $ENV{CORETRACEDIR}/build_linux/Debug $ENV{CORETRACEDIR}/build_vs2017/x64/Debug)
-	target_link_libraries(SolarPILOT debug ${WEXD_LIB} debug ${LKD_LIB} debug ${LPSOLVED_LIB} debug ${NLOPTD_LIB} debug ${SHAREDD_LIB} debug ${CORETRACED_LIB} debug ${SOLARPILOTD_LIB})
+			
+	target_link_libraries(SolarPILOT debug ${CORETRACED_LIB}) 
 endif()
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release" OR MSVC)
-	unset(WEX_LIB CACHE)
-	unset(LK_LIB CACHE)
-	unset(LPSOLVE_LIB CACHE)
-	unset(NLOPT_LIB CACHE)
-	unset(SHARED_LIB CACHE)
-	unset(SOLARPILOT_LIB CACHE)
 	unset(CORETRACE_LIB CACHE)
-	find_library( WEX_LIB
-			NAMES wex.a wex.lib
-			PATHS $ENV{WEXDIR}/build $ENV{WEXDIR}/build/Release)
-	find_library( LK_LIB
-			NAMES lk.a lk.lib
-			PATHS $ENV{LKDIR}/build $ENV{LKDIR}/build/Release)
-	find_library( LPSOLVE_LIB
-			NAMES lpsolve.a lpsolve.lib
-			PATHS $ENV{SSCDIR}/build/lpsolve $ENV{SSCDIR}/build/lpsolve/Release)
-	find_library( NLOPT_LIB
-			NAMES nlopt.a nlopt.lib
-			PATHS $ENV{SSCDIR}/build/nlopt $ENV{SSCDIR}/build/nlopt/Release)
-	find_library( SHARED_LIB
-			NAMES shared.a shared.lib
-			PATHS $ENV{SSCDIR}/build/shared $ENV{SSCDIR}/build/shared/Release)
-	find_library( SOLARPILOT_LIB
-			NAMES solarpilot.a solarpilot.lib
-			PATHS $ENV{SSCDIR}/build/solarpilot $ENV{SSCDIR}/build/solarpilot/Release)
 	find_library( CORETRACE_LIB
 			NAMES coretrace.a coretrace.lib
 			PATHS $ENV{CORETRACEDIR}/build_linux/Release $ENV{CORETRACEDIR}/build_vs2017/x64/Release)
 
-	target_link_libraries(SolarPILOT optimized ${WEX_LIB} optimized ${LK_LIB} optimized ${LPSOLVE_LIB} optimized ${NLOPT_LIB} optimized ${SHARED_LIB} optimized ${CORETRACE_LIB} optimized ${SOLARPILOT_LIB})
+	target_link_libraries(SolarPILOT optimized ${CORETRACE_LIB} ) 
 endif()
 
 target_link_libraries(SolarPILOT ${wxWidgets_LIBRARIES})
@@ -273,8 +225,7 @@ if (MSVC)
 	   vcruntime140.dll
 	)
 
-	#set(SOLARPILOT_DIR ${CMAKE_CURRENT_BINARY_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>)
-	set(SOLARPILOT_DIR ${CMAKE_CURRENT_BINARY_DIR}/../deploy/x64)
+	set(SOLARPILOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/deploy/x64)
 
 	foreach( file_i ${LIBCURL_FILES})
 		add_custom_command(
@@ -285,3 +236,5 @@ if (MSVC)
 	)
 	endforeach( file_i )
 endif()
+
+
