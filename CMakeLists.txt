@@ -170,25 +170,7 @@ endif()
 # Link Libraries and Options
 #
 #####################################################################################################################
-target_link_libraries(SolarPILOT lk wex lpsolve nlopt shared solarpilot_core)
-
-if (CMAKE_BUILD_TYPE STREQUAL "Debug" OR MSVC)
-	unset(CORETRACED_LIB CACHE)
-	find_library( CORETRACED_LIB
-			NAMES coretrace.a coretrace.lib
-			PATHS $ENV{CORETRACEDIR}/build_linux/Debug $ENV{CORETRACEDIR}/build_vs2017/x64/Debug)
-			
-	target_link_libraries(SolarPILOT debug ${CORETRACED_LIB}) 
-endif()
-
-if (CMAKE_BUILD_TYPE STREQUAL "Release" OR MSVC)
-	unset(CORETRACE_LIB CACHE)
-	find_library( CORETRACE_LIB
-			NAMES coretrace.a coretrace.lib
-			PATHS $ENV{CORETRACEDIR}/build_linux/Release $ENV{CORETRACEDIR}/build_vs2017/x64/Release)
-
-	target_link_libraries(SolarPILOT optimized ${CORETRACE_LIB} ) 
-endif()
+target_link_libraries(SolarPILOT lk wex lpsolve nlopt shared coretrace solarpilot_core)
 
 target_link_libraries(SolarPILOT ${wxWidgets_LIBRARIES})
 
