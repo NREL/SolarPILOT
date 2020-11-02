@@ -1,0 +1,287 @@
+#####################################################################################################################
+#
+# CMake and System Settings
+#
+#####################################################################################################################
+cmake_minimum_required(VERSION 3.11)
+
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
+if(APPLE)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version")
+endif()
+
+
+#####################################################################################################################
+#
+# Project Settings 
+#
+#####################################################################################################################
+
+Project(SolarPILOT)
+
+if ( NOT APPLE)
+	set(CURL_DIR build_resources/libcurl_ssl_x64)
+endif()
+
+#include_directories(. $ENV{WEXDIR}/include $ENV{LKDIR}/include ../ssc ../shared ../splinter)
+include_directories(. $ENV{WEXDIR}/include $ENV{LKDIR}/include $ENV{SSCDIR}/shared $ENV{SSCDIR}/lpsolve $ENV{SSCDIR}/nlopt $ENV{CORETRACEDIR} $ENV{SSCDIR}/solarpilot $ENV{SSCDIR})
+
+
+set(SOLARPILOT_SRC
+	app/FieldPlot.cpp
+	app/FluxPlot.cpp
+	app/gui_about_dialog.cpp
+	app/GUI_ClimatePage.cpp
+	app/GUI_CostPage.cpp
+	app/GUI_HeliostatPage.cpp
+	app/GUI_LayoutPage.cpp
+	app/GUI_LayoutSimulationPage.cpp
+	app/GUI_main.cpp
+	app/GUI_MarketPage.cpp
+	app/GUI_OptimizationPage.cpp
+	app/GUI_ParametricSimulationPage.cpp
+	app/GUI_PerformanceSimulationPage.cpp
+	app/GUI_PlotFieldPage.cpp
+	app/GUI_PlotFluxPage.cpp
+	app/GUI_ReceiverPage.cpp
+	app/GUI_ResultsPage.cpp
+	app/GUI_SimulationsPage.cpp
+	app/gui_util.cpp
+	app/help.cpp
+	app/ImageCanvas.cpp
+	app/InputControl.cpp
+	app/kml_select_dialog.cpp
+	app/layout_sim_export_dialog.cpp
+	app/numericvareditform.cpp
+	app/OutputControl.cpp
+	app/pagepanel.cpp
+	app/param_dialog.cpp
+	app/parse_kml.cpp
+	app/par_edit_ctrls.cpp
+	app/plot_base.cpp
+	app/plot_contourf.cpp
+	app/plot_scatter.cpp
+	app/plot_select_dialog.cpp
+	app/rec_select_dialog.cpp
+	app/rename_dialog.cpp
+	app/sandbox.cpp
+	app/scripting.cpp
+	app/settings_dialog.cpp)
+
+
+#####################################################################################################################
+#
+# Compile Options per Platform
+#
+#####################################################################################################################
+
+cmake_policy(SET CMP0043 NEW)
+
+if(MSVC)
+	add_compile_options(/W3 /MP)
+    add_compile_definitions( __64BIT__ LK_USE_WXWIDGETS _CRT_SECURE_NO_DEPRECATE=1 )
+	add_compile_definitions(_CRT_NON_CONFORMING_SWPRINTFS=1 _SCL_SECURE_NO_WARNINGS=1)
+	add_compile_definitions(__WXMSW__ _UNICODE NOPCH )
+	add_compile_definitions( SP_USE_SOLTRACE SP_USE_THREADS )
+	foreach (flag_var CMAKE_C_FLAGS_DEBUG CMAKE_CXX_FLAGS_DEBUG)
+		set(${flag_var} "${${flag_var}} /D_DEBUG" CACHE STRING "compile flags" FORCE)
+	endforeach()
+else(MSVC)
+	if (APPLE)
+		set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+		add_compile_options(-arch x86_64)
+		add_definitions(-D__WXOSX__)
+	else()
+		add_definitions(-D__64BIT__)
+	endif()
+	add_compile_options(-Wall -Wno-deprecated -Wno-unknown-pragmas -Werror -Wno-overloaded-virtual -fno-common -std=c++11)
+	add_definitions(-DLK_USE_WXWIDGETS -DWX_PRECOMP )
+	if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+		add_compile_definitions(_DEBUG)
+	else()
+		SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3" )
+	endif()
+endif(MSVC)
+
+
+#####################################################################################################################
+#
+# Packages
+#
+#####################################################################################################################
+
+if (UNIX)
+	set(wxWidgets_CONFIG_EXECUTABLE /usr/local/bin/wx-config-3)
+	find_package(wxWidgets COMPONENTS qa aui richtext html propgrid adv net stc core xml base REQUIRED)
+else()
+	set(wxWidgets_ROOT_DIR $ENV{WXMSW3})
+	find_package(wxWidgets COMPONENTS qa webview aui richtext html propgrid adv net stc core xml base scintilla REQUIRED)
+endif()
+
+include(${wxWidgets_USE_FILE})
+
+
+#####################################################################################################################
+# 
+# CMake Targets
+#
+#####################################################################################################################
+
+# Setup Application
+if (APPLE)
+	set(MACOSX_BUNDLE_ICON_FILE ${CMAKE_CURRENT_SOURCE_DIR}/build_resources/SolarPILOT-UI.icns)
+	set(SOLARPILOT_ICON ${CMAKE_CURRENT_SOURCE_DIR}/build_resources/SolarPILOT-UI.icns)
+	set_source_files_properties(${SOLARPILOT_ICON} PROPERTIES
+		MACOSX_PACKAGE_LOCATION "Resources")
+elseif(WIN32)
+	set(SOLARPILOT_ICON ${CMAKE_CURRENT_SOURCE_DIR}/build_resources/SolarPILOT.rc)
+endif()
+
+# Setup Target
+add_executable(SolarPILOT
+		WIN32
+		MACOSX_BUNDLE 
+		${SOLARPILOT_SRC}
+		${SOLARPILOT_ICON})
+set_target_properties(SolarPILOT
+    PROPERTIES
+    DEBUG_POSTFIX "d"
+	MINSIZEREL_POSTFIX "min"
+	RELWITHDEBINFO_POSTFIX "rdbg"
+	PREFIX ""
+	RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_BINARY_DIR}/../deploy/x64
+	RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_BINARY_DIR}/../deploy/x64
+	RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${CMAKE_CURRENT_BINARY_DIR}/../deploy/x64
+	RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_CURRENT_BINARY_DIR}/../deploy/x64
+	)
+
+if (APPLE)
+	set_target_properties(SolarPILOT PROPERTIES
+		MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/../build_resources/Info-SolarPILOT.plist
+	)
+endif()
+
+if (MSVC)
+	set_target_properties(SolarPILOT PROPERTIES
+        LINK_FLAGS /SUBSYSTEM:WINDOWS)
+endif()
+
+#####################################################################################################################
+#
+# Link Libraries and Options
+#
+#####################################################################################################################
+
+if (CMAKE_BUILD_TYPE STREQUAL "Debug" OR MSVC)
+	unset(WEXD_LIB CACHE)
+	unset(LKD_LIB CACHE)
+	unset(LPSOLVED_LIB CACHE)
+	unset(NLOPTD_LIB CACHE)
+	unset(SHAREDD_LIB CACHE)
+	unset(SOLARPILOTD_LIB CACHE)
+	unset(CORETRACED_LIB CACHE)
+	find_library( WEXD_LIB
+			NAMES wexd.a wexd.lib
+			PATHS $ENV{WEXDIR}/build $ENV{WEXDIR}/build/Debug)
+	find_library( LKD_LIB
+			NAMES lkd.a lkd.lib
+			PATHS $ENV{LKDIR}/build $ENV{LKDIR}/build/Debug)
+	find_library( LPSOLVED_LIB
+			NAMES lpsolved.a lpsolved.lib
+			PATHS $ENV{SSCDIR}/build/lpsolve $ENV{SSCDIR}/build/lpsolve/Debug)
+	find_library( NLOPTD_LIB
+			NAMES nloptd.a nloptd.lib
+			PATHS $ENV{SSCDIR}/build/nlopt $ENV{SSCDIR}/build/nlopt/Debug)
+	find_library( SHAREDD_LIB
+			NAMES sharedd.a sharedd.lib
+			PATHS $ENV{SSCDIR}/build/shared $ENV{SSCDIR}/build/shared/Debug)
+	find_library( SOLARPILOTD_LIB
+			NAMES solarpilotd.a solarpilotd.lib
+			PATHS $ENV{SSCDIR}/build/solarpilot $ENV{SSCDIR}/build/solarpilot/Debug)
+	find_library( CORETRACED_LIB
+			NAMES coretrace.a coretrace.lib
+			PATHS $ENV{CORETRACEDIR}/build_linux/Debug $ENV{CORETRACEDIR}/build_vs2017/x64/Debug)
+	target_link_libraries(SolarPILOT debug ${WEXD_LIB} debug ${LKD_LIB} debug ${LPSOLVED_LIB} debug ${NLOPTD_LIB} debug ${SHAREDD_LIB} debug ${CORETRACED_LIB} debug ${SOLARPILOTD_LIB})
+endif()
+
+if (CMAKE_BUILD_TYPE STREQUAL "Release" OR MSVC)
+	unset(WEX_LIB CACHE)
+	unset(LK_LIB CACHE)
+	unset(LPSOLVE_LIB CACHE)
+	unset(NLOPT_LIB CACHE)
+	unset(SHARED_LIB CACHE)
+	unset(SOLARPILOT_LIB CACHE)
+	unset(CORETRACE_LIB CACHE)
+	find_library( WEX_LIB
+			NAMES wex.a wex.lib
+			PATHS $ENV{WEXDIR}/build $ENV{WEXDIR}/build/Release)
+	find_library( LK_LIB
+			NAMES lk.a lk.lib
+			PATHS $ENV{LKDIR}/build $ENV{LKDIR}/build/Release)
+	find_library( LPSOLVE_LIB
+			NAMES lpsolve.a lpsolve.lib
+			PATHS $ENV{SSCDIR}/build/lpsolve $ENV{SSCDIR}/build/lpsolve/Release)
+	find_library( NLOPT_LIB
+			NAMES nlopt.a nlopt.lib
+			PATHS $ENV{SSCDIR}/build/nlopt $ENV{SSCDIR}/build/nlopt/Release)
+	find_library( SHARED_LIB
+			NAMES shared.a shared.lib
+			PATHS $ENV{SSCDIR}/build/shared $ENV{SSCDIR}/build/shared/Release)
+	find_library( SOLARPILOT_LIB
+			NAMES solarpilot.a solarpilot.lib
+			PATHS $ENV{SSCDIR}/build/solarpilot $ENV{SSCDIR}/build/solarpilot/Release)
+	find_library( CORETRACE_LIB
+			NAMES coretrace.a coretrace.lib
+			PATHS $ENV{CORETRACEDIR}/build_linux/Release $ENV{CORETRACEDIR}/build_vs2017/x64/Release)
+
+	target_link_libraries(SolarPILOT optimized ${WEX_LIB} optimized ${LK_LIB} optimized ${LPSOLVE_LIB} optimized ${NLOPT_LIB} optimized ${SHARED_LIB} optimized ${CORETRACE_LIB} optimized ${SOLARPILOT_LIB})
+endif()
+
+target_link_libraries(SolarPILOT ${wxWidgets_LIBRARIES})
+
+if (UNIX AND NOT APPLE)
+	target_link_libraries(SolarPILOT -ldl -lfontconfig)
+endif()
+
+if (UNIX)
+	target_link_libraries(SolarPILOT -lm -lcurl)
+elseif (MSVC)
+	find_library( CURL_LIB
+			NAMES libcurl.lib
+			PATHS $ENV{WEXDIR}/build_resources/libcurl_ssl_x64/lib)
+	target_link_libraries(SolarPILOT ${CURL_LIB})
+	target_link_libraries(SolarPILOT Winhttp)
+endif()
+
+
+#####################################################################################################################
+#
+# Target Installation
+#
+#####################################################################################################################
+
+if (MSVC)
+	set( LIBCURL_FILES
+	   dbghelp.dll
+	   libcurl.dll
+	   libeay32.dll
+	   libssh2.dll
+	   msvcp140.dll
+	   openssl.exe
+	   ssleay32.dll
+	   vcruntime140.dll
+	)
+
+	#set(SOLARPILOT_DIR ${CMAKE_CURRENT_BINARY_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>)
+	set(SOLARPILOT_DIR ${CMAKE_CURRENT_BINARY_DIR}/../deploy/x64)
+
+	foreach( file_i ${LIBCURL_FILES})
+		add_custom_command(
+		TARGET SolarPILOT
+		POST_BUILD
+		COMMAND ${CMAKE_COMMAND}
+		ARGS -E copy $ENV{WEXDIR}/build_resources/libcurl_ssl_x64/bin/${file_i} ${SOLARPILOT_DIR}
+	)
+	endforeach( file_i )
+endif()
