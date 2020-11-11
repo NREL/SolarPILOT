@@ -73,8 +73,6 @@ public:
     
 protected:
     void OnPaint(wxPaintEvent &event);
-private:
-    DECLARE_EVENT_TABLE()
 
 };
 

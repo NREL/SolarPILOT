@@ -75,18 +75,19 @@ gui_about::gui_about(wxWindow *parent, wxWindowID id, string &bg_name, string &v
     _panel->SetBackgroundStyle(wxBG_STYLE_PAINT);
     wxBoxSizer *main_sizer = new wxBoxSizer(wxVERTICAL);
     main_sizer->Add(_panel,1,wxEXPAND,0);
+
+	_panel->Bind(wxEVT_PAINT, &gui_about::OnPaint, this);
         
     this->SetSizer(main_sizer);
     this->SetSizeHints( imgsize );
     this->Layout();
-        
         
 }
     
 void gui_about::OnPaint(wxPaintEvent &event)
 {
     
-    wxAutoBufferedPaintDC dc(_panel);
+	wxAutoBufferedPaintDC dc(_panel);
 
     dc.DrawBitmap( _bitmap, 0, 0);
     dc.SetFont( wxFont(20, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD) );
@@ -96,10 +97,6 @@ void gui_about::OnPaint(wxPaintEvent &event)
     dc.DrawText(msg, _bitmap.GetWidth()/2 - mext.GetWidth()/2, 280);
     event.Skip();
 }
-
-BEGIN_EVENT_TABLE(gui_about, wxFrame)
-    EVT_PAINT( gui_about::OnPaint )
-END_EVENT_TABLE()
 
 
 //---------------------------------------------------------------------------------------
