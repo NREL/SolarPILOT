@@ -193,18 +193,12 @@ void FluxPlot::DoPaint(wxDC &_pdc)
     switch (rgeom)
     {
     case Receiver::REC_GEOM_TYPE::CYLINDRICAL_CLOSED:
+    case Receiver::REC_GEOM_TYPE::CYLINDRICAL_OPEN:
+    case Receiver::REC_GEOM_TYPE::CYLINDRICAL_CAV:
         xaxmin = -180.;
         xaxmax = 180.;
         xaxcent = 0.;
         is_angle = true;
-        break;
-    case Receiver::REC_GEOM_TYPE::CYLINDRICAL_OPEN:
-    case Receiver::REC_GEOM_TYPE::CYLINDRICAL_CAV:
-        xaxmin = vrec->span_min.val;
-        xaxmax = vrec->span_max.val;
-        xaxcent = vrec->panel_rotation.val;
-        is_angle = true;
-
         break;
     case Receiver::REC_GEOM_TYPE::PLANE_RECT:
     case Receiver::REC_GEOM_TYPE::PLANE_ELLIPSE:
@@ -218,9 +212,10 @@ void FluxPlot::DoPaint(wxDC &_pdc)
     {    //Polygonal surfaces
 
         //angular definitions for the reciever
-        double angmin = vrec->span_min.val;
-        double angmax = vrec->span_max.val;
+        double span = PI + 2. * asin(vrec->rec_cav_cdepth.val);
         double angcent = vrec->panel_rotation.val;
+        double angmin = angcent - span / 2.;
+        double angmax = angcent + span / 2.;
         
         //Convert to degrees
         angmin *= R2D;

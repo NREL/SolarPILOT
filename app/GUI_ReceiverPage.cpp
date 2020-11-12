@@ -179,112 +179,130 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
 #if _USE_WINDOW_BG 
     parent->SetBackgroundColour(_background_colour);
 #endif    
-    //receiver geometry group
+    //---------------- receiver geometry group ------------------------------
     wxStaticBox *sb0 = new wxStaticBox(parent, wxID_ANY, wxT("Receiver geometry"));
     wxStaticBoxSizer *sbs0 = new wxStaticBoxSizer(sb0, wxVERTICAL);
 
-    InputControl 
-        *rec_type = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_type),
-        *is_polygon = new InputControl(parent, wxID_ANY, _variables.recs[id].is_polygon),
-        *n_panels = new InputControl(parent, wxID_ANY, _variables.recs[id].n_panels),
-        *panel_rotation = new InputControl(parent, wxID_ANY, _variables.recs[id].panel_rotation);
-    {
-    wxWindow* dsibs[] = {n_panels, panel_rotation};
-    is_polygon->setDisabledSiblings("false", 2, dsibs);
-    }
-
     wxPanel
         *panel_rec_ext = new wxPanel(parent),
-        *panel_rec_cav = new wxPanel(parent);
+        *panel_rec_cav = new wxPanel(parent),
+        *panel_rec_flat = new wxPanel(parent);
     wxBoxSizer
         *panel_rec_ext_s = new wxBoxSizer(wxVERTICAL),
-        *panel_rec_cav_s = new wxBoxSizer(wxVERTICAL);
-    //External cylindrical=0;Flat plate=2
-    rec_type->setPanelObject("External cylindrical", *panel_rec_ext);
-    rec_type->setPanelObject("Flat plate", *panel_rec_cav);
-
-    sbs0->Add(rec_type);
-
-    //receiver height and associated optimization controls
-    InputControl
-        *rec_height = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_height);
-    sbs0->Add(rec_height);
+        *panel_rec_cav_s = new wxBoxSizer(wxVERTICAL),
+        *panel_rec_flat_s = new wxBoxSizer(wxVERTICAL);
     
-    sbs0->Add(is_polygon);
-    sbs0->Add(n_panels);
-    sbs0->Add(panel_rotation);
+    // controls shown for all receiver types
+    InputControl* rec_type = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_type);
+    InputControl* rec_height = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_height);
+    
+    // controls for external receiver
+    InputControl* rec_diameter = new InputControl(panel_rec_ext, wxID_ANY, _variables.recs[id].rec_diameter);
 
-    //receiver diameter 
-    InputControl 
-        *rec_diameter = new InputControl(panel_rec_ext, wxID_ANY, _variables.recs[id].rec_diameter);
+    //controls for flat receiver
+    InputControl* rec_width = new InputControl(panel_rec_flat, wxID_ANY, _variables.recs[id].rec_width);
+    
+    // controls for cavity receiver
+    InputControl* n_panels = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].n_panels);
+    InputControl* rec_cav_rad = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_cav_rad);
+    InputControl* rec_cav_cdepth = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_cav_cdepth);
+    InputControl* rec_cav_apwfrac = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_cav_apwfrac);
+    InputControl* rec_cav_tlip = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_cav_tlip);
+    InputControl* rec_cav_blip = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_cav_blip);
+
+    OutputControl* rec_cav_apw = new OutputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_cav_apw, wxT("%.2f"));
+    OutputControl* rec_cav_aph = new OutputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_cav_aph, wxT("%.2f"));
+
+    // additional controls for all receivers
+    InputControl* accept_ang_type = new InputControl(parent, wxID_ANY, _variables.recs[id].accept_ang_type);
+    InputControl* accept_ang_x = new InputControl(parent, wxID_ANY, _variables.recs[id].accept_ang_x);
+    InputControl* accept_ang_y = new InputControl(parent, wxID_ANY, _variables.recs[id].accept_ang_y);
+    InputControl* rec_azimuth = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_azimuth);
+    InputControl* rec_elevation = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_elevation);
+    
+    // hidden controls
+    InputControl* panel_rotation = new InputControl(parent, wxID_ANY, _variables.recs[id].panel_rotation);
+    InputControl* is_polygon = new InputControl(parent, wxID_ANY, _variables.recs[id].is_polygon);
+    InputControl* aperture_type = new InputControl(parent, wxID_ANY, _variables.recs[id].aperture_type);
+    
+    
+    // output controls    
+    OutputControl* rec_aspect = new OutputControl(parent, wxID_ANY, _variables.recs[id].rec_aspect, wxT("%.2f"));
+    OutputControl* absorber_area = new OutputControl(parent, wxID_ANY, _variables.recs[id].absorber_area, wxT("%.1f"));
+    OutputControl* aperture_area = new OutputControl(parent, wxID_ANY, _variables.recs[id].aperture_area, wxT("%.1f"));
+
+    string msg = "For non-planar receivers, the receiver will be oriented such that the\n"
+        "primary parent with the specified azimuth angle will be tilted at the\n"
+        "specified elevation angle. Other panels will be oriented along the arc of\n"
+        "specified radius lying within the rotated receiver midline plane.";
+    wxStaticText* az_info = new wxStaticText(panel_rec_flat, wxID_ANY, msg);
+    az_info->SetForegroundColour(_helptext_colour);
+
+    //External cylindrical=0;Cavity=1;Flat plate=2
+    rec_type->setPanelObject("External cylindrical", *panel_rec_ext);
+    rec_type->setPanelObject("Cavity", *panel_rec_cav);
+    rec_type->setPanelObject("Flat plate", *panel_rec_flat);
+
     panel_rec_ext_s->Add(rec_diameter);
     
-    //receiver width 
-    InputControl 
-        *rec_width = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_width);
-        
-    panel_rec_cav_s->Add(rec_width);
-    
-    wxStaticLine *sl2 = new wxStaticLine(panel_rec_cav, wxID_ANY, wxDefaultPosition, wxSize(1,1), wxHORIZONTAL);
-    panel_rec_cav_s->Add(sl2, 0, wxEXPAND|wxALL, 5);
-    
-    //other objects for the cavity receiver
-    InputControl
-        *aperture_type = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].aperture_type),
-        *rec_cav_rad = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_cav_rad),
-        *rec_cav_cdepth = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_cav_cdepth),
-        *span_min = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].span_min),
-        *span_max = new InputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].span_max);
+    panel_rec_flat_s->Add(rec_width);
+    panel_rec_flat_s->Add(az_info, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    panel_rec_cav_s->Add(aperture_type);
+    panel_rec_cav_s->Add(n_panels);
     panel_rec_cav_s->Add(rec_cav_rad);
     panel_rec_cav_s->Add(rec_cav_cdepth);
-    panel_rec_cav_s->Add(span_min);
-    panel_rec_cav_s->Add(span_max);
-    
-    string msg = "For non-planar receivers, the receiver will be oriented such that the\n"
-                 "primary parent with the specified azimuth angle will be tilted at the\n"
-                 "specified elevation angle. Other panels will be oriented along the arc of\n"
-                 "specified radius lying within the rotated receiver midline plane.";
-    wxStaticText *az_info = new wxStaticText(panel_rec_cav, wxID_ANY, msg);
-    az_info->SetForegroundColour(_helptext_colour);
-    panel_rec_cav_s->Add(az_info, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    panel_rec_cav_s->Add(rec_cav_apwfrac);
+    panel_rec_cav_s->Add(rec_cav_tlip);
+    panel_rec_cav_s->Add(rec_cav_blip);
+    panel_rec_cav_s->Add(rec_cav_aph);
+    panel_rec_cav_s->Add(rec_cav_apw);
 
-    panel_rec_ext->SetSizer(panel_rec_ext_s);
-    panel_rec_cav->SetSizer(panel_rec_cav_s);
-
-    OutputControl
-        *rec_aspect = new OutputControl(parent, wxID_ANY, _variables.recs[id].rec_aspect, wxT("%.2f")),
-        *absorber_area = new OutputControl(parent, wxID_ANY, _variables.recs[id].absorber_area, wxT("%.1f"));
-    
-    sbs0->Add(panel_rec_ext);
-    sbs0->Add(panel_rec_cav);
-
-    InputControl
-        *accept_ang_type = new InputControl(parent, wxID_ANY, _variables.recs[id].accept_ang_type),
-        *accept_ang_x = new InputControl(parent, wxID_ANY, _variables.recs[id].accept_ang_x),
-        *accept_ang_y = new InputControl(parent, wxID_ANY, _variables.recs[id].accept_ang_y),
-        *rec_azimuth = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_azimuth),
-        *rec_elevation = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_elevation);
-
+    sbs0->Add(rec_type);
+    sbs0->Add(rec_height);
     sbs0->Add(accept_ang_type);
     sbs0->Add(accept_ang_x);
     sbs0->Add(accept_ang_y);
     sbs0->Add(rec_azimuth);
     sbs0->Add(rec_elevation);
+    
+    //panel_rec_flat_s->Add(new wxStaticLine(panel_rec_flat, wxID_ANY, wxDefaultPosition, wxSize(1,1), wxHORIZONTAL), 0, wxEXPAND|wxALL, 5);
 
+    sbs0->Add(panel_rotation);
+    sbs0->Add(is_polygon);
+    sbs0->Add(aperture_type);
+
+    panel_rec_ext->SetSizer(panel_rec_ext_s);
+    panel_rec_cav->SetSizer(panel_rec_cav_s);
+    panel_rec_flat->SetSizer(panel_rec_flat_s);
+
+    //add receiver type panels
+    sbs0->Add(panel_rec_ext);
+    sbs0->Add(panel_rec_cav);
+    sbs0->Add(panel_rec_flat);
+
+    //outputs
     sbs0->Add(rec_aspect);
     sbs0->Add(absorber_area);
+    sbs0->Add(aperture_area);
+
     {
-		wxWindow* dsibs[] = {rec_cav_rad, rec_cav_cdepth, is_polygon, n_panels, span_min, span_max};
+        wxWindow* dsibs[] = { n_panels, panel_rotation };
+        is_polygon->setDisabledSiblings("false", 2, dsibs);
+    }
+    {
+		wxWindow* dsibs[] = {accept_ang_type, accept_ang_y, rec_elevation, rec_width};
+		rec_type->setDisabledSiblings("External cylindrical", 4, dsibs);
+    }
+    {
+        wxWindow* dsibs[] = { rec_diameter, rec_width };
+        rec_type->setDisabledSiblings("Cavity", 2, dsibs);
+    }
+    {
+		wxWindow* dsibs[] = {rec_cav_rad, rec_cav_cdepth, is_polygon, n_panels, rec_diameter, rec_cav_apwfrac};
 		rec_type->setDisabledSiblings("Flat plate", 6, dsibs);
     }
 
-    {
-		wxWindow* dsibs[] = {span_min, span_max, accept_ang_type, accept_ang_y, rec_elevation};
-		rec_type->setDisabledSiblings("External cylindrical", 5, dsibs);
-    }
-
+    //---------------- end receiver geometry group ------------------------------
 
     //Receiver positioning group
     wxStaticBox *sb1 = new wxStaticBox(parent, wxID_ANY, wxT("Receiver position"));
@@ -484,8 +502,8 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
 
 
     InputControl *inputs[] = {rec_type, is_polygon, n_panels, panel_rotation, rec_height, rec_diameter, rec_width, aperture_type, rec_azimuth, rec_elevation, 
-                              rec_cav_rad, rec_cav_cdepth, rec_offset_reference, rec_offset_x, rec_offset_y, rec_offset_z, 
-                              span_min, therm_loss_base, piping_loss_coef, piping_loss_const, span_max, peak_flux, flux_profile_type, absorptance, accept_ang_type,
+                              rec_cav_rad, rec_cav_cdepth, rec_offset_reference, rec_offset_x, rec_offset_y, rec_offset_z, rec_cav_apwfrac, rec_cav_tlip, rec_cav_blip,
+                              therm_loss_base, piping_loss_coef, piping_loss_const, peak_flux, flux_profile_type, absorptance, accept_ang_type,
                               is_open_geom, accept_ang_x, accept_ang_y, NULL};
     int i=0;
     while(inputs[i] != NULL)
@@ -495,7 +513,7 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     }
     
     i=0;
-    OutputControl *outputs[] = {rec_aspect, optical_height, rec_offset_x_global, rec_offset_y_global, rec_offset_z_global, 
+    OutputControl *outputs[] = {rec_aspect, optical_height, rec_offset_x_global, rec_offset_y_global, rec_offset_z_global, rec_cav_apw, rec_cav_aph, aperture_area,
                                 absorber_area, therm_loss, piping_loss, NULL};
     while(outputs[i] != NULL)
     { 
