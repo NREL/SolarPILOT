@@ -238,10 +238,10 @@ receiver	piping_loss_coef	IN	DOUBLE	10.2	kW/m	1				Receiver piping loss coeffici
 receiver	piping_loss_const	IN	DOUBLE	0.0	kW	1				Receiver piping loss constant	Constant thermal loss due to piping - doesn't scale with tower height
 receiver	rec_azimuth	IN	DOUBLE	0.0	deg	1				Receiver orientation azimuth	Receiver azimuth orientation: 0 deg is north, positive clockwise
 receiver	rec_cav_cdepth	IN	DOUBLE	0.0	none	1				Cavity absorber centroid aperture offset	Offset of circle circumscribing cavity absorber surfaces from the aperture plane; fraction of cavity radius; positive yields greater receiver depth
-receiver	rec_cav_rad	IN	DOUBLE	7.75	m	1				Receiver cavity active surface radius	Radius of the circle circumscribing all active absorber surfaces
-receiver	rec_cav_tlip	IN	DOUBLE	0.1	none	1				Receiver cavity top lip fractional height	Fraction of the total receiver height occupied by the top lip in a cavity geometry
-receiver	rec_cav_blip	IN	DOUBLE	0.1	none	1				Receiver cavity bottom lip fractional height	Fraction of the total receiver height occupied by the bottom lip in a cavity geometry
-receiver	rec_cav_apwfrac	IN	DOUBLE	1.0	none	1				Receiver cavity aperture width fraction	Width of cavity aperture relative to maximum width at the aperture plane
+receiver	rec_cav_rad	IN	DOUBLE	7.75	m	1				Cavity active surface radius	Radius of the circle circumscribing all active absorber surfaces
+receiver	rec_cav_tlip	IN	DOUBLE	0.1	none	1				Cavity top lip fractional height	Fraction of the total receiver height occupied by the top lip in a cavity geometry
+receiver	rec_cav_blip	IN	DOUBLE	0.1	none	1				Cavity bottom lip fractional height	Fraction of the total receiver height occupied by the bottom lip in a cavity geometry
+receiver	rec_cav_apwfrac	IN	DOUBLE	1.0	none	1				Cavity aperture width fraction	Width of cavity aperture relative to maximum width at the aperture plane
 receiver	rec_diameter	IN	DOUBLE	17.65	m	1				Receiver diameter	Receiver diameter for cylindrical receivers
 receiver	rec_elevation	IN	DOUBLE	0.0	deg	1				Receiver orientation elevation	Receiver elevation orientation: 0 deg to the horizon, negative rotating downward
 receiver	rec_height	IN	DOUBLE	21.6	m	1				Receiver height	Height of the absorbing component
@@ -262,8 +262,8 @@ receiver	aperture_area	OUT	DOUBLE	0.0	m2	0				Receiver aperture area	Area of the
 receiver	optical_height	OUT	DOUBLE	195.0	m	0				Receiver optical height	Calculated height of the centerline of the receiver above the plane of the heliostats
 receiver	piping_loss	OUT	DOUBLE	0.0	MW	0				Receiver piping loss	Thermal loss from non-absorber receiver piping
 receiver	rec_aspect	OUT	DOUBLE	1.2	none	1				Receiver aspect ratio (H/W)	Ratio of receiver height to width
-receiver	rec_cav_apw	OUT	DOUBLE	0.0	m	0				Receiver cavity aperture width	Calculated aperture width based on cavity geometry and aperture width fraction
-receiver	rec_cav_aph	OUT	DOUBLE	0.0	m	0				Receiver cavity aperture height	Calculated aperture height based on receiver height and lip height fractions
+receiver	rec_cav_apw	OUT	DOUBLE	0.0	m	0				Cavity aperture width	Calculated aperture width based on cavity geometry and aperture width fraction
+receiver	rec_cav_aph	OUT	DOUBLE	0.0	m	0				Cavity aperture height	Calculated aperture height based on receiver height and lip height fractions
 receiver	therm_eff	OUT	DOUBLE	0.0	none	0				Receiver calculated thermal efficiency	Receiver calculated thermal efficiency
 receiver	therm_loss	OUT	DOUBLE	0.0	MW	0				Design-point thermal loss	Receiver thermal loss at design
 receiver	q_rec_des	OUT	DOUBLE	0.0	MW	0				Design-point thermal power	Power produced by the receiver at design after thermal losses

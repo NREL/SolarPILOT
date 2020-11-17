@@ -286,8 +286,8 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     sbs0->Add(aperture_area);
 
     {
-        wxWindow* dsibs[] = { n_panels, panel_rotation };
-        is_polygon->setDisabledSiblings("false", 2, dsibs);
+        wxWindow* dsibs[] = { panel_rotation };
+        is_polygon->setDisabledSiblings("false", 1, dsibs);
     }
     {
 		wxWindow* dsibs[] = {accept_ang_type, accept_ang_y, rec_elevation, rec_width};
