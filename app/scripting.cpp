@@ -323,7 +323,7 @@ static void _sp_var( lk::invoke_t &cxt )
 
                 for(int i=0; i<ni; i++)
                 {
-                    for(int j=0; j<Vp.at(i).size(); i++)
+                    for(int j=0; j<Vp.at(i).size(); j++)
                     {
                         cxt.result().vec()->push_back( lk::vardata_t() );
                         cxt.result().vec()->at(i*ni + j).vec_append( (double)j );

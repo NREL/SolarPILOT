@@ -22,8 +22,8 @@ class CoPylot:
     def __init__(self):
         cwd = os.getcwd()
         if sys.platform == 'win32' or sys.platform == 'cygwin':
-            #self.pdll = CDLL("C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/build_vs2017/build/Debug/x64/solarpilot.dll") # for debugging
-            self.pdll = CDLL(cwd + "/solarpilot.dll")
+            self.pdll = CDLL("C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/build_vs2017/build/Debug/x64/solarpilot.dll") # for debugging
+            #self.pdll = CDLL(cwd + "/solarpilot.dll")
         elif sys.platform == 'darwin':
             self.pdll = CDLL(cwd + "/solarpilot.dylib")
         elif sys.platform == 'linux2':
@@ -48,20 +48,23 @@ class CoPylot:
     def data_free(self, p_data):
         self.pdll.sp_data_free(c_void_p(p_data))
 
-    #SPEXPORT void sp_set_number(sp_data_t p_data, const char* name, sp_number_t v);
+    #SPEXPORT bool sp_set_number(sp_data_t p_data, const char* name, sp_number_t v);
     def data_set_number(self, p_data, name, value):
-        self.pdll.sp_set_number(c_void_p(p_data), c_char_p(name), c_number(value)) 
+        self.pdll.sp_set_number.restype = c_bool
+        return self.pdll.sp_set_number(c_void_p(p_data), c_char_p(name.encode()), c_number(value)) 
 
-    #SPEXPORT void sp_set_string(sp_data_t p_data, const char *name, const char *value)
+    #SPEXPORT bool sp_set_string(sp_data_t p_data, const char *name, const char *value)
     def data_set_string(self, p_data, name, svalue):
-        self.pdll.sp_set_string(c_void_p(p_data), c_char_p(name), c_char_p(svalue))
+        self.pdll.sp_set_string.restype = c_bool
+        return self.pdll.sp_set_string(c_void_p(p_data), c_char_p(name.encode()), c_char_p(svalue.encode()))
 
-    #SPEXPORT void sp_set_array(sp_data_t p_data, const char *name, sp_number_t *pvalues, int length)
+    #SPEXPORT bool sp_set_array(sp_data_t p_data, const char *name, sp_number_t *pvalues, int length)
     def data_set_array(self, p_data, name, parr):
         count = len(parr)
         arr = (c_number*count)()
         arr[:] = parr # set all at once
-        return self.pdll.sp_set_array(c_void_p(p_data), c_char_p(name), pointer(arr), c_int(count))
+        self.pdll.sp_set_array.restype = c_bool
+        return self.pdll.sp_set_array(c_void_p(p_data), c_char_p(name.encode()), pointer(arr), c_int(count))
 
     # Set array variable through a csv file
     def data_set_array_from_csv(self, p_data, name, fn):
@@ -72,7 +75,7 @@ class CoPylot:
         f.close()
         return self.data_set_array(p_data, name, data)
 
-    #SPEXPORT void sp_set_matrix(sp_data_t p_data, const char *name, sp_number_t *pvalues, int nrows, int ncols)
+    #SPEXPORT bool sp_set_matrix(sp_data_t p_data, const char *name, sp_number_t *pvalues, int nrows, int ncols)
     def data_set_matrix(self, p_data, name, mat):
         nrows = len(mat)
         ncols = len(mat[0])
@@ -83,7 +86,8 @@ class CoPylot:
             for c in range(ncols):
                 arr[idx] = c_number(mat[r][c])
                 idx += 1
-        return self.pdll.sp_set_matrix( c_void_p(p_data), c_char_p(name), pointer(arr), c_int(nrows), c_int(ncols))
+        self.pdll.sp_set_matrix.restype = c_bool
+        return self.pdll.sp_set_matrix( c_void_p(p_data), c_char_p(name.encode()), pointer(arr), c_int(nrows), c_int(ncols))
 
     # Set matrix variable values through a csv file
     def data_set_matrix_from_csv(self, p_data, name, fn):
@@ -98,18 +102,18 @@ class CoPylot:
     #SPEXPORT sp_number_t sp_get_number(sp_data_t p_data, const char* name)
     def data_get_number(self, p_data, name):
         self.pdll.sp_get_number.restype = c_number
-        return self.pdll.sp_get_number(c_void_p(p_data), c_char_p(name))
+        return self.pdll.sp_get_number(c_void_p(p_data), c_char_p(name.encode()))
 
     #SPEXPORT const char *sp_get_string(sp_data_t p_data, const char *name)
     def data_get_string(self, p_data, name):
         self.pdll.sp_get_string.restype = c_char_p
-        return self.pdll.sp_get_string(c_void_p(p_data), c_char_p(name))
+        return self.pdll.sp_get_string(c_void_p(p_data), c_char_p(name.encode())).decode()
 
     #SPEXPORT sp_number_t *sp_get_array(sp_data_t p_data, const char *name, int *length)
     def data_get_array(self, p_data, name):
         count = c_int()
         self.pdll.sp_get_array.restype = POINTER(c_number)
-        parr = self.pdll.sp_get_array(c_void_p(p_data), c_char_p(name), byref(count))
+        parr = self.pdll.sp_get_array(c_void_p(p_data), c_char_p(name.encode()), byref(count))
         arr = parr[0:count.value]
         return arr
 
@@ -118,7 +122,7 @@ class CoPylot:
         nrows = c_int()
         ncols = c_int()
         self.pdll.sp_get_matrix.restype = POINTER(c_number)
-        parr = self.pdll.sp_get_matrix( c_void_p(p_data), c_char_p(name), byref(nrows), byref(ncols) )
+        parr = self.pdll.sp_get_matrix( c_void_p(p_data), c_char_p(name.encode()), byref(nrows), byref(ncols) )
         mat = []
         for r in range(nrows.value):
             row = []
@@ -134,22 +138,22 @@ class CoPylot:
     #SPEXPORT int sp_add_receiver(sp_data_t p_data, const char* receiver_name)
     def add_receiver(self, p_data, rec_name):
         self.pdll.sp_add_receiver.restype = c_int
-        return self.pdll.sp_add_receiver( c_void_p(p_data), c_char_p(rec_name))
+        return self.pdll.sp_add_receiver( c_void_p(p_data), c_char_p(rec_name.encode()))
 
     #SPEXPORT int sp_drop_receiver(sp_data_t p_data, const char* receiver_name)
     def drop_receiver(self, p_data, rec_name):
         self.pdll.sp_drop_receiver.restype = c_int
-        return self.pdll.sp_drop_receiver( c_void_p(p_data), c_char_p(rec_name))
+        return self.pdll.sp_drop_receiver( c_void_p(p_data), c_char_p(rec_name.encode()))
 
     #SPEXPORT int sp_add_heliostat_template(sp_data_t p_data, const char* heliostat_name)
     def add_heliostat_template(self, p_data, helio_name):
         self.pdll.sp_add_heliostat_template.restype = c_int
-        return self.pdll.sp_add_heliostat_template( c_void_p(p_data), c_char_p(helio_name))
+        return self.pdll.sp_add_heliostat_template( c_void_p(p_data), c_char_p(helio_name.encode()))
 
     #SPEXPORT int sp_drop_heliostat_template(sp_data_t p_data, const char* heliostat_name)
     def drop_heliostat_template(self, p_data, helio_name):
         self.pdll.sp_drop_heliostat_template.restype = c_int
-        return self.pdll.sp_drop_heliostat_template( c_void_p(p_data), c_char_p(helio_name))
+        return self.pdll.sp_drop_heliostat_template( c_void_p(p_data), c_char_p(helio_name.encode()))
 
     #SPEXPORT int sp_update_geometry(sp_data_t p_data)
     def update_geometry(self, p_data):
@@ -295,7 +299,7 @@ class CoPylot:
     
     #SPEXPORT void sp_clear_land(sp_data_t p_data, const char* type = NULL)
     def clear_land(self, p_data, clear_type = None):
-        return self.pdll.sp_clear_land( c_void_p(p_data), c_char_p(clear_type))
+        return self.pdll.sp_clear_land( c_void_p(p_data), c_char_p(clear_type.encode()))
 
     #SPEXPORT bool sp_add_land(sp_data_t p_data, const char* type, sp_number_t* polygon_points, int* npts , int* ndim, bool is_append = true)
     def add_land(self, p_data, add_type, poly_points, is_append = True):
@@ -310,12 +314,12 @@ class CoPylot:
                 idx += 1
         
         self.pdll.sp_add_land.restype = c_bool
-        return self.pdll.sp_add_land( c_void_p(p_data), c_char_p(add_type), pointer(PParr), byref(c_int(npts)), byref(c_int(ndim)), c_bool(is_append))
+        return self.pdll.sp_add_land( c_void_p(p_data), c_char_p(add_type.encode()), pointer(PParr), byref(c_int(npts)), byref(c_int(ndim)), c_bool(is_append))
 
     #SPEXPORT sp_number_t* sp_heliostats_by_region(sp_data_t p_data, const char* coor_sys, int* lenret,
     #                                                sp_number_t* arguments = NULL, int* len_arg = NULL,
     #                                                const char* svgfname_data = NULL, sp_number_t* svg_opt_tab = NULL);
-    def heliostats_by_region(self, p_data, coor_sys = b'all', **kwargs):
+    def heliostats_by_region(self, p_data, coor_sys = 'all', **kwargs):
         """
         Returns heliostats that fall within a region. Options are:\n
             >> all (no additional arguments),\n
@@ -329,14 +333,14 @@ class CoPylot:
         """
         argsdict = {
             'arguments': [],
-            'svgfname_data': b'', 
+            'svgfname_data': '', 
             'svg_opt_tab' : [],
             'restype': 'dataframe'
         }
         argsdict.update(kwargs)
 
         # flatten polygon points
-        if coor_sys == b'polygon':
+        if coor_sys == 'polygon':
             temp = []
             for r in range(len(argsdict['arguments'])):
                 for c in range(len(argsdict['arguments'][0])):
@@ -349,17 +353,17 @@ class CoPylot:
 
         lenret = c_int()
         self.pdll.sp_heliostats_by_region.restype = POINTER(c_number)
-        if coor_sys == b'all':
-            res = self.pdll.sp_heliostats_by_region( c_void_p(p_data), c_char_p(coor_sys), byref(lenret) )
-        elif coor_sys == b'cylindrical' or coor_sys == b'cartesian' or coor_sys == b'polygon':
-            res = self.pdll.sp_heliostats_by_region( c_void_p(p_data), c_char_p(coor_sys), byref(lenret), pointer(arg_arr), byref(c_int(len_arg)))
-        elif coor_sys == b'svg' or coor_sys == b'svgfile':
+        if coor_sys == 'all':
+            res = self.pdll.sp_heliostats_by_region( c_void_p(p_data), c_char_p(coor_sys.encode()), byref(lenret) )
+        elif coor_sys == 'cylindrical' or coor_sys == 'cartesian' or coor_sys == 'polygon':
+            res = self.pdll.sp_heliostats_by_region( c_void_p(p_data), c_char_p(coor_sys.encode()), byref(lenret), pointer(arg_arr), byref(c_int(len_arg)))
+        elif coor_sys == 'svg' or coor_sys == 'svgfile':
             if len(argsdict['svg_opt_tab'] == 0):
-                res = self.pdll.sp_heliostats_by_region( c_void_p(p_data), c_char_p(coor_sys), byref(lenret), pointer(arg_arr), byref(c_int(len_arg)), c_char_p(argsdict['svgfname_data']) )
+                res = self.pdll.sp_heliostats_by_region( c_void_p(p_data), c_char_p(coor_sys.encode()), byref(lenret), pointer(arg_arr), byref(c_int(len_arg)), c_char_p(argsdict['svgfname_data'].encode()) )
             elif len(argsdict['svg_opt_tab']) == 4:
                 svg_tab = (c_number*4)()
                 svg_tab[:] = argsdict['svg_opt_tab']
-                res = self.pdll.sp_heliostats_by_region( c_void_p(p_data), c_char_p(coor_sys), byref(lenret), pointer(arg_arr), byref(c_int(len_arg)), c_char_p(argsdict['svgfname_data']), pointer(svg_tab) )
+                res = self.pdll.sp_heliostats_by_region( c_void_p(p_data), c_char_p(coor_sys.encode()), byref(lenret), pointer(arg_arr), byref(c_int(len_arg)), c_char_p(argsdict['svgfname_data'].encode()), pointer(svg_tab) )
             else:
                 print('svg_opt_tab must have the following form: [scale-x, scale-y, offset-x, offset-y]')
         else:
@@ -412,7 +416,6 @@ class CoPylot:
             table_hdr += key
             if (key != list(helio_dict)[-1]):
                 table_hdr += ','
-        table_hdr = table_hdr.encode()
         
         size = ncols*nhel
         helio_data = (c_number*size)()
@@ -423,15 +426,15 @@ class CoPylot:
                 idx += 1
 
         self.pdll.sp_modify_heliostats.restype = c_bool
-        return self.pdll.sp_modify_heliostats( c_void_p(p_data), pointer(helio_data), byref(c_int(nhel)), byref(c_int(ncols)), c_char_p(table_hdr) )
+        return self.pdll.sp_modify_heliostats( c_void_p(p_data), pointer(helio_data), byref(c_int(nhel)), byref(c_int(ncols)), c_char_p(table_hdr.encode()) )
 
     #SPEXPORT bool sp_save_from_script(sp_data_t p_data, const char* sp_fname)
     def save_from_script(self, p_data, sp_fname):
         self.pdll.sp_save_from_script.restype = c_bool
-        return self.pdll.sp_save_from_script( c_void_p(p_data), c_char_p(sp_fname))
+        return self.pdll.sp_save_from_script( c_void_p(p_data), c_char_p(sp_fname.encode()))
 
     #SPEXPORT bool sp_dump_varmap(sp_data_t p_data, const char* sp_fname)
     def dump_varmap_tofile(self, p_data, sp_fname):
         self.pdll.sp_dump_varmap.restype = c_bool
-        return self.pdll.sp_dump_varmap( c_void_p(p_data), c_char_p(sp_fname))
+        return self.pdll.sp_dump_varmap( c_void_p(p_data), c_char_p(sp_fname.encode()))
     
