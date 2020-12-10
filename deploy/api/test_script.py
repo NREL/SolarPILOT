@@ -4,25 +4,27 @@ import matplotlib.pyplot as plt
 
 from copylot import CoPylot
 
+plot_results = False
+test_solTrace_sim = False
 cp = CoPylot()
 print("Process ID: ", os.getpid())
 
-if False:
+if True:
     ## Minimum working example -> Must update path to weather file
     r = cp.data_create()
-    cp.data_set_string(
+    assert cp.data_set_string(
             r,
             "ambient.0.weather_file",
             "C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/deploy/climate_files/USA CA Daggett (TMY2).csv",
         )       # TODO: requires weather file to be specified, Should fix this before the release???
-    print(cp.generate_layout(r))
+    assert cp.generate_layout(r)
     field = cp.get_layout_info(r)
-    print(cp.simulate(r))  
+    assert cp.simulate(r)  
     flux = cp.get_fluxmap(r)
-    cp.data_free(r)
+    assert cp.data_free(r)
 
     # Plotting (default) solar field and flux map
-    if False:
+    if plot_results:
         # Solar Field
         plt.scatter(field['x_location'], field['y_location'], s=1.5)
         plt.tight_layout()
@@ -34,89 +36,99 @@ if False:
         plt.tight_layout()
         plt.show()
 
-#### New SolarPILOT instances
-r = cp.data_create()
+r = cp.data_create()  # New SolarPILOT instance
 
 print(cp.version(r))    # Version number
 cp.api_callback_create(r)   # callback
 #cp.api_disable_callback(r) - tested
 
-if False:
+if True:
     ## Testing set and get number - Pass
-    cp.data_set_number(r, "solarfield.0.dni_des", 1111.0)
-    print(cp.data_get_number(r, "solarfield.0.dni_des"))
+    assert cp.data_set_number(r, "solarfield.0.dni_des", 1111.0)
+    assert cp.data_get_number(r, "solarfield.0.dni_des") == 1111.0
     ## Testing set and get boolean - Pass
-    print(cp.data_get_number(r, "solarfield.0.is_sliprow_skipped"))
-    cp.data_set_number(r, "solarfield.0.is_sliprow_skipped", True)         # Works with True and False
-    print(cp.data_get_number(r, "solarfield.0.is_sliprow_skipped"))
-    cp.data_set_number(r, "solarfield.0.is_sliprow_skipped", 0.)         # Works with 1 and 0 
-    print(cp.data_get_number(r, "solarfield.0.is_sliprow_skipped"))
+    assert cp.data_set_number(r, "solarfield.0.is_sliprow_skipped", True)         # Works with True and False
+    assert cp.data_get_number(r, "solarfield.0.is_sliprow_skipped")
+    assert cp.data_set_number(r, "solarfield.0.is_sliprow_skipped", 0.)         # Works with 1 and 0 
+    assert not cp.data_get_number(r, "solarfield.0.is_sliprow_skipped")
 
-if False:
+if True:
     ## Testing set and get string - Pass
-    cp.data_set_string(r, "ambient.0.loc_state", "Mind")  # - Pass
-    print(cp.data_get_string(r, "ambient.0.loc_state"))  # - Pass
-    cp.data_set_string(r, "ambient.0.sun_csr", "0.05")  # - Not a string variable - Pass
+    assert cp.data_set_string(r, "ambient.0.loc_state", "Mind")  # - Pass
+    assert cp.data_get_string(r, "ambient.0.loc_state") == "Mind"  # - Pass
+    assert not cp.data_set_string(r, "ambient.0.sun_csr", "0.05") # - Not a string variable - Pass
 
-if False:
+if True:
     ## Testing setting and getting Combo variables - Through string - Pass
-    print(cp.data_get_string(r, "ambient.0.sun_type"))
-    cp.data_set_string(r, "ambient.0.sun_type", "Gaussian sun")  # Combo - acceptable option - Pass
-    print(cp.data_get_string(r, "ambient.0.sun_type"))
-    cp.data_set_string(r, "ambient.0.sun_type", "ussian s")  # Combo - not acceptable option - Pass
-    print(cp.data_get_string(r, "ambient.0.sun_type"))
+    assert cp.data_get_string(r, "ambient.0.sun_type") == 'Limb-darkened sun'  # Default value
+    assert cp.data_set_string(r, "ambient.0.sun_type", "Gaussian sun")  # Combo - acceptable option - Pass
+    assert cp.data_get_string(r, "ambient.0.sun_type") == "Gaussian sun"
+    assert not cp.data_set_string(r, "ambient.0.sun_type", "ussian s")  # Combo - not acceptable option - Pass
+    assert cp.data_get_string(r, "ambient.0.sun_type") == "Gaussian sun"  # Value should not change
     ## Testing setting and getting Combo variables - Through number - Pass
-    print(cp.data_get_string(r, "ambient.0.insol_type"))    # get string of combo choice
-    cp.data_set_number(r, "ambient.0.insol_type", 1)  # Combo - acceptable option - Pass
-    print(cp.data_get_number(r, "ambient.0.insol_type"))    # get number of combo choice
-    cp.data_set_number(r, "ambient.0.insol_type", 5)  # Combo - not acceptable option - Pass
-    print(cp.data_get_string(r, "ambient.0.insol_type"))
+    assert cp.data_get_string(r, "ambient.0.insol_type") == 'Weather file data'    # get string of combo choice
+    assert cp.data_set_number(r, "ambient.0.insol_type", 1)  # Combo - acceptable option - Pass
+    assert cp.data_get_number(r, "ambient.0.insol_type") == 1    # get number of combo choice
+    assert cp.data_get_string(r, "ambient.0.insol_type") == 'Hottel model'    # get string of combo choice
+    assert not cp.data_set_number(r, "ambient.0.insol_type", 5)  # Combo - not acceptable option - Pass
+    assert cp.data_get_string(r, "ambient.0.insol_type") == 'Hottel model'  # Value should not change
 
-if False:
+if True:
     ## Testing set and get array - Pass
-    cp.data_set_array_from_csv(r, "financial.0.pmt_factors", "test_array.csv")
-    print(cp.data_get_array(r, "financial.0.pmt_factors"))
-    cp.data_set_array(r, "financial.0.pmt_factors", [1.,2.,3.,4.,5.,6.,7.,8.,9.])
-    print(cp.data_get_array(r, "financial.0.pmt_factors"))
-    print(cp.data_get_array(r, "financial.0.schedule_array"))
-    cp.data_set_array(r, "financial.0.schedule_array", [1.,2.,3.,4.,5.,6.,7.,8.,9.]) # testing set integer array - Pass
-    print(cp.data_get_array(r, "financial.0.schedule_array"))
-    
+    assert cp.data_set_array_from_csv(r, "financial.0.pmt_factors", "test_array.csv")
+    # print(cp.data_get_array(r, "financial.0.pmt_factors"))  # Visual check values
+    assert len(cp.data_get_array(r, "financial.0.pmt_factors")) == 9
+    set_vector = [1.,2.,3.,4.,5.]
+    assert cp.data_set_array(r, "financial.0.pmt_factors", set_vector)
+    ret_vector = cp.data_get_array(r, "financial.0.pmt_factors")
+    for i, val in enumerate(set_vector):
+        assert val == ret_vector[i]
+    assert len(cp.data_get_array(r, "financial.0.schedule_array")) == 8760
+    assert cp.data_set_array(r, "financial.0.schedule_array", set_vector) # testing set integer array - Pass
+    ret_vector = cp.data_get_array(r, "financial.0.schedule_array")
+    for i, val in enumerate(set_vector):
+        assert val == ret_vector[i]
 
-if False:
+if True:
     ## Testing set and get matrix - Pass
-    cp.data_set_matrix(r, "ambient.0.atm_coefs", [[1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]])
-    print(cp.data_get_matrix(r, "ambient.0.atm_coefs"))
-    cp.data_set_matrix_from_csv(r, "ambient.0.atm_coefs", "test_matrix.csv")
-    print(cp.data_get_matrix(r, "ambient.0.atm_coefs"))
+    set_maxtrix = [[1, 1, 1, 1, 1], [2, 2, 2, 2, 2], [3, 3, 3, 3, 3], [4, 4, 4, 4, 4]]
+    assert cp.data_set_matrix(r, "ambient.0.atm_coefs", set_maxtrix)
+    ret_matrix = cp.data_get_matrix(r, "ambient.0.atm_coefs")
+    for i, _ in enumerate(set_maxtrix):
+        for j, val in enumerate(set_maxtrix[i]):
+            assert val == ret_matrix[i][j]
+    
+    assert cp.data_set_matrix_from_csv(r, "ambient.0.atm_coefs", "test_matrix.csv")
+    ret_matrix = cp.data_get_matrix(r, "ambient.0.atm_coefs")
+    assert len(ret_matrix) == 3
+    assert len(ret_matrix[0]) == 3
+    #print(cp.data_get_matrix(r, "ambient.0.atm_coefs"))  # Visual check values
 
-if False:
+if True:
     ## Testing variable reset - Pass
     cp.reset_vars(r)
-    print(cp.data_get_number(r, "solarfield.0.dni_des"))
-    print(cp.data_get_array(r, "financial.0.pmt_factors"))
-    print(cp.data_get_matrix(r, "ambient.0.atm_coefs"))
+    assert cp.data_get_number(r, "solarfield.0.dni_des") == 950
 
-if False:
+if True:
     ## Testing add and drop receiver - Pass
-    print(cp.add_receiver(r, "test_rec"))
-    print(cp.add_receiver(r, "test_rec"))
-    print(cp.drop_receiver(r, "test_rec"))
-    print(cp.drop_receiver(r, "test_re"))
+    assert cp.add_receiver(r, "test_rec") == 1  # Second Receiver 
+    assert cp.add_receiver(r, "test_rec") < 0  # can't add another receiver with the same name
+    assert cp.drop_receiver(r, "test_rec")
+    assert not cp.drop_receiver(r, "test_re")
 
-if False:
+if True:
     ## Testing add and drop heliostat template - Pass
-    print(cp.add_heliostat_template(r, "test_helio"))
-    print(cp.add_heliostat_template(r, "test_helio"))
-    print(cp.drop_heliostat_template(r, "test_helio"))
-    print(cp.drop_heliostat_template(r, "test_heli"))
+    assert cp.add_heliostat_template(r, "test_helio") == 1  # second heliostat template
+    assert cp.add_heliostat_template(r, "test_helio") < 0   # can't add another heliostat template with the same name
+    assert cp.drop_heliostat_template(r, "test_helio")
+    assert not cp.drop_heliostat_template(r, "test_heli")
 
 ## Testing generate - Pass, assign - Pass, and update layout
 if True:
     cp.reset_vars(r)
-    cp.data_set_number(r, "solarfield.0.q_des", 100)       # Small field for debugging
-    cp.data_set_string(r, "receiver.0.rec_type", "Flat plate")
-    cp.data_set_string(
+    assert cp.data_set_number(r, "solarfield.0.q_des", 100)       # Small field for debugging
+    assert cp.data_set_string(r, "receiver.0.rec_type", "Flat plate")
+    assert cp.data_set_string(
         r,
         "ambient.0.weather_file",
         "C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/deploy/climate_files/USA CA Daggett (TMY2).csv",
@@ -124,9 +136,9 @@ if True:
 
     # generate - Pass
     if True:
-        cp.data_set_string(r, "solarfield.0.des_sim_detail", "Single simulation point")  # to speed up solution time for testing
-        cp.data_set_number(r, "solarfield.0.is_sliprow_skipped", True)
-        cp.data_set_number(r, "solarfield.0.slip_plane_blocking", 0.0)
+        assert cp.data_set_string(r, "solarfield.0.des_sim_detail", "Single simulation point")  # to speed up solution time for testing
+        assert cp.data_set_number(r, "solarfield.0.is_sliprow_skipped", True)
+        assert cp.data_set_number(r, "solarfield.0.slip_plane_blocking", 0.0)
         ## If you add a another template and do not choose a temp_which -> ERROR
         # print( cp.add_heliostat_template(r, "test_helio"))
         ## Requires setting heliostat template to use for field generation
@@ -145,7 +157,7 @@ if True:
         # cp.data_set_number(r, "heliostat.0.height", 6.)
         # cp.data_set_number(r, "heliostat.0.width", 6.)
         # cp.data_set_string(r, "solarfield.0.template_rule", "Even radial distribution")
-        print(cp.generate_layout(r, nthreads=4))  # Testing - Pass
+        assert cp.generate_layout(r, nthreads=4)  # Testing - Pass
 
     # assign
     if True:
@@ -155,19 +167,19 @@ if True:
             csvReader = csv.reader(csvDataFile)
             for row in csvReader:
                 helio_data.append([float(i) for i in row])
-        print(cp.assign_layout(r, helio_data))  # Testing - Pass
+        assert cp.assign_layout(r, helio_data)  # Testing - Pass
 
-    if True:
-        ## Trying soltrace simulation
-        # cp.data_set_string(r, "fluxsim.0.flux_model", "SolTrace") # Tested
-        cp.data_set_number(r, "fluxsim.0.x_res", 45)
-        cp.data_set_number(r, "fluxsim.0.y_res", 30)
-        
-        print(cp.simulate(r))  # Testing - Pass
-        flux = cp.get_fluxmap(r)  # Testing - Pass
+    ## SolTrace simulation
+    if test_solTrace_sim: 
+        assert cp.data_set_string(r, "fluxsim.0.flux_model", "SolTrace") # Tested
+    assert cp.data_set_number(r, "fluxsim.0.x_res", 45)
+    assert cp.data_set_number(r, "fluxsim.0.y_res", 30)
+    
+    assert cp.simulate(r)  # Testing - Pass
+    flux = cp.get_fluxmap(r)  # Testing - Pass
 
     # Plotting flux map
-    if True:
+    if plot_results:
         im = plt.imshow(flux)
         plt.colorbar(im)
         plt.tight_layout()
@@ -177,31 +189,31 @@ if True:
     if True:
         ##check = cp.add_land(r, b'exclus', [[1000, 1000],[500,1000], [500,500], [1000, 500]]) # - Testing - Pass
         if True:
+            res = cp.detail_results(r)
             helio_dict = {}
-            helio_dict["id"] = [4166, 4000]
+            helio_dict["id"] = [res.id[0], res.id[1]]
             helio_dict["location-x"] = [1500, -1500]
             helio_dict["location-y"] = [1500, 1500]
             helio_dict["soiling"] = [0.5, 0.3]
             helio_dict["reflectivity"] = [0.2, 0.8]
             helio_dict["enabled"] = [1, 0]
-            print( cp.modify_heliostats(r, helio_dict ))  # TODO: Need to discuss with Mike the solution
-            ## This needs to be fixed for both general api and lk api
+            assert cp.modify_heliostats(r, helio_dict)
 
         if True:
             # find max flux of original geometry
-            print(cp.simulate(r))  # Testing - Pass
+            assert cp.simulate(r)  # Testing - Pass
             flux = cp.get_fluxmap(r)
             maxflux_befc = max(max(flux))
 
             # Change geometry, simulate, find max flux
-            cp.data_set_number(r, "heliostat.0.height", 11.0)
-            print(cp.simulate(r))
+            assert cp.data_set_number(r, "heliostat.0.height", 11.0)
+            assert cp.simulate(r)
             flux = cp.get_fluxmap(r)
             maxflux_aftc_noUP = max(max(flux))
 
             # Update, simulate, and find max flux
-            print(cp.update_geometry(r))  # Testing - Pass
-            print(cp.simulate(r))
+            assert cp.update_geometry(r)  # Testing - Pass
+            assert cp.simulate(r)
             flux = cp.get_fluxmap(r)
             maxflux_aftu = max(max(flux))
             
@@ -221,8 +233,8 @@ if True:
             helio_dict["id"] = list(res2.id.iloc[0:300])
             helio_dict["id"].extend(list(res2.id.iloc[305:len(res2)]))
             helio_dict["enabled"] = [0]*len(helio_dict["id"])
-            print( cp.modify_heliostats(r, helio_dict )) # Testing - Pass
-            print(cp.simulate(r))  # Testing - Pass
+            assert cp.modify_heliostats(r, helio_dict ) # Testing - Pass
+            assert cp.simulate(r)  # Testing - Pass
 
     # Pulling field data
     field,header = cp.get_layout_info(r, get_corners=True, restype="matrix")  # Testing - Pass
@@ -231,9 +243,9 @@ if True:
 
     # Is there a way to create a function to create a field map plot and save it to a image file?
     # - No, currently this functionality lives in UI
-    # - We would have to duplicate functionality in python using matplotlib
+    # - We would have to duplicate functionality in python
     # Plotting solarfield layout
-    if True:
+    if plot_results:
         x = []
         y = []
         for i in range(len(field)):
@@ -245,7 +257,7 @@ if True:
 
     flux = cp.get_fluxmap(r)  # Testing - Pass
     # Plotting flux map
-    if True:
+    if plot_results:
         im = plt.imshow(flux)
         plt.colorbar(im)
         plt.tight_layout()
@@ -254,10 +266,10 @@ if True:
 # Testing dump_varmap and save_from script - Pass
 if True:
     cwd = os.getcwd()
-    print(cp.dump_varmap_tofile(r, "C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/deploy/api/varmap_dump.csv"))
-    # print( cp.dump_varmap_tofile(r, "varmap_dump_v2.csv") ) # This does not work - must provide full path
-    print(cp.dump_varmap_tofile(r, cwd + "\\varmap_dump_v3.csv"))  # This works
-    print(cp.save_from_script( r, "C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/deploy/api/case_study.spt"))
-    print(cp.save_from_script(r, cwd + "\\case_study_v2.spt"))  # This works
+    assert cp.dump_varmap_tofile(r, "C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/deploy/api/varmap_dump.csv")
+    assert not cp.dump_varmap_tofile(r, "varmap_dump_v2.csv") # This does not work - must provide full path
+    assert cp.dump_varmap_tofile(r, cwd + "\\varmap_dump_v3.csv")  # This works
+    assert cp.save_from_script( r, "C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/deploy/api/case_study.spt")
+    assert cp.save_from_script(r, cwd + "\\case_study_v2.spt")  # This works
 
-cp.data_free(r) # Works - free memory
+assert cp.data_free(r) # Works - free memory
