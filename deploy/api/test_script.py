@@ -1,5 +1,4 @@
 import os, csv
-import pandas as pd
 import matplotlib.pyplot as plt
 
 from copylot import CoPylot
