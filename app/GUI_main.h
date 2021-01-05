@@ -166,6 +166,7 @@ class LayoutSimThread;
 class STSimThread;
 class STSimThread;
 class SolarPILOTScriptWindow;
+class SimControl;
 
 struct ST_FluxObj;
 struct ST_System;
@@ -210,8 +211,14 @@ private:
     gui_settings _gui_settings;
     PageNames pageNames;
     //Default themes and sizings
-    int _tool_tip_delay, _n_threads, _n_threads_active, _nrecent_max, _trial_days;
+    int _tool_tip_delay,  _nrecent_max, _trial_days; 
     wxDateTime _trial_start;
+
+    SimControl _sim_control; // 
+    //bool _cancel_simulation; //Flag indicating whether the user wants to cancel the simulation
+    //STSimThread* _stthread;
+    //ST_System* _STSim;
+
 
 	int 
 		_version_major,
@@ -229,16 +236,15 @@ private:
         _default_input_size,
         _spin_ctrl_size,
         _grid_but_size;
-    bool 
+    bool
         _geom_modified,    //Flag indicating that the geometry displayed in the layout grid has not been updated
         _inputs_modified,    //Flag indicating whether any (relevant) input value has changed, requiring a File->Save prompt
         _in_layout_simulation,    //Flag indicating whether a layout simulation is currently running
         _in_flux_simulation,    //Flag indicating whether a flux simulation is currently running
         _in_optimize_simulation,    //Flag indicating whether an optimization simulation is currently running
         _in_param_simulation,    //Flag indicating whether a parametric simulation is currently running
-        _in_user_param_simulation, //Flag indicating whether a user-parametric simulation is currently running
-        _is_mt_simulation,    //Is the current simulation multithreaded?
-        _cancel_simulation; //Flag indicating whether the user wants to cancel the simulation
+        _in_user_param_simulation; //Flag indicating whether a user-parametric simulation is currently running
+
     std::string 
         _contact_info;    //String containing contact info for bugs, etc. Used in crash messages.
         
@@ -379,7 +385,6 @@ private:
     wxDirPickerCtrl
         *_dir_ctrl;
     LayoutSimThread *_simthread;
-    STSimThread *_stthread;
 
     //Flux page
     wxComboBox
@@ -487,7 +492,6 @@ private:
     sim_results
         _results;
     wxGrid *_results_grid;
-    ST_System *_STSim;
 
     SolarPILOTScriptWindow *_active_script_window;
 
@@ -685,6 +689,8 @@ public:
     SolarField *GetSolarFieldObject();
     var_map *GetVariablesObject();
     sim_results *GetResultsObject();
+    SimControl *GetSimControlObject();
+    LayoutSimThread* GetLayoutSimThreadObject();
     void SetThreadCount(int nthread);
     int GetThreadCount();
     ArrayString *GetLocalWeatherDataObject();
@@ -765,11 +771,10 @@ public:
     void OptReloadVariableList();
     void CheckOptGridRange();
 
-    bool DoManagedLayout(SolarField &SF, var_map &vset);
+    //bool DoManagedLayout(SolarField &SF, var_map &vset);
     bool DoPerformanceSimulation(SolarField &SF, var_map &vset, Hvector &helios);
     bool SolTraceFluxSimulation(SolarField &SF, var_map &vset, Hvector &helios);
     bool SolTraceFluxBinning(SolarField &SF);
-    bool HermiteFluxSimulationHandler(SolarField &SF, Hvector &helios);
     void UpdateFluxLC(int sortkey=0);
     int SolTraceProgressUpdate(st_uint_t ntracedtotal, st_uint_t ntraced, st_uint_t ntotrace, st_uint_t curstage, st_uint_t nstages, void *data);
     void SolTraceFileExport(std::string fname);
@@ -790,7 +795,7 @@ public:
     void WriteVariablesToFile(wxTextFile &tfile, var_map &vset);
     void LogFileVariableDump(var_map &vset);
     void LogFileVariableDump(var_map &vset, wxArrayStr &messages);
-    int PopMessage(wxString message, wxString title = wxEmptyString, long style = wxOK|wxICON_INFORMATION);
+    int PopMessage(wxString message, wxString title = wxEmptyString, long style = wxOK | wxICON_INFORMATION);
     void ScriptMessageOutput(const char *msg);
     
 };
@@ -805,5 +810,7 @@ extern void SolarFieldErrorCallback(simulation_error *simerror, void *data);
 extern bool SolarFieldOptimizeSummaryCallback(simulation_info *siminfo, void *data);
 
 extern bool SolarFieldOptimizeDetailCallback(simulation_info *siminfo, void *data);
+
+extern int PopMessageHandler(const char* message, void* data);
 
 #endif

@@ -1,0 +1,4 @@
+*.csv
+.vs/*
+.vscode/*
+__pycache__/*

@@ -93,8 +93,8 @@ fluxsim	save_data_loc	IN	STRING	soltrace_ray_data.csv		FALSE				ray data	Choose 
 fluxsim	seed	IN	INT	-1	none	FALSE				Seed value (-1 for automatic selection)	The seed for the random number generator
 fluxsim	sigma_limit_x	IN	DOUBLE	2		TRUE				Min. image offset from receiver edge - X	Minimum distance (std. dev.) between optical center of heliostat image and the receiver edge in the receiver-X direction
 fluxsim	sigma_limit_y	IN	DOUBLE	2	none	TRUE				Min. image offset from receiver edge - Y	Minimum distance (std. dev.) between optical center of heliostat image and the receiver edge in the receiver-Y direction
-fluxsim	x_res	IN	INT	25	none	FALSE				Flux grid resolution - Horizontal	Number of flux test points per panel (maximum) in the vertical direction for the flux simulation
-fluxsim	y_res	IN	INT	25	none	FALSE				Flux grid resolution - Vertical	Number of flux test points per panel (maximum) in the horizontal direction for the flux simulation
+fluxsim	x_res	IN	INT	25	none	FALSE				Flux grid resolution - Horizontal	Number of flux test points per panel (maximum) in the horizontal direction for the flux simulation
+fluxsim	y_res	IN	INT	25	none	FALSE				Flux grid resolution - Vertical	Number of flux test points per panel (maximum) in the vertical direction for the flux simulation
 fluxsim	multi_rec_aim_rand	IN	DOUBLE	0	none	TRUE				Multi-receiver aimpoint randomization	Factor from 0-1 indicating extent of random sampling in assigning heliostats to receivers. 1=completely random.
 fluxsim	flux_solar_az	OUT	DOUBLE	180	deg	FALSE				Calculated solar azimuth angle	Solar azimuth angle to use for the flux simulation
 fluxsim	flux_solar_el	OUT	DOUBLE	85	deg	FALSE				Calculated solar elevation angle	Solar elevation angle to use for the flux simulation
@@ -266,6 +266,7 @@ receiver	q_rec_des	OUT	DOUBLE	0	MW	FALSE				Design-point thermal power	Power pro
 receiver	rec_offset_x_global	OUT	DOUBLE	0	m	FALSE				Receiver global positioning offset - X axis	Offset of receiver center in the East(+)/West(-) direction from the tower
 receiver	rec_offset_y_global	OUT	DOUBLE	0	m	FALSE				Receiver global positioning offset - Y axis	Offset of receiver center in the North(+)/South(-) direction from the tower
 receiver	rec_offset_z_global	OUT	DOUBLE	0	m	FALSE				Receiver global positioning offset - Z axis	Offset of the receiver center in the vertical direction, positive upwards
+solarfield	version	IN	STRING			FALSE				SolarPILOT code base version number	SolarPILOT code base version number
 solarfield	accept_max	IN	DOUBLE	180	deg	TRUE				Maximum solar field extent angle	Upper bound of the angular range containing the heliostat field
 solarfield	accept_min	IN	DOUBLE	-180	deg	TRUE				Minimum solar field extent angle	Lower bound of the angular range containing the heliostat field
 solarfield	az_spacing	IN	DOUBLE	2	none	TRUE				Azimuthal spacing factor	Azimuthal spacing factor for the first row of heliostats after a reset. Heliostats separated by heliostat width times this factor.

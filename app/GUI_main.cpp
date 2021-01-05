@@ -307,9 +307,9 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
     //Set tool tip delay [ms]
     to_integer(_gui_settings["tt_delay"].value, &_tool_tip_delay);
     //Set the number of CPU's
-    to_integer(_gui_settings["ncpu"].value, &_n_threads);
+    to_integer(_gui_settings["ncpu"].value, &_sim_control._n_threads);
     int nmaxthreads = wxThread::GetCPUCount();
-    if(_n_threads > nmaxthreads || _n_threads < 0 ) _n_threads = nmaxthreads;
+    if(_sim_control._n_threads > nmaxthreads || _sim_control._n_threads < 0 ) _sim_control._n_threads = nmaxthreads;
     //Set the recents file list count
     to_integer(_gui_settings["nrecent_max"].value, &_nrecent_max);
 
@@ -318,8 +318,8 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
     _in_flux_simulation = false;
     _in_param_simulation = false;
     _in_user_param_simulation = false;
-    _cancel_simulation = false;
-    _is_mt_simulation = false;
+    _sim_control._cancel_simulation = false;
+    _sim_control._is_mt_simulation = false;
     _in_optimize_simulation = false;
     _enable_detail_update_gauge = true;
 
@@ -341,6 +341,10 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
 	_variables.sf.des_sim_ndays.val = 2;
 #endif
 
+    _sim_control.soltrace_callback = STCallback;
+    _sim_control.soltrace_callback_data = this;
+    _sim_control.message_callback = PopMessageHandler;
+    _sim_control.message_callback_data = this;
 
     //Create the simulation progress timer and connect it to a timer event
     _sim_timer = new wxTimer(this, wxID_ANY);
@@ -361,7 +365,7 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
     //initialize pointers
     _SFopt_MT = 0;
     _SFopt_S = 0;
-    _STSim = 0;
+    _sim_control._STSim = 0;
     _active_script_window = 0;
 
     //----Create the menu items------
@@ -1302,9 +1306,9 @@ void SPFrame::OnToolsSettings( wxCommandEvent &WXUNUSED(event))
         //Update the stored values
         std::string sf = _settings_file.GetFullPath();
         gui_util::writeSettingsFile(sf, _gui_settings);
-        to_integer(_gui_settings["ncpu"].value, &_n_threads);
+        to_integer(_gui_settings["ncpu"].value, &_sim_control._n_threads);
         int nmaxthreads = wxThread::GetCPUCount();
-        if(_n_threads > nmaxthreads || _n_threads < 0) _n_threads = nmaxthreads;
+        if(_sim_control._n_threads > nmaxthreads || _sim_control._n_threads < 0) _sim_control._n_threads = nmaxthreads;
 
         to_integer(_gui_settings["nrecent_max"].value, &_nrecent_max);
     }
@@ -1474,14 +1478,24 @@ sim_results *SPFrame::GetResultsObject()
     return &_results;
 }
 
+SimControl *SPFrame::GetSimControlObject()
+{
+    return &_sim_control;
+}
+
+LayoutSimThread *SPFrame::GetLayoutSimThreadObject()
+{
+    return _simthread;
+}
+
 void SPFrame::SetThreadCount(int nthread)
 {
-    _n_threads = max( min(wxThread::GetCPUCount(), nthread), 1 );
+    _sim_control._n_threads = max( min(wxThread::GetCPUCount(), nthread), 1 );
 }
 
 int SPFrame::GetThreadCount()
 {
-    return _n_threads;
+    return _sim_control._n_threads;
 }
 
 ArrayString *SPFrame::GetLocalWeatherDataObject()
@@ -1998,7 +2012,7 @@ int SPFrame::SolTraceProgressUpdate(st_uint_t ntracedtotal, st_uint_t ntraced, s
     */
     
     //Check if the simulation has been cancelled
-    if(_cancel_simulation) 
+    if(_sim_control._cancel_simulation)
         return 0;    //Code for coretrace to quit
     
     //Update the gui
@@ -2040,636 +2054,6 @@ int SPFrame::SolTraceProgressUpdate(st_uint_t ntracedtotal, st_uint_t ntraced, s
     return 1;
 }
 
-bool SPFrame::SolTraceFluxSimulation(SolarField &SF, var_map &vset, Hvector &helios)
-{
-    /* 
-    Send geometry to Soltrace and get back simulation results. 
-    From Soltrace library, reference "runthreads.cpp" and "sysdata.cpp"
-
-    Note that the SolTrace coordinate system for defining the sun position is typically:
-    X -> positive west
-    Y -> positive toward zenith
-    Z -> positive north
-    .. However ..
-    We will use a coordinate system consistent with SolarPILOT geometry where:
-    X -> positive east
-    Y -> positive north
-    Z -> positive zenith
-
-    As long as the sun position vector passed to SolTrace is consistent with the field geometry
-    that we're using, the results will be correct.
-
-    */
-
-    bool is_load_raydata = vset.flux.is_load_raydata.val;
-    bool is_save_raydata = vset.flux.is_save_raydata.val;
-    //raydata_file
-    wxFileName raydata_file( vset.flux.raydata_file.val );
-
-    //check that the file exists
-    vector<vector<double> > raydat_st0;
-    vector<vector<double> > raydat_st1;
-    int nsunrays_loadst=0;
-    if(is_load_raydata)
-    {
-        if(! ioutil::file_exists( raydata_file.GetFullPath().c_str() ) )
-            throw spexception("Specified ray data file does not exist. Looking for file: " + raydata_file.GetFullPath());
-
-        //Load the ray data from a file
-        ifstream fdat( raydata_file.GetFullPath().ToStdString() );
-
-        if( fdat.is_open() )
-        {
-            
-            string str;
-            str.reserve(96);
-
-            char line[96];
-            bool nextloop = false;
-            bool firstline = true;
-            while( fdat.getline( line, 96 ) )
-            {
-                //first line is number of sun rays
-                if(firstline)
-                {
-                    for(int i=0; i<16; i++)
-                    {
-                        if(line[i] == '\n' || i==15)
-                        {
-                            to_integer(str, &nsunrays_loadst);
-                            str.clear();
-                            str.reserve(96);
-                            break;
-                        }
-                        else
-                        {
-                            str.push_back(line[i]);
-                        }
-                    }
-                    firstline = false;
-                    continue;
-                }
-
-
-                vector<double> dat(8);
-
-                
-                int ilast = 0;
-    
-                for(int i=0; i<96; i++)
-                {
-                    //check for the transition character
-                    if( line[i] == '#' ) 
-                    {
-                        nextloop = true;
-                        break;
-                    }
-
-                    if( line[i] == ',' )
-                    {
-                        to_double(str, &dat[ilast++]);
-                        
-                        //clear the string
-                        str.clear();
-                        str.reserve(96);
-                        //if this was the 8th entry, go to next line
-                        if( ilast > 7 ) 
-                            break;
-                    }
-                    else
-                    {
-                        str.push_back( line[i] );
-                    }
-                }
-                ilast = 0;
-
-                if( nextloop ) break;
-
-                raydat_st0.push_back(dat);
-            }
-
-            //next loop to get stage 1 input rays
-            while( fdat.getline( line, 96 ) )
-            {
-                vector<double> dat(7);
-                
-                int ilast = 0;
-                //int istr = 0;
-                for(int i=0; i<96; i++)
-                {
-                    if( line[i] == ',' )
-                    {
-                        to_double(str, &dat[ilast++]);
-                        
-                        //clear the string
-                        str.clear();
-                        str.reserve(96);
-                        //if this was the 8th entry, go to next line
-                        if( ilast > 6 ) 
-                            break;
-                    }
-                    else
-                    {
-                        str.push_back( line[i] );
-                    }
-                }
-                ilast = 0;
-
-                raydat_st1.push_back(dat);
-            }
-
-            fdat.close();
-        }
-
-        //set the number of traced rays based on the length of the supplied data
-        int nray = (int)raydat_st0.size() ;
-        
-        vset.flux.min_rays.val =  nray ;
-    }
-    //for saving, check that the specified directory exists. If none specified or if it doesn't exist, prepend the working directory.
-    if(is_save_raydata)
-    {
-        if(! raydata_file.DirExists() )
-            raydata_file = _working_dir.GetPath(true) + raydata_file.GetName(); 
-    }
-
-    bool err_maxray = false;
-    int minrays, maxrays;
-    vector<st_context_t> contexts;
-
-    _stthread = 0;    //initialize to null
-
-    //get sun position and create a vector
-    double el = vset.flux.flux_solar_el.Val()*D2R;
-    double az = vset.flux.flux_solar_az.Val()*D2R;
-    Vect sun = Ambient::calcSunVectorFromAzZen(az, PI/2.-el);
-
-    _STSim = new ST_System;
-    
-    _STSim->CreateSTSystem(SF, helios, sun);
-
-    minrays = _STSim->sim_raycount;
-    maxrays = _STSim->sim_raymax;
-
-    vector< vector<vector< double > >* > st0datawrap;
-    vector< vector<vector< double > >* > st1datawrap;
-
-    if(_n_threads > 1)
-    {
-        //Multithreading support
-        _stthread = new STSimThread[_n_threads];
-        _is_mt_simulation = true;
-
-        int rays_alloc=0;
-        int rays_alloc1=0;
-        for(int i=0; i<_n_threads; i++)
-        {
-            //declare soltrace context
-            st_context_t pcxt = st_create_context();
-            //load soltrace data structure into context
-            ST_System::LoadIntoContext(_STSim, pcxt);
-            //get random seed
-            int seed = SF.getFluxObject()->getRandomObject()->integer();
-            //setup the thread
-            _stthread[i].Setup(pcxt, i, seed, is_load_raydata, is_save_raydata);
-
-            //Decide how many rays to trace for each thread. Evenly divide and allocate remainder to thread 0
-            int rays_this_thread = _STSim->sim_raycount/_n_threads;
-            if (i==0) rays_this_thread += (_STSim->sim_raycount%_n_threads);
-            //when loading ray data externally, we need to divide up receiver stage hits
-            int rays_this_thread1 = raydat_st1.size() / _n_threads;     //for receiver stage input rays
-            if (i==0) rays_this_thread1 += (raydat_st1.size()%_n_threads);
-
-            //if loading ray data, add by thread here
-            if(is_load_raydata)
-            {
-                _stthread[i].CopyStageRayData( raydat_st0, 0, rays_alloc, rays_alloc + rays_this_thread );
-                _stthread[i].CopyStageRayData( raydat_st1, 1, rays_alloc1, rays_alloc1 + rays_this_thread1 );   //for receiver stage input rays
-            }
-            rays_alloc += rays_this_thread;
-            rays_alloc1 += rays_this_thread1;
-
-            st_sim_params( pcxt, rays_this_thread, _STSim->sim_raymax/_n_threads );
-
-        }
-
-        for(int i=0; i<_n_threads; i++)
-        {
-            thread( &STSimThread::StartThread, std::ref( _stthread[i] ) ).detach();
-        }
-        //wxLogMessage((wxString)("Running threads"));
-        int ntotal=0, ntraced=0, ntotrace=0, stagenum=0, nstages=0;
-
-        // every now and then query the threads and update the UI;
-        while (1)
-        {
-            int num_finished = 0;
-            for (int i=0;i<_n_threads;i++)
-                if (_stthread[i].IsFinished())
-                    num_finished++;
-
-            if (num_finished == _n_threads)
-                break;
-
-            // threads still running so update interface
-            int ntotaltraces = 0;
-            for (int i=0;i<_n_threads;i++)
-            {
-                _stthread[i].GetStatus(&ntotal, &ntraced, &ntotrace, &stagenum, &nstages);
-                ntotaltraces += ntotal;
-            }
-
-            SolTraceProgressUpdate(ntotal, ntraced, ntotrace, stagenum, nstages, (void*)NULL);
-            
-            // if dialog's cancel button was pressed, send cancel signal to all threads
-            if (_cancel_simulation)
-            {
-                for (int i=0;i<_n_threads;i++)
-                    _stthread[i].CancelTrace();
-            }
-            std::this_thread::sleep_for(std::chrono::milliseconds(75));            
-        }
-        
-        // determine if any errors occurred
-        bool errors_found = false;
-        contexts.clear();
-        for (int i=0;i<_n_threads;i++)
-        {
-            contexts.push_back(_stthread[i].GetContextId());
-            int code = _stthread[i].GetResultCode();
-
-            if (code < 0) 
-            {
-                errors_found = true;
-                err_maxray = true;
-                PopMessage(wxString::Format("Error occured in trace core thread %d, code=%d.\n\n", i+1, code));
-                break;  //Don't keep displaying if there's an error
-            }
-        }
-        
-        //Consolidate the stage 0 ray data if needed
-        if(is_save_raydata && !errors_found)
-        {
-            for(int i=0; i<_n_threads; i++)
-            {
-                st0datawrap.push_back( _stthread[i].GetStage0RayDataObject() );
-                st1datawrap.push_back( _stthread[i].GetStage1RayDataObject() );
-            }
-        }
-
-    }
-    else
-    {
-        //Create context
-        st_context_t cxt = st_create_context();
-        int seed = SF.getFluxObject()->getRandomObject()->integer();
-        ST_System::LoadIntoContext(_STSim, cxt);
-        if( interop::SolTraceFluxSimulation_ST(cxt, seed, *_STSim, STCallback, this, &raydat_st0, &raydat_st1, is_save_raydata, is_load_raydata) )
-            contexts.push_back(cxt);
-        else
-            err_maxray = true;  //hit max ray limit if function returns false
-
-        if(is_save_raydata && !err_maxray)
-        {
-            st0datawrap.push_back( &raydat_st0 );
-            st1datawrap.push_back( &raydat_st1 );
-        }
-    }
-
-    //reset the progress gauge
-    _is_mt_simulation = false;
-    _flux_gauge->SetValue(0);
-    //Did the simulation terminate after reaching the max ray count?
-    if(err_maxray)
-    { 
-        PopMessage("The simulation has reached the maximum number of rays ("+my_to_string(maxrays)+
-            ") without achieving the required number of ray hits ("+my_to_string(minrays)+")."+
-            " Consider increasing the 'Maximum number of generated rays' or decreasing the "+
-            " 'Desired number of ray intersections'.");
-        return false;
-    }
-    //Was the simulation cancelled during st_sim_run()?
-    if(_cancel_simulation)
-    {
-        _cancel_simulation = false; //reset
-        return false;
-    }
-    
-    //Process the results
-    int nint = 0;
-    int nc = contexts.size();
-    vector<int> csizes;
-    for(int i=0; i<nc; i++)
-    {
-        csizes.push_back( st_num_intersections(contexts.at(i)) );
-        nint += csizes.at(i);
-    }
-
-    double bounds[5]; //xmin, xmax, ymin, ymax, empty
-    _STSim->IntData.nsunrays=0;
-
-    _STSim->IntData.AllocateArrays(nint);
-
-    //Collect all of the results
-    int ind=0;
-    for(int i=0; i<nc; i++)
-    {
-        int cs = csizes.at(i);
-
-        st_locations(contexts.at(i), &_STSim->IntData.hitx[ind], &_STSim->IntData.hity[ind], &_STSim->IntData.hitz[ind]);
-        st_cosines(contexts.at(i), &_STSim->IntData.cosx[ind], &_STSim->IntData.cosy[ind], &_STSim->IntData.cosz[ind]);
-        st_elementmap(contexts.at(i), &_STSim->IntData.emap[ind]);
-        st_stagemap(contexts.at(i), &_STSim->IntData.smap[ind]);
-        st_raynumbers(contexts.at(i), &_STSim->IntData.rnum[ind]);
-
-        int nsr;
-        st_sun_stats(contexts.at(i), &bounds[0], &bounds[1], &bounds[2], &bounds[3], &nsr);    //Bounds should always be the same
-        _STSim->IntData.nsunrays += nsr;
-        ind += cs;
-
-    }
-
-    //DNI
-    double dni = vset.sf.dni_des.val/1000.;    //[kw/m2]
-    
-    //if the heliostat field ray data is loaded from a file, just specify the number of sun rays based on this value
-    if(is_load_raydata)
-        _STSim->IntData.nsunrays = nsunrays_loadst;
-
-    //Get bounding box and sun ray information to calculate power per ray
-    _STSim->IntData.q_ray = (bounds[1]-bounds[0])*(bounds[3]-bounds[2])/float(_STSim->IntData.nsunrays)*dni;
-    
-
-    bool skip_receiver = false;
-
-    if(! skip_receiver)
-    {
-
-        bounds[4] = (float)_STSim->IntData.nsunrays;
-        
-        for(int i=0; i<5; i++)
-            _STSim->IntData.bounds[i] = bounds[i];
-        SolTraceFluxBinning(SF);
-
-
-        //Process the results
-        sim_params P;
-        P.dni = dni;
-        double azzen[2] = {az, PI/2.-el};
-        _results.back().process_raytrace_simulation(SF, P, 2, azzen, helios, _STSim->IntData.q_ray, _STSim->IntData.emap, _STSim->IntData.smap, _STSim->IntData.rnum, nint, bounds);    
-    }
-
-    //If the user wants to save stage0 ray data, do so here
-    if(is_save_raydata)
-    {
-        ofstream fout(raydata_file.GetFullPath().ToStdString());
-        fout.clear();
-        //first line is number of sun rays
-        fout << _STSim->IntData.nsunrays << "\n";
-        //write heliostat IN stage
-        for(int i=0; i<(int)st0datawrap.size(); i++)
-        {
-            for( int j=0; j<(int)st0datawrap.at(i)->size(); j++)
-            {
-                for( int k=0; k<8; k++ )
-                    fout << st0datawrap.at(i)->at(j).at(k) << ",";
-                fout << "\n";
-            }
-        }
-        //special separator
-        fout << "#\n";
-        //write receiver IN stage
-        for(int i=0; i<(int)st1datawrap.size(); i++)
-        {
-            for( int j=0; j<(int)st1datawrap.at(i)->size(); j++)
-            {
-                for( int k=0; k<7; k++ )
-                    fout << st1datawrap.at(i)->at(j).at(k) << ",";
-                fout << "\n";
-            }
-        }
-
-        fout.close();
-    }
-
-    //If the user wants to save the ray data, do so here
-    if( vset.flux.save_data.val )
-    {
-        string fname = vset.flux.save_data_loc.val;
-        if(fname == "")
-        {
-            PopMessage("Ray data was not saved. No file was specified.", "Notice", wxICON_EXCLAMATION|wxOK);
-        }
-        else
-        {
-            FILE *file = fopen(fname.c_str(), "w");
-            if(! file )
-            {
-                PopMessage(wxT("Error opening the flux simulation output file. Please make sure the file is closed and the directory is not write-protected."), wxT("File error"), wxICON_ERROR|wxOK);
-                return false;
-            }
-            fprintf(file, "Pos X, Pos Y, Pos Z, Cos X, Cos Y, Cos Z, Element Map, Stage Map, Ray Number\n");
-            for(int i=0; i<nint; i++)
-            {
-                fprintf(file, "%.3f, %.3f, %.3f, %.7f, %.7f, %.7f, %d, %d, %d\n", 
-                    _STSim->IntData.hitx[i], _STSim->IntData.hity[i], _STSim->IntData.hitz[i], 
-                    _STSim->IntData.cosx[i], _STSim->IntData.cosy[i], _STSim->IntData.cosz[i], 
-                    _STSim->IntData.emap[i], _STSim->IntData.smap[i], _STSim->IntData.rnum[i]);
-            }
-            fclose(file);
-        }
-
-    }
-
-    //Clean up
-    _STSim->IntData.DeallocateArrays();
-    if(_stthread != 0) delete[] _stthread;
-
-    return true;
-    
-}
-
-bool SPFrame::SolTraceFluxBinning(SolarField &SF)
-{
-   //Collect all of the rays that hit the receiver(s) into the flux profile
-    int rstage1 = 2;
-
-    for(int r = 0; r<(int)SF.getReceivers()->size(); r++)
-    {
-        Receiver *Rec = SF.getReceivers()->at(r);
-        if(! Rec->isReceiverEnabled() )
-            continue;
-        var_receiver *RV = Rec->getVarMap();
-
-        //.. for each receiver, 
-        int recgeom = Rec->getGeometryType(); 
-        
-        //Pre-declare all relevant variables
-        FluxSurface *fs;
-        FluxGrid *fg;
-        int e_ind, nfx, nfy, 
-            ibin, jbin;    //indices of the flux grid bin that the current ray will go into
-        double rel, raz, rh, rw, paz, ph, pw, Arec, dqspec;
-        Vect rayhit;
-        //----------
-
-            
-        switch(recgeom)
-        {
-        case Receiver::REC_GEOM_TYPE::CYLINDRICAL_CLOSED:        //0    |    Continuous closed cylinder - external
-        {
-            //There will be only one flux surface and flux grid. Get both objects.
-            fs = &Rec->getFluxSurfaces()->at(0);
-            fs->ClearFluxGrid();
-            fg = fs->getFluxMap();
-            e_ind = r+1;    //element index for this receiver
-
-            rel = RV->rec_elevation.val*D2R;
-            raz = RV->rec_azimuth.val*D2R;
-            rh = RV->rec_height.val;
-            
-            sp_point offset(RV->rec_offset_x_global.Val(), RV->rec_offset_y_global.Val(), RV->optical_height.Val() );   //optical height includes z offset
-
-            //The number of points in the flux grid 
-            //(x-axis is angular around the circumference, y axis is receiver height)
-            nfx = fs->getFluxNX();
-            nfy = fs->getFluxNY();
-                        
-            Arec = Rec->getAbsorberArea();
-            dqspec = _STSim->IntData.q_ray/Arec*(float)(nfx*nfy);
-
-            for(int j=0; j<_STSim->IntData.nint; j++)
-            {    //loop through each intersection
-
-                if(_STSim->IntData.smap[j] != rstage1 || abs(_STSim->IntData.emap[j]) != e_ind) continue;    //only consider rays that interact with this element
-
-                //Where did the ray hit relative to the location of the receiver?
-                rayhit.Set(_STSim->IntData.hitx[j] - offset.x, _STSim->IntData.hity[j] - offset.y, _STSim->IntData.hitz[j] - offset.z);
-
-                //Do any required transform to get the ray intersection into receiver coordinates
-                Toolbox::rotation(-raz, 2, rayhit);
-                Toolbox::rotation(-rel, 0, rayhit);
-
-                //Calculate the point location in relative cylindrical coorinates
-                paz = 0.5 - atan2(rayhit.i, rayhit.j)/(2.*PI);    //0 for the flux grid begins at <S>, progresses CCW to 1
-                ph = 0.5+rayhit.k/rh;    //0 for flux grid at bottom of the panel, 1 at top
-
-                //Calculate which bin to add this ray to in the flux grid
-                ibin = int(floor(paz*nfx));
-                jbin = int(floor(ph*nfy));
-
-                //Add the magnitude of the flux to the correct bin
-                fg->at(ibin).at(jbin).flux += dqspec;
-
-            }
-
-            break;
-        }
-        case Receiver::REC_GEOM_TYPE::CYLINDRICAL_OPEN:
-        case Receiver::REC_GEOM_TYPE::CYLINDRICAL_CAV:
-            break;
-        case Receiver::REC_GEOM_TYPE::PLANE_RECT:    //3    |    Planar rectangle
-        {
-            //Only one flux surface and grid per receiver instance
-            fs = &Rec->getFluxSurfaces()->at(0);
-            fs->ClearFluxGrid();
-            fg = fs->getFluxMap();
-            e_ind = r+1;    //element index for this receiver
-
-            rel = RV->rec_elevation.val*D2R;
-            raz = RV->rec_azimuth.val*D2R;
-            rh = RV->rec_height.val;
-            rw = Rec->getReceiverWidth(*RV); 
-            
-            sp_point offset(RV->rec_offset_x_global.Val(), RV->rec_offset_y_global.Val(), RV->optical_height.Val() );   //optical height includes z offset
-
-            //The number of points in the flux grid 
-            //(x-axis receiver width, y axis is receiver height)
-            nfx = fs->getFluxNX();
-            nfy = fs->getFluxNY();
-                                    
-            Arec = Rec->getAbsorberArea();
-            dqspec = _STSim->IntData.q_ray/Arec*(float)(nfx*nfy);
-
-            
-            for(int j=0; j<_STSim->IntData.nint; j++)
-            {    //loop through each intersection
-
-                if(_STSim->IntData.smap[j] != rstage1 || abs(_STSim->IntData.emap[j]) != e_ind) continue;    //only consider rays that interact with this element
-
-                //Where did the ray hit relative to the location of the receiver?
-                rayhit.Set(_STSim->IntData.hitx[j] - offset.x, _STSim->IntData.hity[j] - offset.y, _STSim->IntData.hitz[j] - offset.z);
-
-                //Do any required transform to get the ray intersection into receiver coordinates
-                Toolbox::rotation(PI-raz, 2, rayhit);
-                Toolbox::rotation(-rel, 0, rayhit);
-
-                //Calculate the point location in relative cylindrical coorinates
-                pw = 0.5 + rayhit.i / rw;    //0 at "starboard" side, increase towards "port"
-                ph = 0.5 + rayhit.k / rh;    //0 for flux grid at bottom of the panel, 1 at top
-
-                //Calculate which bin to add this ray to in the flux grid
-                ibin = int(floor(pw*nfx));
-                jbin = int(floor(ph*nfy));
-
-                //Add the magnitude of the flux to the correct bin
-                fg->at(ibin).at(jbin).flux += dqspec;
-
-            }
-            break;
-        }
-        case Receiver::REC_GEOM_TYPE::PLANE_ELLIPSE:
-        case Receiver::REC_GEOM_TYPE::POLYGON_CLOSED:
-        case Receiver::REC_GEOM_TYPE::POLYGON_OPEN:
-        case Receiver::REC_GEOM_TYPE::POLYGON_CAV:
-        default:
-            return false;
-            break;
-        }
-            
-
-    }
-    return true;
-}
-
-bool SPFrame::HermiteFluxSimulationHandler(SolarField &SF, Hvector &helios)
-{
-    /* 
-    Call the hermite flux evaluation algorithm and process.
-    */
-    SF.HermiteFluxSimulation(helios, 
-        _variables.flux.aim_method.mapval() == var_fluxsim::AIM_METHOD::IMAGE_SIZE_PRIORITY    //to not re-simulate, aim strategy must be "IMAGE_SIZE"...
-        && helios.size() == SF.getHeliostats()->size());                                        //and all heliostats must be included.
-    
-    //Process the results
-    double azzen[2];
-    azzen[0] = D2R* SF.getVarMap()->flux.flux_solar_az.Val();
-    azzen[1] = D2R* (90. - SF.getVarMap()->flux.flux_solar_el.Val() );
-    
-    sim_params P;
-    P.dni = SF.getVarMap()->flux.flux_dni.val;
-
-    _results.back().process_analytical_simulation(SF, P, 2, azzen, &helios);
-
-    //if we have more than 1 receiver, create performance summaries for each and append to the results vector
-    if (SF.getActiveReceiverCount() > 1)
-    {
-        //which heliostats are aiming at which receiver?
-        unordered_map<Receiver*, Hvector> aim_map;
-        for (Hvector::iterator h = helios.begin(); h != helios.end(); h++)
-            aim_map[(*h)->getWhichReceiver()].push_back( *h );
-
-        for (Rvector::iterator rec = SF.getReceivers()->begin(); rec != SF.getReceivers()->end(); rec++)
-        {
-            _results.push_back( sim_result() );
-            Rvector recs = { *rec };
-            _results.back().process_analytical_simulation(SF, P, 2, azzen, &aim_map[*rec], &recs);
-        }
-    }
-    
-    return true;
-}
-
 void SPFrame::SetSimulationStatus(bool in_sim, bool &sim_type_flag, wxBitmapButton *button)
 {
     /* 
@@ -2691,7 +2075,7 @@ void SPFrame::SetSimulationStatus(bool in_sim, bool &sim_type_flag, wxBitmapButt
         button->SetToolTip("Cancel"); 
 
         sim_type_flag = true;
-        _cancel_simulation = false;
+        _sim_control._cancel_simulation = false;
         
     }
     else
@@ -2704,8 +2088,8 @@ void SPFrame::SetSimulationStatus(bool in_sim, bool &sim_type_flag, wxBitmapButt
         button->SetToolTip("Run"); 
 
         sim_type_flag = false;
-        _cancel_simulation = false;
-        _is_mt_simulation = false;    //Reset
+        _sim_control._cancel_simulation = false;
+        _sim_control._is_mt_simulation = false;    //Reset
         PostSimulation();
     }
 }
@@ -3528,7 +2912,7 @@ void SPFrame::ParametricSimulate( parametric &P )
                     */
                     try
                     {
-                        sim_cancelled = sim_cancelled || !DoManagedLayout(_par_SF, varpar);        //Returns TRUE if successful
+                        sim_cancelled = sim_cancelled || !interop::DoManagedLayout(_sim_control, _par_SF, varpar, _simthread);        //Returns TRUE if successful
                     }
                     catch(std::exception &e)
                     {
@@ -3926,8 +3310,9 @@ void SPFrame::CreateParametricsTable(parametric &par, sim_results &results, grid
     table.SetColLabelValue(0, "Units");
     for(int i=0; i<nsim; i++)
     {
-        wxString collab;
-        collab.Printf("Simulation %d", i/(nrec+1)+1);
+        std:string collab;
+        //collab.Printf("Simulation %d", i/(nrec+1)+1);
+        collab = "Simulation " + std::to_string(i / (nrec + 1) + 1);
         table.SetColLabelValue(i+1, collab);
     }
 
@@ -4041,189 +3426,192 @@ bool SPFrame::DoPerformanceSimulation( SolarField &SF, var_map &vset, Hvector &h
         return false;
     
     //Which type of simulation?
+    bool result;
     switch(simtype)
     {
     case var_fluxsim::FLUX_MODEL::HERMITE_ANALYTICAL:
-        return HermiteFluxSimulationHandler(SF, helios);
+        result = interop::HermiteFluxSimulationHandler(_results, SF, helios);
     case var_fluxsim::FLUX_MODEL::SOLTRACE:
-        return SolTraceFluxSimulation(SF, vset, helios);
+        result = SolTraceFluxSimulation(SF, vset, helios);
     default:
-        return false;
+        result = false;
     }
     
+    _flux_gauge->SetValue(0);
+    return result;
 }
 
-bool SPFrame::DoManagedLayout(SolarField &SF, var_map &V)
-{
-    /* 
-    This method is called to create a field layout. The method automatically handles
-    multithreading of hourly simulations.
-
-    Call
-    SF.Create()
-    before passing the solar field to this method.
-    
-    */
-    
-    //Make sure the solar field has been created
-    if( SF.getVarMap() == 0 )
-    {
-        PopMessage("The solar field Create() method must be called before generating the field layout.","Error");        
-        return false;
-    }
-    
-    //Is it possible to run a multithreaded simulation?
-    int nsim_req = SF.calcNumRequiredSimulations();
-    if(_n_threads > 1 && nsim_req > 1)
-    {
-        //More than 1 thread and more than 1 simulation to run
-
-        //Prepare the master solar field object for layout simulation
-        WeatherData wdata;
-        bool full_sim = SF.PrepareFieldLayout(SF, &wdata);
-        
-        //If full simulation is required...
-        if(full_sim)
-        {
-
-            int nthreads = min(nsim_req, _n_threads);
-
-            //Duplicate SF objects in memory
-            
-            wxString msg;
-            msg.Printf("Preparing %d threads for simulation", _n_threads);
-            _layout_log->AppendText(msg);
-            SolarField **SFarr;
-            SFarr = new SolarField*[nthreads];
-            for(int i=0; i<nthreads; i++)
-            {
-                SFarr[i] = new SolarField(SF);
-            }
-            
-            //Create sufficient results arrays in memory
-            sim_results results;
-            results.resize(nsim_req);
-                        
-            //Calculate the number of simulations per thread
-            int npert = (int)ceil((float)nsim_req/(float)nthreads);
-
-            //Create thread objects
-            _simthread = new LayoutSimThread[nthreads];
-            _n_threads_active = nthreads;    //Keep track of how many threads are active
-            _is_mt_simulation = true;
-            
-            int
-                sim_first = 0,
-                sim_last = npert;
-            for(int i=0; i<nthreads; i++)
-            {
-                std::string si = my_to_string(i+1);
-                _simthread[i].Setup(si, SFarr[i], &results, &wdata, sim_first, sim_last, false, false);
-                sim_first = sim_last;
-                sim_last = min(sim_last+npert, nsim_req);
-            }
-            
-            msg.Printf("\n%d ms | Simulating %d design hours", _sim_watch.Time(), nsim_req);
-            _layout_log->AppendText(msg);
-            //Run
-            for(int i=0; i<nthreads; i++)
-                thread( &LayoutSimThread::StartThread, std::ref( _simthread[i] ) ).detach();
-            
-
-            //Wait loop
-            while(true)
-            {
-                int nsim_done = 0, nsim_remain=0, nthread_done=0;
-                for(int i=0; i<nthreads; i++)
-                {
-                    if( _simthread[i].IsFinished() )
-                        nthread_done ++;
-                    
-                    int ns, nr;
-                    _simthread[i].GetStatus(&ns, &nr);
-                    nsim_done += ns;
-                    nsim_remain += nr;
-                    
-                    
-                }
-                SimProgressUpdateMT(nsim_done, nsim_req);
-                if(nthread_done == nthreads) break;
-                std::this_thread::sleep_for(std::chrono::milliseconds(75));
-
-            }
-
-            //Check to see whether the simulation was cancelled
-            bool cancelled = false;
-            for(int i=0; i<nthreads; i++)
-            {
-                cancelled = cancelled || _simthread[i].IsSimulationCancelled();
-            }
-            
-            //check to see whether simulation errored out
-            bool errored_out = false;
-            for(int i=0; i<_n_threads; i++)
-            {
-                errored_out = errored_out || _simthread[i].IsFinishedWithErrors();
-            }
-            if( errored_out )
-            {
-                //make sure each thread is cancelled
-                for(int i=0; i<_n_threads; i++)
-                    _simthread[i].CancelSimulation();
-
-                //Get the error messages, if any
-                string errmsgs;
-                for(int i=0; i<_n_threads; i++)
-                {
-                    for(int j=0; j<(int)_simthread[i].GetSimMessages()->size(); j++)
-                        errmsgs.append( _simthread[i].GetSimMessages()->at(j) + "\n");
-                }
-                //Display error messages
-                if(! errmsgs.empty() )
-                    PopMessage( errmsgs, "SolarPILOT Simulation Error", wxOK|wxICON_ERROR );
-            
-            }
-
-            //Clean up dynamic memory
-            for(int i=0; i<nthreads; i++)
-            {
-                delete SFarr[i];
-            }
-            delete [] SFarr;
-            delete [] _simthread;
-            _simthread = 0;
-
-            //If the simulation was cancelled per the check above, exit out
-            if(cancelled || errored_out)
-            {
-                return false;
-            }
-            
-            //For the map-to-annual case, run a simulation here
-            if(V.sf.des_sim_detail.mapval() == var_solarfield::DES_SIM_DETAIL::EFFICIENCY_MAP__ANNUAL)                
-                SolarField::AnnualEfficiencySimulation(V.amb.weather_file.val, &SF, results); 
-
-            //Process the results
-            SF.ProcessLayoutResults(&results, nsim_req);
-
-        }
-    }
-    else
-    {
-        _n_threads_active = 1;
-        _is_mt_simulation = false;
-        bool simok = SF.FieldLayout();            
-        if(SF.ErrCheck() || !simok) return false;
-    }
-
-    //follow-on stuff
-    Vect sun = Ambient::calcSunVectorFromAzZen( SF.getVarMap()->sf.sun_az_des.Val()*D2R, (90. - SF.getVarMap()->sf.sun_el_des.Val())*D2R );   
-    SF.calcHeliostatShadows(sun);    if(SF.ErrCheck()) return false;
-    V.land.bound_area.Setval( SF.getLandObject()->getLandBoundArea() ); 
-        
-    return true;
-
-}
+//bool SPFrame::DoManagedLayout(SolarField &SF, var_map &V) //, LayoutSimThread* simthread)
+//{
+//    /* 
+//    This method is called to create a field layout. The method automatically handles
+//    multithreading of hourly simulations.
+//
+//    Call
+//    SF.Create()
+//    before passing the solar field to this method.
+//    
+//    */
+//    
+//    //Make sure the solar field has been created
+//    if( SF.getVarMap() == 0 )
+//    {
+//        PopMessage("The solar field Create() method must be called before generating the field layout.","Error");        
+//        return false;
+//    }
+//    
+//    //Is it possible to run a multithreaded simulation?
+//    int nsim_req = SF.calcNumRequiredSimulations();
+//    if(_n_threads > 1 && nsim_req > 1)
+//    {
+//        //More than 1 thread and more than 1 simulation to run
+//
+//        //Prepare the master solar field object for layout simulation
+//        WeatherData wdata;
+//        bool full_sim = SF.PrepareFieldLayout(SF, &wdata);
+//        
+//        //If full simulation is required...
+//        if(full_sim)
+//        {
+//
+//            int nthreads = min(nsim_req, _n_threads);
+//
+//            //Duplicate SF objects in memory
+//            
+//            wxString msg;
+//            msg.Printf("Preparing %d threads for simulation", _n_threads);
+//            _layout_log->AppendText(msg);
+//            SolarField **SFarr;
+//            SFarr = new SolarField*[nthreads];
+//            for(int i=0; i<nthreads; i++)
+//            {
+//                SFarr[i] = new SolarField(SF);
+//            }
+//            
+//            //Create sufficient results arrays in memory
+//            sim_results results;
+//            results.resize(nsim_req);
+//                        
+//            //Calculate the number of simulations per thread
+//            int npert = (int)ceil((float)nsim_req/(float)nthreads);
+//
+//            //Create thread objects
+//            _simthread = new LayoutSimThread[nthreads];
+//            _n_threads_active = nthreads;    //Keep track of how many threads are active
+//            _is_mt_simulation = true;
+//            
+//            int
+//                sim_first = 0,
+//                sim_last = npert;
+//            for(int i=0; i<nthreads; i++)
+//            {
+//                std::string si = my_to_string(i+1);
+//                _simthread[i].Setup(si, SFarr[i], &results, &wdata, sim_first, sim_last, false, false);
+//                sim_first = sim_last;
+//                sim_last = min(sim_last+npert, nsim_req);
+//            }
+//            
+//            msg.Printf("\n%d ms | Simulating %d design hours", _sim_watch.Time(), nsim_req);
+//            _layout_log->AppendText(msg);
+//            //Run
+//            for(int i=0; i<nthreads; i++)
+//                thread( &LayoutSimThread::StartThread, std::ref( _simthread[i] ) ).detach();
+//            
+//
+//            //Wait loop
+//            while(true)
+//            {
+//                int nsim_done = 0, nsim_remain=0, nthread_done=0;
+//                for(int i=0; i<nthreads; i++)
+//                {
+//                    if( _simthread[i].IsFinished() )
+//                        nthread_done ++;
+//                    
+//                    int ns, nr;
+//                    _simthread[i].GetStatus(&ns, &nr);
+//                    nsim_done += ns;
+//                    nsim_remain += nr;
+//                    
+//                    
+//                }
+//                SimProgressUpdateMT(nsim_done, nsim_req);
+//                if(nthread_done == nthreads) break;
+//                std::this_thread::sleep_for(std::chrono::milliseconds(75));
+//
+//            }
+//
+//            //Check to see whether the simulation was cancelled
+//            bool cancelled = false;
+//            for(int i=0; i<nthreads; i++)
+//            {
+//                cancelled = cancelled || _simthread[i].IsSimulationCancelled();
+//            }
+//            
+//            //check to see whether simulation errored out
+//            bool errored_out = false;
+//            for(int i=0; i<_n_threads; i++)
+//            {
+//                errored_out = errored_out || _simthread[i].IsFinishedWithErrors();
+//            }
+//            if( errored_out )
+//            {
+//                //make sure each thread is cancelled
+//                for(int i=0; i<_n_threads; i++)
+//                    _simthread[i].CancelSimulation();
+//
+//                //Get the error messages, if any
+//                string errmsgs;
+//                for(int i=0; i<_n_threads; i++)
+//                {
+//                    for(int j=0; j<(int)_simthread[i].GetSimMessages()->size(); j++)
+//                        errmsgs.append( _simthread[i].GetSimMessages()->at(j) + "\n");
+//                }
+//                //Display error messages
+//                if(! errmsgs.empty() )
+//                    PopMessage( errmsgs, "SolarPILOT Simulation Error", wxOK|wxICON_ERROR );
+//            
+//            }
+//
+//            //Clean up dynamic memory
+//            for(int i=0; i<nthreads; i++)
+//            {
+//                delete SFarr[i];
+//            }
+//            delete [] SFarr;
+//            delete [] _simthread;
+//            _simthread = 0;
+//
+//            //If the simulation was cancelled per the check above, exit out
+//            if(cancelled || errored_out)
+//            {
+//                return false;
+//            }
+//            
+//            //For the map-to-annual case, run a simulation here
+//            if(V.sf.des_sim_detail.mapval() == var_solarfield::DES_SIM_DETAIL::EFFICIENCY_MAP__ANNUAL)                
+//                SolarField::AnnualEfficiencySimulation(V.amb.weather_file.val, &SF, results); 
+//
+//            //Process the results
+//            SF.ProcessLayoutResults(&results, nsim_req);
+//
+//        }
+//    }
+//    else
+//    {
+//        _n_threads_active = 1;
+//        _is_mt_simulation = false;
+//        bool simok = SF.FieldLayout();            
+//        if(SF.ErrCheck() || !simok) return false;
+//    }
+//
+//    //follow-on stuff
+//    Vect sun = Ambient::calcSunVectorFromAzZen( SF.getVarMap()->sf.sun_az_des.Val()*D2R, (90. - SF.getVarMap()->sf.sun_el_des.Val())*D2R );   
+//    SF.calcHeliostatShadows(sun);    if(SF.ErrCheck()) return false;
+//    V.land.bound_area.Setval( SF.getLandObject()->getLandBoundArea() ); 
+//        
+//    return true;
+//
+//}
 
 wxGauge *SPFrame::chooseProgressGauge()
 {
@@ -4498,6 +3886,7 @@ void SPFrame::WriteVariablesToFile(wxTextFile &tfile, var_map &vset)
     }
 }
 
+
 /* ----------------------------------
 
 Callbacks
@@ -4537,3 +3926,9 @@ bool SolarFieldOptimizeDetailCallback(simulation_info *siminfo, void *data)
 	if (frame != NULL) frame->OptimizeProgressDetailUpdate(siminfo);
 	return true;
 };
+
+int PopMessageHandler(const char* message, void* data)
+{
+    SPFrame* F = static_cast<SPFrame*>(data);
+    return F->PopMessage(wxString(message), wxString("Notice"), wxOK | wxICON_INFORMATION);
+}
