@@ -53,6 +53,7 @@
 #include "GUI_main.h"
 #include "wx/tglbtn.h"
 #include "STObject.h"
+#include "interop.h"
 
 using namespace std;
 
@@ -387,7 +388,7 @@ void SPFrame::OnFluxPlotBinChange( int axis )
             _variables.flux.y_res.val
             );    //Flux map should match spec
     }
-    SolTraceFluxBinning(_SF);
+    interop::SolTraceFluxBinning(*this->GetSimControlObject(), _SF);
     Hvector helios;
     GetSelectedHeliostats(helios, _flux_lc_check->GetValue());
 
