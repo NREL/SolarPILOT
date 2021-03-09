@@ -231,6 +231,7 @@ void SPFrame::UpdateLayoutGrid()
     
 }
 
+
 void SPFrame::UpdateLayoutLog(string msg, bool clear)
 {
     /* 

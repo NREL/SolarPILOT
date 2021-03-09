@@ -214,11 +214,7 @@ private:
     int _tool_tip_delay,  _nrecent_max, _trial_days; 
     wxDateTime _trial_start;
 
-    SimControl _sim_control; // 
-    //bool _cancel_simulation; //Flag indicating whether the user wants to cancel the simulation
-    //STSimThread* _stthread;
-    //ST_System* _STSim;
-
+    SimControl _sim_control;
 
 	int 
 		_version_major,
@@ -702,6 +698,8 @@ public:
     SolarPILOTScriptWindow* GetScriptWindowPointer();
     std::string GetVersionInfo();
     wxFileName GetImageDir();
+    wxTextCtrl* GetLayoutLog();
+    wxStopWatch GetSimWatch();
 
     void UpdateHelioUITemplates();
     void UpdateReceiverUITemplates();
@@ -771,7 +769,6 @@ public:
     void OptReloadVariableList();
     void CheckOptGridRange();
 
-    //bool DoManagedLayout(SolarField &SF, var_map &vset);
     bool DoPerformanceSimulation(SolarField &SF, var_map &vset, Hvector &helios);
     bool SolTraceFluxSimulation(SolarField &SF, var_map &vset, Hvector &helios);
     bool SolTraceFluxBinning(SolarField &SF);
@@ -812,5 +809,8 @@ extern bool SolarFieldOptimizeSummaryCallback(simulation_info *siminfo, void *da
 extern bool SolarFieldOptimizeDetailCallback(simulation_info *siminfo, void *data);
 
 extern int PopMessageHandler(const char* message, void* data);
+
+extern int UpdateLayoutLogWithClock(const char* message, void* data);
+
 
 #endif

@@ -100,8 +100,8 @@ class CoPylot:
     def __init__(self):
         cwd = os.getcwd()
         if sys.platform == 'win32' or sys.platform == 'cygwin':
-            #self.pdll = CDLL("C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/build_vs2017/build/Debug/x64/solarpilot.dll") # for debugging
             self.pdll = CDLL(cwd + "/solarpilot.dll")
+            #self.pdll = CDLL(cwd + "/solarpilotd.dll") # for debugging
         elif sys.platform == 'darwin':
             self.pdll = CDLL(cwd + "/solarpilot.dylib")  # Never tested
         elif sys.platform == 'linux2':

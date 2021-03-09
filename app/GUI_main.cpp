@@ -343,9 +343,11 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
 #endif
 
     _sim_control.soltrace_callback = STCallback;
-    _sim_control.soltrace_callback_data = this;
+    _sim_control.soltrace_callback_data = (void*)this;
     _sim_control.message_callback = PopMessageHandler;
-    _sim_control.message_callback_data = this;
+    _sim_control.message_callback_data = (void*)this;
+    _sim_control.layout_log_callback = UpdateLayoutLogWithClock;
+    _sim_control.layout_log_callback_data = (void*)this;
 
     //Create the simulation progress timer and connect it to a timer event
     _sim_timer = new wxTimer(this, wxID_ANY);
@@ -1497,6 +1499,16 @@ void SPFrame::SetThreadCount(int nthread)
 int SPFrame::GetThreadCount()
 {
     return _sim_control._n_threads;
+}
+
+wxTextCtrl* SPFrame::GetLayoutLog()
+{
+    return _layout_log;
+}
+
+wxStopWatch SPFrame::GetSimWatch()
+{
+    return _sim_watch;
 }
 
 ArrayString *SPFrame::GetLocalWeatherDataObject()
@@ -3726,7 +3738,7 @@ Callbacks
 int STCallback(st_uint_t ntracedtotal, st_uint_t ntraced, st_uint_t ntotrace, st_uint_t curstage, st_uint_t nstages, void *data)
 {
 	SPFrame *frame = static_cast<SPFrame*>(data);
-	if (frame != NULL) return frame->SolTraceProgressUpdate(ntracedtotal, ntraced, ntotrace, curstage, nstages, data);
+    if (frame != NULL) return frame->SolTraceProgressUpdate(ntracedtotal, ntraced, ntotrace, curstage, nstages, (void*)NULL);
 	else return 0;
 };
 
@@ -3761,4 +3773,16 @@ int PopMessageHandler(const char* message, void* data)
 {
     SPFrame* F = static_cast<SPFrame*>(data);
     return F->PopMessage(wxString(message), wxString("Notice"), wxOK | wxICON_INFORMATION);
+}
+
+int UpdateLayoutLogWithClock(const char* message, void* data)
+{
+    /*
+    Update the layout log text control.
+    */
+    SPFrame* F = static_cast<SPFrame*>(data);
+    wxString ctext = F->GetLayoutLog()->GetValue();
+    ctext.append(wxT("\n") + wxString(std::to_string(F->GetSimWatch().Time())) + wxString(" ms | ") + wxString(message));
+    F->GetLayoutLog()->SetValue(ctext);
+    return 1;
 }

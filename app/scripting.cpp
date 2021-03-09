@@ -708,7 +708,6 @@ static void _simulate( lk::invoke_t &cxt )
         break;
     case var_fluxsim::FLUX_MODEL::SOLTRACE:
         ok = interop::SolTraceFluxSimulation(*F.GetSimControlObject(),*res,*SF, *V, *helios);
-        //ok = F.SolTraceFluxSimulation(*SF, *V, *helios);
         break;
     default:
         ok = false;
