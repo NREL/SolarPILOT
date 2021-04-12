@@ -245,12 +245,12 @@ void SPFrame::OnDoOptimizationSimulation( wxCommandEvent &event )
             if( _variables.flux.flux_model.mapval() == var_fluxsim::FLUX_MODEL::SOLTRACE )
             {
                 //Cancel the SolTrace simulation
-                _cancel_simulation = true; 
+                _sim_control._cancel_simulation = true;
             }
             else
             {
                 //Cancel the analytical simulation
-                if(_is_mt_simulation)
+                if(_sim_control._is_mt_simulation)
                 {
                     _SFopt_MT->CancelSimulation();                    
                 }
@@ -322,10 +322,10 @@ void SPFrame::OnDoOptimizationSimulation( wxCommandEvent &event )
             stepsize.at(i) = vdef;
         }
 
-        if(_n_threads > 1)
+        if(_sim_control._n_threads > 1)
         {
-            _n_threads_active = _n_threads;
-            _is_mt_simulation = true;
+            _sim_control._n_threads_active = _sim_control._n_threads;
+            _sim_control._is_mt_simulation = true;
 
             _SFopt_MT = new AutoPilot_MT();
             
@@ -349,8 +349,8 @@ void SPFrame::OnDoOptimizationSimulation( wxCommandEvent &event )
             _SFopt_MT->Optimize(optvars, upper, lower, stepsize, &names);
 
 
-            _n_threads_active = 0;
-            _is_mt_simulation = false;
+            _sim_control._n_threads_active = 0;
+            _sim_control._is_mt_simulation = false;
 
             try
             {
@@ -363,7 +363,7 @@ void SPFrame::OnDoOptimizationSimulation( wxCommandEvent &event )
         }
         else
         {
-            _is_mt_simulation = false;
+            _sim_control._is_mt_simulation = false;
 
             _SFopt_S = new AutoPilot_S();
             _SFopt_S->SetSummaryCallback( SolarFieldOptimizeSummaryCallback, this);

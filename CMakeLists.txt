@@ -188,7 +188,6 @@ elseif (MSVC)
 	target_link_libraries(SolarPILOT Winhttp)
 endif()
 
-
 #####################################################################################################################
 #
 # Target Installation

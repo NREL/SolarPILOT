@@ -298,66 +298,31 @@ wxDateTime::Month gui_util::intTowxMonth(int month)
 
 
 //--------grid emulator--------------------
-void grid_emulator::CreateGrid(int nrow, int ncol)
-{
-    _nrow = nrow;
-    _ncol = ncol;
-    data.clear();
-    data.resize(nrow);
-    for(int i=0; i<nrow; i++)
-        data.at(i).resize(ncol);
-    rowlabs.resize(nrow);
-    collabs.resize(ncol);
-}
-
-bool grid_emulator::SetColLabelValue(int col, wxString value)
-{
-    collabs.at(col) = value;
-    return true;
-}
-
-bool grid_emulator::SetRowLabelValue(int row, wxString value)
-{
-    rowlabs.at(row) = value;
-    return true;
-}
-
-bool grid_emulator::SetCellValue(int row, int col, wxString value)
-{
-    data.at(row).at(col) = value;
-    return true;
-}
-
-bool grid_emulator::SetCellValue(wxString value, int row, int col)
-{
-    return SetCellValue(row, col, value);
-}
-
-void grid_emulator::GetPrintableTable(wxArrayStr &printable, wxString eol)
+void grid_emulator::GetPrintableTable(wxArrayStr& printable, wxString eol)
 {
     printable.Clear();
     wxString hdr;
-    for(int i=0; i<_ncol; i++)
-        hdr.Append(", "+collabs.at(i));
-    printable.Add(hdr+eol);
+    for (int i = 0; i < _ncol; i++)
+        hdr.Append(", " + collabs.at(i));
+    printable.Add(hdr + eol);
 
-    for(int i=0; i<_nrow; i++)
+    for (int i = 0; i < _nrow; i++)
     {
         wxString line = rowlabs.at(i);
-        for(int j=0; j<_ncol; j++)
+        for (int j = 0; j < _ncol; j++)
         {
-            wxString tval = GetCellValue(i,j);
-            tval.Replace(",","");
-            line.Append(", "+tval);    //Remove any commas from cell values - the file is comma-delimited
+            wxString tval = GetCellValue(i, j);
+            tval.Replace(",", "");
+            line.Append(", " + tval);    //Remove any commas from cell values - the file is comma-delimited
         }
-        printable.Add(line+eol);
+        printable.Add(line + eol);
     }
-    
+
 }
 
-void grid_emulator::MapToWXGrid(wxGrid *grid)
+void grid_emulator::MapToWXGrid(wxGrid* grid)
 {
-    
+
     if (grid->GetNumberRows() != GetNumberRows())
     {
         grid->DeleteRows(0, grid->GetNumberRows());
@@ -369,13 +334,13 @@ void grid_emulator::MapToWXGrid(wxGrid *grid)
         grid->AppendCols(GetNumberCols());
     }
 
-    for(int i=0; i<_nrow; i++)
+    for (int i = 0; i < _nrow; i++)
         grid->SetRowLabelValue(i, rowlabs.at(i));
-    for(int i=0; i<_ncol; i++)
+    for (int i = 0; i < _ncol; i++)
         grid->SetColLabelValue(i, collabs.at(i));
-    for(int i=0; i<_nrow; i++)
-        for(int j=0; j<_ncol; j++)
-            grid->SetCellValue(i, j, GetCellValue(i,j));
+    for (int i = 0; i < _nrow; i++)
+        for (int j = 0; j < _ncol; j++)
+            grid->SetCellValue(i, j, GetCellValue(i, j));
 
     int nrow = grid->GetNumberRows(),
         ncol = grid->GetNumberCols();
@@ -391,58 +356,6 @@ void grid_emulator::MapToWXGrid(wxGrid *grid)
         }
     }
 }
-
-void grid_emulator::AddRow(int row, wxString label, wxString units, double value, int sigfigs, double mean, double min, double max, double stdev)
-{
-    //Row adding method for simple performance runs
-
-    if((GetNumberCols() < 6) || (GetNumberRows() < row+1))
-        throw spexception("Sorry! Results table incorrectly formatted. Please contact solarpilot.support@nrel.gov for help.");
-    
-    bool is_currency = false;
-    if( units.Find("$") != wxString::npos ) is_currency = true;
-
-    //calculate a good precision
-    if( sigfigs < 0 )
-    {
-        int prec = 4-(int)log10f(value);
-        sigfigs = prec < 0 ? 0 : prec;
-    }
-
-    wxString infmt = wxString::Format("%s.%df", "%", sigfigs);
-    wxString stfmt = wxString::Format("%s.%df", "%", sigfigs+2);
-
-    SetRowLabelValue(row, label);
-    SetCellValue(row, 0, units);
-    SetCellValue(row, 1, is_currency ? gui_util::FormatAsCurrency(value) : to_string(value, infmt.c_str()) );
-    SetCellValue(row, 2, (mean == mean ? to_string(mean, infmt.c_str()) : ""));
-    SetCellValue(row, 3, (min == min ? to_string(min, infmt.c_str()) : "") );
-    SetCellValue(row, 4, (max == max ? to_string(max, infmt.c_str()) : ""));
-    SetCellValue(row, 5, (stdev == stdev ? to_string(stdev, stfmt.c_str()) : ""));
-
-}
-
-int grid_emulator::GetNumberRows()
-{
-	return _nrow;
-}
-int grid_emulator::GetNumberCols()
-{
-	return _ncol;
-}
-wxString grid_emulator::GetRowLabelValue(int row)
-{
-	return rowlabs.at(row);
-}
-wxString grid_emulator::GetColLabelValue(int col)
-{
-	return collabs.at(col);
-}
-wxString grid_emulator::GetCellValue(int row, int col)
-{
-	return data.at(row).at(col);
-}
-
 
 bool gui_util::list_files( std::string &directory, ArrayString &files, std::string filters )
 {
