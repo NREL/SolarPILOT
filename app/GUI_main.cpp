@@ -264,8 +264,8 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
 
     //Set the version tag
 	_version_major = 1;
-	_version_minor = 3;
-	_version_patch = 92;
+	_version_minor = 4;
+	_version_patch = 0;
 
     _software_version = my_to_string(_version_major) + "." + my_to_string(_version_minor) + "." + my_to_string(_version_patch);
     _contact_info = "solarpilot.support@nrel.gov";
@@ -3323,7 +3323,7 @@ void SPFrame::CreateParametricsTable(parametric &par, sim_results &results, grid
     table.SetColLabelValue(0, "Units");
     for(int i=0; i<nsim; i++)
     {
-        std:string collab;
+        std::string collab;
         //collab.Printf("Simulation %d", i/(nrec+1)+1);
         collab = "Simulation " + std::to_string(i / (nrec + 1) + 1);
         table.SetColLabelValue(i+1, collab);
