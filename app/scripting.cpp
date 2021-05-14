@@ -60,6 +60,7 @@
 #include "GUI_main.h"
 #include "IOUtil.h"
 #include "param_dialog.h"
+#include "interop.h"
 
 using namespace std;
 
@@ -752,7 +753,7 @@ static void _summary_results( lk::invoke_t &cxt )
     {
         lk::vardata_t &r = rt.vec()->at(i);
 
-        F.CreateResultsTable(results->at(i), table);
+        interop::CreateResultsTable(results->at(i), table);
 
         r.empty_hash();
 

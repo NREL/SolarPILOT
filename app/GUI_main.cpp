@@ -3045,7 +3045,7 @@ void SPFrame::ParametricSimulate( parametric &P )
                         for (int r = 0; r < n_new_result; r++)
                         {
                             grid_emulator gridtable;
-                            CreateResultsTable(_results.at(n_old_result + r), gridtable);
+                            interop::CreateResultsTable(_results.at(n_old_result + r), gridtable);
 
                             //Write the table
                             wxArrayStr textresults;
@@ -3188,126 +3188,6 @@ void SPFrame::ParametricSimulate( parametric &P )
     delete [] parchanged;
     delete [] parind;
     delete [] parlengths;
-    
-    
-
-}
-
-void SPFrame::CreateResultsTable(sim_result &result, grid_emulator &table)
-{
-    try
-    {
-		//table.CreateGrid(result.is_soltrace ? 18 : 19, 6);
-		table.CreateGrid(18, 6);
-        
-        table.SetColLabelValue(0, "Units");
-        table.SetColLabelValue(1, "Value");
-        table.SetColLabelValue(2, "Mean");
-        table.SetColLabelValue(3, "Minimum");
-        table.SetColLabelValue(4, "Maximum");
-        table.SetColLabelValue(5, "Std. dev");
-    
-        int id=0;
-        table.AddRow(id++, "Total plant cost", "$", result.total_installed_cost, 0);
-        //table.AddRow(id++, "Cost/Energy metric", "-", result.coe_metric);
-        table.AddRow(id++, "Simulated heliostat area", "m^2", result.total_heliostat_area);
-        table.AddRow(id++, "Simulated heliostat count", "-", result.num_heliostats_used, 0);
-        table.AddRow(id++, "Power incident on field", "kW", result.power_on_field);
-        table.AddRow(id++, "Power absorbed by the receiver", "kW", result.power_absorbed);
-        table.AddRow(id++, "Power absorbed by HTF", "kW", result.power_to_htf);
-
-        double nan = std::numeric_limits<double>::quiet_NaN();
-        //------------------------------------
-        if (result.is_soltrace)
-        {
-            table.AddRow(id++, "Cloudiness efficiency", "%", 100.*result.eff_cloud.wtmean, 2);
-            table.AddRow(id++, "Shadowing and Cosine efficiency", "%", 100.*result.eff_cosine.wtmean, 2);
-            table.AddRow(id++, "Reflection efficiency", "%", 100.*result.eff_reflect.wtmean, 2);
-            table.AddRow(id++, "Blocking efficiency", "%", 100.*result.eff_blocking.wtmean, 2);
-            table.AddRow(id++, "Image intercept efficiency", "%", 100.*result.eff_intercept.wtmean, 2);
-            table.AddRow(id++, "Absorption efficiency", "%", 100.*result.eff_absorption.wtmean, 2);
-            table.AddRow(id++, "Solar field optical efficiency", "%", 100.*result.eff_total_sf.wtmean / result.eff_absorption.wtmean, 2);
-            table.AddRow(id++, "Optical efficiency incl. receiver", "%", 100.*result.eff_total_sf.wtmean, 2);
-            table.AddRow(id++, "Incident flux", "kW/m2", result.flux_density.ave, -1, result.flux_density.min, result.flux_density.max, result.flux_density.stdev);
-            table.AddRow(id++, "No. rays traced", "-", result.num_ray_traced, 0);
-            table.AddRow(id++, "No. heliostat ray intersections", "-", result.num_ray_heliostat, 0);
-            table.AddRow(id++, "No. receiver ray intersections", "-", result.num_ray_receiver, 0);
-        }
-        else
-        {   //results table for hermite simulation
-            table.AddRow(id++, "Cloudiness efficiency", "%", 
-                    100.*result.eff_cloud.wtmean, 2,
-                    100.*result.eff_cloud.ave, 
-                    100.*result.eff_cloud.min, 
-                    100.*result.eff_cloud.max, 
-                    100.*result.eff_cloud.stdev);
-            table.AddRow(id++, "Shading efficiency", "%",
-                    100.*result.eff_shading.wtmean, 2,
-                    100.*result.eff_shading.ave,
-                    100.*result.eff_shading.min,
-                    100.*result.eff_shading.max,
-                    100.*result.eff_shading.stdev);
-            table.AddRow(id++, "Cosine efficiency", "%",
-                    100.*result.eff_cosine.wtmean, 2,
-                    100.*result.eff_cosine.ave,
-                    100.*result.eff_cosine.min,
-                    100.*result.eff_cosine.max,
-                    100.*result.eff_cosine.stdev);
-			table.AddRow(id++, "Reflection efficiency", "%",
-                    100.*result.eff_reflect.wtmean, 2,
-                    100.*result.eff_reflect.ave, 
-                    100.*result.eff_reflect.min, 
-                    100.*result.eff_reflect.max, 
-                    100.*result.eff_reflect.stdev);
-            table.AddRow(id++, "Blocking efficiency", "%",
-                    100.*result.eff_blocking.wtmean, 2,
-                    100.*result.eff_blocking.ave,
-                    100.*result.eff_blocking.min,
-                    100.*result.eff_blocking.max,
-                    100.*result.eff_blocking.stdev);
-            table.AddRow(id++, "Attenuation efficiency", "%",
-                    100.*result.eff_attenuation.wtmean, 2,
-                    100.*result.eff_attenuation.ave,
-                    100.*result.eff_attenuation.min,
-                    100.*result.eff_attenuation.max,
-                    100.*result.eff_attenuation.stdev);
-            table.AddRow(id++, "Image intercept efficiency", "%",
-                    100.*result.eff_intercept.wtmean, 2,
-                    100.*result.eff_intercept.ave,
-                    100.*result.eff_intercept.min,
-                    100.*result.eff_intercept.max,
-                    100.*result.eff_intercept.stdev);
-            table.AddRow(id++, "Absorption efficiency", "%", 100.*result.eff_absorption.wtmean, 2);
-            table.AddRow(id++, "Solar field optical efficiency", "%",
-                    100.*result.eff_total_sf.wtmean /result.eff_absorption.wtmean, 2,
-                    nan,
-                    100.*result.eff_total_sf.min/result.eff_absorption.wtmean,
-                    100.*result.eff_total_sf.max/result.eff_absorption.wtmean,
-                    100.*result.eff_total_sf.stdev/result.eff_absorption.wtmean);
-            table.AddRow(id++, "Optical efficiency incl. receiver", "%",
-                    100.*result.eff_total_sf.wtmean, 2,
-                    nan,
-                    100.*result.eff_total_sf.min,
-                    100.*result.eff_total_sf.max,
-                    100.*result.eff_total_sf.stdev);
-            table.AddRow(id++, "Annualized heliostat efficiency", "%",
-                    100.*result.eff_annual.wtmean, 2,
-                    nan,
-                    100.*result.eff_annual.min,
-                    100.*result.eff_annual.max,
-                    100.*result.eff_annual.stdev);
-            table.AddRow(id++, "Incident flux", "kW/m2",
-                    result.flux_density.ave, -1,
-                    nan, 
-                    result.flux_density.min, 
-                    result.flux_density.max, 
-                    result.flux_density.stdev);
-        }
-    }
-    catch(...)
-    {
-        throw spexception("An error occurred while trying to process the simulation results for display.");
-    }
     
 }
 

@@ -54,6 +54,7 @@
 #include "LayoutSimulateThread.h"
 #include "plot_select_dialog.h"
 #include "IOUtil.h"
+#include "interop.h"
 
 using namespace std;
 
@@ -1396,7 +1397,7 @@ void SPFrame::OnUserParSimulate( wxCommandEvent &WXUNUSED(event))
                 for (int r = 0; r < n_new_result; r++)
                 { 
                     grid_emulator gridtable;
-                    CreateResultsTable(_results.at(n_old_result + r), gridtable);
+                    interop::CreateResultsTable(_results.at(n_old_result + r), gridtable);
 
                     //Write the table
                     wxArrayStr textresults;
