@@ -165,8 +165,8 @@ void FluxPlot::DoPaint(wxDC &_pdc)
     
     Receiver *rec = _SF->getReceivers()->at(_receiver);    //This is the receiver to use
     var_receiver *vrec = rec->getVarMap();
-    //int rgeom = rec->getGeometryType();
-    int rgeom = Receiver::REC_GEOM_TYPE::CYLINDRICAL_CAV;    //For debugging
+    int rgeom = rec->getGeometryType();
+    //int rgeom = Receiver::REC_GEOM_TYPE::CYLINDRICAL_CAV;    //For debugging
 
     wxSize parsize = this->GetClientSize();
     parsize.x = parsize.x < 100 ? 1024 : parsize.x;
@@ -519,7 +519,7 @@ void FluxPlot::DoPaint(wxDC &_pdc)
             vector<vector<double> > fdata(fnx*(nfs-1), vector<double>(fny));
 
             //Load data in.
-            int offset = 3*fnx;
+            int offset = (nfs-2)*fnx;
             for (int n = 1; n < nfs; n++) { //Loop through surfaces
                 if (n > 1) {
                     ffs = &fs->at(n);
