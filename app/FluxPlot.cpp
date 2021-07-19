@@ -95,21 +95,42 @@ bool FluxPlot::SaveDataTable(wxString &path, wxString &delim)
 {
     Receiver *rec = _SF->getReceivers()->at(_receiver);    //This is the receiver to use
     FluxSurfaces *fs = rec->getFluxSurfaces();    
-    FluxSurface *ffs = &fs->at(0);
-    FluxGrid *fg = ffs->getFluxMap();
 
-    //Calculate the element size
-    int 
-        fnx = ffs->getFluxNX(),
-        fny = ffs->getFluxNY();
-        
+    int max_ny = 0;
+    int tot_nx = 0;
+
+    for (size_t i = 0; i < fs->size(); i++)
+    {
+        int fs_nx = fs->at(i).getFluxNX();
+        int fs_ny = fs->at(i).getFluxNY();
+
+        max_ny = fs_ny > max_ny ? fs_ny : max_ny;
+        tot_nx += fs_nx;
+    }
+
+    int fnx = tot_nx; 
+    int fny = max_ny;
+
     //Copy the data into a double vector
     vector<vector<double> > fdata(fnx, vector<double>(fny));
 
     //need to manually reverse data for flux table to be consistent with plot
-    for(int i=0; i<fnx; i++)
-        for(int j=0; j<fny; j++)
-            fdata.at(i).at(j) = fg->at(fnx-1-i).at(j).flux;
+    int istart = 0;
+    for (size_t k = 0; k < fs->size(); k++)
+    {
+        FluxSurface* ffs = &fs->at(k);
+        FluxGrid* fg = ffs->getFluxMap();
+
+        int fs_nx = ffs->getFluxNX();
+        int fs_ny = ffs->getFluxNY();
+
+        for(int i=0; i< fs_nx; i++)
+            for(int j=0; j< fs_ny; j++)
+                fdata.at((int)i+istart).at(j) = fg->at(fs_nx-1-i).at(j).flux;
+
+        istart += fs_nx;
+
+    }
     PlotContourf tplot;
     
     return tplot.ExportDataTable(_plotobj, path, delim, fdata);
