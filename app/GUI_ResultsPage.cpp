@@ -51,6 +51,7 @@
 
 
 #include "GUI_main.h"
+#include "interop.h"
 
 using namespace std;
 
@@ -107,7 +108,7 @@ void SPFrame::CreateResultsSummaryPage(wxScrolledWindow *parent)
         
             _results_grid = new wxGrid(parent, wxID_ANY, wxDefaultPosition, wxSize(350,600));
             grid_emulator textgrid;
-            CreateResultsTable(_results.front(), textgrid);
+            interop::CreateResultsTable(_results.front(), textgrid);
             _results_grid->CreateGrid(textgrid.GetNumberRows(),textgrid.GetNumberCols());
             textgrid.MapToWXGrid(_results_grid);
             _results_grid->SetRowLabelSize(200);
@@ -349,7 +350,7 @@ void SPFrame::OnResultsReceiverSelect(wxCommandEvent &evt)
 
     grid_emulator textgrid;
     _results_grid->ClearGrid();
-    CreateResultsTable(*result, textgrid);
+    interop::CreateResultsTable(*result, textgrid);
     
     textgrid.MapToWXGrid(_results_grid);
 

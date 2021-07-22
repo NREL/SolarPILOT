@@ -53,6 +53,7 @@
 
 #if _SANDBOX == 1
 #include "GUI_main.h"
+#include "interop.h"
 //#include "SolarField.h"
 //#include <stdlib.h>
 //#include <time.h>
@@ -64,6 +65,7 @@
 #include <cstdio>
 #include <fstream>
 #include <ostream>
+
 
 struct opt_helper
 {
@@ -382,7 +384,9 @@ bool SPFrame::Sandbox()
     F.UpdateReceiverUITemplates();
     F.UpdateCalculatedGUIValues();
 
-    F.DoManagedLayout(*SF, *V);        //Returns TRUE if successful
+    //F.DoManagedLayout(*SF, *V);        //Returns TRUE if successful
+    interop::DoManagedLayout(*F.GetSimControlObject(), *SF, *V, F.GetLayoutSimThreadObject());  // This will not work
+    
 
     F.UpdateLayoutGrid();
     F.GetFieldPlotObject()->SetPlotData(*SF, FIELD_PLOT::EFF_TOT);

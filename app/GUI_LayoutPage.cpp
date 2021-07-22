@@ -135,6 +135,7 @@ void SPFrame::CreateLayoutPage(wxScrolledWindow *parent)
     rad_spacing_method->addDisabledSiblings("DELSOL Empirical Fit", is_sliprow_skipped );
     rad_spacing_method->addDisabledSiblings("DELSOL Empirical Fit", slip_plane_blocking );
     rad_spacing_method->setDisabledSiblings("Eliminate blocking", trans_limit_fact );
+    is_sliprow_skipped->setDisabledSiblings("false", slip_plane_blocking);
     
     wxBoxSizer *layout_rad_stagger_s = new wxBoxSizer(wxVERTICAL);
     layout_rad_stagger_s->Add(rad_spacing_method);
