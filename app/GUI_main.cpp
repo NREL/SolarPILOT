@@ -2831,20 +2831,24 @@ void SPFrame::SAMInputParametric()
         }
         file.clear();
 
-        block_t<double> *flux = &fluxtab.flux_surfaces.at(0).flux_data;
-        int nc = flux->ncols();
         
         for(int i=0; i<(int)fluxtab.efficiency.size(); i++)
         {
             file << (fluxtab.azimuths.at(i)*R2D - 180.) << "," << fluxtab.zeniths.at(i)*R2D << ",";
-            for(int j=0; j<(int)flux->nrows(); j++)
+            for(int j=0; j<(int)fluxtab.flux_surfaces.at(0).flux_data.nrows(); j++)
             {
                 if( j > 0 )
                     file << ",,";
 
-                for(int k=0; k<nc; k++)
+                for (int l = 0; l < fluxtab.flux_surfaces.size(); l++)
                 {
-                    file << flux->at(j, k, i) << (k<nc-1 ? "," : "");
+                    block_t<double> *flux = &fluxtab.flux_surfaces.at(l).flux_data;
+                    int nc = flux->ncols();
+
+                    for(int k=0; k<nc; k++)
+                    {
+                        file << flux->at(j, k, i) << ((k == nc - 1 && l == fluxtab.flux_surfaces.size()) ? "" : ","); 
+                    }
                 }
                 file << "\n";
             }
