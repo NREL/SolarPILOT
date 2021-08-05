@@ -44,6 +44,9 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
+; Adding CoPylot API -> which requires building the API
+Source: "api/*"; DestDir: "{app}/api"; Excludes: "*.dll"; Flags: ignoreversion
+Source: "api/solarpilot.dll"; DestDir: "{app}/api"; Flags: ignoreversion
 
 Source: "samples/*"; DestDir: "{app}/samples"; Excludes: ".svn,*.map"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "exelib/*"; DestDir: "{app}/exelib"; Excludes: ".svn,\custom"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -57,8 +60,6 @@ Source: "x64/msvcp140.dll"; DestDir: "{app}/x64"; Excludes: ".svn,*.map";  Flags
 Source: "x64/ssleay32.dll"; DestDir: "{app}/x64"; Excludes: ".svn,*.map"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "x64/vcruntime140.dll"; DestDir: "{app}/x64"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "x64/solarpilot.exe"; DestDir: "{app}/x64"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
-;Source: "x64/solarpilot.pdb"; DestDir: "{app}/x64"; Excludes: ".svn,*.map";  Flags: ignoreversion recursesubdirs createallsubdirs
-
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 [Icons]
@@ -107,10 +108,7 @@ end;
 // 4/14/09 - modify to install in localappdata always - avoids UAC issue reported by Paul
 function DefDirRoot(Param: String): String;
 begin
-//  if IsRegularUser then
     Result := ExpandConstant('{localappdata}')
-//  else
-//    Result := ExpandConstant('{pf}')
 end;
 
 
