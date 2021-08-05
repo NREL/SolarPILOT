@@ -1907,7 +1907,7 @@ SolarPILOTScriptWindow::SolarPILOTScriptWindow( wxWindow *parent, int id )
 	//when creating a new script window, we'll usurp the callback function and then reset it if the window is closed later.
 	simulation_info *sim = SPFrame::Instance().GetSolarFieldObject()->getSimInfoObject();
 	
-	_ui_default_callback = static_cast<bool (*)(simulation_info*, void*)>( sim->getCallbackFunction() );
+	_ui_default_callback = sim->getCallbackFunction();
 	_ui_default_data = sim->getCallbackData();
 
     sim->setCallbackFunction(LKInfoCallback, (void*)this);

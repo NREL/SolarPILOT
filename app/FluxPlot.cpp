@@ -183,7 +183,7 @@ void FluxPlot::DoPaint(wxDC &_pdc)
     be on our right side.
 
     */
-    double xaxmin=NULL, xaxmax=NULL, xaxcent;
+    double xaxmin=0., xaxmax=0., xaxcent;
     bool is_angle = false;
 
     //Get the flux surfaces

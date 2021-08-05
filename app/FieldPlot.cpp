@@ -1252,7 +1252,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
 			{
 				std::vector<std::string> oneline = split(lines.at(i), ",");
 
-				if (i == i_id)
+				if (i == static_cast<size_t>(i_id))
 				{
 					//handle ID's line separately
 					_dc.DrawText(idlab, Tx, current_y); //label
@@ -1315,7 +1315,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                 r_in_map.push_back(rc->first);
             std::sort(r_in_map.begin(), r_in_map.end());
 
-            for (int rc = 0; rc < r_in_map.size(); rc++)
+            for (int rc = 0; rc < static_cast<int>(r_in_map.size()); rc++)
             {
                 int xstartpos = cboxpos_x;
 
@@ -1759,3 +1759,4 @@ BEGIN_EVENT_TABLE(FieldPlot, wxScrolledWindow)
     EVT_PAINT(FieldPlot::OnPaint)
     EVT_ERASE_BACKGROUND(FieldPlot::OnEraseBackground)
 END_EVENT_TABLE()
+

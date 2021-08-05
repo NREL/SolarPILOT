@@ -104,7 +104,7 @@ class CoPylot:
             #self.pdll = CDLL(cwd + "/solarpilotd.dll") # for debugging
         elif sys.platform == 'darwin':
             self.pdll = CDLL(cwd + "/solarpilot.dylib")  # Never tested
-        elif sys.platform == 'linux2':
+        elif sys.platform.startswith('linux'):
             self.pdll = CDLL(cwd +"/solarpilot.so")  # Never tested
         else:
             print( 'Platform not supported ', sys.platform)
