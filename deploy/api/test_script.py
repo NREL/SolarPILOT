@@ -287,7 +287,7 @@ if True:
 if True:
     cwd = os.getcwd()
     assert not cp.dump_varmap_tofile(r, "varmap_dump_v2.csv") # This does not work - must provide full path
-    assert cp.dump_varmap_tofile(r, cwd + "/varmap_dump_v3.csv")  # This works
-    assert cp.save_from_script(r, cwd + "/case_study_v2.spt")  # This works
+    assert cp.dump_varmap_tofile(r, os.path.join(cwd, "varmap.csv"))
+    assert cp.save_from_script(r, os.path.join(cwd, "case_study_v2.spt"))
 
 assert cp.data_free(r) # Works - free memory

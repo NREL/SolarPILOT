@@ -45,7 +45,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 ; Adding CoPylot API -> which requires building the API
-Source: "api/*"; DestDir: "{app}/api"; Excludes: "*.dll"; Flags: ignoreversion
+Source: "api/*"; DestDir: "{app}/api"; Excludes: "*.dll, *.spt, varmap.csv"; Flags: ignoreversion
 Source: "api/solarpilot.dll"; DestDir: "{app}/api"; Flags: ignoreversion
 
 Source: "samples/*"; DestDir: "{app}/samples"; Excludes: ".svn,*.map"; Flags: ignoreversion recursesubdirs createallsubdirs
