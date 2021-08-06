@@ -203,7 +203,7 @@ else()
 		PATHS $ENV{SHARED_LIB} $ENV{SSCDIR}/build/shared $ENV{SSCDIR}/build/shared/Release)
 	find_library( CORETRACE_LIB
 		NAMES coretrace.a coretrace.lib
-		PATHS $ENV{CORETRACE_LIB} $ENV{CORETRACEDIR}/build_linux $ENV{CORETRACEDIR}/build/Release)
+		PATHS $ENV{CORETRACE_LIB} $ENV{CORETRACEDIR}/build $ENV{CORETRACEDIR}/build/Release)
 	find_library( SPCORE_LIB
 		NAMES solarpilot_core.a solarpilot_core.lib
 		PATHS $ENV{SPCORE_LIB} $ENV{SSCDIR}/build/solarpilot $ENV{SSCDIR}/build/solarpilot/Release) 
@@ -235,7 +235,7 @@ else()
 			PATHS $ENV{SHARED_LIB} $ENV{SSCDIR}/build/shared $ENV{SSCDIR}/build/shared/Debug)
 		find_library( CORETRACE_LIB
 			NAMES coretraced.a coretraced.lib
-			PATHS $ENV{CORETRACE_LIB} $ENV{CORETRACEDIR}/build_linux $ENV{CORETRACEDIR}/build/Debug)
+			PATHS $ENV{CORETRACE_LIB} $ENV{CORETRACEDIR}/build $ENV{CORETRACEDIR}/build/Debug)
 		find_library( SPCORE_LIB
 			NAMES solarpilot_cored.a solarpilot_cored.lib
 			PATHS $ENV{SPCORE_LIB} $ENV{SSCDIR}/build/solarpilot $ENV{SSCDIR}/build/solarpilot/Debug) 
