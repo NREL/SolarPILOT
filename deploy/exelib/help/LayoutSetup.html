@@ -7,7 +7,7 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="generator" content="HelpNDoc Personal Edition 5.8.2.643">
+  <meta name="generator" content="HelpNDoc Personal Edition 7.5.0.435">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="favicon.ico"/>
 
@@ -16,6 +16,8 @@
   <meta name="keywords" content="">
 
 
+
+  
 
   <!-- Twitter Card data -->
   <meta name="twitter:card" content="summary">
@@ -29,19 +31,19 @@
   <meta property="og:site_name" content="SolarPILOT User's Manual" /> 
 
   <!-- Bootstrap core CSS -->
-  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="vendors/bootstrap-3.4.1/css/bootstrap.min.css" rel="stylesheet"/>
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+  <link href="vendors/bootstrap-3.4.1/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
-      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/html5shiv-3.7.3/html5shiv.min.js"></script>
       <script src="vendors/respond-1.4.2/respond.min.js"></script>
     <![endif]-->
 
   <!-- JsTree styles -->
-  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+  <link href="vendors/jstree-3.3.10/themes/default/style.min.css" rel="stylesheet"/>
 
   <!-- Hnd styles -->
   <link href="css/layout.min.css" rel="stylesheet" />
@@ -76,7 +78,7 @@
     
   </header>
 
-  <nav class="md-nav-expanded">
+  <nav id="panel-left" class="md-nav-expanded">
     <!-- Nav tabs -->
     <ul class="tab-tabs nav nav-tabs" role="tablist">
       <li id="nav-close"> 
@@ -171,7 +173,7 @@
                         <li><a href="InputPageReference.html">Input Page Reference</a></li>
                     </ol>
                     <div class="nav-arrows">
-                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="InputPageReference.html" title="Input Page Reference" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="Costs.html" title="Costs" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="HeliostatsTree.html" title="Heliostats" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                        <div class="btn-group btn-group" role="group"><a class="btn btn-default" href="InputPageReference.html" title="Input Page Reference" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="Costs.html" title="Costs" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="HeliostatsTree.html" title="Heliostats" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
                     </div>
                 </div> 
             
@@ -182,9 +184,7 @@
 
             <div class="main-content">
                 
-<p></p>
-<p class="rvps2"><a name="Top of page"></a>
-<span class="rvts7">Page Overview</span></p>
+<p class="rvps2"><a name="Top of page"></a><span class="rvts7">Page Overview</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The following input groups are described on this page:</span></p>
@@ -203,45 +203,45 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The </span><span class="rvts21">Layout Setup</span><span class="rvts6"> page is the hub for configuring the field layout procedure, land boundaries, and tower height. Aspects of the layout process, design simulation set, design point attributes, and the position generation method are all controlled from this page. The following dialog provides an overview of SolarPILOT's field layout procedure.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<div class="rvps2"><table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; background-color: #dfdfdf; border-spacing: 2px;">
-<tr valign="top">
-<td style="border-color: #c0c0c0; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts8">Heliostat Field Layout Procedure</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">SolarPILOT generates a heliostat field layout through a multi-step process:</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;">
-<li value="1" class="rvps2"><span class="rvts6">Potential heliostat positions are identified within the feasible land area.</span><br/><span class="rvts30">Positions are defined according to the selected </span><span class="rvts42">Layout Method</span><span class="rvts30"> and are only identified as potential positions. Each position is associated with a heliostat "template", or master geometry type based on the template rules specified on the Heliostats page. If only one heliostat type is used, all heliostats assume the same geometry.</span><br/><span class="rvts30"><br/></span></li>
-<li value="2" class="rvps2"><span class="rvts6">SolarPILOT simulates the performance of all potential heliostat positions over the set of all design point simulations. </span><br/><span class="rvts30">Information on the performance of each heliostat is accumulated over all simulations. Each simulation is independent of the others in the set and may incorporate instantaneous or averaged weather data, as specified by the user. All significant optical effects are considered in the simulation, including cosine loss, attenuation, intercept factor, reflectivity (heliostat), receiver surface reflectivity, blocking and shadowing. </span><br/><span class="rvts30"><br/></span></li>
-<li value="3" class="rvps2"><span class="rvts6">All potential heliostats are ordered according to their accumulated design-point performance (most to least).</span><br/><span class="rvts6"><br/></span></li>
-<li value="4" class="rvps2"><span class="rvts6">SolarPILOT executes a single "reference point" simulation for the Design Values conditions, and the total power delivered by each potential heliostat position is recorded.</span><br/><span class="rvts6"><br/></span></li>
-<li value="5" class="rvps2"><span class="rvts6">SolarPILOT proceeds through the sorted list of heliostats accumulating the power delivered by each until the reference Solar Field Design Power (plus losses) is satisfied. </span><br/><span class="rvts30">If excess heliostats remain, they are deleted from the field layout.</span><br/><span class="rvts6"><br/></span></li>
-<li value="6" class="rvps2"><span class="rvts6">The remaining set of heliostats is the final field layout. </span><br/><span class="rvts30">Note that the heliostat layout may not supply adequate energy to meet the reference power requirement. If the set of all potential heliostat positions is equal to the final set of heliostat positions, it is likely that the power provided by the heliostat field does not meet the reference power requirement. Check whether power is satisfied by executing a performance simulation and examining the Power Absorbed by the Receiver on the System Summary page.</span></li>
-</ol>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-</td>
-</tr>
+<div class="rvps2">
+<table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; background-color: #dfdfdf; border-spacing: 2px;">
+ <tr valign="top">
+  <td style="border-color: #c0c0c0; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts8">Heliostat Field Layout Procedure</span></p>
+   <p class="rvps2"><span class="rvts6"><br/></span></p>
+   <p class="rvps2"><span class="rvts6">SolarPILOT generates a heliostat field layout through a multi-step process:</span></p>
+   <p class="rvps2"><span class="rvts6"><br/></span></p>
+   <ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;">
+    <li class="rvps2"><span class="rvts6">Potential heliostat positions are identified within the feasible land area.</span><br/><span class="rvts30">Positions are defined according to the selected </span><span class="rvts42">Layout Method</span><span class="rvts30"> and are only identified as potential positions. Each position is associated with a heliostat "template", or master geometry type based on the template rules specified on the Heliostats page. If only one heliostat type is used, all heliostats assume the same geometry.</span><br/><span class="rvts30"><br/></span></li>
+    <li class="rvps2"><span class="rvts6">SolarPILOT simulates the performance of all potential heliostat positions over the set of all design point simulations.&nbsp;</span><br/><span class="rvts30">Information on the performance of each heliostat is accumulated over all simulations. Each simulation is independent of the others in the set and may incorporate instantaneous or averaged weather data, as specified by the user. All significant optical effects are considered in the simulation, including cosine loss, attenuation, intercept factor, reflectivity (heliostat), receiver surface reflectivity, blocking and shadowing.&nbsp;</span><br/><span class="rvts30"><br/></span></li>
+    <li class="rvps2"><span class="rvts6">All potential heliostats are ordered according to their accumulated design-point performance (most to least).</span><br/><span class="rvts6"><br/></span></li>
+    <li class="rvps2"><span class="rvts6">SolarPILOT executes a single "reference point" simulation for the Design Values conditions, and the total power delivered by each potential heliostat position is recorded.</span><br/><span class="rvts6"><br/></span></li>
+    <li class="rvps2"><span class="rvts6">SolarPILOT proceeds through the sorted list of heliostats accumulating the power delivered by each until the reference Solar Field Design Power (plus losses) is satisfied.&nbsp;</span><br/><span class="rvts30">If excess heliostats remain, they are deleted from the field layout.</span><br/><span class="rvts6"><br/></span></li>
+    <li class="rvps2"><span class="rvts6">The remaining set of heliostats is the final field layout.&nbsp;</span><br/><span class="rvts30">Note that the heliostat layout may not supply adequate energy to meet the reference power requirement. If the set of all potential heliostat positions is equal to the final set of heliostat positions, it is likely that the power provided by the heliostat field does not meet the reference power requirement. Check whether power is satisfied by executing a performance simulation and examining the Power Absorbed by the Receiver on the System Summary page.</span></li>
+   </ol>
+   <p class="rvps2"><span class="rvts6"><br/></span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<p class="rvps2"><a name="Design Point Definition"></a>
-<span class="rvts7">Design Point Definition</span></p>
-<p class="rvps2"><a class="rvts41" href="LayoutSetup.html#Top%20of%20page">-- Top of Page -- </a><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><a name="Design Point Definition"></a><span class="rvts7">Design Point Definition</span></p>
+<p class="rvps2"><a class="rvts41" href="LayoutSetup.html#Top%20of%20page">-- Top of Page --&nbsp;</a><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts30">Jump to: </span><a class="rvts40" href="LayoutSetup.html#Heliostat%20selection%20criteria">Heliostat selection criteria</a><span class="rvts6">; </span><a class="rvts40" href="LayoutSetup.html#Optimization%20simulations">Optimization simulations</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The Design Point Definition group provides inputs for configuring the simulation(s) that SolarPILOT uses to evaluate performance of potential heliostats in the field. Performance simulations may be configured using a number of schemes, and weather data, sun position, and spacing of simulations throughout the year are all dependent on the selected method. This group also allows configuration of the preferred method for heliostat performance ranking. </span></p>
+<p class="rvps2"><span class="rvts6">The Design Point Definition group provides inputs for configuring the simulation(s) that SolarPILOT uses to evaluate performance of potential heliostats in the field. Performance simulations may be configured using a number of schemes, and weather data, sun position, and spacing of simulations throughout the year are all dependent on the selected method. This group also allows configuration of the preferred method for heliostat performance ranking.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The "Design Point" for the layout process may be a set of simulations, a single design point, or the unfiltered set of all potential heliostat positions. </span></p>
+<p class="rvps2"><span class="rvts6">The "Design Point" for the layout process may be a set of simulations, a single design point, or the unfiltered set of all potential heliostat positions.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts21">The design point definition is not used for imported or otherwise specified field layouts.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a name="Heliostat selection criteria"></a>
-<span class="rvts9">Heliostat selection criteria</span></p>
+<p class="rvps2"><a name="Heliostat selection criteria"></a><span class="rvts9">Heliostat selection criteria</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Specify the metric by which heliostats will be compared over the design point simulation set. Several options are available, though </span><span class="rvts21">Power to Receiver </span><span class="rvts6">or </span><span class="rvts21">TOU-Weighted Power</span><span class="rvts6"> are recommended for regular use. The performance of each heliostat is monitored over the design-point simulation set such that any of the following metrics may be used to sort for preference in the final layout. </span></p>
+<p class="rvps2"><span class="rvts6">Specify the metric by which heliostats will be compared over the design point simulation set. Several options are available, though </span><span class="rvts21">Power to Receiver </span><span class="rvts6">or </span><span class="rvts21">TOU-Weighted Power</span><span class="rvts6"> are recommended for regular use. The performance of each heliostat is monitored over the design-point simulation set such that any of the following metrics may be used to sort for preference in the final layout.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts10">Power to receiver</span></p>
 <p class="rvps2"><span class="rvts6">Sort by the total power (normalized by heliostat reflector area) delivered to the receiver over the simulation set. [kWt]</span></p>
@@ -255,9 +255,9 @@
 <p class="rvps2"><span class="rvts6">Cosine efficiency is defined as the power incident on the surface of the heliostat divided by the specific solar resource times the area reflective area of the heliostat. Cosine efficiency decreases as the angle between the normal of the heliostat surface and the incoming solar irradiation increases.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts10">Attenuation efficiency</span></p>
-<p class="rvps2"><span class="rvts6">Sort by the average atmospheric attenuation efficiency of the heliostat over the simulation set. [%]. </span></p>
+<p class="rvps2"><span class="rvts6">Sort by the average atmospheric attenuation efficiency of the heliostat over the simulation set. [%].&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Attenuation efficiency refers to the proportion of light that is not scattered by atmospheric particles (dust, aerosols, etc.) in the path between the heliostat and the receiver. Note that the attenuation efficiency is strictly a function of the distance between the heliostat and the receiver (the slant range) and does not change over time. </span></p>
+<p class="rvps2"><span class="rvts6">Attenuation efficiency refers to the proportion of light that is not scattered by atmospheric particles (dust, aerosols, etc.) in the path between the heliostat and the receiver. Note that the attenuation efficiency is strictly a function of the distance between the heliostat and the receiver (the slant range) and does not change over time.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts21"><br/></span></p>
 <p class="rvps2"><span class="rvts10">Intercept efficiency</span></p>
 <p class="rvps2"><span class="rvts6">Sort by the average intercept efficiency of the heliostat over the simulation set. [%]</span></p>
@@ -267,7 +267,7 @@
 <p class="rvps2"><span class="rvts10">Blocking efficiency</span></p>
 <p class="rvps2"><span class="rvts6">Sort by the average blocking efficiency of the heliostat over the simulation set. [%]</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Blocking occurs when a neighboring heliostat blocks light that has been reflected by the heliostat. </span></p>
+<p class="rvps2"><span class="rvts6">Blocking occurs when a neighboring heliostat blocks light that has been reflected by the heliostat.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts21"><br/></span></p>
 <p class="rvps2"><span class="rvts10">Shadowing efficiency</span></p>
 <p class="rvps2"><span class="rvts6">Sort by the average shadowing efficiency of the heliostat over the simulation set. [%]</span></p>
@@ -275,42 +275,43 @@
 <p class="rvps2"><span class="rvts6">Shadowing occurs when a neighboring heliostat blocks sunlight that would otherwise hit the heliostat.</span></p>
 <p class="rvps2"><span class="rvts21"><br/></span></p>
 <p class="rvps2"><span class="rvts10">TOU-weighted power</span></p>
-<p class="rvps2"><span class="rvts6">Sort by the total power (normalized by heliostat reflector area) weighted by the Payment Allocation Factors (also known as time-of-use or TOU factors) on the </span><span class="rvts21">Markets</span><span class="rvts6"> page, if applicable. [kWt]. </span></p>
+<p class="rvps2"><span class="rvts6">Sort by the total power (normalized by heliostat reflector area) weighted by the Payment Allocation Factors (also known as time-of-use or TOU factors) on the </span><span class="rvts21">Markets</span><span class="rvts6"> page, if applicable. [kWt].&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The power to the receiver may be weighted by the payment allocation factors depending on the month and hour of the day in which the energy is generated during the simulation set. If the Enable Payment Weighting Factors option is disabled, all payment allocation factors are set to 1.0 and this option is equivalent to the </span><span class="rvts21">Power to receiver</span><span class="rvts6"> sorting option.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a name="Optimization simulations"></a>
-<span class="rvts9">Optimization simulations</span></p>
+<p class="rvps2"><a name="Optimization simulations"></a><span class="rvts9">Optimization simulations</span></p>
 <p class="rvps2"><span class="rvts6">Choose the simulation(s) that will be included in the design assessment. All potential heliostat positions are evaluated at each design point simulation to determine the final layout. Refer to the page overview and the Heliostat Field Layout Procedure discussion for more detail.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<div class="rvps2"><table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; background-color: #dfdfdf; border-spacing: 2px;">
-<tr valign="top">
-<td style="border-color: #c0c0c0; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts8">Choosing a design point simulation set</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The design point simulation set serves as a model for the expected solar and atmospheric conditions at a location of interest. The various optimization simulation methods explore the trade-off between computational efficiency and model fidelity. Generally speaking, increasing the number of simulation points in the design point set will improve the estimate of actual plant performance over time, thus facilitating better heliostat layout selection. </span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The methods described below span the spectrum from simple (and likely inaccurate) to enumerative (and more accurate), while several other methods attempt to improve accuracy with averaging of data and careful selection of design point positions. </span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">When choosing a design point simulation method, consider the following:</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
-<li class="rvps2"><span class="rvts21">The "design point" typically includes multiple sun positions and weather conditions.</span><span class="rvts6"> </span><br/><span class="rvts6">Because the heliostat field must produce energy over the course of the year subject to a wide variety of sun positions and weather conditions, the design point simulations may include multiple points that represent the typical varied operating conditions for the plant. </span></li>
-</ul>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
-<li class="rvps2"><span class="rvts21">The final field layout will maximize energy production at the chosen design point simulation set.</span><span class="rvts6"> &nbsp;</span><br/><span class="rvts6">Heliostat performance is characterized only at the specified design point(s), and the set of heliostats chosen for the final layout are the best-performing heliostats at those design points.</span><br/><span class="rvts6"><br/></span></li>
-<li class="rvps2"><span class="rvts21">The field layout converges as the number of design point simulations increases.</span><br/><span class="rvts6">Layout methods that use multiple points (Limited Annual, Representative Profiles, and Efficiency Map + Annual) approach the full Annual Simulation layout as the number of simulation points increases. To minimize computational expense for subsequent layouts, create a parametric analysis in which the number of simulation points increases, and establish the value where additional simulation no longer changes the layout. </span><br/><span class="rvts6"><br/></span></li>
-<li class="rvps2"><span class="rvts21">A field layout may be altered with Payment Allocation Factors. </span><br/><span class="rvts6">If payment allocation factors are used, the layout will maximize the total weighted energy production, and often, production at certain times of the day or months of the year is emphasized over other times. This results in a field layout that maximizes power to the receiver under the weighted scenario.</span><br/><span class="rvts6"><br/></span></li>
-<li class="rvps2"><span class="rvts21">Design point simulations are distinct from the "reference design point".</span><br/><span class="rvts6">Design point simulations are used to establish optical performance of each individual heliostat. The reference design point establishes the single condition under which a particular power level is generated in the field. Other days and times of the year may produce more or less energy than the reference design point, depending on sun position and available solar resource.</span><br/><span class="rvts6"><br/></span></li>
-</ul>
-</td>
-</tr>
+<div class="rvps2">
+<table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; background-color: #dfdfdf; border-spacing: 2px;">
+ <tr valign="top">
+  <td style="border-color: #c0c0c0; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts8">Choosing a design point simulation set</span></p>
+   <p class="rvps2"><span class="rvts6"><br/></span></p>
+   <p class="rvps2"><span class="rvts6">The design point simulation set serves as a model for the expected solar and atmospheric conditions at a location of interest. The various optimization simulation methods explore the trade-off between computational efficiency and model fidelity. Generally speaking, increasing the number of simulation points in the design point set will improve the estimate of actual plant performance over time, thus facilitating better heliostat layout selection.&nbsp;</span></p>
+   <p class="rvps2"><span class="rvts6"><br/></span></p>
+   <p class="rvps2"><span class="rvts6">The methods described below span the spectrum from simple (and likely inaccurate) to enumerative (and more accurate), while several other methods attempt to improve accuracy with averaging of data and careful selection of design point positions.&nbsp;</span></p>
+   <p class="rvps2"><span class="rvts6"><br/></span></p>
+   <p class="rvps2"><span class="rvts6">When choosing a design point simulation method, consider the following:</span></p>
+   <p class="rvps2"><span class="rvts6"><br/></span></p>
+   <ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+    <li class="rvps2"><span class="rvts21">The "design point" typically includes multiple sun positions and weather conditions.</span><span class="rvts6">&nbsp;</span><br/><span class="rvts6">Because the heliostat field must produce energy over the course of the year subject to a wide variety of sun positions and weather conditions, the design point simulations may include multiple points that represent the typical varied operating conditions for the plant.&nbsp;</span></li>
+   </ul>
+   <p class="rvps2"><span class="rvts6"><br/></span></p>
+   <ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+    <li class="rvps2"><span class="rvts21">The final field layout will maximize energy production at the chosen design point simulation set.</span><span class="rvts6"> &nbsp;</span><br/><span class="rvts6">Heliostat performance is characterized only at the specified design point(s), and the set of heliostats chosen for the final layout are the best-performing heliostats at those design points.</span><br/><span class="rvts6"><br/></span></li>
+    <li class="rvps2"><span class="rvts21">The field layout converges as the number of design point simulations increases.</span><br/><span class="rvts6">Layout methods that use multiple points (Limited Annual, Representative Profiles, and Efficiency Map + Annual) approach the full Annual Simulation layout as the number of simulation points increases. To minimize computational expense for subsequent layouts, create a parametric analysis in which the number of simulation points increases, and establish the value where additional simulation no longer changes the layout.&nbsp;</span><br/><span class="rvts6"><br/></span></li>
+    <li class="rvps2"><span class="rvts21">A field layout may be altered with Payment Allocation Factors.&nbsp;</span><br/><span class="rvts6">If payment allocation factors are used, the layout will maximize the total weighted energy production, and often, production at certain times of the day or months of the year is emphasized over other times. This results in a field layout that maximizes power to the receiver under the weighted scenario.</span><br/><span class="rvts6"><br/></span></li>
+    <li class="rvps2"><span class="rvts21">Design point simulations are distinct from the "reference design point".</span><br/><span class="rvts6">Design point simulations are used to establish optical performance of each individual heliostat. The reference design point establishes the single condition under which a particular power level is generated in the field. Other days and times of the year may produce more or less energy than the reference design point, depending on sun position and available solar resource.</span><br/><span class="rvts6"><br/></span></li>
+   </ul>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts10">Single Simulation Point</span></p>
-<p class="rvps2"><span class="rvts6">Specify the day of the month, the hour of the day, the month, and the ambient weather conditions for a single design-point simulation. </span></p>
+<p class="rvps2"><span class="rvts6">Specify the day of the month, the hour of the day, the month, and the ambient weather conditions for a single design-point simulation.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts11">Simulate all daytime hours for specified days</span></p>
 <p class="rvps8"><span class="rvts6">Indicate whether the design point simulation should extend to each daylight hour in the specified day/month. The weather conditions are applied to each hour of the day, although SolarPILOT calculates the current sun position for each simulation point.</span></p>
@@ -319,122 +320,152 @@
 <p class="rvps2"><span class="rvts6">The final layout will consist of all heliostat positions within the feasible land region. This option does not require design point simulations.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts10">Annual Simulation</span></p>
-<p class="rvps2"><span class="rvts6">Each daylight hour of the year is simulated. Due to the large number of evaluation points, this option can take several minutes to complete. </span></p>
+<p class="rvps2"><span class="rvts6">Each daylight hour of the year is simulated. Due to the large number of evaluation points, this option can take several minutes to complete.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts10">Limited Annual Simulation </span></p>
+<p class="rvps2"><span class="rvts10">Limited Annual Simulation&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6">The Limited Annual Simulation option evaluates a subset of the days and hours in the weather file by sampling weather data at regularly spaced intervals throughout the year. The days of the year selected for the limited annual simulation are shown in the summary table along with properties of those days.</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts11">Number of days to simulate</span></p>
-<p class="rvps8"><span class="rvts6">The number of unique days that will be simulated for heliostat field layout generation. </span></p>
+<p class="rvps8"><span class="rvts6">The number of unique days that will be simulated for heliostat field layout generation.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts11">Simulation hour frequency</span></p>
-<p class="rvps8"><span class="rvts6">The frequency at which simulations will be provided for each simulation day. For example, if (1), then every daylight hour is included. If (2), then every other hour symmetric about solar noon, if (3), then every third hour symmetric about solar noon, etc. </span></p>
+<p class="rvps8"><span class="rvts6">The frequency at which simulations will be provided for each simulation day. For example, if (1), then every daylight hour is included. If (2), then every other hour symmetric about solar noon, if (3), then every third hour symmetric about solar noon, etc.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
-<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
-<tr valign="top">
-<td width="102" style="border-color: #ffffff; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts21">Item</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts21">Description</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Day No.</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The day of the year used for simulation</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Month</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The month containing the simulation day</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Day</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The day of the month of the simulation day</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Peak DNI </span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">(W/m2) The maximum observed DNI in the weather file on the simulation day </span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Total DNI</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">(kWh/m2) The total DNI incident on 1 m</span><span class="rvts38">2</span><span class="rvts6"> over the simulation day</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">No. hours</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The number of simulation hours on the simulation day. This count is subject to the Simulation Hour Frequency setting and indicates the actual number of simulations that will be executed for the simulation day.</span></p>
-</td>
-</tr>
+<div class="rvps8">
+<table width="600" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
+ <tr valign="top">
+  <td width="102" style="border-color: #ffffff; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts21">Item</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts21">Description</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Day No.</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The day of the year used for simulation</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Month</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The month containing the simulation day</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Day</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The day of the month of the simulation day</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Peak DNI&nbsp;</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">(W/m2) The maximum observed DNI in the weather file on the simulation day&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Total DNI</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">(kWh/m2) The total DNI incident on 1 m</span><span class="rvts38">2</span><span class="rvts6"> over the simulation day</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">No. hours</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The number of simulation hours on the simulation day. This count is subject to the Simulation Hour Frequency setting and indicates the actual number of simulations that will be executed for the simulation day.</span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts10">Representative Profiles</span></p>
-<p class="rvps2"><span class="rvts6">The Representative Profiles options builds averaged daily profiles for a limited number of days throughout the year based on averaged weather data in the period of days surrounding the simulation day. This option is structured identically with the Limited Annual Simulation option, but uses averaged data rather than selected data points. </span></p>
+<p class="rvps2"><span class="rvts6">The Representative Profiles options builds averaged daily profiles for a limited number of days throughout the year based on averaged weather data in the period of days surrounding the simulation day. This option is structured identically with the Limited Annual Simulation option, but uses averaged data rather than selected data points.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Each representative profile is constructed as follows:</span></p>
 <ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;">
-<li value="1" class="rvps2"><span class="rvts6">Simulation days are selected at even intervals throughout the year. The selected days are symmetric about the solstices to ensure symmetry in the number of hours simulated in each day.</span></li>
-<li value="2" class="rvps2"><span class="rvts6">SolarPILOT identifies the time period surrounding each simulation day. For example, if 4 days are used, then each simulation day represents the 91 days encompassing the simulation day - 45 days before and 45 days after the simulation day. </span></li>
-<li value="3" class="rvps2"><span class="rvts6">The hourly profile of the simulation day uses the average-by-hour of the surrounding days. If the Simulation Hour Frequency is greater than 1, then the averaged profiles use only the hourly data from the simulated hours - intermediate hours are not counted in the averaged profiles.</span></li>
+ <li class="rvps2"><span class="rvts6">Simulation days are selected at even intervals throughout the year. The selected days are symmetric about the solstices to ensure symmetry in the number of hours simulated in each day.</span></li>
+ <li class="rvps2"><span class="rvts6">SolarPILOT identifies the time period surrounding each simulation day. For example, if 4 days are used, then each simulation day represents the 91 days encompassing the simulation day - 45 days before and 45 days after the simulation day.&nbsp;</span></li>
+ <li class="rvps2"><span class="rvts6">The hourly profile of the simulation day uses the average-by-hour of the surrounding days. If the Simulation Hour Frequency is greater than 1, then the averaged profiles use only the hourly data from the simulated hours - intermediate hours are not counted in the averaged profiles.</span></li>
 </ol>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts11">Number of days to simulate</span></p>
-<p class="rvps8"><span class="rvts6">The number of unique days that will be simulated for heliostat field layout generation. </span></p>
+<p class="rvps8"><span class="rvts6">The number of unique days that will be simulated for heliostat field layout generation.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts11">Simulation hour frequency</span></p>
-<p class="rvps8"><span class="rvts6">The frequency at which simulations will be provided for each simulation day. For example, if (1), then every daylight hour is included. If (2), then every other hour symmetric about solar noon, if (3), then every third hour symmetric about solar noon, etc. </span></p>
+<p class="rvps8"><span class="rvts6">The frequency at which simulations will be provided for each simulation day. For example, if (1), then every daylight hour is included. If (2), then every other hour symmetric about solar noon, if (3), then every third hour symmetric about solar noon, etc.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
-<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
-<tr valign="top">
-<td width="102" style="border-color: #ffffff; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts21">Item</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts21">Description</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Day No.</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The day of the year used for simulation</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Month</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The month containing the simulation day</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Day</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The day of the month of the simulation day</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Peak DNI </span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">(W/m2) The maximum DNI for the simulation day based on the averaged hourly profile &nbsp;</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Total DNI</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">(kWh/m2) The total DNI incident on 1 m</span><span class="rvts38">2</span><span class="rvts6"> over the simulation day using the surrounding days' average. </span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">No. hours</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The number of simulation hours on the simulation day. This count is subject to the Simulation Hour Frequency setting and indicates the actual number of simulations that will be executed for the simulation day.</span></p>
-</td>
-</tr>
+<div class="rvps8">
+<table width="600" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
+ <tr valign="top">
+  <td width="102" style="border-color: #ffffff; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts21">Item</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts21">Description</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Day No.</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The day of the year used for simulation</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Month</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The month containing the simulation day</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Day</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The day of the month of the simulation day</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Peak DNI&nbsp;</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">(W/m2) The maximum DNI for the simulation day based on the averaged hourly profile &nbsp;</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Total DNI</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">(kWh/m2) The total DNI incident on 1 m</span><span class="rvts38">2</span><span class="rvts6"> over the simulation day using the surrounding days' average.&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">No. hours</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The number of simulation hours on the simulation day. This count is subject to the Simulation Hour Frequency setting and indicates the actual number of simulations that will be executed for the simulation day.</span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -442,109 +473,137 @@
 <p class="rvps2"><span class="rvts10">Efficiency Map + Annual</span></p>
 <p class="rvps2"><span class="rvts6">The Efficiency Map + Annual simulation option constructs an "efficiency map" lookup table </span><span class="rvts21">for each heliostat</span><span class="rvts6"> for a subset of days throughout the year, then evaluates each daylight hour of the year using the lookup data to establish an annual energy production estimate. The annual simulation interpolates the lookup table based on solar azimuth and zenith angles, then multiplies the estimated heliostat efficiency by the available solar resource to determine power production for each hour.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The simulation days used to generate the lookup table are equally spaced throughout the year and are symmetric about the summer solstice. </span></p>
+<p class="rvps2"><span class="rvts6">The simulation days used to generate the lookup table are equally spaced throughout the year and are symmetric about the summer solstice.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts11">Number of days to simulate</span></p>
-<p class="rvps8"><span class="rvts6">The number of unique days that will be simulated to create the efficiency lookup table. </span></p>
+<p class="rvps8"><span class="rvts6">The number of unique days that will be simulated to create the efficiency lookup table.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts11">Simulation hour frequency</span></p>
-<p class="rvps8"><span class="rvts6">The frequency at which simulations will be provided for each simulation day. For example, if (1), then every daylight hour is included. If (2), then every other hour symmetric about solar noon, if (3), then every third hour symmetric about solar noon, etc. </span></p>
+<p class="rvps8"><span class="rvts6">The frequency at which simulations will be provided for each simulation day. For example, if (1), then every daylight hour is included. If (2), then every other hour symmetric about solar noon, if (3), then every third hour symmetric about solar noon, etc.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
-<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
-<tr valign="top">
-<td width="102" style="border-color: #ffffff; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts21">Item</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts21">Description</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Day No.</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The day of the year used for simulation</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Month</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The month containing the simulation day</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Day</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The day of the month of the simulation day</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">No. hours</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The number of hours on the simulation day. </span></p>
-</td>
-</tr>
+<div class="rvps8">
+<table width="600" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
+ <tr valign="top">
+  <td width="102" style="border-color: #ffffff; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts21">Item</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts21">Description</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Day No.</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The day of the year used for simulation</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Month</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The month containing the simulation day</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Day</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The day of the month of the simulation day</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">No. hours</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The number of hours on the simulation day.&nbsp;</span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<p class="rvps2"><a name="Design Values"></a>
-<span class="rvts7">Design Values</span></p>
-<p class="rvps2"><a class="rvts41" href="LayoutSetup.html#Top%20of%20page">-- Top of Page -- </a><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><a name="Design Values"></a><span class="rvts7">Design Values</span></p>
+<p class="rvps2"><a class="rvts41" href="LayoutSetup.html#Top%20of%20page">-- Top of Page --&nbsp;</a><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a name="sf_des"></a>
-<span class="rvts9">Solar Field Design Power</span></p>
+<p class="rvps2"><a name="sf_des"></a><span class="rvts9">Solar Field Design Power</span></p>
 <p class="rvps2"><span class="rvts6">The desired power delivered by the receiver at the reference design point. The total power delivered by the receiver is equal to the power provided by the solar field minus the heat loss from the receiver and heat loss from tower runner piping.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps17"><img alt="" style="padding : 1px;" src="lib/NewItem17.png"></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
-<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
-<tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><img alt="" style="padding : 1px;" src="lib/NewItem11.png"></p>
-</td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">MW</span></p>
-</td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Thermal power delivered by the solar field</span></p>
-</td>
-</tr>
-<tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><img alt="" style="padding : 1px;" src="lib/NewItem13.png"></p>
-</td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">MW</span></p>
-</td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Thermal power incident on the receiver (prior to emissive, convective, and reflective thermal loss)</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><img alt="" style="padding : 1px;" src="lib/NewItem18.png"></p>
-</td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">-</span></p>
-</td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Receiver surface absorptivity</span></p>
-</td>
-</tr>
-<tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><img alt="" style="padding : 1px;" src="lib/NewItem14.png"></p>
-</td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">kW/m2</span></p>
-</td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Emissive and convective thermal loss per square meter of receiver area. This value is calculated using the receiver heat loss settings on the Receivers page(s).</span></p>
-</td>
-</tr>
-<tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps19"><img alt="" style="padding : 1px;" src="lib/NewItem15.png"></p>
-</td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">m2</span></p>
-</td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Absorptive surface area of the receiver</span></p>
-</td>
-</tr>
-<tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps19"><img alt="" style="padding : 1px;" src="lib/NewItem16.png"></p>
-</td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">MW</span></p>
-</td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Thermal loss due to riser/downcomer piping. This value is calculated on the Receiver page(s) and may be a function of tower height.</span></p>
-</td>
-</tr>
+<div class="rvps8">
+<table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+ <tr valign="middle">
+  <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps18"><img alt="" style="padding : 1px;" src="lib/NewItem11.png"></p>
+  </td>
+  <td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps18"><span class="rvts6">MW</span></p>
+  </td>
+  <td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Thermal power delivered by the solar field</span></p>
+  </td>
+ </tr>
+ <tr valign="middle">
+  <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps18"><img alt="" style="padding : 1px;" src="lib/NewItem13.png"></p>
+  </td>
+  <td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps18"><span class="rvts6">MW</span></p>
+  </td>
+  <td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Thermal power incident on the receiver (prior to emissive, convective, and reflective thermal loss)</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps18"><img alt="" style="padding : 1px;" src="lib/NewItem18.png"></p>
+  </td>
+  <td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps18"><span class="rvts6">-</span></p>
+  </td>
+  <td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Receiver surface absorptivity</span></p>
+  </td>
+ </tr>
+ <tr valign="middle">
+  <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps18"><img alt="" style="padding : 1px;" src="lib/NewItem14.png"></p>
+  </td>
+  <td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps18"><span class="rvts6">kW/m2</span></p>
+  </td>
+  <td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Emissive and convective thermal loss per square meter of receiver area. This value is calculated using the receiver heat loss settings on the Receivers page(s).</span></p>
+  </td>
+ </tr>
+ <tr valign="middle">
+  <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps19"><img alt="" style="padding : 1px;" src="lib/NewItem15.png"></p>
+  </td>
+  <td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps18"><span class="rvts6">m2</span></p>
+  </td>
+  <td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Absorptive surface area of the receiver</span></p>
+  </td>
+ </tr>
+ <tr valign="middle">
+  <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps19"><img alt="" style="padding : 1px;" src="lib/NewItem16.png"></p>
+  </td>
+  <td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps18"><span class="rvts6">MW</span></p>
+  </td>
+  <td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Thermal loss due to riser/downcomer piping. This value is calculated on the Receiver page(s) and may be a function of tower height.</span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -565,7 +624,7 @@
 <p class="rvps2"><span class="rvts6">Use the winter solstice sun position for the current weather file location (typically December 21st).</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts10">Zenith</span></p>
-<p class="rvps2"><span class="rvts6">Use a sun position directly overhead (elevation of 90</span><span class="rvts12">°</span><span class="rvts6">, azimuth of 0</span><span class="rvts12">°</span><span class="rvts6">). </span></p>
+<p class="rvps2"><span class="rvts6">Use a sun position directly overhead (elevation of 90</span><span class="rvts12">°</span><span class="rvts6">, azimuth of 0</span><span class="rvts12">°</span><span class="rvts6">).&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts10">Other</span></p>
 <p class="rvps2"><span class="rvts6">Specify a custom sun position for the reference design point.</span></p>
@@ -578,26 +637,27 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<p class="rvps2"><a name="Field Boundaries"></a>
-<span class="rvts7">Field Boundaries</span></p>
-<p class="rvps2"><a class="rvts41" href="LayoutSetup.html#Top%20of%20page">-- Top of Page -- </a><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><a name="Field Boundaries"></a><span class="rvts7">Field Boundaries</span></p>
+<p class="rvps2"><a class="rvts41" href="LayoutSetup.html#Top%20of%20page">-- Top of Page --&nbsp;</a><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts30">Jump to: </span><a class="rvts40" href="LayoutSetup.html#Bounds%20Scale%20With%20Tower%20Height">Scaled Bounds</a><span class="rvts6">; </span><a class="rvts40" href="LayoutSetup.html#Use%20Fixed%20Land%20Bounds">Fixed Bounds</a><span class="rvts6">; </span><a class="rvts40" href="LayoutSetup.html#Use%20Land%20Boundary%20Array">Land Boundary Array</a><span class="rvts6">; </span><a class="rvts40" href="LayoutSetup.html#Importing%20External%20Land%20Geometry%20Files">Importing External Land Geometry Files</a></p>
 <p class="rvps2"><span class="rvts40"><br/></span></p>
 <p class="rvps2"><span class="rvts6">SolarPILOT provides several options for specifying the region of land where heliostats may be placed. Options include scaled bounds where the land area is a function of tower height, fixed bounds which specifies a minimum and maximum fixed radius centered about the tower where heliostats may be placed, and an option for specifying polygonal shapes that may represent included or excluded land areas. Multiple land boundary methods may be used simultaneously. The following section describes the options and inputs for customizing field boundaries.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<div class="rvps2"><table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; background-color: #dfdfdf; border-spacing: 2px;">
-<tr valign="top">
-<td style="border-color: #c0c0c0; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts8">Specifying Land Boundaries</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The simplest approach for specifying land boundaries uses either the scaled or fixed radial limits. These options are effective for most theoretical analyses where the impact of various design changes is of interest, or where a best-case layout is of interest. However, many prospective projects construct field layouts within inflexible parcels of land. For these cases, the land boundary array option allows layout and characterization with highly constrained land geometries. Complex shapes can be implemented with this option, and the computational expense during layout is usually minimal. </span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Land bounds may be controlled with more than one option. To enable multiple controls, simply enable the checkboxes of the desired options. </span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Active land boundaries are viewable on the Layout Results page by selecting the "Land Boundaries" option in the Plot Display control menu. </span></p>
-<p class="rvps2"><span class="rvts21">To refresh the land boundary plot after input modification, click the "Regenerate current layout" button on the Field Layout page.</span><span class="rvts6"> </span><br/><span class="rvts6"><br/></span></p>
-</td>
-</tr>
+<div class="rvps2">
+<table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; background-color: #dfdfdf; border-spacing: 2px;">
+ <tr valign="top">
+  <td style="border-color: #c0c0c0; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts8">Specifying Land Boundaries</span></p>
+   <p class="rvps2"><span class="rvts6"><br/></span></p>
+   <p class="rvps2"><span class="rvts6">The simplest approach for specifying land boundaries uses either the scaled or fixed radial limits. These options are effective for most theoretical analyses where the impact of various design changes is of interest, or where a best-case layout is of interest. However, many prospective projects construct field layouts within inflexible parcels of land. For these cases, the land boundary array option allows layout and characterization with highly constrained land geometries. Complex shapes can be implemented with this option, and the computational expense during layout is usually minimal.&nbsp;</span></p>
+   <p class="rvps2"><span class="rvts6"><br/></span></p>
+   <p class="rvps2"><span class="rvts6">Land bounds may be controlled with more than one option. To enable multiple controls, simply enable the checkboxes of the desired options.&nbsp;</span></p>
+   <p class="rvps2"><span class="rvts6"><br/></span></p>
+   <p class="rvps2"><span class="rvts6">Active land boundaries are viewable on the Layout Results page by selecting the "Land Boundaries" option in the Plot Display control menu.&nbsp;</span></p>
+   <p class="rvps2"><span class="rvts21">To refresh the land boundary plot after input modification, click the "Regenerate current layout" button on the Field Layout page.</span><span class="rvts6">&nbsp;</span><br/><span class="rvts6"><br/></span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -608,14 +668,13 @@
 <p class="rvps2"><span class="rvts6">The angular bound in the clockwise direction below which heliostat may be placed. Note that -180</span><span class="rvts12">°</span><span class="rvts6"> = +180</span><span class="rvts12">°</span><span class="rvts6"> = South; 0</span><span class="rvts12">°</span><span class="rvts6"> = North; +90</span><span class="rvts12">°</span><span class="rvts6"> = East; -90</span><span class="rvts12">°</span><span class="rvts6"> = West.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts9">Minimum Heliostat Distance [Calculated]</span></p>
-<p class="rvps2"><span class="rvts6">The actual minimum radial distance that a heliostat may be placed away from the receiver position. This value is calculated only for </span><span class="rvts30">Bounds scale with tower height</span><span class="rvts6"> and </span><span class="rvts30">Use fixed land bounds</span><span class="rvts6"> options. </span></p>
+<p class="rvps2"><span class="rvts6">The actual minimum radial distance that a heliostat may be placed away from the receiver position. This value is calculated only for </span><span class="rvts30">Bounds scale with tower height</span><span class="rvts6"> and </span><span class="rvts30">Use fixed land bounds</span><span class="rvts6"> options.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts9">Maximum Heliostat Distance [Calculated]</span></p>
-<p class="rvps2"><span class="rvts6">The actual maximum radial distance that a heliostat may be placed away from the receiver position. This value is calculated only for </span><span class="rvts30">Bounds scale with tower height</span><span class="rvts6"> and </span><span class="rvts30">Use fixed land bounds</span><span class="rvts6"> options. </span></p>
+<p class="rvps2"><span class="rvts6">The actual maximum radial distance that a heliostat may be placed away from the receiver position. This value is calculated only for </span><span class="rvts30">Bounds scale with tower height</span><span class="rvts6"> and </span><span class="rvts30">Use fixed land bounds</span><span class="rvts6"> options.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a name="Bounds Scale With Tower Height"></a>
-<span class="rvts9">Bounds Scale With Tower Height</span></p>
-<p class="rvps2"><span class="rvts6">Choose whether the min/max field boundaries scale with tower height. </span></p>
+<p class="rvps2"><a name="Bounds Scale With Tower Height"></a><span class="rvts9">Bounds Scale With Tower Height</span></p>
+<p class="rvps2"><span class="rvts6">Choose whether the min/max field boundaries scale with tower height.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts11">Maximum Field Radius</span></p>
 <p class="rvps8"><span class="rvts6">The maximum radial distance in terms of equivalent tower heights that heliostats may be placed in the field. The actual distance is equal to this value multiplied by the tower height.</span></p>
@@ -624,8 +683,7 @@
 <p class="rvps8"><span class="rvts6">The minimum radial distance in terms of equivalent tower heights that heliostats may be placed in the field. The actual distance is equal to this value multiplied by the tower height.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a name="Use Fixed Land Bounds"></a>
-<span class="rvts9">Use Fixed Land Bounds</span></p>
+<p class="rvps2"><a name="Use Fixed Land Bounds"></a><span class="rvts9">Use Fixed Land Bounds</span></p>
 <p class="rvps2"><span class="rvts6">Choose whether the min/max field boundaries are constrained by fixed min and max values.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts11">Maximum Land Radius (fixed)</span></p>
@@ -634,9 +692,8 @@
 <p class="rvps8"><span class="rvts11">Minimum Land Radius (fixed)</span></p>
 <p class="rvps8"><span class="rvts6">The minimum radial distance in units of meters that heliostats may be placed in the field.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><a name="Use Land Boundary Array"></a>
-<span class="rvts9">Use Land Boundary Array</span></p>
-<p class="rvps2"><span class="rvts6">Choose whether the allowable heliostat positions are constrained by polygonal shapes specified in the land boundary table. </span></p>
+<p class="rvps2"><a name="Use Land Boundary Array"></a><span class="rvts9">Use Land Boundary Array</span></p>
+<p class="rvps2"><span class="rvts6">Choose whether the allowable heliostat positions are constrained by polygonal shapes specified in the land boundary table.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Polygons are specified point-wise with an X-Y coordinate for each point. The polygon is left "open", where the final point specified for a given polygon is assumed by SolarPILOT to connect to the first point specified for the polygon. Order of entry is significant, as neighboring points are assumed to be sequential in real space. The polygon may be convex or nonconvex, but should not contain intersecting lines.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -650,9 +707,9 @@
 <p class="rvps8"><span class="rvts6">Y-displacement (positive to the north) of the tower with respect to the land boundaries.</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts11">Import Button</span></p>
-<p class="rvps8"><span class="rvts6">Import a text, comma-separated, data, or keyhole markup language (KML) file with land boundary data. This button will prompt a file dialog for information on loading the file. </span></p>
+<p class="rvps8"><span class="rvts6">Import a text, comma-separated, data, or keyhole markup language (KML) file with land boundary data. This button will prompt a file dialog for information on loading the file.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts6">SolarPILOT imports text, comma-separated, and data (*.txt, *.csv, *.dat) files in the same way, and searches the contents of the file for a common data delimiter, parsing each entry. Delimiters may include space, tab, semi-colon, or comma characters. </span></p>
+<p class="rvps8"><span class="rvts6">SolarPILOT imports text, comma-separated, and data (*.txt, *.csv, *.dat) files in the same way, and searches the contents of the file for a common data delimiter, parsing each entry. Delimiters may include space, tab, semi-colon, or comma characters.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts6">SolarPILOT imports KML files using an interactive dialog. This process is described in the </span><a class="rvts40" href="LayoutSetup.html#Importing%20External%20Land%20Geometry%20Files">Importing External Land Geometry Files</a><span class="rvts6"> section below.</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
@@ -662,333 +719,404 @@
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts11">Land Boundary Table</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
-<tr valign="top">
-<td width="102" style="border-color: #ffffff; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts21">Item</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts21">Description</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Type</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The "type" of polygon being specified. </span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts43">I</span><span class="rvts6"> - Region of inclusion</span></p>
-<p class="rvps8"><span class="rvts43">E</span><span class="rvts6"> - Region of exclusion</span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts6">Enter the character "I" or "E" to indicate inclusion or exclusion for the polygon being specified. </span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">No.</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The identification number of the current polygon being specified. Numbering should begin with 0. All points in a contiguous polygon should refer to the same identification number. </span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts6">Numbering is independent for Inclusions and Exclusions. Both types (if used) will have No. "0", "1", etc., as applicable.</span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">X</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The "X" coordinate (East+, West-) of a point.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Y</span></p>
-</td>
-<td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">The "Y" coordinate (North+, South-) of a point. </span></p>
-</td>
-</tr>
+<div class="rvps8">
+<table width="600" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
+ <tr valign="top">
+  <td width="102" style="border-color: #ffffff; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts21">Item</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts21">Description</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Type</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The "type" of polygon being specified.&nbsp;</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts43">I</span><span class="rvts6"> - Region of inclusion</span></p>
+   <p class="rvps8"><span class="rvts43">E</span><span class="rvts6"> - Region of exclusion</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts6">Enter the character "I" or "E" to indicate inclusion or exclusion for the polygon being specified.&nbsp;</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">No.</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The identification number of the current polygon being specified. Numbering should begin with 0. All points in a contiguous polygon should refer to the same identification number.&nbsp;</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts6">Numbering is independent for Inclusions and Exclusions. Both types (if used) will have No. "0", "1", etc., as applicable.</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">X</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The "X" coordinate (East+, West-) of a point.</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="102" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Y</span></p>
+  </td>
+  <td width="404" style="border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">The "Y" coordinate (North+, South-) of a point.&nbsp;</span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
-<div class="rvps8"><table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; background-color: #dfdfdf; border-spacing: 2px;">
-<tr valign="top">
-<td style="border-color: #c0c0c0; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts8">Defining Land Boundaries with Multiple Polygons</span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts6">The region containing heliostats can be defined using the land boundary array option and one or more polygonal shapes. This is a powerful option that allows detailed description of land outlines, roads, cultural exclusions, geographical features, etc. The specified polygonal regions are either "inclusional" or "exclusional", indicating that heliostat positions are to be included within a particular area or excluded, respectively.</span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts6">SolarPILOT accepts polygons as a list of points in the land boundary array table. Membership of each point within any particular polygon is indicated with the "No." flag, or the polygon number input. SolarPILOT applies the following rules when processing boundary polygons:</span></p>
-<ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;"><ol style="text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: decimal;">
-<li value="1" style="margin-left: 0px" class="rvps12"><span class="rvts6">Any number of polygons may be specified</span></li>
-<li value="2" style="margin-left: 0px" class="rvps12"><span class="rvts6">Heliostat positions that lie within at least one "inclusion" region are included in the set of potential heliostats.</span></li>
-<li value="3" style="margin-left: 0px" class="rvps12"><span class="rvts6">Heliostat positions that lie within at least one "exclusion" region are omitted from the set of potential heliostats. </span></li>
-<li value="4" style="margin-left: 0px" class="rvps12"><span class="rvts6">Heliostats that lie within both inclusion and exclusion regions are </span><span class="rvts30">excluded </span><span class="rvts6">from the set of potential heliostats.</span></li>
-<li value="5" style="margin-left: 0px" class="rvps12"><span class="rvts6">Polygon coordinates are relative to the tower position.</span></li>
-</ol></ol>
-<p class="rvps12"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts6">The following example illustrates three land boundary polygons - two inclusion regions and one exclusion region. The land boundary table for this example is reproduced below. </span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps14"><img width="352" height="295" alt="" style="padding : 1px;" src="lib/NewItem20.png"><span class="rvts8"> &nbsp; </span><img width="350" height="293" alt="" style="padding : 1px;" src="lib/NewItem21.png"><span class="rvts6"> </span></p>
-<p class="rvps14"><span class="rvts6"><br/></span></p>
-<div class="rvps14"><table border="1" cellpadding="0" cellspacing="-1" style="border-width: 0px; border-collapse: collapse; margin: 0px auto;">
-<tr valign="top">
-<td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-right: none; border-left: none;"><p class="rvps5"><span class="rvts44">Type</span></p>
-</td>
-<td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-right: none; border-left: none;"><p class="rvps5"><span class="rvts44">No.</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-right: none; border-left: none;"><p class="rvps5"><span class="rvts44">X</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-right: none; border-left: none;"><p class="rvps5"><span class="rvts44">Y</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps5"><span class="rvts45">I</span></p>
-</td>
-<td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps5"><span class="rvts45">0</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps20"><span class="rvts45">-1000</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps20"><span class="rvts45">1000</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts45">I</span></p>
-</td>
-<td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts45">0</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps20"><span class="rvts45">200</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps20"><span class="rvts45">1000</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps5"><span class="rvts45">I</span></p>
-</td>
-<td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps5"><span class="rvts45">0</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps20"><span class="rvts45">200</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps20"><span class="rvts45">-1000</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts45">I</span></p>
-</td>
-<td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts45">0</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps20"><span class="rvts45">-1000</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps20"><span class="rvts45">-1000</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps5"><span class="rvts45">I</span></p>
-</td>
-<td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps5"><span class="rvts45">1</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps20"><span class="rvts45">300</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps20"><span class="rvts45">0</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts45">I</span></p>
-</td>
-<td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts45">1</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps20"><span class="rvts45">300</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps20"><span class="rvts45">1000</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps5"><span class="rvts45">I</span></p>
-</td>
-<td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps5"><span class="rvts45">1</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps20"><span class="rvts45">400</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps20"><span class="rvts45">800</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts45">I</span></p>
-</td>
-<td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts45">1</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps20"><span class="rvts45">1000</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps20"><span class="rvts45">0</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps5"><span class="rvts45">I</span></p>
-</td>
-<td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps5"><span class="rvts45">1</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps20"><span class="rvts45">500</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps20"><span class="rvts45">-500</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts45">E</span></p>
-</td>
-<td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts45">0</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps20"><span class="rvts45">0</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps20"><span class="rvts45">0</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps5"><span class="rvts45">E</span></p>
-</td>
-<td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps5"><span class="rvts45">0</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps20"><span class="rvts45">-500</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;"><p class="rvps20"><span class="rvts45">300</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts45">E</span></p>
-</td>
-<td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps5"><span class="rvts45">0</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps20"><span class="rvts45">-500</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps20"><span class="rvts45">500</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-left: none; background-color: #c0c0c0;"><p class="rvps5"><span class="rvts45">E</span></p>
-</td>
-<td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-left: none; background-color: #c0c0c0;"><p class="rvps5"><span class="rvts45">0</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-left: none; background-color: #c0c0c0;"><p class="rvps20"><span class="rvts45">-300</span></p>
-</td>
-<td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-left: none; background-color: #c0c0c0;"><p class="rvps20"><span class="rvts45">300</span></p>
-</td>
-</tr>
-</table>
-</div>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-</td>
-</tr>
+<div class="rvps8">
+<table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; background-color: #dfdfdf; border-spacing: 2px;">
+ <tr valign="top">
+  <td style="border-color: #c0c0c0; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts8">Defining Land Boundaries with Multiple Polygons</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts6">The region containing heliostats can be defined using the land boundary array option and one or more polygonal shapes. This is a powerful option that allows detailed description of land outlines, roads, cultural exclusions, geographical features, etc. The specified polygonal regions are either "inclusional" or "exclusional", indicating that heliostat positions are to be included within a particular area or excluded, respectively.</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts6">SolarPILOT accepts polygons as a list of points in the land boundary array table. Membership of each point within any particular polygon is indicated with the "No." flag, or the polygon number input. SolarPILOT applies the following rules when processing boundary polygons:</span></p>
+   <ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;">
+    <ol style="text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: decimal;">
+     <li style="margin-left: 0px" class="rvps12"><span class="rvts6">Any number of polygons may be specified</span></li>
+     <li style="margin-left: 0px" class="rvps12"><span class="rvts6">Heliostat positions that lie within at least one "inclusion" region are included in the set of potential heliostats.</span></li>
+     <li style="margin-left: 0px" class="rvps12"><span class="rvts6">Heliostat positions that lie within at least one "exclusion" region are omitted from the set of potential heliostats.&nbsp;</span></li>
+     <li style="margin-left: 0px" class="rvps12"><span class="rvts6">Heliostats that lie within both inclusion and exclusion regions are </span><span class="rvts30">excluded </span><span class="rvts6">from the set of potential heliostats.</span></li>
+     <li style="margin-left: 0px" class="rvps12"><span class="rvts6">Polygon coordinates are relative to the tower position.</span></li>
+    </ol>
+   </ol>
+   <p class="rvps12"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts6">The following example illustrates three land boundary polygons - two inclusion regions and one exclusion region. The land boundary table for this example is reproduced below.&nbsp;</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps14"><img width="352" height="295" alt="" style="padding : 1px;" src="lib/NewItem20.png"><span class="rvts8"> &nbsp; </span><img width="350" height="293" alt="" style="padding : 1px;" src="lib/NewItem21.png"><span class="rvts6">&nbsp;</span></p>
+   <p class="rvps14"><span class="rvts6"><br/></span></p>
+   <div class="rvps14">
+   <table border="1" cellpadding="0" cellspacing="-1" style="border-width: 0px; border-collapse: collapse; margin: 0px auto;">
+    <tr valign="top">
+     <td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-right: none; border-left: none;">
+      <p class="rvps5"><span class="rvts44">Type</span></p>
+     </td>
+     <td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-right: none; border-left: none;">
+      <p class="rvps5"><span class="rvts44">No.</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-right: none; border-left: none;">
+      <p class="rvps5"><span class="rvts44">X</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-right: none; border-left: none;">
+      <p class="rvps5"><span class="rvts44">Y</span></p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps5"><span class="rvts45">I</span></p>
+     </td>
+     <td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps5"><span class="rvts45">0</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps20"><span class="rvts45">-1000</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps20"><span class="rvts45">1000</span></p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps5"><span class="rvts45">I</span></p>
+     </td>
+     <td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps5"><span class="rvts45">0</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps20"><span class="rvts45">200</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps20"><span class="rvts45">1000</span></p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps5"><span class="rvts45">I</span></p>
+     </td>
+     <td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps5"><span class="rvts45">0</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps20"><span class="rvts45">200</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps20"><span class="rvts45">-1000</span></p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps5"><span class="rvts45">I</span></p>
+     </td>
+     <td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps5"><span class="rvts45">0</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps20"><span class="rvts45">-1000</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps20"><span class="rvts45">-1000</span></p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps5"><span class="rvts45">I</span></p>
+     </td>
+     <td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps5"><span class="rvts45">1</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps20"><span class="rvts45">300</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps20"><span class="rvts45">0</span></p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps5"><span class="rvts45">I</span></p>
+     </td>
+     <td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps5"><span class="rvts45">1</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps20"><span class="rvts45">300</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps20"><span class="rvts45">1000</span></p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps5"><span class="rvts45">I</span></p>
+     </td>
+     <td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps5"><span class="rvts45">1</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps20"><span class="rvts45">400</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps20"><span class="rvts45">800</span></p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps5"><span class="rvts45">I</span></p>
+     </td>
+     <td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps5"><span class="rvts45">1</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps20"><span class="rvts45">1000</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps20"><span class="rvts45">0</span></p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps5"><span class="rvts45">I</span></p>
+     </td>
+     <td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps5"><span class="rvts45">1</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps20"><span class="rvts45">500</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps20"><span class="rvts45">-500</span></p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps5"><span class="rvts45">E</span></p>
+     </td>
+     <td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps5"><span class="rvts45">0</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps20"><span class="rvts45">0</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps20"><span class="rvts45">0</span></p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps5"><span class="rvts45">E</span></p>
+     </td>
+     <td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps5"><span class="rvts45">0</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps20"><span class="rvts45">-500</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps20"><span class="rvts45">300</span></p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps5"><span class="rvts45">E</span></p>
+     </td>
+     <td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps5"><span class="rvts45">0</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps20"><span class="rvts45">-500</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+      <p class="rvps20"><span class="rvts45">500</span></p>
+     </td>
+    </tr>
+    <tr valign="top">
+     <td width="57" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps5"><span class="rvts45">E</span></p>
+     </td>
+     <td width="49" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps5"><span class="rvts45">0</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps20"><span class="rvts45">-300</span></p>
+     </td>
+     <td width="51" height="19" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 0px; border-top: none; border-right: none; border-left: none; background-color: #c0c0c0;">
+      <p class="rvps20"><span class="rvts45">300</span></p>
+     </td>
+    </tr>
+   </table>
+   </div>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<div class="rvps8"><a name="Importing External Land Geometry Files"></a>
-<table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; background-color: #dfdfdf; border-spacing: 2px;">
-<tr valign="top">
-<td style="border-color: #c0c0c0; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts8">Importing External Land Geometry Files</span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts6">SolarPILOT can import boundary geometry files that have been created using external geospatial software such as Google Earth</span><span class="rvts12">™</span><span class="rvts6">. SolarPILOT parses the contents of a KML file to determine land boundaries based on polygonal shapes constructed within the geospatial software. This dialog provides a brief tutorial on using KML files in SolarPILOT. For this example, we use Google Earth</span><span class="rvts12">™</span><span class="rvts6"> to reconstruct the land boundaries for the </span><span class="rvts30">Ivanpah-II</span><span class="rvts6"> plant in Ivanpah, CA (USA).</span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts6">The process for incorporating KML data is straightforward, and the main steps are outlined as follows:</span></p>
-<ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;"><ol style="text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: decimal;">
-<li value="1" style="margin-left: 0px" class="rvps12"><span class="rvts21">Acquire and open Google Earth</span></li>
-<li value="2" style="margin-left: 0px" class="rvps12"><span class="rvts21">Locate the land parcel of interest</span></li>
-<li value="3" style="margin-left: 0px" class="rvps12"><span class="rvts21">Identify tower location with a placemark</span></li>
-<li value="4" style="margin-left: 0px" class="rvps12"><span class="rvts21">Construct polygons for each inclusion or exclusion of interest</span></li>
-<li value="5" style="margin-left: 0px" class="rvps12"><span class="rvts21">Export each polygon to a unique KML file</span></li>
-<li value="6" style="margin-left: 0px" class="rvps12"><span class="rvts21">Import tower location into SolarPILOT, then import polygon file(s) into SolarPILOT </span></li>
-</ol></ol>
-<p class="rvps12"><span class="rvts21"><br/></span></p>
-<p class="rvps8"><span class="rvts6">Each of these steps is illustrated in more detail.</span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts47">1. Acquire and open Google Earth</span></p>
-<p class="rvps8"><span class="rvts21"><br/></span></p>
-<p class="rvps8"><span class="rvts6">A free version of Google Earth is available at </span><a class="rvts46" href="https://www.google.com/earth/">https://www.google.com/earth/</a><span class="rvts6">. </span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem24.png"></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts47">2. Locate the land parcel of interest</span></p>
-<p class="rvps8"><span class="rvts21"><br/></span></p>
-<p class="rvps8"><span class="rvts6">Use the search tool or simply scroll to the location that you would like to implement.</span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem25.png"></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts47">3. Identify tower location with a Placemark</span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts6">Make sure the Toolbar is enabled (View -&gt; Toolbar). Click the "Add Placemark" icon </span><img alt="" style="padding : 1px;" src="lib/NewItem26.png"><span class="rvts48"> and select the position of the tower. Name the tower location as desired. Click OK.</span></p>
-<p class="rvps8"><span class="rvts8"><br/></span></p>
-<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem27.png"></p>
-<p class="rvps8"><span class="rvts8"><br/></span></p>
-<p class="rvps8"><span class="rvts47">4. Construct polygons for each inclusion or exclusion of interest</span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts6">On the Toolbar, click the "Add Polygon" icon </span><img alt="" style="padding : 1px;" src="lib/NewItem28.png"><span class="rvts48"> and begin constructing the primary inclusion polygon. Trace the outline of the polygon by clicking the vertices' location. Once the geometry is constructed, name the polygon and click OK. In this example, the shading style of the polygons were also modified to clarify inclusion and exclusion regions. </span></p>
-<p class="rvps8"><span class="rvts48"><br/></span></p>
-<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem29.png"></p>
-<p class="rvps8"><span class="rvts48"><br/></span></p>
-<p class="rvps8"><span class="rvts48">Each constructed polygon will appear in the "My Places" tree. You may wish to organize your places using a single folder, as shown in the following image.</span></p>
-<p class="rvps8"><span class="rvts48"><br/></span></p>
-<p class="rvps8"><span class="rvts47">5. Export each polygon to a unique KML file</span></p>
-<p class="rvps8"><span class="rvts48"><br/></span></p>
-<p class="rvps8"><span class="rvts48">All geometry components must be exported as KML files. Right click each component and choose "Save Place As...". Select "KML" as the extension type and save the files to a convenient location.</span></p>
-<p class="rvps8"><span class="rvts48"><br/></span></p>
-<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem31.png"></p>
-<p class="rvps8"><span class="rvts48"><br/></span></p>
-<p class="rvps8"><span class="rvts47">6. Import tower location into SolarPILOT, then import polygon file(s) into SolarPILOT </span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts6">In SolarPILOT, enable the "Use Land Boundary Array" option and disable the other options. Click the "Import" button.</span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts6">Navigate to the folder containing the KML files created in the previous step. Select the first polygon file that you wish to import and click "OK". (Note: don't select the tower location file in this step!).</span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts6">The "Land Import Settings" dialog will appear. &nbsp;</span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem32.png"></p>
-<p class="rvps8"><span class="rvts36"><br/></span></p>
-<p class="rvps8"><span class="rvts36">Click the "From File..." button. Select the KML file containing the tower location. The tower location coordinate inputs will automatically be populated. </span></p>
-<p class="rvps8"><span class="rvts36"><br/></span></p>
-<p class="rvps8"><span class="rvts36">Now specify whether the polygon file selected at the beginning of this step is an Inclusion or Exclusion. If you seek to replace existing data in the land boundary table, choose "Replace" in the drop-down menu. If the table is not yet populated, choose "Append to". Click OK. The first polygon file has now been included in the table!</span></p>
-<p class="rvps8"><span class="rvts36"><br/></span></p>
-<p class="rvps8"><span class="rvts36">Import subsequent geometry files by clicking "Import" and following this procedure. Note that the </span><span class="rvts49">tower location must be specified only once</span><span class="rvts36"> and subsequent import operations will use the previously specified location. For geometries with multiple polygons, ensure that the region type and append status is correct. </span></p>
-<p class="rvps8"><span class="rvts36"><br/></span></p>
-<p class="rvps8"><span class="rvts36">The land geometry is now available for simulation. This example produces the following field layout when all potential heliostats are included:</span></p>
-<p class="rvps8"><span class="rvts36"><br/></span></p>
-<p class="rvps8"><img width="464" height="415" alt="" style="padding : 1px;" src="lib/NewItem34.png"></p>
-<p class="rvps8"><span class="rvts36"><br/></span></p>
-<p class="rvps8"><span class="rvts36"><br/></span></p>
-<p class="rvps8"><span class="rvts36">For more information on KML files, see </span><a class="rvts23" href="http://en.wikipedia.org/wiki/Keyhole_Markup_Language">http://en.wikipedia.org/wiki/Keyhole_Markup_Language</a><span class="rvts6">.</span></p>
-<p class="rvps8"><span class="rvts6"><br/></span></p>
-</td>
-</tr>
+<div class="rvps8">
+<a name="Importing External Land Geometry Files"></a><table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; background-color: #dfdfdf; border-spacing: 2px;">
+ <tr valign="top">
+  <td style="border-color: #c0c0c0; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts8">Importing External Land Geometry Files</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts6">SolarPILOT can import boundary geometry files that have been created using external geospatial software such as Google Earth</span><span class="rvts12">™</span><span class="rvts6">. SolarPILOT parses the contents of a KML file to determine land boundaries based on polygonal shapes constructed within the geospatial software. This dialog provides a brief tutorial on using KML files in SolarPILOT. For this example, we use Google Earth</span><span class="rvts12">™</span><span class="rvts6"> to reconstruct the land boundaries for the </span><span class="rvts30">Ivanpah-II</span><span class="rvts6"> plant in Ivanpah, CA (USA).</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts6">The process for incorporating KML data is straightforward, and the main steps are outlined as follows:</span></p>
+   <ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;">
+    <ol style="text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: decimal;">
+     <li style="margin-left: 0px" class="rvps12"><span class="rvts21">Acquire and open Google Earth</span></li>
+     <li style="margin-left: 0px" class="rvps12"><span class="rvts21">Locate the land parcel of interest</span></li>
+     <li style="margin-left: 0px" class="rvps12"><span class="rvts21">Identify tower location with a placemark</span></li>
+     <li style="margin-left: 0px" class="rvps12"><span class="rvts21">Construct polygons for each inclusion or exclusion of interest</span></li>
+     <li style="margin-left: 0px" class="rvps12"><span class="rvts21">Export each polygon to a unique KML file</span></li>
+     <li style="margin-left: 0px" class="rvps12"><span class="rvts21">Import tower location into SolarPILOT, then import polygon file(s) into SolarPILOT&nbsp;</span></li>
+    </ol>
+   </ol>
+   <p class="rvps12"><span class="rvts21"><br/></span></p>
+   <p class="rvps8"><span class="rvts6">Each of these steps is illustrated in more detail.</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts47">1. Acquire and open Google Earth</span></p>
+   <p class="rvps8"><span class="rvts21"><br/></span></p>
+   <p class="rvps8"><span class="rvts6">A free version of Google Earth is available at </span><a class="rvts46" href="https://www.google.com/earth/">https://www.google.com/earth/</a><span class="rvts6">.&nbsp;</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem24.png"></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts47">2. Locate the land parcel of interest</span></p>
+   <p class="rvps8"><span class="rvts21"><br/></span></p>
+   <p class="rvps8"><span class="rvts6">Use the search tool or simply scroll to the location that you would like to implement.</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem25.png"></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts47">3. Identify tower location with a Placemark</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts6">Make sure the Toolbar is enabled (View -&gt; Toolbar). Click the "Add Placemark" icon </span><img alt="" style="padding : 1px;" src="lib/NewItem26.png"><span class="rvts48"> and select the position of the tower. Name the tower location as desired. Click OK.</span></p>
+   <p class="rvps8"><span class="rvts8"><br/></span></p>
+   <p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem27.png"></p>
+   <p class="rvps8"><span class="rvts8"><br/></span></p>
+   <p class="rvps8"><span class="rvts47">4. Construct polygons for each inclusion or exclusion of interest</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts6">On the Toolbar, click the "Add Polygon" icon </span><img alt="" style="padding : 1px;" src="lib/NewItem28.png"><span class="rvts48"> and begin constructing the primary inclusion polygon. Trace the outline of the polygon by clicking the vertices' location. Once the geometry is constructed, name the polygon and click OK. In this example, the shading style of the polygons were also modified to clarify inclusion and exclusion regions.&nbsp;</span></p>
+   <p class="rvps8"><span class="rvts48"><br/></span></p>
+   <p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem29.png"></p>
+   <p class="rvps8"><span class="rvts48"><br/></span></p>
+   <p class="rvps8"><span class="rvts48">Each constructed polygon will appear in the "My Places" tree. You may wish to organize your places using a single folder, as shown in the following image.</span></p>
+   <p class="rvps8"><span class="rvts48"><br/></span></p>
+   <p class="rvps8"><span class="rvts47">5. Export each polygon to a unique KML file</span></p>
+   <p class="rvps8"><span class="rvts48"><br/></span></p>
+   <p class="rvps8"><span class="rvts48">All geometry components must be exported as KML files. Right click each component and choose "Save Place As...". Select "KML" as the extension type and save the files to a convenient location.</span></p>
+   <p class="rvps8"><span class="rvts48"><br/></span></p>
+   <p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem31.png"></p>
+   <p class="rvps8"><span class="rvts48"><br/></span></p>
+   <p class="rvps8"><span class="rvts47">6. Import tower location into SolarPILOT, then import polygon file(s) into SolarPILOT&nbsp;</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts6">In SolarPILOT, enable the "Use Land Boundary Array" option and disable the other options. Click the "Import" button.</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts6">Navigate to the folder containing the KML files created in the previous step. Select the first polygon file that you wish to import and click "OK". (Note: don't select the tower location file in this step!).</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><span class="rvts6">The "Land Import Settings" dialog will appear. &nbsp;</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+   <p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem32.png"></p>
+   <p class="rvps8"><span class="rvts36"><br/></span></p>
+   <p class="rvps8"><span class="rvts36">Click the "From File..." button. Select the KML file containing the tower location. The tower location coordinate inputs will automatically be populated.&nbsp;</span></p>
+   <p class="rvps8"><span class="rvts36"><br/></span></p>
+   <p class="rvps8"><span class="rvts36">Now specify whether the polygon file selected at the beginning of this step is an Inclusion or Exclusion. If you seek to replace existing data in the land boundary table, choose "Replace" in the drop-down menu. If the table is not yet populated, choose "Append to". Click OK. The first polygon file has now been included in the table!</span></p>
+   <p class="rvps8"><span class="rvts36"><br/></span></p>
+   <p class="rvps8"><span class="rvts36">Import subsequent geometry files by clicking "Import" and following this procedure. Note that the </span><span class="rvts49">tower location must be specified only once</span><span class="rvts36"> and subsequent import operations will use the previously specified location. For geometries with multiple polygons, ensure that the region type and append status is correct.&nbsp;</span></p>
+   <p class="rvps8"><span class="rvts36"><br/></span></p>
+   <p class="rvps8"><span class="rvts36">The land geometry is now available for simulation. This example produces the following field layout when all potential heliostats are included:</span></p>
+   <p class="rvps8"><span class="rvts36"><br/></span></p>
+   <p class="rvps8"><img width="464" height="415" alt="" style="padding : 1px;" src="lib/NewItem34.png"></p>
+   <p class="rvps8"><span class="rvts36"><br/></span></p>
+   <p class="rvps8"><span class="rvts36"><br/></span></p>
+   <p class="rvps8"><span class="rvts36">For more information on KML files, see </span><a class="rvts23" href="http://en.wikipedia.org/wiki/Keyhole_Markup_Language">http://en.wikipedia.org/wiki/Keyhole_Markup_Language</a><span class="rvts6">.</span></p>
+   <p class="rvps8"><span class="rvts6"><br/></span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<p class="rvps2"><a name="Field Configuration"></a>
-<span class="rvts7">Field Configuration</span></p>
-<p class="rvps2"><a class="rvts41" href="LayoutSetup.html#Top%20of%20page">-- Top of Page -- </a><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><a name="Field Configuration"></a><span class="rvts7">Field Configuration</span></p>
+<p class="rvps2"><a class="rvts41" href="LayoutSetup.html#Top%20of%20page">-- Top of Page --&nbsp;</a><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps6"><a name="Tower Optical Height"></a>
-<span class="rvts0"><span class="rvts20">Tower Optical Height</span></span></h2>
-<p class="rvps2"><span class="rvts6">The tower optical height is the distance between the heliostat pivot point and the midpoint of the receiver, as shown below. The height of the tower structure is not necessarily equal to the tower optical height. </span></p>
+<h2 class="rvps6"><a name="Tower Optical Height"></a><span class="rvts0"><span class="rvts20">Tower Optical Height</span></span></h2>
+<p class="rvps2"><span class="rvts6">The tower optical height is the distance between the heliostat pivot point and the midpoint of the receiver, as shown below. The height of the tower structure is not necessarily equal to the tower optical height.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem36.png"><span class="rvts6"> </span></p>
+<p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem36.png"><span class="rvts6">&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h2 class="rvps6"><span class="rvts0"><span class="rvts20">Layout Method</span></span></h2>
-<p class="rvps2"><span class="rvts6">Choose the method for calculating potential heliostat positions. </span></p>
+<p class="rvps2"><span class="rvts6">Choose the method for calculating potential heliostat positions.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Radial Stagger</span></span></h3>
 <p class="rvps2"><span class="rvts6">This option uses the "radial stagger" method for heliostat layout. In this method, heliostat rows are placed alternatingly along iso-azimuthal lines at constant radii. This concept is illustrated below.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps5"><a name="Figure: Radial stagger concept"></a>
-<img alt="" style="padding : 1px;" src="lib/NewItem38.png"></p>
-<p class="rvps2"><span class="rvts6">Initial heliostat spacing between heliostats in a row is determined by the Azimuthal Spacing Factor described below. As rows are added radially, the distance between neighboring heliostats in the same radial row increases. Once the ratio of heliostat spacing to the original spacing (in terms of absolute distance) exceeds the Azimuthal Spacing Reset Limit, the spacing resets to the original distance. This discontinuity is referred to as a "slip plane". </span></p>
+<p class="rvps5"><a name="Figure: Radial stagger concept"></a><img alt="" style="padding : 1px;" src="lib/NewItem38.png"></p>
+<p class="rvps2"><span class="rvts6">Initial heliostat spacing between heliostats in a row is determined by the Azimuthal Spacing Factor described below. As rows are added radially, the distance between neighboring heliostats in the same radial row increases. Once the ratio of heliostat spacing to the original spacing (in terms of absolute distance) exceeds the Azimuthal Spacing Reset Limit, the spacing resets to the original distance. This discontinuity is referred to as a "slip plane".&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Spacing between rows in the radial direction is a function of the radius of the row. More information on how SolarPILOT calculates this dimension is provided below in the Radial Spacing Method descriptions. </span></p>
+<p class="rvps2"><span class="rvts6">Spacing between rows in the radial direction is a function of the radius of the row. More information on how SolarPILOT calculates this dimension is provided below in the Radial Spacing Method descriptions.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h4 class="rvps21"><span class="rvts0"><span class="rvts27">Radial Spacing Method</span></span></h4>
-<p class="rvps8"><span class="rvts6">Choose the algorithm for calculating the distance between rows. </span></p>
+<p class="rvps8"><span class="rvts6">Choose the algorithm for calculating the distance between rows.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <h3 class="rvps22"><span class="rvts0"><span class="rvts26">Eliminate Blocking</span></span></h3>
-<p class="rvps12"><span class="rvts6">The Eliminate Blocking option seeks to space rows radially such that heliostats along an iso-azimuthal line do not block reflected light from reaching the receiver. To accomplish this, rows of heliostats must be spaced sufficiently apart to prevent light reflected from the lowermost portion of the distal heliostat from being intercepted by the uppermost portion of the proximal heliostat, as illustrated below. </span></p>
+<p class="rvps12"><span class="rvts6">The Eliminate Blocking option seeks to space rows radially such that heliostats along an iso-azimuthal line do not block reflected light from reaching the receiver. To accomplish this, rows of heliostats must be spaced sufficiently apart to prevent light reflected from the lowermost portion of the distal heliostat from being intercepted by the uppermost portion of the proximal heliostat, as illustrated below.&nbsp;</span></p>
 <p class="rvps12"><span class="rvts6"><br/></span></p>
-<p class="rvps12"><span class="rvts6">As the radial position of the rows increases, the elevation angle </span><span class="rvts29">θ</span><span class="rvts6"> of the tangent line decreases, and the spacing between rows </span><span class="rvts50">Δ</span><span class="rvts30">R </span><span class="rvts6">must also increase to prevent blocking. Note that </span><span class="rvts50">Δ</span><span class="rvts30">R</span><span class="rvts6"> represents the distance between alternating rows, as each intermediate row is offset azimuthally and does not contribute to blocking in this way. </span></p>
+<p class="rvps12"><span class="rvts6">As the radial position of the rows increases, the elevation angle </span><span class="rvts29">θ</span><span class="rvts6"> of the tangent line decreases, and the spacing between rows </span><span class="rvts50">Δ</span><span class="rvts30">R </span><span class="rvts6">must also increase to prevent blocking. Note that </span><span class="rvts50">Δ</span><span class="rvts30">R</span><span class="rvts6"> represents the distance between alternating rows, as each intermediate row is offset azimuthally and does not contribute to blocking in this way.&nbsp;</span></p>
 <h3 class="rvps22"><span class="rvts0"><span class="rvts26"><br/></span></span></h3>
-<h3 class="rvps25"><a name="eliminate blocking graphic"></a>
-<img alt="" style="padding : 1px;" src="lib/NewItem44.png"></h3>
+<h3 class="rvps25"><a name="eliminate blocking graphic"></a><img alt="" style="padding : 1px;" src="lib/NewItem44.png"></h3>
 <p class="rvps12"><span class="rvts6"><br/></span></p>
-<p class="rvps12"><span class="rvts6">See </span><span class="rvts23">Radial Stagger: Eliminate Blocking</span><span class="rvts6"> for a mathematical description of this method. </span></p>
+<p class="rvps12"><span class="rvts6">See </span><span class="rvts23">Radial Stagger: Eliminate Blocking</span><span class="rvts6"> for a mathematical description of this method.&nbsp;</span></p>
 <p class="rvps12"><span class="rvts6"><br/></span></p>
 <p class="rvps12"><span class="rvts6">Note that the row spacing must be sufficient to avoid collisions between neighboring heliostat rows. SolarPILOT ensures that collisions are avoided by calculating </span><span class="rvts29">δ</span><span class="rvts51">min</span><span class="rvts6"> for each row. See </span><span class="rvts23">Radial Stagger: Collision Avoidance</span><span class="rvts6"> for a mathematical description of this method.</span></p>
 <p class="rvps26"><img alt="" style="padding : 1px;" src="lib/NewItem46.png"></p>
@@ -1002,15 +1130,15 @@
 <p class="rvps24"><span class="rvts6">This value adjust the radial distance at which the layout transitions from close-packed to the standard radial stagger arrangement. The value that you specify multiplies the calculated radial distance at which the offset due to elimination of blocking supersedes the collision limit separation. An increase in this value will cause the transition to happen at a greater distance from the tower, but may introduce additional blocking loss.</span></p>
 <p class="rvps12"><span class="rvts6"><br/></span></p>
 <h3 class="rvps22"><span class="rvts0"><span class="rvts26">DELSOL3 Empirical Fit</span></span></h3>
-<p class="rvps12"><span class="rvts6">The DELSOL3 software from Sandia National Lab incorporates several spacing correlations that azimuthal and radial spacing as a function of distance from the tower, heliostat height, heliostat width, heliostat geometry type (rectangular vs. round), and receiver type (external surround vs. cavity or flat plate). These correlations have been implemented in SolarPILOT and determine both radial and azimuthal spacing. </span></p>
+<p class="rvps12"><span class="rvts6">The DELSOL3 software from Sandia National Lab incorporates several spacing correlations that azimuthal and radial spacing as a function of distance from the tower, heliostat height, heliostat width, heliostat geometry type (rectangular vs. round), and receiver type (external surround vs. cavity or flat plate). These correlations have been implemented in SolarPILOT and determine both radial and azimuthal spacing.&nbsp;</span></p>
 <p class="rvps12"><span class="rvts6"><br/></span></p>
 <p class="rvps12"><span class="rvts6">More information on the correlations is available in the DELSOL3 documentation (Kistler, 1986) and in the </span><span class="rvts23">Radial Stagger: DELSOL3 Empirical Fit</span><span class="rvts6"> section.</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <h4 class="rvps21"><span class="rvts0"><span class="rvts27">Azimuthal Spacing Factor</span></span></h4>
-<p class="rvps8"><span class="rvts6">The initial spacing between heliostats in a single row in terms of heliostat structural widths. The separation of heliostats in a row after a slip plane or in the first row of the field is determined by multiplying the Azimuthal Spacing Factor by the Heliostat Width. </span></p>
+<p class="rvps8"><span class="rvts6">The initial spacing between heliostats in a single row in terms of heliostat structural widths. The separation of heliostats in a row after a slip plane or in the first row of the field is determined by multiplying the Azimuthal Spacing Factor by the Heliostat Width.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <h4 class="rvps21"><span class="rvts0"><span class="rvts27">Azimuthal Spacing Reset Limit</span></span></h4>
-<p class="rvps8"><span class="rvts6">The spacing ratio limit at which a slip plane is applied and the subsequent radial row reverts to initial azimuthal spacing. </span></p>
+<p class="rvps8"><span class="rvts6">The spacing ratio limit at which a slip plane is applied and the subsequent radial row reverts to initial azimuthal spacing.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts6">The azimuthal spacing ratio is determined by dividing the azimuthal spacing between heliostats in a row by the minimum (initial) spacing. As shown in the </span><a class="rvts23" href="LayoutSetup.html#Figure:%20Radial%20stagger%20concept">radial spacing concept figure</a><span class="rvts6"> above, azimuthal spacing increases with radius and must be periodically reset to improve optical performance. The ratio of spacing in any given row to the initial spacing determines where the spacing will revert to the initial value.</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
@@ -1048,27 +1176,26 @@
 <p class="rvps12"><span class="rvts6">Constrain the heliostat field macro shape as a rectangle. The distance between the tower location and any corner position is equal to the Maximum field Radius setting in the Field Boundaries group.</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <h4 class="rvps23"><span class="rvts0"><span class="rvts27">Layout Aspect Ratio (Y/X)</span></span></h4>
-<p class="rvps24"><span class="rvts6">Specify the ratio of rectangle height to width. </span></p>
+<p class="rvps24"><span class="rvts6">Specify the ratio of rectangle height to width.&nbsp;</span></p>
 <p class="rvps24"><span class="rvts6"><br/></span></p>
 <p class="rvps24"><span class="rvts6">Values &gt;1 induce a "tall" rectangle, while values &lt;1 induce a "wide" rectangle.</span></p>
 <p class="rvps24"><span class="rvts6"><br/></span></p>
 <h3 class="rvps22"><span class="rvts0"><span class="rvts26">Undefined</span></span></h3>
-<p class="rvps12"><span class="rvts6">Don't constrain the macro field geometry to any particular shape. Instead, this option chooses the best positions on the Cartesian grid within the boundaries specified in the Field Boundaries group. </span></p>
+<p class="rvps12"><span class="rvts6">Don't constrain the macro field geometry to any particular shape. Instead, this option chooses the best positions on the Cartesian grid within the boundaries specified in the Field Boundaries group.&nbsp;</span></p>
 <p class="rvps12"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">User-Defined</span></span></h3>
-<p class="rvps2"><span class="rvts6">Use an imported (externally defined) layout as specified on the Field Layout page. </span></p>
+<p class="rvps2"><span class="rvts6">Use an imported (externally defined) layout as specified on the Field Layout page.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Note that this option is automatically selected when a layout is successfully imported on the Field Layout page. </span></p>
+<p class="rvps2"><span class="rvts6">Note that this option is automatically selected when a layout is successfully imported on the Field Layout page.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<p class="rvps2"><a name="Advanced Layout Options"></a>
-<span class="rvts7">Advanced Layout Options</span></p>
-<p class="rvps2"><a class="rvts41" href="LayoutSetup.html#Top%20of%20page">-- Top of Page -- </a><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p class="rvps2"><a name="Advanced Layout Options"></a><span class="rvts7">Advanced Layout Options</span></p>
+<p class="rvps2"><a class="rvts41" href="LayoutSetup.html#Top%20of%20page">-- Top of Page --&nbsp;</a><span class="rvts41"> &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h2 class="rvps6"><span class="rvts0"><span class="rvts20">Enable Optical Layout Zone Method</span></span></h2>
-<p class="rvps2"><span class="rvts6">Enable the algorithm for evaluating heliostats using neighbor groups for improved simulation speed. </span></p>
+<p class="rvps2"><span class="rvts6">Enable the algorithm for evaluating heliostats using neighbor groups for improved simulation speed.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The optical layout zone method groups heliostats into zones based on proximity to each other and estimated intercept factor within a tolerance band. The size and positioning of the zone depends on the local estimate of intercept factor and varies spatially. Heliostats within a single zone are considered together during layout simulations such that the intercept factor for each zone is calculated only once using the centroid of the zone. Heliostats within that zone inherit the zone-wide intercept value, though all other optical terms are calculated for each heliostat. This method reduces computation expense, but can alter the final layout and should be used with care. More information on this method is provided in </span><span class="rvts23">Optical Layout Zones</span><span class="rvts6">. </span></p>
+<p class="rvps2"><span class="rvts6">The optical layout zone method groups heliostats into zones based on proximity to each other and estimated intercept factor within a tolerance band. The size and positioning of the zone depends on the local estimate of intercept factor and varies spatially. Heliostats within a single zone are considered together during layout simulations such that the intercept factor for each zone is calculated only once using the centroid of the zone. Heliostats within that zone inherit the zone-wide intercept value, though all other optical terms are calculated for each heliostat. This method reduces computation expense, but can alter the final layout and should be used with care. More information on this method is provided in </span><span class="rvts23">Optical Layout Zones</span><span class="rvts6">.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">SolarPILOT calculates optical zone size by estimating the rate of change of the intercept factor as a function of radial and azimuthal position in the heliostat field. As the derivative value increases, so too does the potential difference in intercept factor between neighboring heliostats. Given a sufficiently small zone, heliostats within can be approximated to have the same base intercept value. The zones are formed using a "meshing" technique, and the following settings help control the dimensions and behavior of the mesh.</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
@@ -1085,32 +1212,31 @@
 <p class="rvps8"><span class="rvts6">The maximum allowable zone width in the azimuthal direction of any optical zone. Specifying a maximum zone size prevents inaccurate grouping in areas of low mesh density.</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <h4 class="rvps21"><span class="rvts0"><span class="rvts27">Optical Layout Zone Mesh Tolerance</span></span></h4>
-<p class="rvps8"><span class="rvts6">The maximum spatial variation of intercept factor within any particular zone, subject to the min/max zone size constraints. </span></p>
+<p class="rvps8"><span class="rvts6">The maximum spatial variation of intercept factor within any particular zone, subject to the min/max zone size constraints.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts6">SolarPILOT estimates the optical intercept of heliostats as a function of azimuthal and radial position in the heliostat field and constructs optical layout zones (groups of heliostats) such that the estimated intercept factor of each heliostat within the zone lies within the specified zone mesh tolerance. </span></p>
+<p class="rvps8"><span class="rvts6">SolarPILOT estimates the optical intercept of heliostats as a function of azimuthal and radial position in the heliostat field and constructs optical layout zones (groups of heliostats) such that the estimated intercept factor of each heliostat within the zone lies within the specified zone mesh tolerance.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <h2 class="rvps6"><span class="rvts0"><span class="rvts20">Apply Proximity Filter</span></span></h2>
-<p class="rvps2"><span class="rvts6">Enable the heliostat proximity filter algorithm to favor layouts with heliostats that are closer in proximity to the tower. </span></p>
+<p class="rvps2"><span class="rvts6">Enable the heliostat proximity filter algorithm to favor layouts with heliostats that are closer in proximity to the tower.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">If enabled, this algorithm post-processes the field layout to replace more distant heliostats with nearer ones. The algorithm works as follows:</span></p>
 <ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;">
-<li value="1" class="rvps2"><span class="rvts6">Beginning with the last (worst performing) heliostats in the layout, the power delivered by each heliostat is accumulated until the Proximity Filter Fraction times the design-point incident power is exceeded. (In other words, SolarPILOT finds the set of poorest-performing heliostats with reference design point power equal to the Proximity Filter Fraction times the design-point incident power.) </span></li>
-<li value="2" class="rvps2"><span class="rvts6">Step (1) yields </span><span class="rvts30">N</span><span class="rvts6"> heliostats. SolarPILOT identifies an equal number </span><span class="rvts30">N</span><span class="rvts6"> of heliostats that are the best performing of those </span><span class="rvts30">not</span><span class="rvts6"> included in the original layout. These represent the "first </span><span class="rvts30">N</span><span class="rvts6"> out", so to speak. SolarPILOT now has a list of </span><span class="rvts30">N*2</span><span class="rvts6"> heliostats whose performance spans the cutoff used to form the original layout.</span></li>
-<li value="3" class="rvps2"><span class="rvts6">The list of </span><span class="rvts30">N*2</span><span class="rvts6"> heliostats is sorted by radial position.</span></li>
-<li value="4" class="rvps2"><span class="rvts6">Beginning with the nearest heliostat, SolarPILOT adds heliostats back into the final layout until the reference design point power is again satisfied.</span></li>
+ <li class="rvps2"><span class="rvts6">Beginning with the last (worst performing) heliostats in the layout, the power delivered by each heliostat is accumulated until the Proximity Filter Fraction times the design-point incident power is exceeded. (In other words, SolarPILOT finds the set of poorest-performing heliostats with reference design point power equal to the Proximity Filter Fraction times the design-point incident power.)&nbsp;</span></li>
+ <li class="rvps2"><span class="rvts6">Step (1) yields </span><span class="rvts30">N</span><span class="rvts6"> heliostats. SolarPILOT identifies an equal number </span><span class="rvts30">N</span><span class="rvts6"> of heliostats that are the best performing of those </span><span class="rvts30">not</span><span class="rvts6"> included in the original layout. These represent the "first </span><span class="rvts30">N</span><span class="rvts6"> out", so to speak. SolarPILOT now has a list of </span><span class="rvts30">N*2</span><span class="rvts6"> heliostats whose performance spans the cutoff used to form the original layout.</span></li>
+ <li class="rvps2"><span class="rvts6">The list of </span><span class="rvts30">N*2</span><span class="rvts6"> heliostats is sorted by radial position.</span></li>
+ <li class="rvps2"><span class="rvts6">Beginning with the nearest heliostat, SolarPILOT adds heliostats back into the final layout until the reference design point power is again satisfied.</span></li>
 </ol>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The purpose of this algorithm is to develop compact field layouts that may account for expense or performance uncertainty associated with long slant ranges. </span></p>
+<p class="rvps2"><span class="rvts6">The purpose of this algorithm is to develop compact field layouts that may account for expense or performance uncertainty associated with long slant ranges.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h4 class="rvps21"><span class="rvts0"><span class="rvts27">Proximity Filter Fraction</span></span></h4>
-<p class="rvps8"><span class="rvts6">The fraction (based on power delivered) of heliostats to be reconsidered for layout inclusion on the basis of radial proximity. </span></p>
+<p class="rvps8"><span class="rvts6">The fraction (based on power delivered) of heliostats to be reconsidered for layout inclusion on the basis of radial proximity.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h2 class="rvps6"><span class="rvts0"><span class="rvts20">Heliostat shading interaction limit</span></span></h2>
 <p class="rvps2"><span class="rvts6">Heliostat blocking and shading are calculated by projecting vectors from heliostat corner points along the direction of incoming irradiation and determining whether the vector(s) intersect other heliostats in a nearby region. The radius of the region in which intersections are tested is calculated by multiplying the heliostat height by the Heliostat shading interaction limit. By default, this value is equal to 100. The following figure illustrates the effect of increasing the heliostat shading/blocking interaction limit for a set of solar positions. The plot shows percent error in power absorbed by the receiver at the limit specified on the X-axis compared to the power absorbed after solution convergence. Several different sun positions are shown, with an azimuth angle of 180 indicating south, and 270 indicating west. As expected, a larger limit is required for convergence at lower sun angles. In most cases, a limit of 50 is sufficient for convergence. The case shown is the layout achieved using SolarPILOT default values.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem221.png"></p>
-<p></p>
+<p class="rvps5"><img alt="" style="padding : 1px;" src="lib/NewItem221.png"><span class="rvts6"></span></p>
 <p class="rvps4" style="clear: both;"><span class="rvts13">Created with the Personal Edition of HelpNDoc: </span><a class="rvts14" href="https://www.helpndoc.com/feature-tour">Easily create Qt Help files</a></p>
 
             </div>
@@ -1142,37 +1268,36 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
-  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
-  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
-  <script src="vendors/uri-1.18.9/uri.min.js"></script>
-  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
-  
-  <!-- Headroom -->
-  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
-  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+  <!-- Splitter -->
+  <div id="hnd-splitter" style="left: 350px"></div>  
 
-  <!-- JsTree -->
-  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+  <!-- Scripts -->
+  <script src="vendors/jquery-3.5.1/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+  <script src="vendors/bootstrap-3.4.1/js/ie10-viewport-bug-workaround.js"></script>
+  <script src="vendors/markjs-8.11.1/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.19.2/uri.min.js"></script>
+  <script src="vendors/imageMapResizer-1.0.10/imageMapResizer.min.js"></script>
+  <script src="vendors/headroom-0.11.0/headroom.min.js"></script>
+  <script src="vendors/jstree-3.3.10/jstree.min.js"></script>  
+  <script src="vendors/interactjs-1.9.22/interact.min.js"></script>  
 
   <!-- HelpNDoc scripts -->
+  <script src="js/polyfill.object.min.js"></script>
   <script src="_translations.js"></script>
   <script src="js/hndsd.min.js"></script>
   <script src="js/hndse.min.js"></script>
   <script src="js/app.min.js"></script>
 
-  <!-- Scripts -->
+  <!-- Init script -->
   <script>
     $(function() {
-      // Instanciate FastClick
-      Origami.fastclick(document.body);
       // Create the app
       var app = new Hnd.App();
       // Update translations
       hnd_ut(app);
+	  // Instanciate imageMapResizer
+	  imageMapResize();
 	  // Custom JS
 	  
       // Boot the app

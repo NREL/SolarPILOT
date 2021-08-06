@@ -7,7 +7,7 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="generator" content="HelpNDoc Personal Edition 5.8.2.643">
+  <meta name="generator" content="HelpNDoc Personal Edition 7.5.0.435">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="favicon.ico"/>
 
@@ -16,6 +16,8 @@
   <meta name="keywords" content="">
 
 
+
+  
 
   <!-- Twitter Card data -->
   <meta name="twitter:card" content="summary">
@@ -29,19 +31,19 @@
   <meta property="og:site_name" content="SolarPILOT User's Manual" /> 
 
   <!-- Bootstrap core CSS -->
-  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="vendors/bootstrap-3.4.1/css/bootstrap.min.css" rel="stylesheet"/>
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+  <link href="vendors/bootstrap-3.4.1/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
-      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/html5shiv-3.7.3/html5shiv.min.js"></script>
       <script src="vendors/respond-1.4.2/respond.min.js"></script>
     <![endif]-->
 
   <!-- JsTree styles -->
-  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+  <link href="vendors/jstree-3.3.10/themes/default/style.min.css" rel="stylesheet"/>
 
   <!-- Hnd styles -->
   <link href="css/layout.min.css" rel="stylesheet" />
@@ -76,7 +78,7 @@
     
   </header>
 
-  <nav class="md-nav-expanded">
+  <nav id="panel-left" class="md-nav-expanded">
     <!-- Nav tabs -->
     <ul class="tab-tabs nav nav-tabs" role="tablist">
       <li id="nav-close"> 
@@ -171,7 +173,7 @@
                         <li><a href="InputPageReference.html">Input Page Reference</a></li><li><a href="Results.html">Results</a></li>
                     </ol>
                     <div class="nav-arrows">
-                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="Results.html" title="Results" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="Layoutresults.html" title="Layout results" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="SystemSummary.html" title="System Summary" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                        <div class="btn-group btn-group" role="group"><a class="btn btn-default" href="Results.html" title="Results" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="Layoutresults.html" title="Layout results" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="SystemSummary.html" title="System Summary" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
                     </div>
                 </div> 
             
@@ -182,8 +184,6 @@
 
             <div class="main-content">
                 
-<p></p>
-<p></p>
 <p class="rvps4" style="clear: both;"><span class="rvts13">Created with the Personal Edition of HelpNDoc: </span><a class="rvts14" href="https://www.helpndoc.com/create-epub-ebooks">Free EPub producer</a></p>
 
             </div>
@@ -215,37 +215,36 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
-  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
-  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
-  <script src="vendors/uri-1.18.9/uri.min.js"></script>
-  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
-  
-  <!-- Headroom -->
-  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
-  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+  <!-- Splitter -->
+  <div id="hnd-splitter" style="left: 350px"></div>  
 
-  <!-- JsTree -->
-  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+  <!-- Scripts -->
+  <script src="vendors/jquery-3.5.1/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+  <script src="vendors/bootstrap-3.4.1/js/ie10-viewport-bug-workaround.js"></script>
+  <script src="vendors/markjs-8.11.1/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.19.2/uri.min.js"></script>
+  <script src="vendors/imageMapResizer-1.0.10/imageMapResizer.min.js"></script>
+  <script src="vendors/headroom-0.11.0/headroom.min.js"></script>
+  <script src="vendors/jstree-3.3.10/jstree.min.js"></script>  
+  <script src="vendors/interactjs-1.9.22/interact.min.js"></script>  
 
   <!-- HelpNDoc scripts -->
+  <script src="js/polyfill.object.min.js"></script>
   <script src="_translations.js"></script>
   <script src="js/hndsd.min.js"></script>
   <script src="js/hndse.min.js"></script>
   <script src="js/app.min.js"></script>
 
-  <!-- Scripts -->
+  <!-- Init script -->
   <script>
     $(function() {
-      // Instanciate FastClick
-      Origami.fastclick(document.body);
       // Create the app
       var app = new Hnd.App();
       // Update translations
       hnd_ut(app);
+	  // Instanciate imageMapResizer
+	  imageMapResize();
 	  // Custom JS
 	  
       // Boot the app

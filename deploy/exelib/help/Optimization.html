@@ -7,7 +7,7 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="generator" content="HelpNDoc Personal Edition 5.8.2.643">
+  <meta name="generator" content="HelpNDoc Personal Edition 7.5.0.435">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="favicon.ico"/>
 
@@ -16,6 +16,8 @@
   <meta name="keywords" content="">
 
 
+
+  
 
   <!-- Twitter Card data -->
   <meta name="twitter:card" content="summary">
@@ -29,19 +31,19 @@
   <meta property="og:site_name" content="SolarPILOT User's Manual" /> 
 
   <!-- Bootstrap core CSS -->
-  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="vendors/bootstrap-3.4.1/css/bootstrap.min.css" rel="stylesheet"/>
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+  <link href="vendors/bootstrap-3.4.1/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
-      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/html5shiv-3.7.3/html5shiv.min.js"></script>
       <script src="vendors/respond-1.4.2/respond.min.js"></script>
     <![endif]-->
 
   <!-- JsTree styles -->
-  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+  <link href="vendors/jstree-3.3.10/themes/default/style.min.css" rel="stylesheet"/>
 
   <!-- Hnd styles -->
   <link href="css/layout.min.css" rel="stylesheet" />
@@ -76,7 +78,7 @@
     
   </header>
 
-  <nav class="md-nav-expanded">
+  <nav id="panel-left" class="md-nav-expanded">
     <!-- Nav tabs -->
     <ul class="tab-tabs nav nav-tabs" role="tablist">
       <li id="nav-close"> 
@@ -171,7 +173,7 @@
                         <li><a href="InputPageReference.html">Input Page Reference</a></li><li><a href="Simulationcontrol.html">Simulation control</a></li>
                     </ol>
                     <div class="nav-arrows">
-                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="Simulationcontrol.html" title="Simulation control" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="Parametrics.html" title="Parametrics" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="Results.html" title="Results" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                        <div class="btn-group btn-group" role="group"><a class="btn btn-default" href="Simulationcontrol.html" title="Simulation control" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="Parametrics.html" title="Parametrics" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="Results.html" title="Results" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
                     </div>
                 </div> 
             
@@ -182,9 +184,7 @@
 
             <div class="main-content">
                 
-<p></p>
-<h1 class="rvps9"><a name="top"></a>
-<span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
+<h1 class="rvps9"><a name="top"></a><span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The Optimization page allows you to select design parameters and optimize their value with respect to expected plant productivity over the year. Before running the optimization tool, you will need to add and configure optimization variables in the Variable Table. After running an optimization, you can choose whether to apply the optimized values shown in the Optimization Log by clicking the Apply to inputs button.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -196,47 +196,63 @@
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem204.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">where</span></p>
-<div class="rvps8"><table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
-<tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem206.png"></p>
-</td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">$</span></p>
-</td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Total installed cost</span></p>
-</td>
-</tr>
-<tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem207.png"></p>
-</td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">MWh</span></p>
-</td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Expected simulation power production (energy generated during field layout sample days)</span></p>
-</td>
-</tr>
-<tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem208.png"></p>
-</td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">MWt</span></p>
-</td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Power produced by the field at the reference condition</span></p>
-</td>
-</tr>
-<tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem209.png"></p>
-</td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6">MWt</span></p>
-</td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Specified solar field power production on the Layout Setup page</span></p>
-</td>
-</tr>
-<tr valign="middle">
-<td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem210.png"></p>
-</td>
-<td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps18"><span class="rvts6"><br/></span></p>
-</td>
-<td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps8"><span class="rvts6">Penalty factor for under-design power output from the Optimization page</span></p>
-</td>
-</tr>
+<div class="rvps8">
+<table width="600" border="1" cellpadding="1" cellspacing="2" style="border-width: 0px; border-spacing: 2px;">
+ <tr valign="middle">
+  <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem206.png"></p>
+  </td>
+  <td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps18"><span class="rvts6">$</span></p>
+  </td>
+  <td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Total installed cost</span></p>
+  </td>
+ </tr>
+ <tr valign="middle">
+  <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem207.png"></p>
+  </td>
+  <td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps18"><span class="rvts6">MWh</span></p>
+  </td>
+  <td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Expected simulation power production (energy generated during field layout sample days)</span></p>
+  </td>
+ </tr>
+ <tr valign="middle">
+  <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem208.png"></p>
+  </td>
+  <td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps18"><span class="rvts6">MWt</span></p>
+  </td>
+  <td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Power produced by the field at the reference condition</span></p>
+  </td>
+ </tr>
+ <tr valign="middle">
+  <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem209.png"></p>
+  </td>
+  <td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps18"><span class="rvts6">MWt</span></p>
+  </td>
+  <td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Specified solar field power production on the Layout Setup page</span></p>
+  </td>
+ </tr>
+ <tr valign="middle">
+  <td width="70" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem210.png"></p>
+  </td>
+  <td width="80" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps18"><span class="rvts6"><br/></span></p>
+  </td>
+  <td width="430" valign="top" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps8"><span class="rvts6">Penalty factor for under-design power output from the Optimization page</span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
@@ -250,8 +266,7 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps9"><a name="Setting"></a>
-<span class="rvts0"><span class="rvts22">Settings</span></span></h1>
+<h1 class="rvps9"><a name="Setting"></a><span class="rvts0"><span class="rvts22">Settings</span></span></h1>
 <p class="rvps2"><a class="rvts35" href="Optimization.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The settings parameters allow you to configure the optimization algorithm by managing (default) initial step size, maximum iterations, convergence tolerance, and a penalty for systems that cannot deliver the specified thermal power output.</span></p>
@@ -259,23 +274,25 @@
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Initial step size</span></span></h3>
 <p class="rvps2"><span class="rvts6">The (default) initial step size provides a guess to SolarPILOT for specifying the relative amount to vary each optimization variable on the first step. The Initial step size value multiplies the current value of each parameter to add to the Variable table to provide a step size. For example, if you add tower optical height to the variable table, and if the current value specified in the interface is 180 [m], the resulting initial step size for that variable would equal (initial step size -- say 0.06) * (180 [m]) = 10.8 [m].</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">After adding parameters to the variable table, you can modify the initial step size and other limits as needed. </span></p>
+<p class="rvps2"><span class="rvts6">After adding parameters to the variable table, you can modify the initial step size and other limits as needed.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<div class="rvps2"><table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; background-color: #dfdfdf; border-spacing: 2px;">
-<tr valign="top">
-<td style="border-color: #c0c0c0; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts8">Choosing initial step size values</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The initial step size provides the optimization algorithm with a test point to determine how to subsequently improve the objective function. Step size may differ for each variable that you optimize. Criteria for choosing the best step size include the following:</span></p>
-<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
-<li class="rvps2"><span class="rvts6">Step size should be sufficiently large that the resulting variable change is likely to have a non-trivial impact on the objective function</span></li>
-<li class="rvps2"><span class="rvts6">Step size should be sufficiently small that the modified variable value does not result in an infeasible system or nonsensical (e.g., negative dimension) value</span></li>
-<li class="rvps2"><span class="rvts6">When optimizing a system for the first time, relatively larger step sizes (e.g., ~10% of the variable value) may be needed to avoid optimizing to a local, suboptimal point</span></li>
-<li class="rvps2"><span class="rvts6">When refining a system, a smaller step size will encourage a local search without moving away from a favorable starting region</span></li>
-</ul>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-</td>
-</tr>
+<div class="rvps2">
+<table width="100%" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; background-color: #dfdfdf; border-spacing: 2px;">
+ <tr valign="top">
+  <td style="border-color: #c0c0c0; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts8">Choosing initial step size values</span></p>
+   <p class="rvps2"><span class="rvts6"><br/></span></p>
+   <p class="rvps2"><span class="rvts6">The initial step size provides the optimization algorithm with a test point to determine how to subsequently improve the objective function. Step size may differ for each variable that you optimize. Criteria for choosing the best step size include the following:</span></p>
+   <ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+    <li class="rvps2"><span class="rvts6">Step size should be sufficiently large that the resulting variable change is likely to have a non-trivial impact on the objective function</span></li>
+    <li class="rvps2"><span class="rvts6">Step size should be sufficiently small that the modified variable value does not result in an infeasible system or nonsensical (e.g., negative dimension) value</span></li>
+    <li class="rvps2"><span class="rvts6">When optimizing a system for the first time, relatively larger step sizes (e.g., ~10% of the variable value) may be needed to avoid optimizing to a local, suboptimal point</span></li>
+    <li class="rvps2"><span class="rvts6">When refining a system, a smaller step size will encourage a local search without moving away from a favorable starting region</span></li>
+   </ul>
+   <p class="rvps2"><span class="rvts6"><br/></span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -290,8 +307,7 @@
 <p class="rvps2"><span class="rvts6">Systems that do not produce the specified Solar field design power on the Layout Setup page are penalized according to the extent &nbsp;to which they are under power, with the difference being multiplied by the power shortage penalty. See the objective function description at the top of this page for mathematical context. For example, a power shortage penalty of 0.5 with a 500 MWt Solar field design power on a layout that produces only 250 MWt would result in an objective function penalty that is 125% of the unpenalized objective.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps9"><a name="Variable table"></a>
-<span class="rvts0"><span class="rvts22">Variable Table</span></span></h1>
+<h1 class="rvps9"><a name="Variable table"></a><span class="rvts0"><span class="rvts22">Variable Table</span></span></h1>
 <p class="rvps2"><a class="rvts35" href="Optimization.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Add</span></span></h3>
@@ -314,8 +330,7 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps9"><a name="Optimization log"></a>
-<span class="rvts0"><span class="rvts22">Optimization Log</span></span></h1>
+<h1 class="rvps9"><a name="Optimization log"></a><span class="rvts0"><span class="rvts22">Optimization Log</span></span></h1>
 <p class="rvps2"><a class="rvts35" href="Optimization.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The optimization log provides a history of variable values, objective function values, peak flux, and plant cost for each iteration that is considered.</span></p>
@@ -328,8 +343,7 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Apply to Inputs</span></span></h3>
 <p class="rvps2"><span class="rvts6">After running the optimization routine, you can apply the optimized variable values to the SolarPILOT interface inputs. After clicking this button, the input values will take on the optimized value. You will need to regenerate the heliostat field layout after taking this action.</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p></p>
+<p class="rvps2"><span class="rvts6"></span><span class="rvts6"></span></p>
 <p class="rvps4" style="clear: both;"><span class="rvts13">Created with the Personal Edition of HelpNDoc: </span><a class="rvts14" href="https://www.helpndoc.com">Free EBook and documentation generator</a></p>
 
             </div>
@@ -361,37 +375,36 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
-  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
-  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
-  <script src="vendors/uri-1.18.9/uri.min.js"></script>
-  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
-  
-  <!-- Headroom -->
-  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
-  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+  <!-- Splitter -->
+  <div id="hnd-splitter" style="left: 350px"></div>  
 
-  <!-- JsTree -->
-  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+  <!-- Scripts -->
+  <script src="vendors/jquery-3.5.1/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+  <script src="vendors/bootstrap-3.4.1/js/ie10-viewport-bug-workaround.js"></script>
+  <script src="vendors/markjs-8.11.1/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.19.2/uri.min.js"></script>
+  <script src="vendors/imageMapResizer-1.0.10/imageMapResizer.min.js"></script>
+  <script src="vendors/headroom-0.11.0/headroom.min.js"></script>
+  <script src="vendors/jstree-3.3.10/jstree.min.js"></script>  
+  <script src="vendors/interactjs-1.9.22/interact.min.js"></script>  
 
   <!-- HelpNDoc scripts -->
+  <script src="js/polyfill.object.min.js"></script>
   <script src="_translations.js"></script>
   <script src="js/hndsd.min.js"></script>
   <script src="js/hndse.min.js"></script>
   <script src="js/app.min.js"></script>
 
-  <!-- Scripts -->
+  <!-- Init script -->
   <script>
     $(function() {
-      // Instanciate FastClick
-      Origami.fastclick(document.body);
       // Create the app
       var app = new Hnd.App();
       // Update translations
       hnd_ut(app);
+	  // Instanciate imageMapResizer
+	  imageMapResize();
 	  // Custom JS
 	  
       // Boot the app

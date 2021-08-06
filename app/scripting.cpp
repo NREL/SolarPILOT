@@ -1580,7 +1580,7 @@ static void _modify_heliostats( lk::invoke_t &cxt )
     SPFrame &F = SPFrame::Instance(); 
     SolarField *SF = F.GetSolarFieldObject();
     if( SF->getHeliostats()->size() < 1 )
-        return;
+        throw lk::error_t("Heliostat field does not exist. Please generate or specify layout with run_layout.");
 
     //collect all relevant heliostat ID's
     std::vector< int > hids;
@@ -1601,8 +1601,10 @@ static void _modify_heliostats( lk::invoke_t &cxt )
             helios.push_back( hmap->at( hids.at(i) ) );
         }
         catch(...)
-        {}
-            }
+        {
+            throw lk::error_t("Failed to find heliostat ID: " + std::to_string(hids.at(i)));
+        }
+    }
     
     //get the variable table
     lk::varhash_t *vars = cxt.arg(1).hash();
