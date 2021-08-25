@@ -7,7 +7,7 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="generator" content="HelpNDoc Personal Edition 5.8.2.643">
+  <meta name="generator" content="HelpNDoc Personal Edition 7.5.0.435">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="favicon.ico"/>
 
@@ -16,6 +16,8 @@
   <meta name="keywords" content="">
 
 
+
+  
 
   <!-- Twitter Card data -->
   <meta name="twitter:card" content="summary">
@@ -29,19 +31,19 @@
   <meta property="og:site_name" content="SolarPILOT User's Manual" /> 
 
   <!-- Bootstrap core CSS -->
-  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="vendors/bootstrap-3.4.1/css/bootstrap.min.css" rel="stylesheet"/>
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+  <link href="vendors/bootstrap-3.4.1/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
-      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/html5shiv-3.7.3/html5shiv.min.js"></script>
       <script src="vendors/respond-1.4.2/respond.min.js"></script>
     <![endif]-->
 
   <!-- JsTree styles -->
-  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+  <link href="vendors/jstree-3.3.10/themes/default/style.min.css" rel="stylesheet"/>
 
   <!-- Hnd styles -->
   <link href="css/layout.min.css" rel="stylesheet" />
@@ -76,7 +78,7 @@
     
   </header>
 
-  <nav class="md-nav-expanded">
+  <nav id="panel-left" class="md-nav-expanded">
     <!-- Nav tabs -->
     <ul class="tab-tabs nav nav-tabs" role="tablist">
       <li id="nav-close"> 
@@ -171,7 +173,7 @@
                         <li><a href="InputPageReference.html">Input Page Reference</a></li><li><a href="Simulationcontrol.html">Simulation control</a></li>
                     </ol>
                     <div class="nav-arrows">
-                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="Simulationcontrol.html" title="Simulation control" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="Performancesimulation.html" title="Performance simulation" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="Optimization.html" title="Optimization" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                        <div class="btn-group btn-group" role="group"><a class="btn btn-default" href="Simulationcontrol.html" title="Simulation control" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="Performancesimulation.html" title="Performance simulation" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="Optimization.html" title="Optimization" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
                     </div>
                 </div> 
             
@@ -182,15 +184,13 @@
 
             <div class="main-content">
                 
-<p></p>
-<h1 class="rvps9"><a name="top"></a>
-<span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
+<h1 class="rvps9"><a name="top"></a><span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The Parametrics page provides options for constructing and executing batch runs of SolarPILOT. Parametric runs allow you to lay out and/or characterize a field over a range of parameter values. Multiple parameters can be varied. The three run types are described as follows:</span></p>
 <ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;">
-<li value="1" class="rvps2"><span class="rvts21">Parametric Simulation Setup</span><span class="rvts6"> allows you to select any number of parameters from a list then enter values that are to be assigned in subsequent runs. Use this option for a quick parametric analysis in which all variable combinations (excepting </span><span class="rvts30">linked</span><span class="rvts6"> values -- see below) are evaluated.</span></li>
-<li value="2" class="rvps2"><span class="rvts21">Simulation Variable Table</span><span class="rvts6"> allows you to specify any number of parameters and any number of runs, and manually assign values for each variable and run. Use this option when you would like to analyze a particular selection of variable combinations that is less exhaustive than the full combinatorial space.</span></li>
-<li value="3" class="rvps2"><span class="rvts21">SAM Batch Simulation</span><span class="rvts6"> is a macro that generates solar field optical efficiency and receiver flux profiles as a function of sun position over a range that you specify. This information is used in the SAM Generic CSP System model, or can be assigned in the scripting options for the SAM Molten Salt Power Tower model. Use this option when you want to characterize flux and efficiency over a range of sun positions.</span></li>
+ <li class="rvps2"><span class="rvts21">Parametric Simulation Setup</span><span class="rvts6"> allows you to select any number of parameters from a list then enter values that are to be assigned in subsequent runs. Use this option for a quick parametric analysis in which all variable combinations (excepting </span><span class="rvts30">linked</span><span class="rvts6"> values -- see below) are evaluated.</span></li>
+ <li class="rvps2"><span class="rvts21">Simulation Variable Table</span><span class="rvts6"> allows you to specify any number of parameters and any number of runs, and manually assign values for each variable and run. Use this option when you would like to analyze a particular selection of variable combinations that is less exhaustive than the full combinatorial space.</span></li>
+ <li class="rvps2"><span class="rvts21">SAM Batch Simulation</span><span class="rvts6"> is a macro that generates solar field optical efficiency and receiver flux profiles as a function of sun position over a range that you specify. This information is used in the SAM Generic CSP System model, or can be assigned in the scripting options for the SAM Molten Salt Power Tower model. Use this option when you want to characterize flux and efficiency over a range of sun positions.</span></li>
 </ol>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><a class="rvts23" href="Parametrics.html#Parametric%20Simulation%20Setup">Parametric Simulation Setup</a></p>
@@ -202,15 +202,14 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps9"><a name="Parametric Simulation Setup"></a>
-<span class="rvts0"><span class="rvts22">Parametric Simulation Setup</span></span></h1>
+<h1 class="rvps9"><a name="Parametric Simulation Setup"></a><span class="rvts0"><span class="rvts22">Parametric Simulation Setup</span></span></h1>
 <p class="rvps2"><a class="rvts35" href="Parametrics.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Parametric Simulation Setup allows you to select any number of parameters from a list then enter values that are to be assigned in subsequent runs. Use this option for a quick parametric analysis in which all variable combinations (excepting </span><span class="rvts30">linked</span><span class="rvts6"> values -- see below) are evaluated.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Variables: Add (Button)</span></span></h3>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts6">After clicking the Add button, you will be presented with a dialog listing all of the possible parametric variables for SolarPILOT. Use the dialog to select the variables that you would like to parameterize. You can search the dialog for keyword names (figure - right) and filter options that match your query. After you have completed your selection(s), click </span><span class="rvts21">OK</span><span class="rvts6"> to accept or </span><span class="rvts21">Cancel</span><span class="rvts6"> to return without adding the selected variables. </span></p>
+<p class="rvps8"><span class="rvts6">After clicking the Add button, you will be presented with a dialog listing all of the possible parametric variables for SolarPILOT. Use the dialog to select the variables that you would like to parameterize. You can search the dialog for keyword names (figure - right) and filter options that match your query. After you have completed your selection(s), click </span><span class="rvts21">OK</span><span class="rvts6"> to accept or </span><span class="rvts21">Cancel</span><span class="rvts6"> to return without adding the selected variables.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem200.png"><span class="rvts6"> </span><img alt="" style="padding : 1px;" src="lib/NewItem201.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -218,11 +217,11 @@
 <p class="rvps2"><span class="rvts6">Once variables have been added to the parametrics list, they can be removed by selecting the variable in the list and clicking </span><span class="rvts30">Remove</span><span class="rvts6">. Use caution, as this cannot be undone!</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Selected Variable Values: Edit (Button)</span></span></h3>
-<p class="rvps2"><span class="rvts6">The edit variable values button launches a dialog in which you can specify which values the specified parameter will assume. SolarPILOT will provide one of three dialog types, depending on the data type of the parameter that you select. If the parameter is continuous, the dialog will allow you to assign a discrete set of values over a continuous range. If the parameter is a drop-down menu, the available options will be displayed with check-boxes, and if the parameter is the weather file location, a list of weather files is provided. </span></p>
+<p class="rvps2"><span class="rvts6">The edit variable values button launches a dialog in which you can specify which values the specified parameter will assume. SolarPILOT will provide one of three dialog types, depending on the data type of the parameter that you select. If the parameter is continuous, the dialog will allow you to assign a discrete set of values over a continuous range. If the parameter is a drop-down menu, the available options will be displayed with check-boxes, and if the parameter is the weather file location, a list of weather files is provided.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">For each parameter, you can choose whether the heliostat field will be regenerated (a new layout created) when the parameter value changes, or whether the existing layout should be used. </span><span class="rvts21">Note that the existing layout option requires that you have previously created a solar field layout.</span><span class="rvts6"> </span></p>
+<p class="rvps2"><span class="rvts6">For each parameter, you can choose whether the heliostat field will be regenerated (a new layout created) when the parameter value changes, or whether the existing layout should be used. </span><span class="rvts21">Note that the existing layout option requires that you have previously created a solar field layout.</span><span class="rvts6">&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The continuous parameter dialog provides controls for adding and removing values, moving values up and down in the list, and specifying a range with increments. </span></p>
+<p class="rvps2"><span class="rvts6">The continuous parameter dialog provides controls for adding and removing values, moving values up and down in the list, and specifying a range with increments.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem202.png"><img width="421" height="362" alt="" style="padding : 1px;" src="lib/NewItem203.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -242,13 +241,13 @@
 <p class="rvps2"><span class="rvts6">Enable this option to save an image of the heliostat field with detailed information plotted for each parametric run.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h4 class="rvps21"><span class="rvts0"><span class="rvts27">Save field options [...]</span></span></h4>
-<p class="rvps8"><span class="rvts6">The save field image options button launches a dialog wherein you can choose more detailed specifications for saving files and information about detailed field performance for parametric simulations. </span></p>
+<p class="rvps8"><span class="rvts6">The save field image options button launches a dialog wherein you can choose more detailed specifications for saving files and information about detailed field performance for parametric simulations.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts6">The "Plot selections" group allows selection of which metric(s) should be reported and saved as image files. Each selection will produce an image file for each evaluation in the parametric table. The "Annotations" group allows selection of text annotations describing conditions or parameters for the parametric simulation plot that is produced. The annotations appear in the upper right hand corner of the exported plot and inherit the font size that you specify for axis labels.</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts6">The Save field options dialog is available for both the Parametric Simulation Setup option and the Simulation Variable Table option, offering identical functionality.</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem257.png"><span class="rvts6"> </span></p>
+<p class="rvps8"><img alt="" style="padding : 1px;" src="lib/NewItem257.png"><span class="rvts6">&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Save receiver flux image</span></span></h3>
@@ -259,106 +258,142 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps9"><a name="Simulation Variable Table"></a>
-<span class="rvts0"><span class="rvts22">Simulation Variable Table</span></span></h1>
+<h1 class="rvps9"><a name="Simulation Variable Table"></a><span class="rvts0"><span class="rvts22">Simulation Variable Table</span></span></h1>
 <p class="rvps2"><a class="rvts35" href="Parametrics.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The Simulation Variable Table allows you to specify any number of parameters and any number of runs, and manually assign values for each variable and run. Use this option when you would like to analyze a particular selection of variable combinations that is less exhaustive than the full combinatorial space.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The variable table requires that you specify whether the layout must be regenerated on each simulation. You can indicate that a layout is required with any of the following text: 'y', 'yes', '1', 'true'.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The variable names are coded identifiers, and you can review the variable names by exporting to a CSV file with the </span><span class="rvts30">Variables...</span><span class="rvts6"> button. </span></p>
+<p class="rvps2"><span class="rvts6">The variable names are coded identifiers, and you can review the variable names by exporting to a CSV file with the </span><span class="rvts30">Variables...</span><span class="rvts6"> button.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">[Number of] Vars</span></span></h3>
 <p class="rvps2"><span class="rvts6">Specify the number of variables to be entered in the table. The number of variables does not include the required </span><span class="rvts30">Regenerate Layout</span><span class="rvts6"> row in the table.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">[Number of] Runs</span></span></h3>
-<p class="rvps2"><span class="rvts6">Specify the number of simulations to execute, equal to the number of columns in the table. </span></p>
+<p class="rvps2"><span class="rvts6">Specify the number of simulations to execute, equal to the number of columns in the table.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Import table (Button)</span></span></h3>
 <p class="rvps2"><span class="rvts6">Import a parametric simulation table from a comma-separated file. The file format requires that the first row be named "Regenerate layout", and subsequent rows have the appropriate variable name provided. Columns in the imported table correspond to unique runs. An example imported table is shown as follows, where values would be comma-separated.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<div class="rvps28"><table border="0" cellpadding="0" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
-<tr valign="top">
-<td width="184" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">Regenerate layout</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">n</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">n</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">n</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">n</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">n</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">n</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">n</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">n</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="184" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">fluxsim.0.flux_solar_az_in</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">70.425</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">85.3915</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">105.5788</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">180</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">254.415</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">274.6048</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">289.571</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">76.173</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="184" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">fluxsim.0.flux_solar_el_in</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">13.1508</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">37.1455</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">61.5609</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">78.5706</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">61.5657</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">37.1508</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">13.1553</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">9.4441</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="184" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">fluxsim.0.flux_dni</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">665</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">928</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">978</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">1000</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">978</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">928</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">665</span></p>
-</td>
-<td width="69" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19">531</span></p>
-</td>
-</tr>
+<div class="rvps28">
+<table border="0" cellpadding="0" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+ <tr valign="top">
+  <td width="184" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">Regenerate layout</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">n</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">n</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">n</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">n</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">n</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">n</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">n</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">n</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="184" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">fluxsim.0.flux_solar_az_in</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">70.425</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">85.3915</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">105.5788</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">180</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">254.415</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">274.6048</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">289.571</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">76.173</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="184" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">fluxsim.0.flux_solar_el_in</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">13.1508</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">37.1455</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">61.5609</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">78.5706</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">61.5657</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">37.1508</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">13.1553</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">9.4441</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="184" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">fluxsim.0.flux_dni</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">665</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">928</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">978</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">1000</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">978</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">928</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">665</span></p>
+  </td>
+  <td width="69" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19">531</span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts19"><br/></span></p>
@@ -370,167 +405,233 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The following table is a sample of the output provided from this function:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<div class="rvps2"><table border="0" cellpadding="0" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
-<tr valign="top">
-<td width="199" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">ambient.0.atm_model</span></p>
-</td>
-<td width="167" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">DELSOL3 clear day</span></p>
-</td>
-<td width="82" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">none</span></p>
-</td>
-<td width="238" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">Atmospheric attenuation model</span></p>
-</td>
-<td width="486" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19"> [DELSOL3 clear day;DELSOL3 hazy day;User-defined]</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="199" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">ambient.0.dni_layout</span></p>
-</td>
-<td width="167" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">950</span></p>
-</td>
-<td width="82" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">W/m2</span></p>
-</td>
-<td width="238" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">Constant DNI for layout calculations</span></p>
-</td>
-<td width="486" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19"><br/></span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="199" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">ambient.0.dpres</span></p>
-</td>
-<td width="167" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">1</span></p>
-</td>
-<td width="82" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">atm</span></p>
-</td>
-<td width="238" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">Ambient pressure</span></p>
-</td>
-<td width="486" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19"><br/></span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="199" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">ambient.0.sun_csr</span></p>
-</td>
-<td width="167" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">0.1</span></p>
-</td>
-<td width="82" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">none</span></p>
-</td>
-<td width="238" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">Circumsolar ratio</span></p>
-</td>
-<td width="486" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19"><br/></span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="199" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">ambient.0.sun_rad_limit</span></p>
-</td>
-<td width="167" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">4.65</span></p>
-</td>
-<td width="82" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">mrad</span></p>
-</td>
-<td width="238" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">Sunshape angular extent</span></p>
-</td>
-<td width="486" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19"><br/></span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="199" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">ambient.0.sun_type</span></p>
-</td>
-<td width="167" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">Limb-darkened sun</span></p>
-</td>
-<td width="82" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">none</span></p>
-</td>
-<td width="238" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">Sunshape model</span></p>
-</td>
-<td width="486" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19"> [Pillbox sun;Gaussian sun;Limb-darkened sun;Point sun;Buie CSR;User sun]</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="199" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">financial.0.contingency_rate</span></p>
-</td>
-<td width="167" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">7</span></p>
-</td>
-<td width="82" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">%</span></p>
-</td>
-<td width="238" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">Contingency</span></p>
-</td>
-<td width="486" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19"><br/></span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="199" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">financial.0.heliostat_spec_cost</span></p>
-</td>
-<td width="167" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">180</span></p>
-</td>
-<td width="82" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">$/m2</span></p>
-</td>
-<td width="238" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">Heliostat field</span></p>
-</td>
-<td width="486" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19"><br/></span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="199" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">financial.0.land_spec_cost</span></p>
-</td>
-<td width="167" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">10000</span></p>
-</td>
-<td width="82" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">$/acre</span></p>
-</td>
-<td width="238" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">Land cost per acre</span></p>
-</td>
-<td width="486" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19"><br/></span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="199" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">financial.0.plant_spec_cost</span></p>
-</td>
-<td width="167" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">1200</span></p>
-</td>
-<td width="82" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">$/kWe</span></p>
-</td>
-<td width="238" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">Power block and plant </span></p>
-</td>
-<td width="486" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19"><br/></span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="199" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">financial.0.rec_cost_exp</span></p>
-</td>
-<td width="167" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">0.7</span></p>
-</td>
-<td width="82" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">none</span></p>
-</td>
-<td width="238" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">Receiver cost scaling exponent</span></p>
-</td>
-<td width="486" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19"><br/></span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="199" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">financial.0.rec_ref_area</span></p>
-</td>
-<td width="167" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">1571</span></p>
-</td>
-<td width="82" height="19" valign="top" style="padding: 0px;"><p class="rvps5"><span class="rvts19">m2</span></p>
-</td>
-<td width="238" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">Receiver reference area</span></p>
-</td>
-<td width="486" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19"><br/></span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="199" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19">............</span></p>
-</td>
-<td width="167" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19"><br/></span></p>
-</td>
-<td width="82" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19"><br/></span></p>
-</td>
-<td width="238" height="19" valign="top" style="padding: 0px;"><p class="rvps2"><span class="rvts19"><br/></span></p>
-</td>
-<td width="486" height="19" valign="top" style="padding: 0px;"><p class="rvps20"><span class="rvts19"><br/></span></p>
-</td>
-</tr>
+<div class="rvps2">
+<table border="0" cellpadding="0" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+ <tr valign="top">
+  <td width="199" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">ambient.0.atm_model</span></p>
+  </td>
+  <td width="167" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">DELSOL3 clear day</span></p>
+  </td>
+  <td width="82" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">none</span></p>
+  </td>
+  <td width="238" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">Atmospheric attenuation model</span></p>
+  </td>
+  <td width="486" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">&nbsp;[DELSOL3 clear day;DELSOL3 hazy day;User-defined]</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="199" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">ambient.0.dni_layout</span></p>
+  </td>
+  <td width="167" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">950</span></p>
+  </td>
+  <td width="82" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">W/m2</span></p>
+  </td>
+  <td width="238" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">Constant DNI for layout calculations</span></p>
+  </td>
+  <td width="486" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19"><br/></span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="199" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">ambient.0.dpres</span></p>
+  </td>
+  <td width="167" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">1</span></p>
+  </td>
+  <td width="82" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">atm</span></p>
+  </td>
+  <td width="238" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">Ambient pressure</span></p>
+  </td>
+  <td width="486" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19"><br/></span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="199" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">ambient.0.sun_csr</span></p>
+  </td>
+  <td width="167" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">0.1</span></p>
+  </td>
+  <td width="82" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">none</span></p>
+  </td>
+  <td width="238" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">Circumsolar ratio</span></p>
+  </td>
+  <td width="486" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19"><br/></span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="199" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">ambient.0.sun_rad_limit</span></p>
+  </td>
+  <td width="167" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">4.65</span></p>
+  </td>
+  <td width="82" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">mrad</span></p>
+  </td>
+  <td width="238" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">Sunshape angular extent</span></p>
+  </td>
+  <td width="486" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19"><br/></span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="199" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">ambient.0.sun_type</span></p>
+  </td>
+  <td width="167" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">Limb-darkened sun</span></p>
+  </td>
+  <td width="82" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">none</span></p>
+  </td>
+  <td width="238" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">Sunshape model</span></p>
+  </td>
+  <td width="486" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">&nbsp;[Pillbox sun;Gaussian sun;Limb-darkened sun;Point sun;Buie CSR;User sun]</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="199" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">financial.0.contingency_rate</span></p>
+  </td>
+  <td width="167" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">7</span></p>
+  </td>
+  <td width="82" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">%</span></p>
+  </td>
+  <td width="238" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">Contingency</span></p>
+  </td>
+  <td width="486" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19"><br/></span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="199" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">financial.0.heliostat_spec_cost</span></p>
+  </td>
+  <td width="167" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">180</span></p>
+  </td>
+  <td width="82" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">$/m2</span></p>
+  </td>
+  <td width="238" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">Heliostat field</span></p>
+  </td>
+  <td width="486" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19"><br/></span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="199" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">financial.0.land_spec_cost</span></p>
+  </td>
+  <td width="167" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">10000</span></p>
+  </td>
+  <td width="82" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">$/acre</span></p>
+  </td>
+  <td width="238" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">Land cost per acre</span></p>
+  </td>
+  <td width="486" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19"><br/></span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="199" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">financial.0.plant_spec_cost</span></p>
+  </td>
+  <td width="167" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">1200</span></p>
+  </td>
+  <td width="82" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">$/kWe</span></p>
+  </td>
+  <td width="238" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">Power block and plant&nbsp;</span></p>
+  </td>
+  <td width="486" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19"><br/></span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="199" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">financial.0.rec_cost_exp</span></p>
+  </td>
+  <td width="167" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">0.7</span></p>
+  </td>
+  <td width="82" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">none</span></p>
+  </td>
+  <td width="238" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">Receiver cost scaling exponent</span></p>
+  </td>
+  <td width="486" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19"><br/></span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="199" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">financial.0.rec_ref_area</span></p>
+  </td>
+  <td width="167" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">1571</span></p>
+  </td>
+  <td width="82" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps5"><span class="rvts19">m2</span></p>
+  </td>
+  <td width="238" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">Receiver reference area</span></p>
+  </td>
+  <td width="486" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19"><br/></span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="199" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19">............</span></p>
+  </td>
+  <td width="167" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19"><br/></span></p>
+  </td>
+  <td width="82" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19"><br/></span></p>
+  </td>
+  <td width="238" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps2"><span class="rvts19"><br/></span></p>
+  </td>
+  <td width="486" height="19" valign="top" style="padding: 0px;">
+   <p class="rvps20"><span class="rvts19"><br/></span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts19"><br/></span></p>
-<p class="rvps2"><span class="rvts6"> </span></p>
+<p class="rvps2"><span class="rvts6">&nbsp;</span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Variable Table</span></span></h3>
 <p class="rvps2"><span class="rvts6">The variable table contains the information needed to set parameter values for each run. You can enter and modify data in the table.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -541,8 +642,7 @@
 <p class="rvps2"><span class="rvts6">Enable this option to export system performance summary data for each parametric run.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<a name="SAM Batch Simulation"></a>
-<hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
+<a name="SAM Batch Simulation"></a><hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
 <h1 class="rvps9"><span class="rvts0"><span class="rvts22">SAM Batch Simulation</span></span></h1>
 <p class="rvps2"><a class="rvts35" href="Parametrics.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts21"><br/></span></p>
@@ -561,7 +661,7 @@
 <p class="rvps2"><span class="rvts6">Specify the name of the receiver fluxmap file.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">SAM grid data format</span></span></h3>
-<p class="rvps2"><span class="rvts6">Choose the format for solar positions that will be used to generate the efficiency and fluxmap values. </span></p>
+<p class="rvps2"><span class="rvts6">Choose the format for solar positions that will be used to generate the efficiency and fluxmap values.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h4 class="rvps21"><span class="rvts0"><span class="rvts27">Auto spacing</span></span></h4>
 <p class="rvps8"><span class="rvts6">Space the solar positions such that the separation between zenith positions is constant between daily profiles that are evaluated. This method chooses eight days in the year and evaluates performance at intervals of every other hour centered about solar noon. Depending on location, approximately 44 solar positions are evaluated, and only sun positions that are viable for the given location are considered.</span></p>
@@ -582,14 +682,13 @@
 <p class="rvps8"><span class="rvts6">Generate a fluxmap array for each sun position using the dimensions specified on the Performance simulation page.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Normalize fluxmap data</span></span></h3>
-<p class="rvps2"><span class="rvts6">You can choose whether to output fluxmap data that is dimensional or that is normalized. </span></p>
+<p class="rvps2"><span class="rvts6">You can choose whether to output fluxmap data that is dimensional or that is normalized.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Dimensional output provides flux data in kilowatts per square meter for the direct normal irradiance value that you specify on the Performance simulation page. The dimensional data takes into account the performance of the solar field as a function of sun position.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Normalized output provides the proportion of incident flux that falls within each region on the fluxmap. The receiver is subdivided into horizontal and vertical regions ("grid cells") according to the specified fluxmap resolution, and the fractional values indicate the proportional of power that strikes a given grid cell. The summation of all cells equals unity. To dimensionalize the fluxmap, the fractional values should be multiplied by the total solar field optical efficiency, the total aperture area of the heliostat field, and the current direct normal irradiance.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p></p>
+<p class="rvps2"><span class="rvts6"></span><span class="rvts6"></span></p>
 <p class="rvps4" style="clear: both;"><span class="rvts13">Created with the Personal Edition of HelpNDoc: </span><a class="rvts14" href="https://www.helpndoc.com/create-epub-ebooks">Generate EPub eBooks with ease</a></p>
 
             </div>
@@ -621,37 +720,36 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
-  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
-  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
-  <script src="vendors/uri-1.18.9/uri.min.js"></script>
-  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
-  
-  <!-- Headroom -->
-  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
-  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+  <!-- Splitter -->
+  <div id="hnd-splitter" style="left: 350px"></div>  
 
-  <!-- JsTree -->
-  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+  <!-- Scripts -->
+  <script src="vendors/jquery-3.5.1/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+  <script src="vendors/bootstrap-3.4.1/js/ie10-viewport-bug-workaround.js"></script>
+  <script src="vendors/markjs-8.11.1/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.19.2/uri.min.js"></script>
+  <script src="vendors/imageMapResizer-1.0.10/imageMapResizer.min.js"></script>
+  <script src="vendors/headroom-0.11.0/headroom.min.js"></script>
+  <script src="vendors/jstree-3.3.10/jstree.min.js"></script>  
+  <script src="vendors/interactjs-1.9.22/interact.min.js"></script>  
 
   <!-- HelpNDoc scripts -->
+  <script src="js/polyfill.object.min.js"></script>
   <script src="_translations.js"></script>
   <script src="js/hndsd.min.js"></script>
   <script src="js/hndse.min.js"></script>
   <script src="js/app.min.js"></script>
 
-  <!-- Scripts -->
+  <!-- Init script -->
   <script>
     $(function() {
-      // Instanciate FastClick
-      Origami.fastclick(document.body);
       // Create the app
       var app = new Hnd.App();
       // Update translations
       hnd_ut(app);
+	  // Instanciate imageMapResizer
+	  imageMapResize();
 	  // Custom JS
 	  
       // Boot the app

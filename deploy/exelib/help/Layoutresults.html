@@ -7,7 +7,7 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="generator" content="HelpNDoc Personal Edition 5.8.2.643">
+  <meta name="generator" content="HelpNDoc Personal Edition 7.5.0.435">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="favicon.ico"/>
 
@@ -16,6 +16,8 @@
   <meta name="keywords" content="">
 
 
+
+  
 
   <!-- Twitter Card data -->
   <meta name="twitter:card" content="summary">
@@ -29,19 +31,19 @@
   <meta property="og:site_name" content="SolarPILOT User's Manual" /> 
 
   <!-- Bootstrap core CSS -->
-  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="vendors/bootstrap-3.4.1/css/bootstrap.min.css" rel="stylesheet"/>
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+  <link href="vendors/bootstrap-3.4.1/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
-      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/html5shiv-3.7.3/html5shiv.min.js"></script>
       <script src="vendors/respond-1.4.2/respond.min.js"></script>
     <![endif]-->
 
   <!-- JsTree styles -->
-  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+  <link href="vendors/jstree-3.3.10/themes/default/style.min.css" rel="stylesheet"/>
 
   <!-- Hnd styles -->
   <link href="css/layout.min.css" rel="stylesheet" />
@@ -76,7 +78,7 @@
     
   </header>
 
-  <nav class="md-nav-expanded">
+  <nav id="panel-left" class="md-nav-expanded">
     <!-- Nav tabs -->
     <ul class="tab-tabs nav nav-tabs" role="tablist">
       <li id="nav-close"> 
@@ -171,7 +173,7 @@
                         <li><a href="InputPageReference.html">Input Page Reference</a></li><li><a href="Results.html">Results</a></li>
                     </ol>
                     <div class="nav-arrows">
-                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="Results.html" title="Results" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="Results.html" title="Results" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="ReceiverFluxProfile.html" title="Receiver Flux Profile" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                        <div class="btn-group btn-group" role="group"><a class="btn btn-default" href="Results.html" title="Results" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="Results.html" title="Results" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="ReceiverFluxProfile.html" title="Receiver Flux Profile" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
                     </div>
                 </div> 
             
@@ -182,9 +184,7 @@
 
             <div class="main-content">
                 
-<p></p>
-<h1 class="rvps9"><a name="top"></a>
-<span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
+<h1 class="rvps9"><a name="top"></a><span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The Layout Results page displays the current heliostat field layout and tower position from a top-down view, and it allows you to view performance data for the entire field and smaller regions of individual heliostats. The plot is interactive and responds to certain mouse actions.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -194,32 +194,31 @@
 <p class="rvps2"><a class="rvts23" href="Layoutresults.html#interacting">Interacting with the Plot</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps9"><a name="plot-and-controls"></a>
-<span class="rvts0"><span class="rvts22">Field Plot and Controls</span></span></h1>
+<h1 class="rvps9"><a name="plot-and-controls"></a><span class="rvts0"><span class="rvts22">Field Plot and Controls</span></span></h1>
 <p class="rvps2"><a class="rvts35" href="Layoutresults.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The Layout results page consists of a control bar and the plot rendering of the field. The figure below annotates the various controls and pieces of information that are displayed on the plot. </span></p>
+<p class="rvps2"><span class="rvts6">The Layout results page consists of a control bar and the plot rendering of the field. The figure below annotates the various controls and pieces of information that are displayed on the plot.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The performance information shown on the plot corresponds to either:</span></p>
 <ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;">
-<li value="1" class="rvps2"><span class="rvts6">The sun position and Direct Normal Irradiation specified on the Performance Simulation page, if a performance simulation has been most recently executed, or</span></li>
-<li value="2" class="rvps2"><span class="rvts6">The Sun Location at Design Point and Design-Point DNI Value on the Layout Setup page, if a field layout has been most recently executed.</span></li>
+ <li class="rvps2"><span class="rvts6">The sun position and Direct Normal Irradiation specified on the Performance Simulation page, if a performance simulation has been most recently executed, or</span></li>
+ <li class="rvps2"><span class="rvts6">The Sun Location at Design Point and Design-Point DNI Value on the Layout Setup page, if a field layout has been most recently executed.</span></li>
 </ol>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The </span><span class="rvts21">Plot data selection</span><span class="rvts6"> control allows you to specify which performance criteria is illustrated with the color map on the plot. The choices include:</span></p>
 <ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
-<li class="rvps2"><span class="rvts30">Land boundaries</span><span class="rvts6">: An illustration of the area in which heliostats can be placed.</span></li>
-<li class="rvps2"><span class="rvts30">Field layout</span><span class="rvts6">: An illustration of the position and orientation of each heliostat without any superimposed performance information.</span></li>
-<li class="rvps2"><span class="rvts30">Total efficiency</span><span class="rvts6">: The total optical efficiency (including spillage and transmission losses) of each heliostat at the simulated sun position.</span></li>
-<li class="rvps2"><span class="rvts30">Cosine efficiency</span><span class="rvts6">: The cosine efficiency due to nonzero angular displacement between the heliostat normal vector and the sun vector (1.- fractional cosine loss)*100%</span></li>
-<li class="rvps2"><span class="rvts30">Attenuation efficiency</span><span class="rvts6">: The attenuation efficiency due to atmospheric scattering after reflection (1.- fractional attenuation loss)*100%</span></li>
-<li class="rvps2"><span class="rvts30">Blocking efficiency</span><span class="rvts6">: Loss due to reflected light from the heliostat being intercepted by another heliostat (1. - fractional blocking loss)*100%</span></li>
-<li class="rvps2"><span class="rvts30">Shading efficiency</span><span class="rvts6">: Loss due to light from the sun being blocked from hitting the heliostat (a.k.a shadowing; 1 - fractional shading loss)*100%</span></li>
-<li class="rvps2"><span class="rvts30">Image intercept efficiency</span><span class="rvts6">: Loss due to light that is reflected by the heliostat that misses the receiver target (a.k.a. spillage; 1 - fractional intercept loss)*100%</span></li>
-<li class="rvps2"><span class="rvts30">Reflectivity</span><span class="rvts6">: Loss due to partial absorption of light incident on the heliostat mirror surface (light reflected / light incident)</span></li>
-<li class="rvps2"><span class="rvts30">Delivered power</span><span class="rvts6">: Total power delivered to the surface of the receiver (does not include receiver surface reflective loss)</span></li>
-<li class="rvps2"><span class="rvts30">Ranking metric</span><span class="rvts6">: The value used to determine which heliostats are to be included in the layout. By default, the ranking metric is the total energy delivered to the receiver over the course of all simulated hours. The metric does </span><span class="rvts21">not</span><span class="rvts6"> necessarily represent the expected annual production for each heliostat, but establishes which heliostats are relatively more productive over time.</span></li>
-<li class="rvps2"><span class="rvts30">Optical mesh</span><span class="rvts6">: The cylindrical coordinate zones into which heliostats are grouped to evaluate intercept factor during field layout, if the Enable Optical Layout Zone Method checkbox is enabled on the Layout Setup page. Heliostats within each zone have approximately the same intercept factor, and a single calculation is made for each zone to expedite the layout calculations. Note that the optical mesh is not used for performance simulations or for raytrace simulations.</span></li>
+ <li class="rvps2"><span class="rvts30">Land boundaries</span><span class="rvts6">: An illustration of the area in which heliostats can be placed.</span></li>
+ <li class="rvps2"><span class="rvts30">Field layout</span><span class="rvts6">: An illustration of the position and orientation of each heliostat without any superimposed performance information.</span></li>
+ <li class="rvps2"><span class="rvts30">Total efficiency</span><span class="rvts6">: The total optical efficiency (including spillage and transmission losses) of each heliostat at the simulated sun position.</span></li>
+ <li class="rvps2"><span class="rvts30">Cosine efficiency</span><span class="rvts6">: The cosine efficiency due to nonzero angular displacement between the heliostat normal vector and the sun vector (1.- fractional cosine loss)*100%</span></li>
+ <li class="rvps2"><span class="rvts30">Attenuation efficiency</span><span class="rvts6">: The attenuation efficiency due to atmospheric scattering after reflection (1.- fractional attenuation loss)*100%</span></li>
+ <li class="rvps2"><span class="rvts30">Blocking efficiency</span><span class="rvts6">: Loss due to reflected light from the heliostat being intercepted by another heliostat (1. - fractional blocking loss)*100%</span></li>
+ <li class="rvps2"><span class="rvts30">Shading efficiency</span><span class="rvts6">: Loss due to light from the sun being blocked from hitting the heliostat (a.k.a shadowing; 1 - fractional shading loss)*100%</span></li>
+ <li class="rvps2"><span class="rvts30">Image intercept efficiency</span><span class="rvts6">: Loss due to light that is reflected by the heliostat that misses the receiver target (a.k.a. spillage; 1 - fractional intercept loss)*100%</span></li>
+ <li class="rvps2"><span class="rvts30">Reflectivity</span><span class="rvts6">: Loss due to partial absorption of light incident on the heliostat mirror surface (light reflected / light incident)</span></li>
+ <li class="rvps2"><span class="rvts30">Delivered power</span><span class="rvts6">: Total power delivered to the surface of the receiver (does not include receiver surface reflective loss)</span></li>
+ <li class="rvps2"><span class="rvts30">Ranking metric</span><span class="rvts6">: The value used to determine which heliostats are to be included in the layout. By default, the ranking metric is the total energy delivered to the receiver over the course of all simulated hours. The metric does </span><span class="rvts21">not</span><span class="rvts6"> necessarily represent the expected annual production for each heliostat, but establishes which heliostats are relatively more productive over time.</span></li>
+ <li class="rvps2"><span class="rvts30">Optical mesh</span><span class="rvts6">: The cylindrical coordinate zones into which heliostats are grouped to evaluate intercept factor during field layout, if the Enable Optical Layout Zone Method checkbox is enabled on the Layout Setup page. Heliostats within each zone have approximately the same intercept factor, and a single calculation is made for each zone to expedite the layout calculations. Note that the optical mesh is not used for performance simulations or for raytrace simulations.</span></li>
 </ul>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -238,63 +237,76 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img width="766" height="646" alt="" style="padding : 1px;" src="lib/NewItem215.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<a name="interacting"></a>
-<hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
+<a name="interacting"></a><hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
 <h1 class="rvps9"><span class="rvts0"><span class="rvts22">Interacting with the plot</span></span></h1>
 <p class="rvps2"><a class="rvts35" href="Layoutresults.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The field plot is interactive, allowing several actions to be taken. </span></p>
+<p class="rvps2"><span class="rvts6">The field plot is interactive, allowing several actions to be taken.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<div class="rvps2"><table border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
-<tr valign="top">
-<td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts21">Left mouse click + drag</span></p>
-</td>
-<td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts6">Pan the plot</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts21">Left mouse click + drag (zoom mode)</span></p>
-</td>
-<td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts6">Zoom to rectangle</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts21">Mouse wheel scroll</span></p>
-</td>
-<td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts6">Zoom in/out</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts21">Right mouse click</span></p>
-</td>
-<td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts6">Select nearest heliostat to click location</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts21">CTRL + right mouse click</span></p>
-</td>
-<td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts6">Select multiple heliostats</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts21">CTRL + right mouse click - selected</span></p>
-</td>
-<td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts6">De-select already selected heliostat</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts21">Right mouse click - empty space</span></p>
-</td>
-<td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;"><p class="rvps2"><span class="rvts6">De-select all heliostats</span></p>
-</td>
-</tr>
+<div class="rvps2">
+<table border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
+ <tr valign="top">
+  <td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts21">Left mouse click + drag</span></p>
+  </td>
+  <td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts6">Pan the plot</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts21">Left mouse click + drag (zoom mode)</span></p>
+  </td>
+  <td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts6">Zoom to rectangle</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts21">Mouse wheel scroll</span></p>
+  </td>
+  <td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts6">Zoom in/out</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts21">Right mouse click</span></p>
+  </td>
+  <td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts6">Select nearest heliostat to click location</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts21">CTRL + right mouse click</span></p>
+  </td>
+  <td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts6">Select multiple heliostats</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts21">CTRL + right mouse click - selected</span></p>
+  </td>
+  <td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts6">De-select already selected heliostat</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="254" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts21">Right mouse click - empty space</span></p>
+  </td>
+  <td width="511" style="border-color: #969696; border-style: solid; padding: 1px; border-top: none; border-right: none; border-bottom: none; border-left: none;">
+   <p class="rvps2"><span class="rvts6">De-select all heliostats</span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Upon selecting one or more heliostats, the field plot will display statistics in the upper right corner of the window. The values correspond only to the heliostat(s) that are currently selected. Selected heliostats will appear with a green border in the plot. </span></p>
+<p class="rvps2"><span class="rvts6">Upon selecting one or more heliostats, the field plot will display statistics in the upper right corner of the window. The values correspond only to the heliostat(s) that are currently selected. Selected heliostats will appear with a green border in the plot.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem217.png"></p>
-<p></p>
+<p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem217.png"><span class="rvts6"></span></p>
 <p class="rvps4" style="clear: both;"><span class="rvts13">Created with the Personal Edition of HelpNDoc: </span><a class="rvts14" href="https://www.helpndoc.com/create-epub-ebooks">Generate EPub eBooks with ease</a></p>
 
             </div>
@@ -326,37 +338,36 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
-  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
-  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
-  <script src="vendors/uri-1.18.9/uri.min.js"></script>
-  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
-  
-  <!-- Headroom -->
-  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
-  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+  <!-- Splitter -->
+  <div id="hnd-splitter" style="left: 350px"></div>  
 
-  <!-- JsTree -->
-  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+  <!-- Scripts -->
+  <script src="vendors/jquery-3.5.1/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+  <script src="vendors/bootstrap-3.4.1/js/ie10-viewport-bug-workaround.js"></script>
+  <script src="vendors/markjs-8.11.1/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.19.2/uri.min.js"></script>
+  <script src="vendors/imageMapResizer-1.0.10/imageMapResizer.min.js"></script>
+  <script src="vendors/headroom-0.11.0/headroom.min.js"></script>
+  <script src="vendors/jstree-3.3.10/jstree.min.js"></script>  
+  <script src="vendors/interactjs-1.9.22/interact.min.js"></script>  
 
   <!-- HelpNDoc scripts -->
+  <script src="js/polyfill.object.min.js"></script>
   <script src="_translations.js"></script>
   <script src="js/hndsd.min.js"></script>
   <script src="js/hndse.min.js"></script>
   <script src="js/app.min.js"></script>
 
-  <!-- Scripts -->
+  <!-- Init script -->
   <script>
     $(function() {
-      // Instanciate FastClick
-      Origami.fastclick(document.body);
       // Create the app
       var app = new Hnd.App();
       // Update translations
       hnd_ut(app);
+	  // Instanciate imageMapResizer
+	  imageMapResize();
 	  // Custom JS
 	  
       // Boot the app

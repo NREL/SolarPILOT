@@ -62,7 +62,7 @@ void SPFrame::CreateCostPage(wxScrolledWindow *parent)
     parent->SetBackgroundColour(_background_colour);
 #endif    //Create objects
 
-    //Direct costs grou
+    //Direct costs group
     wxStaticBox *sb0 = new wxStaticBox(parent, wxID_ANY, "Direct Capital Costs" );
     wxStaticBoxSizer *sbs0 = new wxStaticBoxSizer(sb0, wxVERTICAL);
 
@@ -73,9 +73,9 @@ void SPFrame::CreateCostPage(wxScrolledWindow *parent)
         *rec_ref_area = new InputControl(parent, wxID_ANY,  _variables.fin.rec_ref_area),
         *rec_cost_exp = new InputControl(parent, wxID_ANY,  _variables.fin.rec_cost_exp),
         *site_spec_cost = new InputControl(parent, wxID_ANY,  _variables.fin.site_spec_cost),
-        *heliostat_spec_cost = new InputControl(parent, wxID_ANY,  _variables.fin.heliostat_spec_cost);
-    InputControl
+        *heliostat_spec_cost = new InputControl(parent, wxID_ANY,  _variables.fin.heliostat_spec_cost),
         *wiring_user_spec = new InputControl(parent, wxID_ANY,  _variables.fin.wiring_user_spec),
+        *contingency_rate = new InputControl(parent, wxID_ANY, _variables.fin.contingency_rate),
         *fixed_cost = new InputControl(parent, wxID_ANY,  _variables.fin.fixed_cost);
     
     OutputControl
@@ -85,6 +85,7 @@ void SPFrame::CreateCostPage(wxScrolledWindow *parent)
         *heliostat_area = new OutputControl(parent, wxID_ANY, _variables.sf.sf_area),
         *heliostat_cost = new OutputControl(parent, wxID_ANY, _variables.fin.heliostat_cost),
         *wiring_cost = new OutputControl(parent, wxID_ANY, _variables.fin.wiring_cost),
+        *contingency_cost = new OutputControl(parent, wxID_ANY, _variables.fin.contingency_cost),
         *total_direct_cost = new OutputControl(parent, wxID_ANY, _variables.fin.total_direct_cost);
 
     wxFlexGridSizer *sbs0gs = new wxFlexGridSizer(2,0,0);
@@ -108,6 +109,8 @@ void SPFrame::CreateCostPage(wxScrolledWindow *parent)
     sbs0gs->Add(wiring_cost, 0, wxALIGN_BOTTOM, 0);
     sbs0gs->Add((1,1),0,0,0);
     sbs0gs->Add(fixed_cost);
+    sbs0gs->Add(contingency_rate);
+    sbs0gs->Add(contingency_cost);
     sbs0->Add(sbs0gs);
     sbs0->Add(total_direct_cost, 0, wxALIGN_RIGHT|wxTOP, 20);
     
@@ -120,14 +123,12 @@ void SPFrame::CreateCostPage(wxScrolledWindow *parent)
         *land_const = new InputControl(parent, wxID_ANY,  _variables.land.land_const),
         *land_mult = new InputControl(parent, wxID_ANY,  _variables.land.land_mult),
         *land_spec_cost = new InputControl(parent, wxID_ANY,  _variables.fin.land_spec_cost),
-        *contingency_rate = new InputControl(parent, wxID_ANY,  _variables.fin.contingency_rate),
         *sales_tax_rate = new InputControl(parent, wxID_ANY,  _variables.fin.sales_tax_rate),
         *sales_tax_frac = new InputControl(parent, wxID_ANY,  _variables.fin.sales_tax_frac);
     OutputControl
         *bound_area = new OutputControl(parent, wxID_ANY, _variables.land.bound_area),
         *land_area_tot = new OutputControl(parent, wxID_ANY, _variables.land.land_area),
         *land_cost = new OutputControl(parent, wxID_ANY, _variables.fin.land_cost),
-        *contingency_cost = new OutputControl(parent, wxID_ANY, _variables.fin.contingency_cost),
         *sales_tax_cost = new OutputControl(parent, wxID_ANY, _variables.fin.sales_tax_cost),
         *total_indirect_cost = new OutputControl(parent, wxID_ANY, _variables.fin.total_indirect_cost);
 
@@ -139,10 +140,7 @@ void SPFrame::CreateCostPage(wxScrolledWindow *parent)
     sbs1gs->Add(bound_area);
     sbs1gs->Add((1,1), 0, 0, 0);
     sbs1gs->Add(land_area_tot);
-    //sbs1gs->Add(land_area);
     sbs1gs->Add(land_cost);
-    sbs1gs->Add(contingency_rate);
-    sbs1gs->Add(contingency_cost);
     sbs1gs->Add(sales_tax_rate);
     sbs1gs->Add((1,1), 0, 0, 0);
     sbs1gs->Add(sales_tax_frac);

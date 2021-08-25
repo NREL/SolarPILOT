@@ -7,7 +7,7 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="generator" content="HelpNDoc Personal Edition 5.8.2.643">
+  <meta name="generator" content="HelpNDoc Personal Edition 7.5.0.435">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="favicon.ico"/>
 
@@ -16,6 +16,8 @@
   <meta name="keywords" content="">
 
 
+
+  
 
   <!-- Twitter Card data -->
   <meta name="twitter:card" content="summary">
@@ -29,19 +31,19 @@
   <meta property="og:site_name" content="SolarPILOT User's Manual" /> 
 
   <!-- Bootstrap core CSS -->
-  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="vendors/bootstrap-3.4.1/css/bootstrap.min.css" rel="stylesheet"/>
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+  <link href="vendors/bootstrap-3.4.1/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
-      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/html5shiv-3.7.3/html5shiv.min.js"></script>
       <script src="vendors/respond-1.4.2/respond.min.js"></script>
     <![endif]-->
 
   <!-- JsTree styles -->
-  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+  <link href="vendors/jstree-3.3.10/themes/default/style.min.css" rel="stylesheet"/>
 
   <!-- Hnd styles -->
   <link href="css/layout.min.css" rel="stylesheet" />
@@ -76,7 +78,7 @@
     
   </header>
 
-  <nav class="md-nav-expanded">
+  <nav id="panel-left" class="md-nav-expanded">
     <!-- Nav tabs -->
     <ul class="tab-tabs nav nav-tabs" role="tablist">
       <li id="nav-close"> 
@@ -171,7 +173,7 @@
                         <li><a href="InputPageReference.html">Input Page Reference</a></li><li><a href="Results.html">Results</a></li>
                     </ol>
                     <div class="nav-arrows">
-                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="Results.html" title="Results" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="ReceiverFluxProfile.html" title="Receiver Flux Profile" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a></div>
+                        <div class="btn-group btn-group" role="group"><a class="btn btn-default" href="Results.html" title="Results" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="ReceiverFluxProfile.html" title="Receiver Flux Profile" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a></div>
                     </div>
                 </div> 
             
@@ -182,9 +184,7 @@
 
             <div class="main-content">
                 
-<p></p>
-<h1 class="rvps9"><a name="top"></a>
-<span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
+<h1 class="rvps9"><a name="top"></a><span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The System Summary page displays the numerical results from a performance simulation. If no performance simulation has been executed, the page is intentionally empty. The page displays results in one of three different formats, depending on the type of simulation that has been executed. These include results from a Hermite Analytical simulation, a SolTrace simulation, or a Parametric simulation.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -195,8 +195,7 @@
 <p class="rvps2"><a class="rvts23" href="SystemSummary.html#parametric">Flux simulation results summary (Parametric Simulation)</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps9"><a name="hermite-analytical"></a>
-<span class="rvts0"><span class="rvts22">Flux simulation results summary (Hermite Analytical Simulation)</span></span></h1>
+<h1 class="rvps9"><a name="hermite-analytical"></a><span class="rvts0"><span class="rvts22">Flux simulation results summary (Hermite Analytical Simulation)</span></span></h1>
 <p class="rvps2"><a class="rvts35" href="SystemSummary.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The Hermite (analytical) option on the Performance Simulation page produces results exemplified by the following table:</span></p>
@@ -205,11 +204,11 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The values associated with each of the seventeen metrics are displayed in five columns. The columns are defined as follows:</span></p>
 <ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;">
-<li value="1" class="rvps2"><span class="rvts21">Value</span><span class="rvts6">: The reported value is the nominal, field-wide, value that represents the best summary of the simulated system. For efficiency values, the nominal value may differ from a pure statistical average, and both are reported. In cases where the mean and nominal efficiency values are equal by definition, the mean value is not reported separately.</span></li>
-<li value="2" class="rvps2"><span class="rvts21">Mean</span><span class="rvts6">: The arithmetic mean across the entire sample (either all heliostats, or all flux locations).</span></li>
-<li value="3" class="rvps2"><span class="rvts21">Minimum</span><span class="rvts6">: The minimum value observed across the entire sample.</span></li>
-<li value="4" class="rvps2"><span class="rvts21">Maximum</span><span class="rvts6">: The maximum value observed across the entire sample.</span></li>
-<li value="5" class="rvps2"><span class="rvts21">Std. dev</span><span class="rvts6">: The standard deviation of the values observed across the entire sample.</span></li>
+ <li class="rvps2"><span class="rvts21">Value</span><span class="rvts6">: The reported value is the nominal, field-wide, value that represents the best summary of the simulated system. For efficiency values, the nominal value may differ from a pure statistical average, and both are reported. In cases where the mean and nominal efficiency values are equal by definition, the mean value is not reported separately.</span></li>
+ <li class="rvps2"><span class="rvts21">Mean</span><span class="rvts6">: The arithmetic mean across the entire sample (either all heliostats, or all flux locations).</span></li>
+ <li class="rvps2"><span class="rvts21">Minimum</span><span class="rvts6">: The minimum value observed across the entire sample.</span></li>
+ <li class="rvps2"><span class="rvts21">Maximum</span><span class="rvts6">: The maximum value observed across the entire sample.</span></li>
+ <li class="rvps2"><span class="rvts21">Std. dev</span><span class="rvts6">: The standard deviation of the values observed across the entire sample.</span></li>
 </ol>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The metrics are calculated according to the conventions described below. Note that the order of efficiency values corresponds to the order in which they are calculated by SolarPILOT. Each efficiency term is defined such that it represents the loss incurred after all previous losses are imposed.</span></p>
@@ -218,10 +217,10 @@
 <p class="rvps2"><span class="rvts6">The total plant cost is calculated on the Costs page and reported on the Simulation Results page. Please refer to the </span><a class="rvts23" href="Costs.html#Page%20Overview">Costs page documentation</a><span class="rvts6"> for details on the calculation method.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Simulated heliostat area (m^2)</span></span></h3>
-<p class="rvps2"><span class="rvts6">This value is the total aperture area of all heliostats that are enabled and included in the layout for the most recent performance simulation. </span></p>
+<p class="rvps2"><span class="rvts6">This value is the total aperture area of all heliostats that are enabled and included in the layout for the most recent performance simulation.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Simulated heliostat count (-)</span></span></h3>
-<p class="rvps2"><span class="rvts6">This value is the number of heliostats that are enabled and included in the layout for the most recent performance simulation. </span></p>
+<p class="rvps2"><span class="rvts6">This value is the number of heliostats that are enabled and included in the layout for the most recent performance simulation.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Power incident on field (kW)</span></span></h3>
 <p class="rvps2"><span class="rvts6">This value is the product of the Direct Normal Irradiation on the Performance Simulation page and the Simulated heliostat area as reported on the System Summary page.</span></p>
@@ -236,24 +235,26 @@
 <p class="rvps2"><span class="rvts6">Cloudiness efficiency is non-unity when the Simulate cloud transient option is enabled on the Performance Simulation page. Simulated clouds reduce the irradiance incident on affected heliostats, and the cloudiness efficiency represents the percentage of power that passes through the clouds and strikes the heliostats. The efficiency value accounts for potential differences in individual heliostat aperture area.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Shading efficiency (%)</span></span></h3>
-<p class="rvps2"><span class="rvts6">Shading efficiency represents the proportion of power lost due to heliostats casting shadows on neighbors, thereby preventing irradiance from reaching a portion of the affected heliostat(s). </span></p>
+<p class="rvps2"><span class="rvts6">Shading efficiency represents the proportion of power lost due to heliostats casting shadows on neighbors, thereby preventing irradiance from reaching a portion of the affected heliostat(s).&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">SolarPILOT calculates shadowing and blocking using a vector projection and clipping method. Neighboring heliostats are tested for potential interference by projecting vectors from the heliostat corners along the direction of either the tower (blocking) or sun position (shadowing). If a projected vector intercepts an adjacent heliostat, blocking or shadowing are enforced according to the position of the interception. This method assumes that neighboring heliostats lie in parallel planes, which holds for all but very small solar fields in which tracking angles differ significantly between neighboring heliostats. This assumption results in the simplification that shadowed or blocked regions are rectangular, which simplifies the computation without affecting accuracy. Overlap of shadowing and blocking is neglected, so the blocking-shadowing efficiency is conservative.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The shadowing and blocking algorithm is as follows:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;">
-<li value="1" class="rvps2"><span class="rvts6">Each heliostat </span><span class="rvts21">J</span><span class="rvts6"> is assigned a list of neighbors that may block or shadow ("interfere'" with) the heliostat. An interfering heliostat is subsequently denoted </span><span class="rvts21">K</span><span class="rvts6">.</span></li>
-<li value="2" class="rvps2"><span class="rvts6">A vector aiming at the </span><span class="rvts30">subject</span><span class="rvts6"> is calculated for the interfering heliostat </span><img alt="" style="padding : 1px;" src="lib/NewItem229.png"><span class="rvts6">. The </span><span class="rvts30">subject</span><span class="rvts6"> is either the receiver (blocking scenario) or the sun (shadowing scenario). </span></li>
-<li value="3" class="rvps2"><span class="rvts6">Heliostats are tested for the possibility of interference:</span></li>
+ <li class="rvps2"><span class="rvts6">Each heliostat </span><span class="rvts21">J</span><span class="rvts6"> is assigned a list of neighbors that may block or shadow ("interfere'" with) the heliostat. An interfering heliostat is subsequently denoted </span><span class="rvts21">K</span><span class="rvts6">.</span></li>
+ <li class="rvps2"><span class="rvts6">A vector aiming at the </span><span class="rvts30">subject</span><span class="rvts6"> is calculated for the interfering heliostat </span><img alt="" style="padding : 1px;" src="lib/NewItem229.png"><span class="rvts6">. The </span><span class="rvts30">subject</span><span class="rvts6"> is either the receiver (blocking scenario) or the sun (shadowing scenario).&nbsp;</span></li>
+ <li class="rvps2"><span class="rvts6">Heliostats are tested for the possibility of interference:</span></li>
 </ol>
-<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: circle;">
-<li class="rvps2"><span class="rvts6">The first test requires that the interfering heliostat </span><span class="rvts21">K</span><span class="rvts6"> is within view of the interfered heliostat </span><span class="rvts21">J</span><span class="rvts6">. The dot product is calculated between the heliostat normal vector and the interfering heliostat subject vector.</span><br/><img alt="" style="padding : 1px;" src="lib/NewItem224.png"><br/><span class="rvts6"> If the dot product is non-positive, </span><span class="rvts21">K</span><span class="rvts6"> cannot interfere with </span><span class="rvts21">J</span><span class="rvts6"> and the loss is zero.</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span></li>
-<li class="rvps2"><span class="rvts6">The maximum interference length is calculated for heliostat </span><span class="rvts21">J</span><span class="rvts6"> based on the position in space of each heliostat</span><span class="rvts21"> P</span><span class="rvts63">J</span><span class="rvts6"> and </span><span class="rvts21">P</span><span class="rvts63">K</span><span class="rvts6">, the heliostat structure height </span><span class="rvts30">h</span><span class="rvts63">J</span><span class="rvts6">, the interfering heliostat normal vector </span><img alt="" style="padding : 1px;" src="lib/NewItem226.png"><span class="rvts6">, and the zenith angle of the heliostat tracking vector </span><img alt="" style="padding : 1px;" src="lib/NewItem227.png"><span class="rvts6">. </span><br/><img alt="" style="padding : 1px;" src="lib/NewItem228.png"><br/><span class="rvts6">If the distance separating the two heliostats in question is greater than </span><span class="rvts30">L</span><span class="rvts52">int</span><span class="rvts6">, the heliostats cannot interfere and the loss is zero. </span><span class="rvts30">L</span><span class="rvts52">int</span><span class="rvts6"> is limited to 100 x </span><span class="rvts30">h</span><span class="rvts63">J</span><span class="rvts6"> during very low sun elevation angles to reduce the number of potentially interfering heliostats and the associated computational requirement. This limit is conservative, as blocking and shadowing losses converge for radial-stagger layouts at approximately 20 x </span><span class="rvts30">h</span><span class="rvts63">J</span><span class="rvts6"> for elevation angles as low as three degrees.</span></li>
-</ul></ul>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+ <ul style="text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: circle;">
+  <li class="rvps2"><span class="rvts6">The first test requires that the interfering heliostat </span><span class="rvts21">K</span><span class="rvts6"> is within view of the interfered heliostat </span><span class="rvts21">J</span><span class="rvts6">. The dot product is calculated between the heliostat normal vector and the interfering heliostat subject vector.</span><br/><img alt="" style="padding : 1px;" src="lib/NewItem224.png"><br/><span class="rvts6">&nbsp;If the dot product is non-positive, </span><span class="rvts21">K</span><span class="rvts6"> cannot interfere with </span><span class="rvts21">J</span><span class="rvts6"> and the loss is zero.</span><span class="rvts6"> &nbsp; &nbsp; &nbsp; &nbsp;</span></li>
+  <li class="rvps2"><span class="rvts6">The maximum interference length is calculated for heliostat </span><span class="rvts21">J</span><span class="rvts6"> based on the position in space of each heliostat</span><span class="rvts21"> P</span><span class="rvts63">J</span><span class="rvts6"> and </span><span class="rvts21">P</span><span class="rvts63">K</span><span class="rvts6">, the heliostat structure height </span><span class="rvts30">h</span><span class="rvts63">J</span><span class="rvts6">, the interfering heliostat normal vector </span><img alt="" style="padding : 1px;" src="lib/NewItem226.png"><span class="rvts6">, and the zenith angle of the heliostat tracking vector </span><img alt="" style="padding : 1px;" src="lib/NewItem227.png"><span class="rvts6">.&nbsp;</span><br/><img alt="" style="padding : 1px;" src="lib/NewItem228.png"><br/><span class="rvts6">If the distance separating the two heliostats in question is greater than </span><span class="rvts30">L</span><span class="rvts52">int</span><span class="rvts6">, the heliostats cannot interfere and the loss is zero. </span><span class="rvts30">L</span><span class="rvts52">int</span><span class="rvts6"> is limited to 100 x </span><span class="rvts30">h</span><span class="rvts63">J</span><span class="rvts6"> during very low sun elevation angles to reduce the number of potentially interfering heliostats and the associated computational requirement. This limit is conservative, as blocking and shadowing losses converge for radial-stagger layouts at approximately 20 x </span><span class="rvts30">h</span><span class="rvts63">J</span><span class="rvts6"> for elevation angles as low as three degrees.</span></li>
+ </ul>
+</ul>
 <ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;">
-<li value="4" class="rvps2"><span class="rvts6">The interference vector</span><img alt="" style="padding : 1px;" src="lib/NewItem231.png"><span class="rvts6"> is projected from the two top corners of </span><span class="rvts21">K</span><span class="rvts6"> onto a plane containing </span><span class="rvts21">J</span><span class="rvts6">. The plane intersection points are tested for containment within </span><span class="rvts21">J</span><span class="rvts6">. </span></li>
-<li value="5" class="rvps2"><span class="rvts6">The interfered region area is calculated based on the intersection position of </span><img alt="" style="padding : 1px;" src="lib/NewItem230.png"><span class="rvts6"> within </span><span class="rvts21">J</span><span class="rvts6">. The total interference efficiency is equal to the quotient of the complement of the interference area and the total heliostat area.</span></li>
+ <li value="4" class="rvps2"><span class="rvts6">The interference vector</span><img alt="" style="padding : 1px;" src="lib/NewItem231.png"><span class="rvts6"> is projected from the two top corners of </span><span class="rvts21">K</span><span class="rvts6"> onto a plane containing </span><span class="rvts21">J</span><span class="rvts6">. The plane intersection points are tested for containment within </span><span class="rvts21">J</span><span class="rvts6">.&nbsp;</span></li>
+ <li class="rvps2"><span class="rvts6">The interfered region area is calculated based on the intersection position of </span><img alt="" style="padding : 1px;" src="lib/NewItem230.png"><span class="rvts6"> within </span><span class="rvts21">J</span><span class="rvts6">. The total interference efficiency is equal to the quotient of the complement of the interference area and the total heliostat area.</span></li>
 </ol>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -264,13 +265,13 @@
 <p class="rvps2"><span class="rvts6">Reflection efficiency captures power loss after cloudiness, shadowing, and cosine efficiency, and includes both mirror soiling and reflectivity efficiency.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Blocking efficiency (%)</span></span></h3>
-<p class="rvps2"><span class="rvts6">Blocking efficiency accounts for power loss due to light that is reflected from heliostats onto the back of adjacent heliostats. Blocking is calculated according to the algorithm described in the Shading efficiency section above. </span></p>
+<p class="rvps2"><span class="rvts6">Blocking efficiency accounts for power loss due to light that is reflected from heliostats onto the back of adjacent heliostats. Blocking is calculated according to the algorithm described in the Shading efficiency section above.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Attenuation efficiency (%)</span></span></h3>
-<p class="rvps2"><span class="rvts6">Attenuation efficiency accounts for power loss during transmission of reflected light from the heliostats in the field to the receiver. Attenuation is caused by atmospheric scattering of light, in which light interacts with water vapor, dust, or other particulate matter and is reflected, refracted, or absorbed. </span></p>
+<p class="rvps2"><span class="rvts6">Attenuation efficiency accounts for power loss during transmission of reflected light from the heliostats in the field to the receiver. Attenuation is caused by atmospheric scattering of light, in which light interacts with water vapor, dust, or other particulate matter and is reflected, refracted, or absorbed. See </span><a class="rvts23" href="Climate.html#Atmospheric%20Attenuation%20Model">Climate: atmospheric attenuation</a><span class="rvts6"> for the calculation methodology.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Image intercept efficiency (%)</span></span></h3>
-<p class="rvps2"><span class="rvts6">Image intercept efficiency accounts for light that is transmitted from the heliostat field to the position of the receiver but fails to intercept or impinge on the receiver aperture. This loss is also referred to as "spillage." Light that strikes non-absorbing surfaces such as oven boxes, refractory walls, or the tower structure, or light that misses the receiver system entirely is accounted for in this efficiency value. </span></p>
+<p class="rvps2"><span class="rvts6">Image intercept efficiency accounts for light that is transmitted from the heliostat field to the position of the receiver but fails to intercept or impinge on the receiver aperture. This loss is also referred to as "spillage." Light that strikes non-absorbing surfaces such as oven boxes, refractory walls, or the tower structure, or light that misses the receiver system entirely is accounted for in this efficiency value.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">SolarPILOT calculates intercept efficiency for each heliostat by taking the integral of the flux image function (the Hermite polynomial model) using Guassian quadrature. The intercept efficiency accounts for the user-selected heliostat aim point strategy.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -280,15 +281,21 @@
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Solar field optical efficiency (%)</span></span></h3>
 <p class="rvps2"><span class="rvts6">This value represents the total optical efficiency of the solar field </span><span class="rvts30">excluding receiver absorption efficiency</span><span class="rvts6">. The solar field optical efficiency is equal to the product of all efficiency values except absorption efficiency.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps3"><img alt="" style="padding : 1px;" src="lib/NewItem264.png"></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The mean solar field efficiency is equivalent to the quotient of the power incident on the receiver surface divided by the product of the DNI and the </span><a class="rvts23" href="Costs.html#Total_solar_field_area">total solar field reflective area</a><span class="rvts6">.</span></p>
+<p class="rvps3"><img alt="" style="padding : 1px;" src="lib/NewItem267.png"></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Optical efficiency incl. receiver (%)</span></span></h3>
-<p class="rvps2"><span class="rvts6">This value represents the total optical efficiency of the solar field and receiver. The optical efficiency including receiver is equal to the product of all efficiency values.</span></p>
+<p class="rvps2"><span class="rvts6">This value represents the total optical efficiency of the solar field and receiver. The optical efficiency including receiver is equal to the product of all efficiency values including the receiver thermal absorptance (</span><img alt="" style="padding : 1px;" src="lib/NewItem269.png"><span class="rvts6">).</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps3"><img alt="" style="padding : 1px;" src="lib/NewItem265.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Incident flux (kW/m2)</span></span></h3>
 <p class="rvps2"><span class="rvts6">The Incident flux indicates the intensity of reflected irradiation that is incident on the receiver after all losses, including receiver absorption efficiency. The number reported in the </span><span class="rvts30">Value</span><span class="rvts6"> column indicates the mean flux intensity across the receiver aperture.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h1 class="rvps9"><span class="rvts0"><span class="rvts22">Flux simulation results summary</span></span><a name="soltrace"></a>
-<span class="rvts0"><span class="rvts22"> (SolTrace Simulation)</span></span></h1>
+<h1 class="rvps9"><span class="rvts0"><span class="rvts22">Flux simulation results summary</span></span><a name="soltrace"></a><span class="rvts0"><span class="rvts22"> (SolTrace Simulation)</span></span></h1>
 <p class="rvps2"><a class="rvts35" href="SystemSummary.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The SolTrace option on the Performance Simulation page produces results exemplified by the following table:</span></p>
@@ -297,23 +304,23 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The values associated with each of the seventeen metrics are displayed in five columns. The columns are defined as follows:</span></p>
 <ol style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: decimal;">
-<li value="1" class="rvps2"><span class="rvts21">Value</span><span class="rvts6">: The reported value is the nominal, field-wide, value that represents the best summary of the simulated system. </span></li>
-<li value="2" class="rvps2"><span class="rvts21">Mean</span><span class="rvts6">: The arithmetic mean across the entire sample of flux locations. Note that the SolTrace engine does not provide sufficient information to characterize the losses associated with individual heliostats. Consequently, only the field-wide value can be provided for the reported metrics.</span></li>
-<li value="3" class="rvps2"><span class="rvts21">Minimum</span><span class="rvts6">: The minimum flux value observed on the receiver.</span></li>
-<li value="4" class="rvps2"><span class="rvts21">Maximum</span><span class="rvts6">: The maximum flux value observed on the receiver.</span></li>
-<li value="5" class="rvps2"><span class="rvts21">Std. dev</span><span class="rvts6">: The standard deviation of the flux values observed across the entire receiver.</span></li>
+ <li class="rvps2"><span class="rvts21">Value</span><span class="rvts6">: The reported value is the nominal, field-wide, value that represents the best summary of the simulated system.&nbsp;</span></li>
+ <li class="rvps2"><span class="rvts21">Mean</span><span class="rvts6">: The arithmetic mean across the entire sample of flux locations. Note that the SolTrace engine does not provide sufficient information to characterize the losses associated with individual heliostats. Consequently, only the field-wide value can be provided for the reported metrics.</span></li>
+ <li class="rvps2"><span class="rvts21">Minimum</span><span class="rvts6">: The minimum flux value observed on the receiver.</span></li>
+ <li class="rvps2"><span class="rvts21">Maximum</span><span class="rvts6">: The maximum flux value observed on the receiver.</span></li>
+ <li class="rvps2"><span class="rvts21">Std. dev</span><span class="rvts6">: The standard deviation of the flux values observed across the entire receiver.</span></li>
 </ol>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The metrics are calculated according to the conventions described below. </span></p>
+<p class="rvps2"><span class="rvts6">The metrics are calculated according to the conventions described below.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Total plant cost ($)</span></span></h3>
 <p class="rvps2"><span class="rvts6">The total plant cost is calculated on the Costs page and reported on the Simulation Results page. Please refer to the </span><a class="rvts23" href="Costs.html#Page%20Overview">Costs page documentation</a><span class="rvts6"> for details on the calculation method.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Simulated heliostat area (m^2)</span></span></h3>
-<p class="rvps2"><span class="rvts6">This value is the total aperture area of all heliostats that are enabled and included in the layout for the most recent performance simulation. </span></p>
+<p class="rvps2"><span class="rvts6">This value is the total aperture area of all heliostats that are enabled and included in the layout for the most recent performance simulation.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Simulated heliostat count (-)</span></span></h3>
-<p class="rvps2"><span class="rvts6">This value is the number of heliostats that are enabled and included in the layout for the most recent performance simulation. </span></p>
+<p class="rvps2"><span class="rvts6">This value is the number of heliostats that are enabled and included in the layout for the most recent performance simulation.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Power incident on field (kW)</span></span></h3>
 <p class="rvps2"><span class="rvts6">This value is the product of the Direct Normal Irradiation on the Performance Simulation page and the Simulated heliostat area as reported on the System Summary page.</span></p>
@@ -336,31 +343,40 @@
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem235.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
-<div class="rvps2"><table width="500" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem241.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">Number of rays that hit the heliostat field</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem242.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">Number of rays cast by the sun within the bounding box</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem243.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">The area of the bounding box containing all heliostats</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem244.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">The total solar field aperture area</span></p>
-</td>
-</tr>
+<div class="rvps2">
+<table width="500" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem241.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">Number of rays that hit the heliostat field</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem242.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">Number of rays cast by the sun within the bounding box</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem243.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">The area of the bounding box containing all heliostats</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem244.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">The total solar field aperture area</span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -370,74 +386,91 @@
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem245.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
-<div class="rvps2"><table width="500" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem241.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">Number of rays that hit the heliostat field</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem246.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">Number of rays that are absorbed upon first interaction with the heliostat stage.</span></p>
-</td>
-</tr>
+<div class="rvps2">
+<table width="500" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem241.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">Number of rays that hit the heliostat field</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem246.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">Number of rays that are absorbed upon first interaction with the heliostat stage.</span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Blocking efficiency (%)</span></span></h3>
-<p class="rvps2"><span class="rvts6">Blocking efficiency accounts for power loss due to light that is reflected from heliostats onto the back of adjacent heliostats. Blocking is calculated by tracking rays that are absorbed within the heliostat stage on a second stage interaction. </span></p>
+<p class="rvps2"><span class="rvts6">Blocking efficiency accounts for power loss due to light that is reflected from heliostats onto the back of adjacent heliostats. Blocking is calculated by tracking rays that are absorbed within the heliostat stage on a second stage interaction.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem247.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
-<div class="rvps2"><table width="500" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem241.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">Number of rays that hit the heliostat field</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem246.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">Number of rays that are absorbed upon first interaction with the heliostat stage.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem248.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">Number of rays that are absorbed within the heliostat stage on a second stage interaction. </span></p>
-</td>
-</tr>
+<div class="rvps2">
+<table width="500" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem241.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">Number of rays that hit the heliostat field</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem246.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">Number of rays that are absorbed upon first interaction with the heliostat stage.</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem248.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">Number of rays that are absorbed within the heliostat stage on a second stage interaction.&nbsp;</span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts64">Not specified: Attenuation efficiency (%)</span></span></h3>
-<p class="rvps2"><span class="rvts6">Attenuation efficiency is not currently modeled by the SolTrace engine. </span></p>
+<p class="rvps2"><span class="rvts6">Attenuation efficiency is not currently modeled by the SolTrace engine.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Image intercept efficiency (%)</span></span></h3>
-<p class="rvps2"><span class="rvts6">Image intercept efficiency accounts for light that is transmitted from the heliostat field to the position of the receiver but fails to intercept or impinge on the receiver aperture. This loss is also referred to as "spillage." Light that strikes non-absorbing surfaces such as oven boxes, refractory walls, or the tower structure, or light that misses the receiver system entirely is accounted for in this efficiency value. </span></p>
+<p class="rvps2"><span class="rvts6">Image intercept efficiency accounts for light that is transmitted from the heliostat field to the position of the receiver but fails to intercept or impinge on the receiver aperture. This loss is also referred to as "spillage." Light that strikes non-absorbing surfaces such as oven boxes, refractory walls, or the tower structure, or light that misses the receiver system entirely is accounted for in this efficiency value.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">SolarPILOT calculates intercept efficiency for the SolTrace engine as follows:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem249.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
-<div class="rvps2"><table width="500" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem250.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">Number of rays that hit the receiver aperture (but not necessarily absorbed by the receiver)</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem251.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">Number of rays that leave the heliostat stage after accounting for cosine, reflection, and blocking losses.</span></p>
-</td>
-</tr>
+<div class="rvps2">
+<table width="500" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem250.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">Number of rays that hit the receiver aperture (but not necessarily absorbed by the receiver)</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem251.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">Number of rays that leave the heliostat stage after accounting for cosine, reflection, and blocking losses.</span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -448,19 +481,24 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem252.png"></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
-<div class="rvps2"><table width="500" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem250.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">Number of rays that hit the receiver aperture (but not necessarily absorbed by the receiver)</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem253.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">Number of rays that are absorbed upon interaction with the receiver.</span></p>
-</td>
-</tr>
+<div class="rvps2">
+<table width="500" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem250.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">Number of rays that hit the receiver aperture (but not necessarily absorbed by the receiver)</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem253.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">Number of rays that are absorbed upon interaction with the receiver.</span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -470,19 +508,24 @@
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem254.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
-<div class="rvps2"><table width="500" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem250.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">Number of rays that hit the receiver aperture (but not necessarily absorbed by the receiver)</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem241.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">Number of rays that hit the heliostat field</span></p>
-</td>
-</tr>
+<div class="rvps2">
+<table width="500" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem250.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">Number of rays that hit the receiver aperture (but not necessarily absorbed by the receiver)</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem241.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">Number of rays that hit the heliostat field</span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -492,19 +535,24 @@
 <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem255.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">where:</span></p>
-<div class="rvps2"><table width="500" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem253.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">Number of rays that are absorbed upon interaction with the receiver.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="55" style="border-width : 0px; padding: 1px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem241.png"></p>
-</td>
-<td width="433" style="border-width : 0px; padding: 1px;"><p class="rvps2"><span class="rvts6">Number of rays that hit the heliostat field</span></p>
-</td>
-</tr>
+<div class="rvps2">
+<table width="500" border="1" cellpadding="1" cellspacing="2" style="border-color: #000000; border-style: solid; border-spacing: 2px;">
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem253.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">Number of rays that are absorbed upon interaction with the receiver.</span></p>
+  </td>
+ </tr>
+ <tr valign="top">
+  <td width="55" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><img alt="" style="padding : 1px;" src="lib/NewItem241.png"></p>
+  </td>
+  <td width="433" style="border-width : 0px; padding: 1px;">
+   <p class="rvps2"><span class="rvts6">Number of rays that hit the heliostat field</span></p>
+  </td>
+ </tr>
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -524,8 +572,7 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h1 class="rvps9"><a name="parametric"></a>
-<span class="rvts0"><span class="rvts22">Flux simulation results summary</span></span><span class="rvts0"><span class="rvts22"> (Parametric Simulation)</span></span></h1>
+<h1 class="rvps9"><a name="parametric"></a><span class="rvts0"><span class="rvts22">Flux simulation results summary</span></span><span class="rvts0"><span class="rvts22"> (Parametric Simulation)</span></span></h1>
 <p class="rvps2"><a class="rvts35" href="SystemSummary.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">When executing a parametric simulation, the results table displays metrics resulting from each evaluation. The contents of the table mimic the </span><a class="rvts23" href="SystemSummary.html#hermite-analytical">Flux simulation results summary (Hermite Analytical Simulation)</a><span class="rvts6">, although several notable differences are outlined below. The following table provides an example of the results summary for a parametric simulation.</span></p>
@@ -535,20 +582,19 @@
 <p class="rvps2"><span class="rvts6">Additional table contents are as follows:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Cost/Energy metric (-)</span></span></h3>
-<p class="rvps2"><span class="rvts6">The Cost/Energy metric is an indicator of the ratio of plant cost to energy produced by the field. This metric </span><span class="rvts21">should not be interpreted as levelized cost of energy or as an indication of plant economic viability</span><span class="rvts6">. It is a useful metric for comparing multiple fields, or multiple layout configurations within a particular case. </span></p>
+<p class="rvps2"><span class="rvts6">The Cost/Energy metric is an indicator of the ratio of plant cost to energy produced by the field. This metric </span><span class="rvts21">should not be interpreted as levelized cost of energy or as an indication of plant economic viability</span><span class="rvts6">. It is a useful metric for comparing multiple fields, or multiple layout configurations within a particular case.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The Cost/Energy metric is calculated by taking the ratio of total plant cost and a summation of the energy produced in the most recent layout or performance calculation. For example, during a layout calculation, field performance is calculated at hourly intervals over four representative days. The total energy produced by the heliostats included in the final layout over all calculation hours and days serves as the denominator in this ratio. If a performance simulation has been executed, the Cost/Energy metric is updated to reflect the energy produced during the most recent calculation.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">[Varies] Parametric values (units vary)</span></span></h3>
-<p class="rvps2"><span class="rvts6">The values from the parametric simulation that you specify are reproduced in rows of the table. The row label entails the group to which the variable belongs (one of </span><span class="rvts30">heliostat</span><span class="rvts6">, </span><span class="rvts30">receiver</span><span class="rvts6">, </span><span class="rvts30">solarfield</span><span class="rvts6">, </span><span class="rvts30">land</span><span class="rvts6">, </span><span class="rvts30">ambient</span><span class="rvts6">, </span><span class="rvts30">fluxsim</span><span class="rvts6">,</span><span class="rvts30"> financial</span><span class="rvts6">, </span><span class="rvts30">optimize</span><span class="rvts6">). </span></p>
+<p class="rvps2"><span class="rvts6">The values from the parametric simulation that you specify are reproduced in rows of the table. The row label entails the group to which the variable belongs (one of </span><span class="rvts30">heliostat</span><span class="rvts6">, </span><span class="rvts30">receiver</span><span class="rvts6">, </span><span class="rvts30">solarfield</span><span class="rvts6">, </span><span class="rvts30">land</span><span class="rvts6">, </span><span class="rvts30">ambient</span><span class="rvts6">, </span><span class="rvts30">fluxsim</span><span class="rvts6">,</span><span class="rvts30"> financial</span><span class="rvts6">, </span><span class="rvts30">optimize</span><span class="rvts6">).&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Average incident flux (kW/m2)</span></span></h3>
 <p class="rvps2"><span class="rvts6">The average incident flux is the mean observed flux intensity incident on the receiver aperture.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps13"><span class="rvts0"><span class="rvts26">Peak incident flux (kW/m2)</span></span></h3>
 <p class="rvps2"><span class="rvts6">The peak incident flux is the maximum observed flux intensity incident on the receiver aperture.</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p></p>
+<p class="rvps2"><span class="rvts6"></span><span class="rvts6"></span></p>
 <p class="rvps4" style="clear: both;"><span class="rvts13">Created with the Personal Edition of HelpNDoc: </span><a class="rvts14" href="https://www.helpndoc.com/feature-tour/create-ebooks-for-amazon-kindle">Generate Kindle eBooks with ease</a></p>
 
             </div>
@@ -580,37 +626,36 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
-  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
-  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
-  <script src="vendors/uri-1.18.9/uri.min.js"></script>
-  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
-  
-  <!-- Headroom -->
-  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
-  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+  <!-- Splitter -->
+  <div id="hnd-splitter" style="left: 350px"></div>  
 
-  <!-- JsTree -->
-  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+  <!-- Scripts -->
+  <script src="vendors/jquery-3.5.1/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+  <script src="vendors/bootstrap-3.4.1/js/ie10-viewport-bug-workaround.js"></script>
+  <script src="vendors/markjs-8.11.1/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.19.2/uri.min.js"></script>
+  <script src="vendors/imageMapResizer-1.0.10/imageMapResizer.min.js"></script>
+  <script src="vendors/headroom-0.11.0/headroom.min.js"></script>
+  <script src="vendors/jstree-3.3.10/jstree.min.js"></script>  
+  <script src="vendors/interactjs-1.9.22/interact.min.js"></script>  
 
   <!-- HelpNDoc scripts -->
+  <script src="js/polyfill.object.min.js"></script>
   <script src="_translations.js"></script>
   <script src="js/hndsd.min.js"></script>
   <script src="js/hndse.min.js"></script>
   <script src="js/app.min.js"></script>
 
-  <!-- Scripts -->
+  <!-- Init script -->
   <script>
     $(function() {
-      // Instanciate FastClick
-      Origami.fastclick(document.body);
       // Create the app
       var app = new Hnd.App();
       // Update translations
       hnd_ut(app);
+	  // Instanciate imageMapResizer
+	  imageMapResize();
 	  // Custom JS
 	  
       // Boot the app

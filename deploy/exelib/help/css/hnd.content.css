@@ -67,7 +67,7 @@ span.rvts11
 }
 span.rvts12
 {
- font-family: 'Arial Unicode MS', 'Lucida Sans Unicode', 'Arial', 'Helvetica', sans-serif;
+ font-family: Symbola, 'Arial Unicode MS', 'Lucida Sans Unicode', 'Arial', 'Helvetica', sans-serif;
 }
 span.rvts13 /* Font Style */
 {
@@ -141,7 +141,10 @@ a.rvts25, span.rvts25
  color: #ff6600;
  text-decoration: underline;
 }
-a.rvts25:hover { color: #993300; }
+a.rvts25:hover
+{
+ color: #993300;
+}
 span.rvts26
 {
  font-size: 11pt;
@@ -214,7 +217,10 @@ a.rvts40, span.rvts40
  color: #0000ff;
  text-decoration: underline;
 }
-a.rvts40:hover { color: #0000ff; }
+a.rvts40:hover
+{
+ color: #0000ff;
+}
 a.rvts41, span.rvts41
 {
  font-size: 8pt;
@@ -222,7 +228,10 @@ a.rvts41, span.rvts41
  color: #ff6600;
  text-decoration: underline;
 }
-a.rvts41:hover { color: #993300; }
+a.rvts41:hover
+{
+ color: #993300;
+}
 span.rvts42
 {
  font-style: italic;

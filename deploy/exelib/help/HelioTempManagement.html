@@ -7,7 +7,7 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="generator" content="HelpNDoc Personal Edition 5.8.2.643">
+  <meta name="generator" content="HelpNDoc Personal Edition 7.5.0.435">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="favicon.ico"/>
 
@@ -16,6 +16,8 @@
   <meta name="keywords" content="">
 
 
+
+  
 
   <!-- Twitter Card data -->
   <meta name="twitter:card" content="summary">
@@ -29,19 +31,19 @@
   <meta property="og:site_name" content="SolarPILOT User's Manual" /> 
 
   <!-- Bootstrap core CSS -->
-  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="vendors/bootstrap-3.4.1/css/bootstrap.min.css" rel="stylesheet"/>
 
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+  <link href="vendors/bootstrap-3.4.1/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
-      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/html5shiv-3.7.3/html5shiv.min.js"></script>
       <script src="vendors/respond-1.4.2/respond.min.js"></script>
     <![endif]-->
 
   <!-- JsTree styles -->
-  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+  <link href="vendors/jstree-3.3.10/themes/default/style.min.css" rel="stylesheet"/>
 
   <!-- Hnd styles -->
   <link href="css/layout.min.css" rel="stylesheet" />
@@ -76,7 +78,7 @@
     
   </header>
 
-  <nav class="md-nav-expanded">
+  <nav id="panel-left" class="md-nav-expanded">
     <!-- Nav tabs -->
     <ul class="tab-tabs nav nav-tabs" role="tablist">
       <li id="nav-close"> 
@@ -171,7 +173,7 @@
                         <li><a href="InputPageReference.html">Input Page Reference</a></li><li><a href="HeliostatsTree.html">Heliostats</a></li>
                     </ol>
                     <div class="nav-arrows">
-                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="HeliostatsTree.html" title="Heliostats" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="HeliostatsTree.html" title="Heliostats" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="HeliostatTemplate.html" title="Heliostat Template" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                        <div class="btn-group btn-group" role="group"><a class="btn btn-default" href="HeliostatsTree.html" title="Heliostats" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="HeliostatsTree.html" title="Heliostats" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="HeliostatTemplate.html" title="Heliostat Template" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
                     </div>
                 </div> 
             
@@ -182,21 +184,18 @@
 
             <div class="main-content">
                 
-<p></p>
-<h1 class="rvps9"><a name="Top of page"></a>
-<span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
+<h1 class="rvps9"><a name="Top of page"></a><span class="rvts0"><span class="rvts22">Page Overview</span></span></h1>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">SolarPILOT can model multiple heliostat geometries in a single layout. You can manage the heliostat templates and their positioning in the field on the template management page. This page appears in the page list as </span><span class="rvts21">Heliostats.</span></p>
 <p class="rvps2"><span class="rvts21"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Two input groups are available. </span></p>
+<p class="rvps2"><span class="rvts6">Two input groups are available.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><a class="rvts23" href="HelioTempManagement.html#Heliostat%20Templates">Heliostat Templates</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><a class="rvts23" href="HelioTempManagement.html#Heliostat%20Type%20Use">Heliostat Type Use</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps9"><a name="Heliostat Templates"></a>
-<span class="rvts0"><span class="rvts22">Heliostat Templates</span></span></h1>
+<h1 class="rvps9"><a name="Heliostat Templates"></a><span class="rvts0"><span class="rvts22">Heliostat Templates</span></span></h1>
 <p class="rvps2"><a class="rvts35" href="HelioTempManagement.html#Top%20of%20page">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts53"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The Heliostat Templates group allows you to add, delete, disable, or rename heliostat templates. Actions taken in this group affect the templates that appear in the page list.</span></p>
@@ -211,9 +210,9 @@
 <p class="rvps2"><span class="rvts6">Delete the selected heliostat template from the template list. This button has no action unless a template is selected. Once confirmed, the action cannot be undone.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h2 class="rvps6"><span class="rvts0"><span class="rvts20">Disable [Button]</span></span></h2>
-<p class="rvps2"><span class="rvts6">Disable a selected heliostat template. This button has no action unless a template is selected. A disabled template remains a part of the project file, but is not used as part of the heliostat field layout. </span></p>
+<p class="rvps2"><span class="rvts6">Disable a selected heliostat template. This button has no action unless a template is selected. A disabled template remains a part of the project file, but is not used as part of the heliostat field layout.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Disabling a heliostat template may be desired when considering multiple heliostat options as part of a field layout, for example. </span></p>
+<p class="rvps2"><span class="rvts6">Disabling a heliostat template may be desired when considering multiple heliostat options as part of a field layout, for example.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h2 class="rvps6"><span class="rvts0"><span class="rvts20">Rename [Button]</span></span></h2>
 <p class="rvps2"><span class="rvts6">Rename the selected template.</span></p>
@@ -226,25 +225,23 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h1 class="rvps9"><a name="Heliostat Type Use"></a>
-<span class="rvts0"><span class="rvts22">Heliostat Type Use</span></span></h1>
+<h1 class="rvps9"><a name="Heliostat Type Use"></a><span class="rvts0"><span class="rvts22">Heliostat Type Use</span></span></h1>
 <p class="rvps2"><a class="rvts35" href="HelioTempManagement.html#Top%20of%20page">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The Heliostat Type Use group determines how multiple heliostat templates (if applicable) are distributed in the heliostat field layout. Because SolarPILOT can model multiple heliostat geometries, rules for the positioning of each heliostat type are governed in this input group.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps6"><a name="Heliostat Geometry Distribution"></a>
-<span class="rvts0"><span class="rvts20">Heliostat Geometry Distribution</span></span></h2>
-<p class="rvps2"><span class="rvts6">Select the heliostat geometry (template) spatial distribution method. </span></p>
+<h2 class="rvps6"><a name="Heliostat Geometry Distribution"></a><span class="rvts0"><span class="rvts20">Heliostat Geometry Distribution</span></span></h2>
+<p class="rvps2"><span class="rvts6">Select the heliostat geometry (template) spatial distribution method.&nbsp;</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps10"><span class="rvts0"><span class="rvts26">Use Single Template</span></span></h3>
-<p class="rvps8"><span class="rvts6">With this option, all heliostats in the field are based on the geometry defined in a single template. </span></p>
+<p class="rvps8"><span class="rvts6">With this option, all heliostats in the field are based on the geometry defined in a single template.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <h4 class="rvps11"><span class="rvts0"><span class="rvts27">Select Heliostat Geometry</span></span></h4>
 <p class="rvps12"><span class="rvts6">Select the heliostat geometry template to be used for the heliostat field layout. The drop-down list contains all active heliostat geometry templates in the template list.</span></p>
 <p class="rvps12"><span class="rvts6"><br/></span></p>
 <h3 class="rvps10"><span class="rvts0"><span class="rvts26">Specified Range</span></span></h3>
-<p class="rvps8"><span class="rvts6">Specify the radial and azimuthal ranges in which each template may be placed. Specify the range requirements for each active template in the provided input table. </span></p>
+<p class="rvps8"><span class="rvts6">Specify the radial and azimuthal ranges in which each template may be placed. Specify the range requirements for each active template in the provided input table.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts6">Note that:</span></p>
 <p class="rvps8"><span class="rvts6">1) Heliostats not contained within any specified range will assume the first active template in the list.</span></p>
@@ -259,8 +256,7 @@
 <h3 class="rvps10"><span class="rvts0"><span class="rvts26">Even Radial Distribution</span></span></h3>
 <p class="rvps8"><span class="rvts6">The active heliostat templates are assigned to evenly-spaced radial zones in the order specified in the template list control. The radial range for each template is equal to the maximum allowable positioning radius minus the minimum allowable positioning radius all divided by the number of heliostat templates.</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p></p>
+<p class="rvps2"><span class="rvts6"></span><span class="rvts6"></span></p>
 <p class="rvps4" style="clear: both;"><span class="rvts13">Created with the Personal Edition of HelpNDoc: </span><a class="rvts14" href="https://www.helpndoc.com">Free EPub and documentation generator</a></p>
 
             </div>
@@ -292,37 +288,36 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
-  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
-  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
-  <script src="vendors/uri-1.18.9/uri.min.js"></script>
-  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
-  
-  <!-- Headroom -->
-  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
-  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+  <!-- Splitter -->
+  <div id="hnd-splitter" style="left: 350px"></div>  
 
-  <!-- JsTree -->
-  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+  <!-- Scripts -->
+  <script src="vendors/jquery-3.5.1/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+  <script src="vendors/bootstrap-3.4.1/js/ie10-viewport-bug-workaround.js"></script>
+  <script src="vendors/markjs-8.11.1/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.19.2/uri.min.js"></script>
+  <script src="vendors/imageMapResizer-1.0.10/imageMapResizer.min.js"></script>
+  <script src="vendors/headroom-0.11.0/headroom.min.js"></script>
+  <script src="vendors/jstree-3.3.10/jstree.min.js"></script>  
+  <script src="vendors/interactjs-1.9.22/interact.min.js"></script>  
 
   <!-- HelpNDoc scripts -->
+  <script src="js/polyfill.object.min.js"></script>
   <script src="_translations.js"></script>
   <script src="js/hndsd.min.js"></script>
   <script src="js/hndse.min.js"></script>
   <script src="js/app.min.js"></script>
 
-  <!-- Scripts -->
+  <!-- Init script -->
   <script>
     $(function() {
-      // Instanciate FastClick
-      Origami.fastclick(document.body);
       // Create the app
       var app = new Hnd.App();
       // Update translations
       hnd_ut(app);
+	  // Instanciate imageMapResizer
+	  imageMapResize();
 	  // Custom JS
 	  
       // Boot the app

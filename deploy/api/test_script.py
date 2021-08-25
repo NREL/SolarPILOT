@@ -3,19 +3,19 @@ import matplotlib.pyplot as plt
 
 from copylot import CoPylot
 
-plot_results = False
-test_solTrace_sim = False
+plot_results = True
+test_solTrace_sim = True
 cp = CoPylot()
 print("Process ID: ", os.getpid())
 
 if True:
     ## Minimum working example -> Must update path to weather file
     r = cp.data_create()
+    cp.api_callback_create(r) 
     assert cp.data_set_string(
             r,
             "ambient.0.weather_file",
-            "C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/deploy/climate_files/USA CA Daggett (TMY2).csv",
-        )       # TODO: requires weather file to be specified, Should fix this before the release???
+            "../climate_files/USA CA Daggett (TMY2).csv")
     assert cp.generate_layout(r)
     field = cp.get_layout_info(r)
     assert cp.simulate(r)  
@@ -130,7 +130,7 @@ if True:
     assert cp.data_set_string(
         r,
         "ambient.0.weather_file",
-        "C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/deploy/climate_files/USA CA Daggett (TMY2).csv",
+        "../climate_files/USA CA Daggett (TMY2).csv",
     )
 
     # generate - Pass
@@ -167,22 +167,42 @@ if True:
             for row in csvReader:
                 helio_data.append([float(i) for i in row])
         assert cp.assign_layout(r, helio_data)  # Testing - Pass
-
-    ## SolTrace simulation
-    if test_solTrace_sim: 
-        assert cp.data_set_string(r, "fluxsim.0.flux_model", "SolTrace") # Tested
+    
+    # Changing flux map resolution    
     assert cp.data_set_number(r, "fluxsim.0.x_res", 45)
     assert cp.data_set_number(r, "fluxsim.0.y_res", 30)
-    
-    assert cp.simulate(r)  # Testing - Pass
-    flux = cp.get_fluxmap(r)  # Testing - Pass
 
+    assert cp.simulate(r)
+    flux_hermite = cp.get_fluxmap(r)  # Testing - Pass
+    
     # Plotting flux map
     if plot_results:
-        im = plt.imshow(flux)
+        im = plt.imshow(flux_hermite)
+        plt.title('Hermite Results')
         plt.colorbar(im)
         plt.tight_layout()
         plt.show()
+
+    ## SolTrace simulation
+    if test_solTrace_sim: 
+        print("="*10 + " Testing SolTrace " + "="*10)
+        assert cp.data_set_string(r, "fluxsim.0.flux_model", "SolTrace") # Tested
+        assert cp.data_set_string(r, "fluxsim.0.aim_method", "Keep existing")
+        assert cp.data_set_number(r, "fluxsim.0.max_rays", 100000000)
+        assert cp.data_set_number(r, "fluxsim.0.min_rays", 1000000)
+        assert cp.simulate(r)  # Testing - Pass
+        flux_ST = cp.get_fluxmap(r)  # Testing - Pass
+        # Change back for rest of tests
+        assert cp.data_set_string(r, "fluxsim.0.flux_model", "Hermite (analytical)")
+        assert cp.data_set_string(r, "fluxsim.0.aim_method", "Image size priority")
+
+    	# Plotting flux map
+        if plot_results:
+            im = plt.imshow(flux_ST)
+            plt.title('SolTrace Results')
+            plt.colorbar(im)
+            plt.tight_layout()
+            plt.show()
 
     # Update field
     if True:
@@ -199,6 +219,7 @@ if True:
             assert cp.modify_heliostats(r, helio_dict)
 
         if True:
+
             # find max flux of original geometry
             assert cp.simulate(r)  # Testing - Pass
             flux = cp.get_fluxmap(r)
@@ -265,10 +286,8 @@ if True:
 # Testing dump_varmap and save_from script - Pass
 if True:
     cwd = os.getcwd()
-    assert cp.dump_varmap_tofile(r, "C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/deploy/api/varmap_dump.csv")
     assert not cp.dump_varmap_tofile(r, "varmap_dump_v2.csv") # This does not work - must provide full path
-    assert cp.dump_varmap_tofile(r, cwd + "\\varmap_dump_v3.csv")  # This works
-    assert cp.save_from_script( r, "C:/Users/WHamilt2/Documents/solarPILOT_build/SolarPILOT/deploy/api/case_study.spt")
-    assert cp.save_from_script(r, cwd + "\\case_study_v2.spt")  # This works
+    assert cp.dump_varmap_tofile(r, os.path.join(cwd, "varmap.csv"))
+    assert cp.save_from_script(r, os.path.join(cwd, "case_study_v2.spt"))
 
 assert cp.data_free(r) # Works - free memory

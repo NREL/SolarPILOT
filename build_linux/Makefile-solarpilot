@@ -2,13 +2,13 @@ SSCDIR = ../../ssc
 
 VPATH = $(SSCDIR)/solarpilot
 
-STDIR = ../../soltrace/coretrace
+STDIR = ../../SolTrace/coretrace
 STLIB = $(STDIR)/build_linux/coretrace.a
-SHARELIB = $(SSCDIR)/build_linux/shared.a
+SHARELIB = $(SSCDIR)/build/shared/shared.a
 NLOPTDIR = $(SSCDIR)/nlopt
-NLOPTLIB = $(SSCDIR)/build_linux/nlopt.a
+NLOPTLIB = $(SSCDIR)/build/nlopt/nlopt.a
 LPDIR = $(SSCDIR)/lpsolve
-LPLIB = $(SSCDIR)/build_linux/lpsolve.a
+LPLIB = $(SSCDIR)/build/nlopt/lpsolve.a
 
 CC = g++ #gcc
 CXX = g++

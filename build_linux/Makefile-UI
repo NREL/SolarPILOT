@@ -4,26 +4,34 @@ VPATH = ../app
 HOMEDIR = ../..
 
 SSCDIR = $(HOMEDIR)/ssc
-WEXDIR = $(HOMEDIR)/wex
-WEXLIB = $(WEXDIR)/wexuxwx3.a
-LKDIR = $(HOMEDIR)/lk
-LKLIB = $(LKDIR)/lkuxwx3.a
-STDIR = $(HOMEDIR)/soltrace/coretrace
+
+WEXDIR = $(HOMEDIR)/wex/build
+WEXLIB = $(WEXDIR)/wex.a
+
+LKDIR = $(HOMEDIR)/lk/build
+LKLIB = $(LKDIR)/lk.a
+
+STDIR = $(HOMEDIR)/SolTrace/coretrace
 STLIB = $(STDIR)/build_linux/coretrace.a
-SHAREDIR = $(SSCDIR)/build_linux
+
+SHAREDIR = $(SSCDIR)/build/shared
 SHAREDLIB = $(SHAREDIR)/shared.a
-FCLIB = ./fieldcore.a
-FCDIR = $(SSCDIR)/solarpilot
-NLOPTLIB = $(SHAREDIR)/nlopt.a
-LPDIR = $(SSCDIR)/lpsolve
-LPLIB = $(SSCDIR)/build_linux/lpsolve.a
+
+SPCOREDIR = $(SSCDIR)/build/solarpilot
+SPCORELIB = $(SPCOREDIR)/solarpilot_core.a
+
+NLOPTLIB = $(SSCDIR)/build/nlopt
+NLOPTLIB = $(NLOPTLIB)/nlopt.a
+
+LPDIR = $(SSCDIR)/build/lpsolve
+LPLIB = $(LPDIR)/lpsolve.a
 
 CC = g++ 
 CXX = g++
-CFLAGS = -I. -I$(WEXDIR)/include -I$(LKDIR)/include -I$(SSCDIR) -I../rapidxml -I$(FCDIR) -I$(STDIR) -D__64BIT__ -g -O3 -std=c++0x -DLK_USE_WXWIDGETS -DSP_STANDALONE -D_GLIBCXX_USE_NANOSLEEP `wx-config-3 --cflags` 
+CFLAGS = -I. -I$(WEXDIR)/include -I$(LKDIR)/include -I$(SSCDIR) -I../rapidxml -I$(SPCOREDIR) -I$(STDIR) -D__64BIT__ -g -O3 -std=c++0x -DLK_USE_WXWIDGETS -DSP_STANDALONE -D_GLIBCXX_USE_NANOSLEEP `wx-config-3 --cflags` 
 
 CXXFLAGS = $(CFLAGS)
-LDFLAGS =  $(WEXLIB) $(LKLIB) $(STLIB) $(FCLIB) $(NLOPTLIB) $(LPLIB) $(SHAREDLIB)  `wx-config-3 --libs stc` `wx-config-3 --libs aui` `wx-config-3 --libs` -lm  -lfontconfig -ldl -lcurl
+LDFLAGS =  $(WEXLIB) $(LKLIB) $(STLIB) $(SPCORELIB) $(NLOPTLIB) $(LPLIB) $(SHAREDLIB)  `wx-config-3 --libs stc` `wx-config-3 --libs aui` `wx-config-3 --libs` -lm  -lfontconfig -ldl -lcurl
 
 
 OBJECTS  = \

@@ -3670,3 +3670,4 @@ int UpdateLayoutLogWithClock(const char* message, void* data)
     F->GetLayoutLog()->SetValue(ctext);
     return 1;
 }
+

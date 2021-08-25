@@ -11,6 +11,10 @@ if(APPLE)
     set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version")
 endif()
 
+if (UNIX AND NOT CMAKE_C_COMPILER)
+	set(CMAKE_C_COMPILER gcc)
+	set(CMAKE_CXX_COMPILER g++)
+endif()
 
 #####################################################################################################################
 #
@@ -18,7 +22,7 @@ endif()
 #
 #####################################################################################################################
 
-Project(SolarPILOT-UI)
+Project(SolarPILOT)
 
 if ( NOT APPLE)
 	set(CURL_DIR build_resources/libcurl_ssl_x64)
@@ -78,7 +82,7 @@ cmake_policy(SET CMP0043 NEW)
 
 if(MSVC)
 	add_compile_options(/W3 /MP)
-    add_compile_definitions( __64BIT__ LK_USE_WXWIDGETS _CRT_SECURE_NO_DEPRECATE=1 )
+        add_compile_definitions( __64BIT__ LK_USE_WXWIDGETS _CRT_SECURE_NO_DEPRECATE=1 )
 	add_compile_definitions(_CRT_NON_CONFORMING_SWPRINTFS=1 _SCL_SECURE_NO_WARNINGS=1)
 	add_compile_definitions(__WXMSW__ _UNICODE NOPCH )
 	add_compile_definitions( SP_USE_SOLTRACE SP_USE_THREADS )
@@ -93,8 +97,9 @@ else(MSVC)
 	else()
 		add_definitions(-D__64BIT__)
 	endif()
-	add_compile_options(-Wall -Wno-deprecated -Wno-unknown-pragmas -Werror -Wno-overloaded-virtual -fno-common -std=c++11)
+	add_compile_options(-Wall -Wno-deprecated -Wno-unknown-pragmas -Wno-overloaded-virtual -fno-common -std=c++11)
 	add_definitions(-DLK_USE_WXWIDGETS -DWX_PRECOMP )
+	add_definitions(-DSP_USE_SOLTRACE -DSP_USE_THREADS )
 	if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 		add_compile_definitions(_DEBUG)
 	else()
@@ -170,7 +175,75 @@ endif()
 # Link Libraries and Options
 #
 #####################################################################################################################
-target_link_libraries(SolarPILOT lk wex lpsolve nlopt shared coretrace solarpilot_core)
+
+if (${CMAKE_PROJECT_NAME} STREQUAL solarpilot_ui)
+	target_link_libraries(SolarPILOT solarpilot_core coretrace shared nlopt lpsolve wex lk)
+else()
+	unset(LK_LIB CACHE)
+	unset(WEX_LIB CACHE)
+	unset(LPSOLVE_LIB CACHE)
+	unset(NLOPT_LIB CACHE)
+	unset(SHARED_LIB CACHE)
+	unset(CORETRACE_LIB CACHE)
+	unset(SPCORE_LIB CACHE)
+	find_library( LK_LIB
+		NAMES lk.a lk.lib
+		PATHS $ENV{LK_LIB} $ENV{LKDIR}/build $ENV{LKDIR}/build/Release)
+	find_library( WEX_LIB
+		NAMES wex.a wex.lib
+		PATHS $ENV{WEX_LIB} $ENV{WEXDIR}/build $ENV{WEXDIR}/build/Release)
+	find_library( LPSOLVE_LIB
+		NAMES lpsolve.a lpsolve.lib
+		PATHS $ENV{LPSOLVE_LIB} $ENV{SSCDIR}/build/lpsolve $ENV{SSCDIR}/build/lpsolve/Release)
+	find_library( NLOPT_LIB
+		NAMES nlopt.a nlopt.lib
+		PATHS $ENV{NLOPT_LIB} $ENV{SSCDIR}/build/nlopt $ENV{SSCDIR}/build/nlopt/Release)
+	find_library( SHARED_LIB
+		NAMES shared.a shared.lib
+		PATHS $ENV{SHARED_LIB} $ENV{SSCDIR}/build/shared $ENV{SSCDIR}/build/shared/Release)
+	find_library( CORETRACE_LIB
+		NAMES coretrace.a coretrace.lib
+		PATHS $ENV{CORETRACE_LIB} $ENV{CORETRACEDIR}/build $ENV{CORETRACEDIR}/build/Release)
+	find_library( SPCORE_LIB
+		NAMES solarpilot_core.a solarpilot_core.lib
+		PATHS $ENV{SPCORE_LIB} $ENV{SSCDIR}/build/solarpilot $ENV{SSCDIR}/build/solarpilot/Release) 
+
+	target_link_libraries(SolarPILOT optimized ${SPCORE_LIB} optimized ${CORETRACE_LIB} optimized ${SHARED_LIB} optimized ${NLOPT_LIB} optimized ${LPSOLVE_LIB} optimized ${WEX_LIB} optimized ${LK_LIB})
+	
+	if (CMAKE_BUILD_TYPE STREQUAL "Debug" OR MSVC)
+		unset(LK_LIB CACHE)
+		unset(WEX_LIB CACHE)
+		unset(LPSOLVE_LIB CACHE)
+		unset(NLOPT_LIB CACHE)
+		unset(SHARED_LIB CACHE)
+		unset(CORETRACE_LIB CACHE)
+		unset(SPCORE_LIB CACHE)
+		find_library( LK_LIB
+			NAMES lkd.a lkd.lib
+			PATHS $ENV{LK_LIB} $ENV{LKDIR}/build $ENV{LKDIR}/build/Debug)
+		find_library( WEX_LIB
+			NAMES wexd.a wexd.lib
+			PATHS $ENV{WEX_LIB} $ENV{WEXDIR}/build $ENV{WEXDIR}/build/Debug)
+		find_library( LPSOLVE_LIB
+			NAMES lpsolved.a lpsolved.lib
+			PATHS $ENV{LPSOLVE_LIB} $ENV{SSCDIR}/build/lpsolve $ENV{SSCDIR}/build/lpsolve/Debug)
+		find_library( NLOPT_LIB
+			NAMES nloptd.a nloptd.lib
+			PATHS $ENV{NLOPT_LIB} $ENV{SSCDIR}/build/nlopt $ENV{SSCDIR}/build/nlopt/Debug)
+		find_library( SHARED_LIB
+			NAMES sharedd.a sharedd.lib
+			PATHS $ENV{SHARED_LIB} $ENV{SSCDIR}/build/shared $ENV{SSCDIR}/build/shared/Debug)
+		find_library( CORETRACE_LIB
+			NAMES coretraced.a coretraced.lib
+			PATHS $ENV{CORETRACE_LIB} $ENV{CORETRACEDIR}/build $ENV{CORETRACEDIR}/build/Debug)
+		find_library( SPCORE_LIB
+			NAMES solarpilot_cored.a solarpilot_cored.lib
+			PATHS $ENV{SPCORE_LIB} $ENV{SSCDIR}/build/solarpilot $ENV{SSCDIR}/build/solarpilot/Debug) 
+
+		target_link_libraries(SolarPILOT debug ${SPCORE_LIB} debug ${CORETRACE_LIB} debug ${SHARED_LIB} debug ${NLOPT_LIB} debug ${LPSOLVE_LIB} debug ${WEX_LIB} debug ${LK_LIB})
+	
+	endif()
+endif()
 
 target_link_libraries(SolarPILOT ${wxWidgets_LIBRARIES})
 
