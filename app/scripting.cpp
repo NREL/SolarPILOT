@@ -1080,6 +1080,8 @@ static void _optimize( lk::invoke_t &cxt )
     std::vector< std::vector<double> > flux_vals;
     std::vector< std::vector< double > > eval_points;
 
+    bool run_ok;
+
     if(n_threads > 1)
     {
         AutoPilot_MT *SFopt_MT = new AutoPilot_MT();
@@ -1096,10 +1098,11 @@ static void _optimize( lk::invoke_t &cxt )
         SFopt_MT->Setup(*V, true);
             
         //run the optimization
-        SFopt_MT->Optimize(optvars, upper, lower, stepsize, &names);
+        run_ok = SFopt_MT->Optimize(optvars, upper, lower, stepsize, &names);
 
         //get resulting info
-        SFopt_MT->GetOptimizationObject()->getOptimizationSimulationHistory( eval_points, obj_vals, flux_vals );
+        if(run_ok)
+            SFopt_MT->GetOptimizationObject()->getOptimizationSimulationHistory( eval_points, obj_vals, flux_vals );
 
         try
         {
@@ -1124,10 +1127,11 @@ static void _optimize( lk::invoke_t &cxt )
         SFopt_S->Setup(*V, true);
             
         //run the optimization
-        SFopt_S->Optimize(optvars, upper, lower, stepsize, &names);
+        run_ok = SFopt_S->Optimize(optvars, upper, lower, stepsize, &names);
 
         //get resulting info
-        SFopt_S->GetOptimizationObject()->getOptimizationSimulationHistory( eval_points, obj_vals, flux_vals );
+        if(run_ok)
+            SFopt_S->GetOptimizationObject()->getOptimizationSimulationHistory( eval_points, obj_vals, flux_vals );
 
 
         try
@@ -1136,8 +1140,10 @@ static void _optimize( lk::invoke_t &cxt )
         }
         catch(...)
         {}
-            }
+    }
         
+    if (!run_ok)
+        return;
 
     //set up return structure
     //result/objective/flux/iterations
@@ -1915,7 +1921,8 @@ SolarPILOTScriptWindow::SolarPILOTScriptWindow( wxWindow *parent, int id )
     sim->setCallbackFunction(LKInfoCallback, (void*)this);
 
     _reporting_enabled = true;
-
+    
+    this->m_output->SetFont(wxFont::wxFont(9, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, 1));
     this->AddOutput("\nTip: Use the 'Help' button to look up and add variables to the script.");
 }
 
