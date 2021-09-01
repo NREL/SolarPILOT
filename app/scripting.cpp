@@ -938,21 +938,21 @@ static void _detail_results( lk::invoke_t &cxt )
 }
 
 
-static void _get_fluxmap( lk::invoke_t &cxt )
+static void _get_fluxmap(lk::invoke_t& cxt)
 {
 
     LK_DOC("get_fluxmap", "Retrieve the receiver fluxmap, optionally specifying the receiver ID to retrieve.", "([integer:receiver id]):array");
 
-    SPFrame &F = SPFrame::Instance();
-    SolarField *SF = F.GetSolarFieldObject();
+    SPFrame& F = SPFrame::Instance();
+    SolarField* SF = F.GetSolarFieldObject();
 
-    Receiver *rec;
+    Receiver* rec;
 
-    if( cxt.arg_count() == 1 )
+    if (cxt.arg_count() == 1)
     {
         int id = cxt.arg(0).as_integer();
 
-        if( id > SF->getReceivers()->size() -1 )
+        if (id > SF->getReceivers()->size() - 1)
             return;
 
         rec = SF->getReceivers()->at(id);
@@ -961,24 +961,54 @@ static void _get_fluxmap( lk::invoke_t &cxt )
     {
         rec = SF->getReceivers()->front();
     }
-    
-    FluxGrid *fg = rec->getFluxSurfaces()->front().getFluxMap();
 
-    cxt.result().empty_vector();
-    cxt.result().vec()->reserve( fg->size() );
+    FluxSurfaces* fs = rec->getFluxSurfaces();
+    //FluxGrid* fg = rec->getFluxSurfaces()->front().getFluxMap();
 
-    for(size_t i=0; i<fg->front().size(); i++)
+    //count dimensions for the flux array
+    int max_ny = 0;
+    int tot_nx = 0;
+    for (size_t i = 0; i < fs->size(); i++)
     {
-        cxt.result().vec()->push_back( lk::vardata_t() );
-        lk::vardata_t &p = cxt.result().vec()->back();
+        int fs_nx = fs->at(i).getFluxNX();
+        int fs_ny = fs->at(i).getFluxNY();
 
-        p.empty_vector();
-        
-        for(size_t j=0; j<fg->size(); j++)
-        {
-            p.vec_append( fg->at(j).at(i).flux );
-        }
+        max_ny = fs_ny > max_ny ? fs_ny : max_ny;
+        tot_nx += fs_nx;
     }
+
+    //resize the array appropriately
+    cxt.result().empty_vector();
+    {
+        lk::vardata_t tmp;
+        tmp.resize(tot_nx);
+
+        cxt.result().vec()->resize(max_ny, tmp);
+    }
+
+    int istart = tot_nx;  //load the flux surfaces in reverse
+    for (size_t k = 0; k < fs->size(); k++)
+    {
+        FluxSurface* ffs = &fs->at(k);
+        FluxGrid* fg = ffs->getFluxMap();
+
+        int fs_nx = ffs->getFluxNX();
+        int fs_ny = ffs->getFluxNY();
+
+
+        istart -= fs_nx; //load the flux surfaces in reverse
+
+        // for each row in the fluxgrid surface...
+        for(size_t i=0; i< fs_nx; i++)
+        {
+            //for each column in the fluxgrid surface
+            for (size_t j = 0; j < fs_ny; j++)
+            {
+                //set the flux value to the result array
+                cxt.result().vec()->at(j).vec()->at(istart + i).assign(fg->at(i).at(j).flux);
+            }
+        }
+    }   
 
 }
 
@@ -1922,7 +1952,7 @@ SolarPILOTScriptWindow::SolarPILOTScriptWindow( wxWindow *parent, int id )
 
     _reporting_enabled = true;
     
-    this->m_output->SetFont(wxFont::wxFont(9, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, 1));
+    this->m_output->SetFont(wxFont::wxFont(9, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
     this->AddOutput("\nTip: Use the 'Help' button to look up and add variables to the script.");
 }
 
