@@ -93,10 +93,12 @@ static bool LKInfoCallback(simulation_info *siminfo, void *data)
                 msg.append(notices + "\n");
 
             frame->AddOutput(msg);
-            wxYieldIfNeeded();
         }
+        wxYieldIfNeeded();
     }
-    return true;
+    bool force_stop = frame->GetEditor()->IsStopFlagSet();
+
+    return !force_stop;
 };
 
 
@@ -1171,9 +1173,6 @@ static void _optimize( lk::invoke_t &cxt )
         catch(...)
         {}
     }
-        
-    if (!run_ok)
-        return;
 
     //set up return structure
     //result/objective/flux/iterations
@@ -1181,6 +1180,12 @@ static void _optimize( lk::invoke_t &cxt )
 
     lk::vardata_t res_hash;
     res_hash.empty_hash();
+
+    if (!run_ok)
+    {
+        cxt.result().hash_item("result", res_hash);
+        return;
+    }
 
     for(size_t i=0; i<optvars.size(); i++)
     {

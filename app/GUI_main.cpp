@@ -3659,7 +3659,7 @@ int PopMessageHandler(const char* message, void* data)
     return F->PopMessage(wxString(message), wxString("Notice"), wxOK | wxICON_INFORMATION);
 }
 
-int UpdateLayoutLogWithClock(const char* message, void* data)
+int UpdateLayoutLogWithClock(double progress, const char* message, void* data)
 {
     /*
     Update the layout log text control.
@@ -3667,7 +3667,22 @@ int UpdateLayoutLogWithClock(const char* message, void* data)
     SPFrame* F = static_cast<SPFrame*>(data);
     wxString ctext = F->GetLayoutLog()->GetValue();
     ctext.append(wxT("\n") + wxString(std::to_string(F->GetSimWatch().Time())) + wxString(" ms | ") + wxString(message));
+
+
+    simulation_info* siminfo = F->GetSolarFieldObject()->getSimInfoObject();
+
+    int nsim = siminfo->getTotalSimulationCount();
+
+    siminfo->setCurrentSimulation((int)(progress * nsim));
+
+    F->SimProgressUpdate(siminfo);
+
     F->GetLayoutLog()->SetValue(ctext);
+    
+    /*wxGauge* g = F->chooseProgressGauge();
+    if(progress <= 1. && progress > 0.)
+        g->SetValue((int)((double)g->GetRange() * progress));*/
+
     return 1;
 }
 
