@@ -82,8 +82,8 @@ fluxsim	is_load_raydata	IN	BOOL	0	none	1	checkbox		X	Load existing heliostat ray
 fluxsim	is_optical_err	IN	BOOL	1		0	checkbox			Include optical errors	Include the reflector optical error sources in the SolTrace simulation
 fluxsim	is_save_raydata	IN	BOOL	0	none	1	checkbox		X	Save heliostat stage ray data	Save heliostat field raytrace data to a file for future re-use
 fluxsim	is_sunshape_err	IN	BOOL	1		0	checkbox			Include sun shape	Include the sun shape error in the SolTrace simulation
-fluxsim	max_rays	IN	INT	1000000.0	none	0				Maximum number of generated rays	The maximum number of generated rays allowed before terminating the simulation. Overrides the desired rays setting.
-fluxsim	min_rays	IN	INT	10000.0	none	0				Desired number of ray intersections	The minimum number of ray hits on the receiver before terminating the simulation.
+fluxsim	max_rays	IN	INT	1000000.0	none	1				Maximum number of generated rays	The maximum number of generated rays allowed before terminating the simulation. Overrides the desired rays setting.
+fluxsim	min_rays	IN	INT	10000.0	none	1				Desired number of ray intersections	The minimum number of ray hits on the receiver before terminating the simulation.
 fluxsim	norm_dist_sigma	IN	DOUBLE	0.25		1				Aiming distribution standard dev.	Size of the standard distribution relative to half of the height of the receiver.
 fluxsim	plot_zmax	IN	DOUBLE	1000.0	none	0				Max	Z-axis maximum value
 fluxsim	plot_zmin	IN	DOUBLE	0.0	none	0				Min	Z-axis minimum value
@@ -93,8 +93,8 @@ fluxsim	save_data_loc	IN	STRING	soltrace_ray_data.csv		0				ray data	Choose a lo
 fluxsim	seed	IN	INT	-1.0	none	0				Seed value (-1 for automatic selection)	The seed for the random number generator
 fluxsim	sigma_limit_x	IN	DOUBLE	2.0		1				Min. image offset from receiver edge - X	Minimum distance (std. dev.) between optical center of heliostat image and the receiver edge in the receiver-X direction
 fluxsim	sigma_limit_y	IN	DOUBLE	2.0	none	1				Min. image offset from receiver edge - Y	Minimum distance (std. dev.) between optical center of heliostat image and the receiver edge in the receiver-Y direction
-fluxsim	x_res	IN	INT	25.0	none	0				Flux grid resolution - Horizontal	Number of flux test points per panel (maximum) in the vertical direction for the flux simulation
-fluxsim	y_res	IN	INT	25.0	none	0				Flux grid resolution - Vertical	Number of flux test points per panel (maximum) in the horizontal direction for the flux simulation
+fluxsim	x_res	IN	INT	25.0	none	1				Flux grid resolution - Horizontal	Number of flux test points per panel (maximum) in the vertical direction for the flux simulation
+fluxsim	y_res	IN	INT	25.0	none	1				Flux grid resolution - Vertical	Number of flux test points per panel (maximum) in the horizontal direction for the flux simulation
 fluxsim	multi_rec_aim_rand	IN	DOUBLE	0.0	none	1				Multi-receiver aimpoint randomization	Factor from 0-1 indicating extent of random sampling in assigning heliostats to receivers. 1=completely random.
 fluxsim	flux_solar_az	OUT	DOUBLE	180.0	deg	0				Calculated solar azimuth angle	Solar azimuth angle to use for the flux simulation
 fluxsim	flux_solar_el	OUT	DOUBLE	85.0	deg	0				Calculated solar elevation angle	Solar elevation angle to use for the flux simulation
@@ -237,11 +237,11 @@ receiver	power_fraction	IN	DOUBLE	1.0	none	1				Multi-receiver power fraction	Ta
 receiver	piping_loss_coef	IN	DOUBLE	10.2	kW/m	1				Receiver piping loss coefficient	Loss per meter of tower height
 receiver	piping_loss_const	IN	DOUBLE	0.0	kW	1				Receiver piping loss constant	Constant thermal loss due to piping - doesn't scale with tower height
 receiver	rec_azimuth	IN	DOUBLE	0.0	deg	1				Receiver orientation azimuth	Receiver azimuth orientation: 0 deg is north, positive clockwise
-receiver	rec_cav_cdepth	IN	DOUBLE	0.1	none	1				Cavity absorber centroid aperture offset	Offset of circle circumscribing cavity absorber surfaces from the aperture plane; fraction of cavity radius; positive yields greater receiver depth
-receiver	rec_cav_rad	IN	DOUBLE	7.5	m	1				Cavity active surface radius	Radius of the circle circumscribing all active absorber surfaces
-receiver	rec_cav_tlip	IN	DOUBLE	0.1	none	1				Cavity top lip fractional height	Fraction of the total receiver height occupied by the top lip in a cavity geometry
-receiver	rec_cav_blip	IN	DOUBLE	0.1	none	1				Cavity bottom lip fractional height	Fraction of the total receiver height occupied by the bottom lip in a cavity geometry
-receiver	rec_cav_apwfrac	IN	DOUBLE	1.0	none	1				Cavity aperture width fraction	Width of cavity aperture relative to maximum width at the aperture plane
+receiver	rec_cav_cdepth	IN	DOUBLE	-0.25	none	1				Cavity absorber centroid aperture offset	Offset of centroid of cavity absorber surfaces from the aperture plane (fraction of cavity radius); positive yields greater receiver depth
+receiver	rec_cav_rad	IN	DOUBLE	8.0	m	1				Cavity active surface radius	Radius of the circle circumscribing all active absorber surfaces
+receiver	rec_cav_tlip	IN	DOUBLE	0.0	none	1			X	Cavity top lip fractional height	Fraction of the total receiver height occupied by the top lip in a cavity geometry
+receiver	rec_cav_blip	IN	DOUBLE	0.0	none	1			X	Cavity bottom lip fractional height	Fraction of the total receiver height occupied by the bottom lip in a cavity geometry
+receiver	rec_cav_apwfrac	IN	DOUBLE	1.0	none	1			X	Cavity aperture width fraction	Width of cavity aperture relative to maximum width at the aperture plane
 receiver	rec_diameter	IN	DOUBLE	17.65	m	1				Receiver diameter	Receiver diameter for cylindrical receivers
 receiver	rec_elevation	IN	DOUBLE	0.0	deg	1				Receiver orientation elevation	Receiver elevation orientation: 0 deg to the horizon, negative rotating downward
 receiver	rec_height	IN	DOUBLE	21.6	m	1				Receiver height	Height of the absorbing component
