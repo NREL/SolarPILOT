@@ -264,7 +264,7 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
 
     //Set the version tag
 	_version_major = 1;
-	_version_minor = 4;
+	_version_minor = 5;
 	_version_patch = 0;
 
     _software_version = my_to_string(_version_major) + "." + my_to_string(_version_minor) + "." + my_to_string(_version_patch);
@@ -2228,20 +2228,24 @@ void SPFrame::SAMInputParametric()
         }
         file.clear();
 
-        block_t<double> *flux = &fluxtab.flux_surfaces.at(0).flux_data;
-        int nc = flux->ncols();
         
         for(int i=0; i<(int)fluxtab.efficiency.size(); i++)
         {
             file << (fluxtab.azimuths.at(i)*R2D - 180.) << "," << fluxtab.zeniths.at(i)*R2D << ",";
-            for(int j=0; j<(int)flux->nrows(); j++)
+            for(int j=0; j<(int)fluxtab.flux_surfaces.at(0).flux_data.nrows(); j++)
             {
                 if( j > 0 )
                     file << ",,";
 
-                for(int k=0; k<nc; k++)
+                for (int l = 0; l < fluxtab.flux_surfaces.size(); l++)
                 {
-                    file << flux->at(j, k, i) << (k<nc-1 ? "," : "");
+                    block_t<double> *flux = &fluxtab.flux_surfaces.at(l).flux_data;
+                    int nc = flux->ncols();
+
+                    for(int k=0; k<nc; k++)
+                    {
+                        file << flux->at(j, k, i) << ((k == nc - 1 && l == fluxtab.flux_surfaces.size()) ? "" : ","); 
+                    }
                 }
                 file << "\n";
             }
@@ -3655,7 +3659,7 @@ int PopMessageHandler(const char* message, void* data)
     return F->PopMessage(wxString(message), wxString("Notice"), wxOK | wxICON_INFORMATION);
 }
 
-int UpdateLayoutLogWithClock(const char* message, void* data)
+int UpdateLayoutLogWithClock(double progress, const char* message, void* data)
 {
     /*
     Update the layout log text control.
@@ -3663,7 +3667,22 @@ int UpdateLayoutLogWithClock(const char* message, void* data)
     SPFrame* F = static_cast<SPFrame*>(data);
     wxString ctext = F->GetLayoutLog()->GetValue();
     ctext.append(wxT("\n") + wxString(std::to_string(F->GetSimWatch().Time())) + wxString(" ms | ") + wxString(message));
+
+
+    simulation_info* siminfo = F->GetSolarFieldObject()->getSimInfoObject();
+
+    int nsim = siminfo->getTotalSimulationCount();
+
+    siminfo->setCurrentSimulation((int)(progress * nsim));
+
+    F->SimProgressUpdate(siminfo);
+
     F->GetLayoutLog()->SetValue(ctext);
+    
+    /*wxGauge* g = F->chooseProgressGauge();
+    if(progress <= 1. && progress > 0.)
+        g->SetValue((int)((double)g->GetRange() * progress));*/
+
     return 1;
 }
 

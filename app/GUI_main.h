@@ -810,7 +810,7 @@ extern bool SolarFieldOptimizeDetailCallback(simulation_info *siminfo, void *dat
 
 extern int PopMessageHandler(const char* message, void* data);
 
-extern int UpdateLayoutLogWithClock(const char* message, void* data);
+extern int UpdateLayoutLogWithClock(double progress, const char* message, void* data);
 
 
 #endif

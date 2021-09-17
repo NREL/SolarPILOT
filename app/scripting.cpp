@@ -93,10 +93,12 @@ static bool LKInfoCallback(simulation_info *siminfo, void *data)
                 msg.append(notices + "\n");
 
             frame->AddOutput(msg);
-            wxYieldIfNeeded();
         }
+        wxYieldIfNeeded();
     }
-    return true;
+    bool force_stop = frame->GetEditor()->IsStopFlagSet();
+
+    return !force_stop;
 };
 
 
@@ -938,21 +940,21 @@ static void _detail_results( lk::invoke_t &cxt )
 }
 
 
-static void _get_fluxmap( lk::invoke_t &cxt )
+static void _get_fluxmap(lk::invoke_t& cxt)
 {
 
     LK_DOC("get_fluxmap", "Retrieve the receiver fluxmap, optionally specifying the receiver ID to retrieve.", "([integer:receiver id]):array");
 
-    SPFrame &F = SPFrame::Instance();
-    SolarField *SF = F.GetSolarFieldObject();
+    SPFrame& F = SPFrame::Instance();
+    SolarField* SF = F.GetSolarFieldObject();
 
-    Receiver *rec;
+    Receiver* rec;
 
-    if( cxt.arg_count() == 1 )
+    if (cxt.arg_count() == 1)
     {
         int id = cxt.arg(0).as_integer();
 
-        if( id > SF->getReceivers()->size() -1 )
+        if (id > SF->getReceivers()->size() - 1)
             return;
 
         rec = SF->getReceivers()->at(id);
@@ -961,24 +963,54 @@ static void _get_fluxmap( lk::invoke_t &cxt )
     {
         rec = SF->getReceivers()->front();
     }
-    
-    FluxGrid *fg = rec->getFluxSurfaces()->front().getFluxMap();
 
-    cxt.result().empty_vector();
-    cxt.result().vec()->reserve( fg->size() );
+    FluxSurfaces* fs = rec->getFluxSurfaces();
+    //FluxGrid* fg = rec->getFluxSurfaces()->front().getFluxMap();
 
-    for(size_t i=0; i<fg->front().size(); i++)
+    //count dimensions for the flux array
+    int max_ny = 0;
+    int tot_nx = 0;
+    for (size_t i = 0; i < fs->size(); i++)
     {
-        cxt.result().vec()->push_back( lk::vardata_t() );
-        lk::vardata_t &p = cxt.result().vec()->back();
+        int fs_nx = fs->at(i).getFluxNX();
+        int fs_ny = fs->at(i).getFluxNY();
 
-        p.empty_vector();
-        
-        for(size_t j=0; j<fg->size(); j++)
-        {
-            p.vec_append( fg->at(j).at(i).flux );
-        }
+        max_ny = fs_ny > max_ny ? fs_ny : max_ny;
+        tot_nx += fs_nx;
     }
+
+    //resize the array appropriately
+    cxt.result().empty_vector();
+    {
+        lk::vardata_t tmp;
+        tmp.resize(tot_nx);
+
+        cxt.result().vec()->resize(max_ny, tmp);
+    }
+
+    int istart = tot_nx;  //load the flux surfaces in reverse
+    for (size_t k = 0; k < fs->size(); k++)
+    {
+        FluxSurface* ffs = &fs->at(k);
+        FluxGrid* fg = ffs->getFluxMap();
+
+        int fs_nx = ffs->getFluxNX();
+        int fs_ny = ffs->getFluxNY();
+
+
+        istart -= fs_nx; //load the flux surfaces in reverse
+
+        // for each row in the fluxgrid surface...
+        for(size_t i=0; i< fs_nx; i++)
+        {
+            //for each column in the fluxgrid surface
+            for (size_t j = 0; j < fs_ny; j++)
+            {
+                //set the flux value to the result array
+                cxt.result().vec()->at(j).vec()->at(istart + i).assign(fg->at(i).at(j).flux);
+            }
+        }
+    }   
 
 }
 
@@ -1080,6 +1112,8 @@ static void _optimize( lk::invoke_t &cxt )
     std::vector< std::vector<double> > flux_vals;
     std::vector< std::vector< double > > eval_points;
 
+    bool run_ok;
+
     if(n_threads > 1)
     {
         AutoPilot_MT *SFopt_MT = new AutoPilot_MT();
@@ -1096,10 +1130,11 @@ static void _optimize( lk::invoke_t &cxt )
         SFopt_MT->Setup(*V, true);
             
         //run the optimization
-        SFopt_MT->Optimize(optvars, upper, lower, stepsize, &names);
+        run_ok = SFopt_MT->Optimize(optvars, upper, lower, stepsize, &names);
 
         //get resulting info
-        SFopt_MT->GetOptimizationObject()->getOptimizationSimulationHistory( eval_points, obj_vals, flux_vals );
+        if(run_ok)
+            SFopt_MT->GetOptimizationObject()->getOptimizationSimulationHistory( eval_points, obj_vals, flux_vals );
 
         try
         {
@@ -1124,10 +1159,11 @@ static void _optimize( lk::invoke_t &cxt )
         SFopt_S->Setup(*V, true);
             
         //run the optimization
-        SFopt_S->Optimize(optvars, upper, lower, stepsize, &names);
+        run_ok = SFopt_S->Optimize(optvars, upper, lower, stepsize, &names);
 
         //get resulting info
-        SFopt_S->GetOptimizationObject()->getOptimizationSimulationHistory( eval_points, obj_vals, flux_vals );
+        if(run_ok)
+            SFopt_S->GetOptimizationObject()->getOptimizationSimulationHistory( eval_points, obj_vals, flux_vals );
 
 
         try
@@ -1136,8 +1172,7 @@ static void _optimize( lk::invoke_t &cxt )
         }
         catch(...)
         {}
-            }
-        
+    }
 
     //set up return structure
     //result/objective/flux/iterations
@@ -1145,6 +1180,12 @@ static void _optimize( lk::invoke_t &cxt )
 
     lk::vardata_t res_hash;
     res_hash.empty_hash();
+
+    if (!run_ok)
+    {
+        cxt.result().hash_item("result", res_hash);
+        return;
+    }
 
     for(size_t i=0; i<optvars.size(); i++)
     {
@@ -1915,7 +1956,8 @@ SolarPILOTScriptWindow::SolarPILOTScriptWindow( wxWindow *parent, int id )
     sim->setCallbackFunction(LKInfoCallback, (void*)this);
 
     _reporting_enabled = true;
-
+    
+    this->m_output->SetFont(wxFont::wxFont(9, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
     this->AddOutput("\nTip: Use the 'Help' button to look up and add variables to the script.");
 }
 
