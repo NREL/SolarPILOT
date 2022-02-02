@@ -93,6 +93,8 @@ class CoPylot:
         Modify attributes of a subset of heliostats in the current layout
     save_from_script(p_data: int, sp_fname: str) -> bool
         Save the current case as a SolarPILOT .spt file
+    load_from_script(p_data: int, sp_fname: str) -> bool
+        Load a SolarPILOT .spt file
     dump_varmap_tofile(p_data: int, fname: str) -> bool
         Dump the variable structure to a text csv file
     """
@@ -1030,6 +1032,26 @@ class CoPylot:
 
         self.pdll.sp_save_from_script.restype = c_bool
         return self.pdll.sp_save_from_script( c_void_p(p_data), c_char_p(sp_fname.encode()))
+
+    #SPEXPORT bool sp_load_from_script(sp_data_t p_data, const char* sp_fname)
+    def load_from_script(self, p_data: int,  sp_fname: str) -> bool:
+        """Load a SolarPILOT .spt file
+
+         Parameters
+         ----------
+         p_data : int
+             memory address of SolarPILOT instance
+         sp_fname : str
+             filename to load SolarPILOT case
+
+         Returns
+         -------
+         bool
+             True if successful, False otherwise
+         """
+
+        self.pdll.sp_load_from_script.restype = c_bool
+        return self.pdll.sp_load_from_script( c_void_p(p_data), c_char_p(sp_fname.encode()))
 
     #SPEXPORT bool sp_dump_varmap(sp_data_t p_data, const char* sp_fname)
     def dump_varmap_tofile(self, p_data: int, fname: str) -> bool:

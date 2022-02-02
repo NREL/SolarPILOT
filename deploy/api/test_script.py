@@ -290,4 +290,19 @@ if True:
     assert cp.dump_varmap_tofile(r, os.path.join(cwd, "varmap.csv"))
     assert cp.save_from_script(r, os.path.join(cwd, "case_study_v2.spt"))
 
+# Testing load_from script - Pass
+if True:
+    cp.reset_vars(r)
+    cp_var = "receiver.0.rec_width"
+    cp_value = 2.5
+    filename = "test_load_file.spt"
+    def_cp_value = cp.data_get_number(r, cp_var)
+    assert cp.data_set_number(r, cp_var, cp_value)
+    assert cp.save_from_script(r, os.path.join(cwd, filename))
+    assert cp.data_free(r)
+    r = cp.data_create()
+    assert cp.data_get_number(r, cp_var) == def_cp_value
+    assert cp.load_from_script(r, os.path.join(cwd, filename))
+    assert cp.data_get_number(r, cp_var) == cp_value
+
 assert cp.data_free(r) # Works - free memory
