@@ -287,7 +287,14 @@ if True:
 if True:
     cwd = os.getcwd()
     assert not cp.dump_varmap_tofile(r, "varmap_dump_v2.csv") # This does not work - must provide full path
+    assert cp.data_set_number(r, "solarfield.0.dni_des", 1111.0)
     assert cp.dump_varmap_tofile(r, os.path.join(cwd, "varmap.csv"))
     assert cp.save_from_script(r, os.path.join(cwd, "case_study_v2.spt"))
+    assert cp.data_free(r) 
+
+    cp = CoPylot()
+    r = cp.data_create()
+    assert cp.load_from_script(r, os.path.join(cwd, "case_study_v2.spt"))
+    assert cp.data_get_number(r, "solarfield.0.dni_des") == 1111.0  # Testing if variable value loads correctly
 
 assert cp.data_free(r) # Works - free memory

@@ -21,8 +21,8 @@ ArchitecturesInstallIn64BitMode=x64
 
 
 ; UPDATE THESE TO MATCH THE VERSION
-AppVerName=SolarPILOT 1.4.0
-DefaultDirName={pf}\SolarPILOT\1.4.0
+AppVerName=SolarPILOT 1.4.1
+DefaultDirName={pf}\SolarPILOT\1.4.1
 
 AppPublisher=National Renewable Energy Laboratory
 AppPublisherURL=http://www.nrel.gov/csp/solarpilot.html
@@ -45,7 +45,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 ; Adding CoPylot API -> which requires building the API
-Source: "api/*"; DestDir: "{app}/api"; Excludes: "*.dll, *.spt, varmap.csv"; Flags: ignoreversion
+Source: "api/*"; DestDir: "{app}/api"; Excludes: "*.dll, *.spt, varmap.csv, .gitignore"; Flags: ignoreversion
 Source: "api/solarpilot.dll"; DestDir: "{app}/api"; Flags: ignoreversion
 
 Source: "samples/*"; DestDir: "{app}/samples"; Excludes: ".svn,*.map"; Flags: ignoreversion recursesubdirs createallsubdirs

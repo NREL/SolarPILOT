@@ -97,11 +97,14 @@ class CoPylot:
         Dump the variable structure to a text csv file
     """
 
-    def __init__(self):
+    def __init__(self, debug: bool = False):
         cwd = os.getcwd()
+        is_debugging = debug
         if sys.platform == 'win32' or sys.platform == 'cygwin':
-            self.pdll = CDLL(cwd + "/solarpilot.dll")
-            #self.pdll = CDLL(cwd + "/solarpilotd.dll") # for debugging
+            if is_debugging:
+                self.pdll = CDLL(cwd + "/solarpilotd.dll")
+            else:
+                self.pdll = CDLL(cwd + "/solarpilot.dll")
         elif sys.platform == 'darwin':
             self.pdll = CDLL(cwd + "/solarpilot.dylib")  # Never tested
         elif sys.platform.startswith('linux'):
@@ -782,14 +785,14 @@ class CoPylot:
 
     #SPEXPORT sp_number_t* sp_get_fluxmap(sp_data_t p_data, int* nrows, int* ncols, int rec_id = 0)
     def get_fluxmap(self, p_data: int, rec_id: int = 0) -> list:
-        """Retrieve the receiver fluxmap, optionally specifying the receiver ID to retrive
+        """Retrieve the receiver fluxmap, optionally specifying the receiver ID to retrieve
 
         Parameters
         ----------
         p_data : int
             memory address of SolarPILOT instance
         rec_id : int, optional
-            receiver ID to retrive
+            receiver ID to retrieve
 
         Returns
         -------
@@ -1011,6 +1014,102 @@ class CoPylot:
         self.pdll.sp_modify_heliostats.restype = c_bool
         return self.pdll.sp_modify_heliostats( c_void_p(p_data), pointer(helio_data), byref(c_int(nhel)), byref(c_int(ncols)), c_char_p(table_hdr.encode()) )
 
+    #SPEXPORT bool sp_calculate_optical_efficiency_table(sp_data_t p_data, int ud_n_az, int ud_n_zen);
+    def calculate_optical_efficiency_table(self, p_data: int,  ud_n_az: int = 0, ud_n_zen: int = 0) -> bool:
+        """Calculates optical efficiency table  based an even spacing of azimuths and zeniths (elevation) angles.
+
+         Parameters
+         ----------
+         p_data : int
+             memory address of SolarPILOT instance
+         ud_n_az : int
+             user-defined number of azimuth sampling points
+         ud_n_zen : int
+             user-defined number of zenith (elevation) sampling points
+
+         Returns
+         -------
+         bool
+             True if successful, False otherwise
+         """
+
+        self.pdll.sp_calculate_optical_efficiency_table.restype = c_bool
+        if ud_n_az == 0 and ud_n_zen == 0:
+            return self.pdll.sp_calculate_optical_efficiency_table( c_void_p(p_data))
+        else:
+            return self.pdll.sp_calculate_optical_efficiency_table( c_void_p(p_data), c_int(ud_n_az), c_int(ud_n_zen))
+
+    #SPEXPORT sp_number_t* sp_get_optical_efficiency_table(sp_data_t p_data, int* nrows, int* ncols)
+    def get_optical_efficiency_table(self, p_data: int) -> dict:
+        """Retrieve the field optical efficiency table as a function of azimuth and elevation angles
+
+        Parameters
+        ----------
+        p_data : int
+            memory address of SolarPILOT instance
+        
+        Returns
+        -------
+        dictionary with the following keys:
+
+            #. ``azimuth``: list, Solar azimuth angle [deg]
+            #. ``elevation``: list, Solar elevation angle [deg]
+            #. ``eff_data``: list of lists, Solar field optical efficiency at a specific azimuth (rows) and elevation (cols) angles [-]
+        """
+
+        nrows = c_int()
+        ncols = c_int()
+        self.pdll.sp_get_optical_efficiency_table.restype = POINTER(c_number)
+        res = self.pdll.sp_get_optical_efficiency_table( c_void_p(p_data), byref(nrows), byref(ncols))
+        # Formatting output
+        elevation = []
+        azimuth = []
+        eff_data = []
+        for r in range(nrows.value):
+            row = []
+            for c in range(ncols.value):
+                if r == 0 and c == 0:
+                    pass
+                elif r == 0:
+                    elevation.append( float(res[ncols.value * r + c]))
+                elif r != 0 and c == 0:
+                    azimuth.append( float(res[ncols.value * r + c]))
+                else:
+                    row.append( float(res[ncols.value * r + c]))
+            if r != 0:
+                eff_data.append(row)
+        
+        return {'azimuth': azimuth, 'elevation': elevation, 'eff_data': eff_data}
+    
+
+    #SPEXPORT bool sp_save_optical_efficiency_table(sp_data_t p_data, const char* sp_fname, const char* table_name)
+    def save_optical_efficiency_table(self, p_data: int, sp_fname: str, modelica_table_name: str = 'none') -> bool:
+        """
+        Saves optical efficiency table as a CSV file in the following format:
+            First row: Elevation angles (with leading zero)
+            First column: Azimuth angles
+            Rest of columns: Optical efficiency corresponding to elevation angle       
+
+        Parameters
+        ----------
+        p_data : int
+            memory address of SolarPILOT instance
+        sp_fname : str
+            filename to save efficiency table
+        modelica_table_name : str (optional)
+            Modelica table name for table output file consistent with Modelica formatting requirements. 
+            If not provided, then table format follows get_optical_efficiency_table(). 
+            Otherwise, table format contains extra header lines and elevation angle to be in ascending order (required by Modelica).
+
+        Returns
+        -------
+        bool
+            True if successful, False otherwise
+        """
+
+        self.pdll.sp_save_optical_efficiency_table.restype = c_bool
+        return self.pdll.sp_save_optical_efficiency_table( c_void_p(p_data), c_char_p(sp_fname.encode()), c_char_p(modelica_table_name.encode()))
+
     #SPEXPORT bool sp_save_from_script(sp_data_t p_data, const char* sp_fname)
     def save_from_script(self, p_data: int, sp_fname: str) -> bool:
         """Save the current case as a SolarPILOT .spt file
@@ -1030,6 +1129,26 @@ class CoPylot:
 
         self.pdll.sp_save_from_script.restype = c_bool
         return self.pdll.sp_save_from_script( c_void_p(p_data), c_char_p(sp_fname.encode()))
+
+    #SPEXPORT bool sp_load_from_script(sp_data_t p_data, const char* sp_fname)
+    def load_from_script(self, p_data: int,  sp_fname: str) -> bool:
+        """Load a SolarPILOT .spt file
+
+         Parameters
+         ----------
+         p_data : int
+             memory address of SolarPILOT instance
+         sp_fname : str
+             filename to load SolarPILOT case
+
+         Returns
+         -------
+         bool
+             True if successful, False otherwise
+         """
+
+        self.pdll.sp_load_from_script.restype = c_bool
+        return self.pdll.sp_load_from_script( c_void_p(p_data), c_char_p(sp_fname.encode()))
 
     #SPEXPORT bool sp_dump_varmap(sp_data_t p_data, const char* sp_fname)
     def dump_varmap_tofile(self, p_data: int, fname: str) -> bool:
