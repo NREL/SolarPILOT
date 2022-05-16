@@ -97,8 +97,11 @@ class CoPylot:
         Dump the variable structure to a text csv file
     """
 
-    def __init__(self, debug: bool = False):
-        cwd = os.getcwd()
+    def __init__(self, debug: bool = False, path: str = None):
+        if path is None:
+            cwd = os.getcwd()
+        else:
+            cwd = path
         is_debugging = debug
         if sys.platform == 'win32' or sys.platform == 'cygwin':
             if is_debugging:
