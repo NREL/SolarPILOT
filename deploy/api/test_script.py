@@ -174,6 +174,11 @@ if True:
 
     assert cp.simulate(r)
     flux_hermite = cp.get_fluxmap(r)  # Testing - Pass
+
+    assert cp.data_get_number(r, "solarfield.0.sf_area") > 1 
+    assert cp.data_get_number(r, "financial.0.rec_cost") > 1
+    assert cp.data_get_number(r, "land.0.land_area") > 1 
+    assert cp.data_get_number(r, "ambient.0.sun_csr_adj" ) > 0.05 
     
     # Plotting flux map
     if plot_results:

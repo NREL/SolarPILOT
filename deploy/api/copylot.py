@@ -8,7 +8,7 @@ def api_callback(fprogress, msg):
     """Callback function for API -> prints message from SolarPILOT DLL"""
     newline = False
     if fprogress != 0:
-        print("Progress is {:.2f} %".format(fprogress*100))
+        print("\rProgress is {:.2f} %".format(fprogress*100), end = "\r")
         newline = True
     if msg.decode() != '':
         if newline:
