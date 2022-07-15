@@ -567,7 +567,7 @@ void SPFrame::OnParAddVar( wxCommandEvent &WXUNUSED(event))
 
             //Add the weather file locations
             ArrayString wfiles;
-            std::string cpath = _climate_dir.GetPath(true);
+            std::string cpath = _climate_dir.GetPath(true).ToStdString();
             gui_util::list_files( cpath, wfiles, "eps csv tm2 tm3 tmy");
             _par_data.SetWeatherFileList(wfiles);
 

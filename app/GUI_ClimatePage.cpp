@@ -313,7 +313,7 @@ void SPFrame::LoadClimateFiles()
     */
     
     //Get a list of all files in the directory.
-    std::string cpath = _climate_dir.GetPath();
+    std::string cpath = _climate_dir.GetPath().ToStdString();
     gui_util::list_files(cpath, _all_climate_files, "csv tm2 tm3 smw epw");
 
     int nwf = _all_climate_files.size();

@@ -117,7 +117,7 @@ static void _add_receiver( lk::invoke_t &cxt )
     var_map *V = F.GetSolarFieldObject()->getVarMap();
 
 
-    string tname = cxt.arg(0).as_string();
+    string tname = cxt.arg(0).as_string().ToStdString();
     // check to make sure this isn't a duplicate. Each item needs a unique name
     bool dupe = false;
     for(unsigned int i=0; i<V->recs.size(); i++)
@@ -185,7 +185,7 @@ static void _add_heliostat_template( lk::invoke_t &cxt )
     SPFrame &F = SPFrame::Instance();
     var_map *V = F.GetSolarFieldObject()->getVarMap();
 
-    string tname = cxt.arg(0).as_string();
+    string tname = cxt.arg(0).as_string().ToStdString();
     bool dupe = false;
     for(unsigned int i=0; i<V->hels.size(); i++)
     { 
@@ -257,7 +257,7 @@ static void _sp_var( lk::invoke_t &cxt )
     
     var_map *vmap = SPFrame::Instance().GetSolarFieldObject()->getVarMap();
     
-    wxString name = cxt.arg(0).as_string();
+    wxString name = cxt.arg(0).as_string().ToStdString();
     if (cxt.arg_count() == 1)  //Get a variable
     {
         if( vmap->_varptrs.find( name.ToStdString() ) == vmap->_varptrs.end() ) 
@@ -387,7 +387,7 @@ static void _sp_var( lk::invoke_t &cxt )
     else if (cxt.arg_count() == 2)      //set variable
     {
     
-        std::string arg = cxt.arg(1).as_string();
+        std::string arg = cxt.arg(1).as_string().ToStdString();
         std::string sname = (std::string)name;
             
         //make sure the specified variable exists
@@ -542,7 +542,7 @@ static void _generate_layout( lk::invoke_t &cxt )
                 std::vector< lk::vardata_t > *hp = cxt.arg(0).vec()->at(i).vec();
 
                 for(size_t j=0; j<hp->size(); j++)
-                    helstr += hp->at(j).as_string() + (j < hp->size()-1 ? "," : "");
+                    helstr += hp->at(j).as_string().ToStdString() + (j < hp->size()-1 ? "," : "");
                 
                 V->sf.layout_data.val += helstr + (i < npos-1 ? ";" : "");
             }
@@ -1068,7 +1068,7 @@ static void _optimize( lk::invoke_t &cxt )
     for(size_t i=0; i<nv; i++ )
     {
         //check that the specified variable names exist
-        std::string varname = vartab.vec()->at(i).hash()->at("variable")->as_string();
+        std::string varname = vartab.vec()->at(i).hash()->at("variable")->as_string().ToStdString();
 
         if( V->_varptrs.find(varname) == V->_varptrs.end() )
             throw lk::error_t("Specified variable does not exist: " + varname);
@@ -1189,7 +1189,7 @@ static void _optimize( lk::invoke_t &cxt )
 
     for(size_t i=0; i<optvars.size(); i++)
     {
-        std::string varname = vartab.vec()->at(i).hash()->at("variable")->as_string();
+        std::string varname = vartab.vec()->at(i).hash()->at("variable")->as_string().ToStdString();
         spvar<double> *varptr = static_cast<spvar<double>*>( V->_varptrs.at( varname ) );
         res_hash.hash_item( varname, varptr->val );
     }
@@ -1231,7 +1231,7 @@ static void _clear_land( lk::invoke_t &cxt )
 
     if( cxt.arg_count() == 1 )
     {
-        std::string arg = cxt.arg(0).as_string();
+        std::string arg = cxt.arg(0).as_string().ToStdString();
         arg = lower_case(arg);
 
         if( arg.find( "inclusion" ) != std::string::npos )
@@ -1331,7 +1331,7 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
     Hvector *helios = SF->getHeliostats();
 
     //which coordinate system?
-    std::string system = cxt.arg(0).as_string();
+    std::string system = cxt.arg(0).as_string().ToStdString();
 
     //which return data type?
     /*bool is_returnloc = false;
@@ -1473,7 +1473,7 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
         if( lower_case(system) == "svgfile" )
         {
 
-            std::string fname = cxt.arg(1).as_string();
+            std::string fname = cxt.arg(1).as_string().ToStdString();
 
             if( ! ioutil::file_exists(fname.c_str()) )
                 throw lk::error_t("Invalid SVG file - not found.");
@@ -1543,7 +1543,7 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
         else
         {
             //get the string data and break it up into units
-            std::string data = cxt.arg(1).as_string();
+            std::string data = cxt.arg(1).as_string().ToStdString();
             entries = split(data, ";");
             scale_s = split(entries.front(), " ");
             offset_s = split(entries.at(1), " ");
@@ -1662,7 +1662,7 @@ static void _modify_heliostats( lk::invoke_t &cxt )
     //for each provided option
     for( lk::varhash_t::iterator var=vars->begin(); var != vars->end(); var++)
     {
-        std::string varname = var->first;
+        std::string varname = var->first.ToStdString();
         lk::vardata_t val = *var->second;
 
         //first make sure this is a valid attribute
@@ -1771,7 +1771,7 @@ static void _save_from_script( lk::invoke_t &cxt )
     SolarField *SF = F.GetSolarFieldObject();
     var_map *V = SF->getVarMap();
 
-    std::string fname = cxt.arg(0).as_string();
+    std::string fname = cxt.arg(0).as_string().ToStdString();
     if(! ioutil::dir_exists( ioutil::path_only(fname).c_str() ) )
     {
         cxt.result().assign( 0. );
@@ -1796,7 +1796,7 @@ static void _dump_varmap( lk::invoke_t &cxt )
     LK_DOC("dump_variables", "Dump the variable structure to a text csv file. Returns true if successful.", "(string:path):boolean");
     
     //valid path?
-    std::string fname = cxt.arg(0).as_string();
+    std::string fname = cxt.arg(0).as_string().ToStdString();
     if(! ioutil::dir_exists( ioutil::path_only(fname).c_str() ) )
     {
         cxt.result().assign( 0. );
@@ -1871,7 +1871,7 @@ static void _open_from_script( lk::invoke_t &cxt )
 {
     LK_DOC("open_project", "Open a SolarPILOT .spt case file. Returns true if successful. Updates the interface.", "(string:path):boolean");
 
-    std::string fname = cxt.arg(0).as_string();
+    std::string fname = cxt.arg(0).as_string().ToStdString();
     if(! ioutil::dir_exists( ioutil::path_only(fname).c_str() ) )
     {
         cxt.result().assign( 0. );
@@ -1957,7 +1957,7 @@ SolarPILOTScriptWindow::SolarPILOTScriptWindow( wxWindow *parent, int id )
 
     _reporting_enabled = true;
     
-    this->m_output->SetFont(wxFont::wxFont(9, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
+    this->m_output->SetFont(wxFont(9, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
     this->AddOutput("\nTip: Use the 'Help' button to look up and add variables to the script.");
 }
 
