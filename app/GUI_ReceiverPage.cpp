@@ -1034,7 +1034,7 @@ void SPFrame::OnReceiverColor(wxCommandEvent&)
     wxColourDialog* dlg = new wxColourDialog(this, &cdat);
     if (dlg->ShowModal() == wxID_OK)
     {
-        std::string cname = dlg->GetColourData().GetColour().GetAsString(wxC2S_HTML_SYNTAX);
+        std::string cname = dlg->GetColourData().GetColour().GetAsString(wxC2S_HTML_SYNTAX).ToStdString();
         if (cname == "#FFFFFF")
             cname = "random";
         rv->map_color.set_from_string( cname.c_str() );

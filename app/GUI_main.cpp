@@ -451,7 +451,7 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
     wxImage::AddHandler(new wxICOHandler );
     const wxSize imageSize(32, 32);
     _imageList = new wxImageList(imageSize.GetWidth(), imageSize.GetHeight());
-    std::string impath = _image_dir.GetPath(true);
+    std::string impath = _image_dir.GetPath(true).ToStdString();
     _imageList->Add( wxIcon((string)(impath+"Main.ico"), wxBITMAP_TYPE_ICO) );
     _imageList->Add( wxIcon((string)(impath+"Climate.ico"), wxBITMAP_TYPE_ICO) );
     _imageList->Add( wxIcon((string)(impath+"Financing.ico"), wxBITMAP_TYPE_ICO) );
@@ -1307,7 +1307,7 @@ void SPFrame::OnToolsSettings( wxCommandEvent &WXUNUSED(event))
     if( dlg->ShowModal() == wxID_OK)
     {
         //Update the stored values
-        std::string sf = _settings_file.GetFullPath();
+        std::string sf = _settings_file.GetFullPath().ToStdString();
         gui_util::writeSettingsFile(sf, _gui_settings);
         to_integer(_gui_settings["ncpu"].value, &_sim_control._n_threads);
         int nmaxthreads = wxThread::GetCPUCount();
@@ -1333,7 +1333,7 @@ void SPFrame::OnHelpContents( wxCommandEvent &WXUNUSED(event) )
 void SPFrame::OnHelpAbout( wxCommandEvent &WXUNUSED(event) )
 {
     /* Show the splash screen again with information on the version and authors */
-    string dir = _image_dir.GetPath(true) + "Splash_about.png";
+    string dir = _image_dir.GetPath(true).ToStdString() + "Splash_about.png";
     gui_about *pop = new gui_about(this, wxID_ANY, dir, _software_version, _imageList->GetIcon( ID_ICON_MAIN));
     pop->Show();
 

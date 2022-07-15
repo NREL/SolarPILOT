@@ -707,7 +707,7 @@ void SPFrame::OnOptimizeGridChange( wxGridEvent &event)
     int col = event.GetCol();
     if( col > 0 )
     {
-        string newval = _opt_var_grid->GetCellValue(row, col);
+        string newval = _opt_var_grid->GetCellValue(row, col).ToStdString();
         if(lower_case(newval) != "none" )
         {
             //try to convert it as a double
