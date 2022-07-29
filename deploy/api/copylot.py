@@ -531,6 +531,40 @@ class CoPylot:
         self.pdll.sp_drop_heliostat_template.restype = c_bool
         return self.pdll.sp_drop_heliostat_template( c_void_p(p_data), c_char_p(helio_name.encode()))
 
+    #SPEXPORT bool sp_generate_simulation_days(sp_data_t p_data, int *nrecord)
+    def generate_simulation_days(self, p_data: int):
+        """Report out the days, hours, and weather data used to generate the annual performance estimate
+        for the heliostat field layout. 
+
+        Parameters
+        ----------
+        p_data : int
+            memory address of SolarPILOT instance
+
+        Returns
+        -------
+        list | Each row is a time step; columns are as follows:
+            0 | Month (1-12)
+            1 | Day of the month (1-N)
+            2 | Hour of the day (0-23.999..)
+            3 | DNI (W/m^2) direct normal irradiance
+            4 | T_db (C)) dry bulb temperature
+            5 | V_wind (m/s) wind velocity
+            6 | Step_weight (-) relative weight given to each step during layout
+        """
+        nrecord = c_int()
+        ncol = c_int()
+        self.pdll.sp_generate_simulation_days.restype = POINTER(c_number)
+        simdays = self.pdll.sp_generate_simulation_days( c_void_p(p_data), byref(nrecord), byref(ncol))
+        self.pdll._sp_free_var.restype = c_void_p
+        self.pdll._sp_free_var( byref(simdays) )
+        data = []
+        for i in range(nrecord.value):
+            data.append(simdays[i*ncol.value:i*ncol.value+ncol.value])
+
+        return data
+
+
     #SPEXPORT bool sp_update_geometry(sp_data_t p_data)
     def update_geometry(self, p_data: int) -> bool:
         """Refresh the solar field, receiver, or ambient condition settings based on current parameter settings
