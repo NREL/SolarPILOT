@@ -556,8 +556,8 @@ class CoPylot:
         ncol = c_int()
         self.pdll.sp_generate_simulation_days.restype = POINTER(c_number)
         simdays = self.pdll.sp_generate_simulation_days( c_void_p(p_data), byref(nrecord), byref(ncol))
-        self.pdll._sp_free_var.restype = c_void_p
-        self.pdll._sp_free_var( byref(simdays) )
+        # self.pdll._sp_free_var.restype = c_void_p
+        # self.pdll._sp_free_var( byref(simdays) )
         data = []
         for i in range(nrecord.value):
             data.append(simdays[i*ncol.value:i*ncol.value+ncol.value])
@@ -1204,3 +1204,15 @@ class CoPylot:
         self.pdll.sp_dump_varmap.restype = c_bool
         return self.pdll.sp_dump_varmap( c_void_p(p_data), c_char_p(fname.encode()))
     
+    # SPEXPORT bool sp_export_soltrace(sp_data_t p_data, const char* sp_fname)
+    def export_soltrace(self, p_data: int, fname: str) -> bool:
+        """
+        """
+        self.pdll.sp_export_soltrace.restype = c_bool
+        return self.pdll.sp_export_soltrace( c_void_p(p_data), c_char_p(fname.encode()))
+
+    # SPEXPORT bool sp_load_soltrace_context(sp_data_t p_data, st_context_t* solt_cxt)
+    def load_soltrace_context(self, p_data: int, solt_cxt : int) -> bool:
+
+        self.pdll.sp_load_soltrace_context.restype = c_bool
+        return self.pdll.sp_load_soltrace_context( c_void_p(p_data), c_void_p(solt_cxt))
