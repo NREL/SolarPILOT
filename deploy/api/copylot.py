@@ -536,6 +536,8 @@ class CoPylot:
         """Report out the days, hours, and weather data used to generate the annual performance estimate
         for the heliostat field layout. 
 
+        ** This function requires that a layout has previously been created **
+
         Parameters
         ----------
         p_data : int
@@ -551,6 +553,8 @@ class CoPylot:
             4 | T_db (C)) dry bulb temperature
             5 | V_wind (m/s) wind velocity
             6 | Step_weight (-) relative weight given to each step during layout
+            7 | Solar azimuth angle (deg, N=0, +CW)
+            8 | Solar zenith angle (deg, 0=zen)
         """
         nrecord = c_int()
         ncol = c_int()
