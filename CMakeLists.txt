@@ -31,15 +31,15 @@ endif()
 include_directories(. $ENV{WEXDIR}/include $ENV{LKDIR}/include $ENV{CORETRACEDIR} $ENV{SSCDIR}/shared $ENV{SSCDIR}/solarpilot)
 
 set(SOLARPILOT_SRC
-	app/FieldPlot.cpp
-	app/FluxPlot.cpp
-	app/gui_about_dialog.cpp
+	app/FieldPlot.cpp                         app/FieldPlot.h
+	app/FluxPlot.cpp                          app/FluxPlot.h
+	app/gui_about_dialog.cpp                  app/gui_about_dialog.h
 	app/GUI_ClimatePage.cpp
 	app/GUI_CostPage.cpp
 	app/GUI_HeliostatPage.cpp
 	app/GUI_LayoutPage.cpp
 	app/GUI_LayoutSimulationPage.cpp
-	app/GUI_main.cpp
+	app/GUI_main.cpp                          app/GUI_main.h
 	app/GUI_MarketPage.cpp
 	app/GUI_OptimizationPage.cpp
 	app/GUI_ParametricSimulationPage.cpp
@@ -49,27 +49,27 @@ set(SOLARPILOT_SRC
 	app/GUI_ReceiverPage.cpp
 	app/GUI_ResultsPage.cpp
 	app/GUI_SimulationsPage.cpp
-	app/gui_util.cpp
-	app/help.cpp
-	app/ImageCanvas.cpp
-	app/InputControl.cpp
-	app/kml_select_dialog.cpp
-	app/layout_sim_export_dialog.cpp
-	app/numericvareditform.cpp
-	app/OutputControl.cpp
-	app/pagepanel.cpp
-	app/param_dialog.cpp
-	app/parse_kml.cpp
-	app/par_edit_ctrls.cpp
-	app/plot_base.cpp
-	app/plot_contourf.cpp
-	app/plot_scatter.cpp
-	app/plot_select_dialog.cpp
-	app/rec_select_dialog.cpp
-	app/rename_dialog.cpp
+	app/gui_util.cpp                          app/gui_util.h
+	app/help.cpp                              app/help.h
+	app/ImageCanvas.cpp                       app/ImageCanvas.h
+	app/InputControl.cpp                      app/InputControl.h
+	app/kml_select_dialog.cpp                 app/kml_select_dialog.h
+	app/layout_sim_export_dialog.cpp          app/layout_sim_export_dialog.h
+	app/numericvareditform.cpp                app/numericvareditform.h
+	app/OutputControl.cpp                     app/OutputControl.h
+	app/pagepanel.cpp                         app/pagepanel.h
+	app/par_edit_ctrls.cpp                    app/par_edit_ctrls.h
+	app/param_dialog.cpp                      app/param_dialog.h
+	app/parse_kml.cpp                         app/parse_kml.h
+	app/plot_base.cpp                         app/plot_base.h
+	app/plot_contourf.cpp                     app/plot_contourf.h
+	app/plot_scatter.cpp                      app/plot_scatter.h
+	app/plot_select_dialog.cpp                app/plot_select_dialog.h
+	app/rec_select_dialog.cpp                 app/rec_select_dialog.h
+	app/rename_dialog.cpp                     app/rename_dialog.h
 	app/sandbox.cpp
-	app/scripting.cpp
-	app/settings_dialog.cpp)
+	app/scripting.cpp                         app/scripting.h
+	app/settings_dialog.cpp                   app/settings_dialog.h)
 
 
 #####################################################################################################################
