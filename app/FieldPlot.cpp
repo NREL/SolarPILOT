@@ -446,6 +446,9 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             }
 
             DrawScaledPolygon(_dc, ppm, o, xexcs, yexcs, nexc);
+
+            delete[] xexcs;
+            delete[] yexcs;
         }
 
         //exclude the center region
@@ -1110,8 +1113,8 @@ void FieldPlot::DoPaint(wxDC &_pdc)
                     _dc.DrawText( labval, xlocm-ext.GetWidth()/2, ylocm-ext.GetHeight()/2 );
                 }
 
-                delete [] xc;
-                delete [] yc;
+                delete[] xc;
+                delete[] yc;
             }
         }
         _dc.SetFont( base_font );
@@ -1336,7 +1339,7 @@ void FieldPlot::DoPaint(wxDC &_pdc)
             }
         }
 
-        delete [] plot_vals;
+        delete[] plot_vals;
 
 
         //Draw the plot boundary
@@ -1520,7 +1523,7 @@ void FieldPlot::DrawScaledPolygon( wxDC &dc, double ppm, double origin[2], doubl
 
     dc.DrawPolygon(n_points, points);
 
-    delete [] points;
+    delete[] points;
 }
 
 void FieldPlot::DrawScaledEllipse( wxDC &dc, double ppm, double origin[2], double x, double y, double diam)
