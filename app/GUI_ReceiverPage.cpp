@@ -186,11 +186,13 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     wxPanel
         *panel_rec_ext = new wxPanel(parent),
         *panel_rec_cav = new wxPanel(parent),
-        *panel_rec_flat = new wxPanel(parent);
+        *panel_rec_flat = new wxPanel(parent),
+        *panel_rec_fall = new wxPanel(parent);
     wxBoxSizer
         *panel_rec_ext_s = new wxBoxSizer(wxVERTICAL),
         *panel_rec_cav_s = new wxBoxSizer(wxVERTICAL),
-        *panel_rec_flat_s = new wxBoxSizer(wxVERTICAL);
+        *panel_rec_flat_s = new wxBoxSizer(wxVERTICAL),
+        *panel_rec_fall_s = new wxBoxSizer(wxVERTICAL);
     
     // controls shown for all receiver types
     InputControl* rec_type = new InputControl(parent, wxID_ANY, _variables.recs[id].rec_type);
@@ -213,6 +215,45 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     OutputControl* rec_cav_apw = new OutputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_cav_apw, wxT("%.2f"));
     OutputControl* rec_cav_aph = new OutputControl(panel_rec_cav, wxID_ANY, _variables.recs[id].rec_cav_aph, wxT("%.2f"));
 
+    // controls for falling particle receiver
+    InputControl* rec_width_fall = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].rec_width);
+    InputControl* norm_curtain_width = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].norm_curtain_width);
+    InputControl* norm_curtain_height = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].norm_curtain_height);
+    InputControl* max_curtain_depth = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].max_curtain_depth);
+    InputControl* curtain_type = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].curtain_type);
+    InputControl* curtain_radius = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].curtain_radius);
+    InputControl* is_snout = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].is_snout);
+    InputControl* snout_depth = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].snout_depth);
+    InputControl* snout_vert_angle = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].snout_vert_angle);
+    InputControl* snout_horiz_angle = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].snout_horiz_angle);
+
+    //----- Troughs location panel -------------
+    string sid = my_to_string(id);
+
+    wxButton* import_troughs_locs = new wxButton(panel_rec_fall, wxID_ANY, "Import", wxDefaultPosition, wxDefaultSize, 0L, wxDefaultValidator, sid);
+    import_troughs_locs->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnTroughsLocImport), NULL, this);
+    wxButton* export_troughs_locs = new wxButton(panel_rec_fall, wxID_ANY, "Export", wxDefaultPosition, wxDefaultSize, 0L, wxDefaultValidator, sid);
+    export_troughs_locs->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnTroughsLocExport), NULL, this);
+    wxSpinCtrl* num_troughs_spin = new wxSpinCtrl(panel_rec_fall, wxID_ANY, "0", wxDefaultPosition, _spin_ctrl_size, wxSP_ARROW_KEYS | wxALIGN_RIGHT, 0, 10, 0, sid);
+    num_troughs_spin->Connect(wxEVT_COMMAND_SPINCTRL_UPDATED, wxCommandEventHandler(SPFrame::OnNumTroughsSpin), NULL, this);
+
+    wxBoxSizer* troughs_locs_button_sizer = new wxBoxSizer(wxHORIZONTAL);
+    troughs_locs_button_sizer->Add(import_troughs_locs, 0, wxALL, 5);
+    troughs_locs_button_sizer->Add(export_troughs_locs, 0, wxALL, 5);
+    troughs_locs_button_sizer->AddSpacer(10);
+    troughs_locs_button_sizer->Add(new wxStaticText(panel_rec_fall, wxID_ANY, "Number of troughs"), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
+    troughs_locs_button_sizer->Add(num_troughs_spin, 0, wxALL, 5);
+
+    wxGrid* trough_locs_grid = new wxGrid(panel_rec_fall, wxID_ANY, wxDefaultPosition, wxSize(250, 250), 262144L, sid);
+    _troughs_loc_objects[id] = s_troughs_loc_objects(trough_locs_grid, num_troughs_spin);
+
+    trough_locs_grid->CreateGrid(0, 0);
+    UpdateTroughsLocGrid(id);
+    trough_locs_grid->Connect(wxEVT_GRID_CELL_CHANGED, wxGridEventHandler(SPFrame::OnTroughLocChange), NULL, this);
+    //----------------------------------------
+    OutputControl* curtain_height = new OutputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].curtain_total_height, wxT("%.2f"));
+    OutputControl* curtain_width = new OutputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].curtain_width, wxT("%.2f"));
+
     // additional controls for all receivers
     InputControl* accept_ang_type = new InputControl(parent, wxID_ANY, _variables.recs[id].accept_ang_type);
     InputControl* accept_ang_x = new InputControl(parent, wxID_ANY, _variables.recs[id].accept_ang_x);
@@ -224,7 +265,6 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     InputControl* panel_rotation = new InputControl(parent, wxID_ANY, _variables.recs[id].panel_rotation);
     InputControl* is_polygon = new InputControl(parent, wxID_ANY, _variables.recs[id].is_polygon);
     InputControl* aperture_type = new InputControl(parent, wxID_ANY, _variables.recs[id].aperture_type);
-    
     
     // output controls    
     OutputControl* rec_aspect = new OutputControl(parent, wxID_ANY, _variables.recs[id].rec_aspect, wxT("%.2f"));
@@ -238,10 +278,11 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     wxStaticText* az_info = new wxStaticText(panel_rec_flat, wxID_ANY, msg);
     az_info->SetForegroundColour(_helptext_colour);
 
-    //External cylindrical=0;Cavity=1;Flat plate=2
+    //External cylindrical=0;Cavity=1;Flat plate=2;Falling particle=3
     rec_type->setPanelObject("External cylindrical", *panel_rec_ext);
     rec_type->setPanelObject("Cavity", *panel_rec_cav);
     rec_type->setPanelObject("Flat plate", *panel_rec_flat);
+    rec_type->setPanelObject("Falling particle", *panel_rec_fall);
 
     panel_rec_ext_s->Add(rec_diameter);
     
@@ -256,6 +297,21 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     panel_rec_cav_s->Add(rec_cav_blip);
     panel_rec_cav_s->Add(rec_cav_aph);
     panel_rec_cav_s->Add(rec_cav_apw);
+
+    panel_rec_fall_s->Add(rec_width_fall);
+    panel_rec_fall_s->Add(norm_curtain_height);
+    panel_rec_fall_s->Add(curtain_height);
+    panel_rec_fall_s->Add(norm_curtain_width);
+    panel_rec_fall_s->Add(curtain_width);
+    panel_rec_fall_s->Add(max_curtain_depth);
+    panel_rec_fall_s->Add(troughs_locs_button_sizer);
+    panel_rec_fall_s->Add(trough_locs_grid, 1, wxEXPAND | wxALL, 5);
+    panel_rec_fall_s->Add(curtain_type);
+    panel_rec_fall_s->Add(curtain_radius);
+    panel_rec_fall_s->Add(is_snout);
+    panel_rec_fall_s->Add(snout_depth);
+    panel_rec_fall_s->Add(snout_vert_angle);
+    panel_rec_fall_s->Add(snout_horiz_angle);
 
     sbs0->Add(rec_type);
     sbs0->Add(rec_height);
@@ -274,11 +330,13 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     panel_rec_ext->SetSizer(panel_rec_ext_s);
     panel_rec_cav->SetSizer(panel_rec_cav_s);
     panel_rec_flat->SetSizer(panel_rec_flat_s);
+    panel_rec_fall->SetSizer(panel_rec_fall_s);
 
     //add receiver type panels
     sbs0->Add(panel_rec_ext);
     sbs0->Add(panel_rec_cav);
     sbs0->Add(panel_rec_flat);
+    sbs0->Add(panel_rec_fall);
 
     //outputs
     sbs0->Add(rec_aspect);
@@ -286,20 +344,24 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     sbs0->Add(aperture_area);
 
     {
-        wxWindow* dsibs[] = { panel_rotation };
+        wxWindow* dsibs[] = {panel_rotation};
         is_polygon->setDisabledSiblings("false", 1, dsibs);
     }
     {
-		wxWindow* dsibs[] = {accept_ang_type, accept_ang_y, rec_elevation, rec_width};
-		rec_type->setDisabledSiblings("External cylindrical", 4, dsibs);
+		wxWindow* dsibs[] = {accept_ang_type, accept_ang_y, rec_elevation};
+		rec_type->setDisabledSiblings("External cylindrical", 3, dsibs);
     }
     {
-        wxWindow* dsibs[] = { rec_diameter, rec_width };
-        rec_type->setDisabledSiblings("Cavity", 2, dsibs);
+		wxWindow* dsibs[] = {is_polygon};
+		rec_type->setDisabledSiblings("Flat plate", 1, dsibs);
     }
     {
-		wxWindow* dsibs[] = {rec_cav_rad, rec_cav_cdepth, is_polygon, n_panels, rec_diameter, rec_cav_apwfrac};
-		rec_type->setDisabledSiblings("Flat plate", 6, dsibs);
+        wxWindow* dsibs[] = {snout_depth, snout_vert_angle, snout_horiz_angle};
+        is_snout->setDisabledSiblings("false", 3, dsibs);
+    }
+    {
+        wxWindow* dsibs[] = {curtain_radius};
+        curtain_type->setDisabledSiblings("Flat", 1, dsibs);
     }
 
     //---------------- end receiver geometry group ------------------------------
@@ -344,7 +406,7 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
         *absorptance = new InputControl(parent, wxID_ANY, _variables.recs[id].absorptance),
         *peak_flux = new InputControl(parent, wxID_ANY, _variables.recs[id].peak_flux),
         *flux_profile_type = new InputControl(parent, wxID_ANY, _variables.recs[id].flux_profile_type);
-    string sid = my_to_string(id);    
+    //string sid = my_to_string(id);    
     
     //----------------------------------------
     wxPanel *user_flux_panel = new wxPanel(parent);
@@ -387,6 +449,8 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     {
         wxWindow* dsibs[] = { user_flux_panel, flux_profile_type };
         rec_type->addDisabledSiblings("External cylindrical", 2, dsibs);
+        rec_type->addDisabledSiblings("Falling particle", 2, dsibs);
+
     }
     rec_type->updateInputDisplay();
 
@@ -502,9 +566,10 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
 
 
     InputControl *inputs[] = {rec_type, is_polygon, n_panels, panel_rotation, rec_height, rec_diameter, rec_width, aperture_type, rec_azimuth, rec_elevation, 
-                              rec_cav_rad, rec_cav_cdepth, rec_offset_reference, rec_offset_x, rec_offset_y, rec_offset_z, rec_cav_apwfrac, rec_cav_tlip, rec_cav_blip,
-                              therm_loss_base, piping_loss_coef, piping_loss_const, peak_flux, flux_profile_type, absorptance, accept_ang_type,
-                              is_open_geom, accept_ang_x, accept_ang_y, NULL};
+                              rec_cav_rad, rec_cav_cdepth, rec_offset_reference, rec_offset_x, rec_offset_y, rec_offset_z, rec_cav_apwfrac, rec_cav_tlip, rec_cav_blip, 
+                              rec_width_fall, norm_curtain_width, norm_curtain_height, max_curtain_depth, curtain_type, 
+                              curtain_radius, is_snout, snout_depth, snout_vert_angle, snout_horiz_angle, therm_loss_base, piping_loss_coef, piping_loss_const, peak_flux, 
+                              flux_profile_type, absorptance, accept_ang_type, is_open_geom, accept_ang_x, accept_ang_y, NULL};
     int i=0;
     while(inputs[i] != NULL)
     { 
@@ -514,7 +579,7 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     
     i=0;
     OutputControl *outputs[] = {rec_aspect, optical_height, rec_offset_x_global, rec_offset_y_global, rec_offset_z_global, rec_cav_apw, rec_cav_aph, aperture_area,
-                                absorber_area, therm_loss, piping_loss, NULL};
+                                absorber_area, curtain_height, curtain_width, therm_loss, piping_loss, NULL};
     while(outputs[i] != NULL)
     { 
         _output_map[ outputs[i]->getVarObject() ] = outputs[i]; 
@@ -1440,3 +1505,252 @@ void SPFrame::UpdateUserFluxData(int id)
 
     return;
 }
+
+void SPFrame::OnTroughsLocImport(wxCommandEvent& evt)
+{
+    int recid;
+    to_integer(static_cast<wxButton*>(evt.GetEventObject())->GetName().ToStdString(), &recid);
+
+    wxFileDialog filedlg(this, "Select a file for import...", wxEmptyString, wxEmptyString,
+        "Data files (*.txt;*.dat;*.csv)|*.txt;*.dat;*.csv");
+    filedlg.CentreOnParent();
+
+    //Show and process
+    if (filedlg.ShowModal() == wxID_OK)
+    {
+        wxString info = filedlg.GetPath().c_str();
+        //Try opening the file
+        if (ioutil::file_exists(info.c_str()))
+        {
+            try
+            {
+                std::string
+                    files,
+                    fnames = (std::string)info,
+                    eol;
+                ioutil::read_file(fnames, files, eol);
+                wxString file(files), fname(fnames);
+                std::vector<std::string> entries = split(file.ToStdString(), eol);
+                int nlines = entries.size();
+
+                //determine the delimiter
+                std::vector<std::string> data;
+
+                //Find the type of delimiter
+                std::vector<std::string> delims;
+                delims.push_back(",");
+                delims.push_back(" ");
+                delims.push_back("\t");
+                delims.push_back(";");
+                std::string delim = "\t";    //initialize
+                unsigned int  ns = 0;
+                for (unsigned int i = 0; i < delims.size(); i++)
+                {
+                    data = split(entries.at(0), delims.at(i));
+                    if (data.size() > ns)
+                    {
+                        delim = delims.at(i); ns = data.size();
+                    }    //pick the delimiter that returns the most entries
+                }
+                data.clear();
+
+                if (ns != 2)
+                {
+                    std::stringstream ss;
+                    ss << "Particle troughs location data must have only two columns, i.e., normalized height and normalized depth.";
+                    PopMessage(ss.str(), "Error");
+                    return;
+                }
+                if (nlines > 10)
+                {
+                    std::stringstream ss;
+                    ss << "Maximum number of particle troughs is 10.";
+                    PopMessage(ss.str(), "Error");
+                    return;
+                }
+                wxFormatString fmt = "%f,%f;";
+                wxString stemp;
+                matrix_t<double>* vval = &_variables.recs[recid].norm_heights_depths.val;
+
+                //_variables.recs[recid].num_troughs.val = nlines;
+
+                vval->clear();    //Clear
+                vval->resize(nlines, ns);
+
+                //Process all of the entries
+                for (int i = 0; i < nlines; i++)
+                {
+                    data = split(entries.at(i), delim);
+
+                    for (unsigned int j = 0; j < ns; j++)
+                        to_double(data.at(j), &vval->at(i, j));
+
+                }
+                //Call to the function that sets the data
+                UpdateTroughsLocGrid(recid);
+            }
+            catch (std::exception& e)
+            {
+                std::stringstream ss;
+                ss << "The specified file could not be loaded. " << e.what();
+                PopMessage(ss.str(), "Error");
+            }
+            catch (...)
+            {
+                PopMessage("The specified file could not be loaded: Unknown error.", "Error");
+            }
+        }
+        else
+        {
+            //Error: the file was not found
+            PopMessage("The specified file could not be loaded: File not found.", "Error");
+        }
+    }
+
+}
+
+void SPFrame::OnTroughsLocExport(wxCommandEvent& evt)
+{
+    int recid;
+    to_integer(static_cast<wxButton*>(evt.GetEventObject())->GetName().ToStdString(), &recid);
+
+    //Get the file
+    wxFileDialog filedlg(this, "Select a path for export...", wxEmptyString, wxEmptyString,
+        "Comma separated file (*.csv)|*.txt;*.csv", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+    filedlg.CentreOnParent();
+
+    //Show and process
+    if (filedlg.ShowModal() == wxID_OK)
+    {
+        wxString info = filedlg.GetPath().c_str();
+
+        matrix_t<double>* vals = &_variables.recs[recid].norm_heights_depths.val;
+
+        ofstream file;
+        file.open((string)info);
+        if (!file.is_open())
+        {
+            PopMessage("The specified file could not be opened for writing. Please ensure that the file is not open or write-protected.", "Error", wxICON_ERROR | wxOK);
+            return;
+        }
+
+        int nc = (int)vals->ncols();
+
+        for (int i = 0; i < (int)vals->nrows(); i++)
+            for (int j = 0; j < nc; j++)
+                file << vals->at(i, j) << (j < nc - 1 ? "," : "\n");
+
+        file.close();
+
+        //notify the user of a successful export
+        wxString msg;
+        msg.sprintf("%s\nFile successfully created.", info.c_str());
+        PopMessage(msg, "Success");
+    }
+}
+
+void SPFrame::OnNumTroughsSpin(wxCommandEvent& evt)
+{
+    int recid;
+    wxSpinCtrl* spin = static_cast<wxSpinCtrl*>(evt.GetEventObject());
+    to_integer(spin->GetName().ToStdString(), &recid);
+
+    if (_troughs_loc_objects.find(recid) == _troughs_loc_objects.end())
+        return;     //invalid receiver ID
+
+    wxGrid* grid = _troughs_loc_objects[recid].gridptr;
+
+    int nspin = spin->GetValue();
+    //_variables.recs[recid].num_troughs.val = nspin;
+
+    int ngrid = grid->GetNumberRows();
+
+    if (nspin < ngrid)
+    {
+        grid->DeleteRows(nspin, ngrid - nspin);
+    }
+    else if (nspin > ngrid)
+    {
+        grid->AppendRows(nspin - ngrid);
+        //set the new column values to equal the last previously existing column
+        for (size_t j = ngrid; j < nspin; j++)
+            for (size_t i = 0; i < grid->GetNumberCols(); i++)
+                if (ngrid != 0)
+                    grid->SetCellValue(j, i, grid->GetCellValue(j - 1, i));
+                else
+                    grid->SetCellValue(j, i, "0.0");
+    }
+    else
+        return;
+    UpdateTroughLocData(recid);
+}
+
+void SPFrame::OnTroughLocChange(wxGridEvent& evt)
+{
+    int recid;
+    to_integer(static_cast<wxGrid*>(evt.GetEventObject())->GetName().ToStdString(), &recid);
+    UpdateTroughLocData(recid);
+}
+
+void SPFrame::UpdateTroughsLocGrid(int id)
+{
+    /*
+    Take the current data in the variable map string and update the interface grid.
+
+    format:
+    x1y1,x2y1,x3y1...;x1y2,x2,y2,...;...
+
+    */
+
+    if (id > _variables.recs.size() - 1)
+        return;     //out of bounds
+
+    matrix_t<double>* table = &_variables.recs[id].norm_heights_depths.val;
+
+    //resize the grid
+    _troughs_loc_objects[id].num_troughs_ptr->SetValue(table->nrows());
+    GridCount(table->nrows(), 2, _troughs_loc_objects[id].gridptr);
+
+    //update the grid
+    for (size_t i = 0; i < table->nrows(); i++)
+        for (size_t j = 0; j < table->ncols(); j++)
+            _troughs_loc_objects[id].gridptr->SetCellValue(i, j, wxString::Format("%f", table->at(i, j)));
+
+    //update the col labels
+    _troughs_loc_objects[id].gridptr->SetColLabelValue(0, "Normalized Height");
+    _troughs_loc_objects[id].gridptr->SetColLabelValue(1, "Normalized Depth");
+    for (size_t j = 0; j < table->ncols(); j++)
+    {
+        _troughs_loc_objects[id].gridptr->SetColSize(j, 130);
+    }
+
+    return;
+}
+
+void SPFrame::UpdateTroughLocData(int id)
+{
+    /*
+    Take the current data in the trough location grid and format it for storage as a string variable
+    in the variable map.
+
+    format:
+    x1y1,x2y1,x3y1...;x1y2,x2,y2,...;...
+
+    */
+
+    wxGrid* grid = _troughs_loc_objects[id].gridptr;
+    matrix_t<double>* table = &_variables.recs[id].norm_heights_depths.val;
+
+    int
+        nr = grid->GetNumberRows(),
+        nc = grid->GetNumberCols();
+
+    table->resize(nr, nc);
+
+    for (size_t i = 0; i < (size_t)nr; i++)
+        for (size_t j = 0; j < (size_t)nc; j++)
+            to_double(grid->GetCellValue(i, j).ToStdString(), &table->at(i, j));
+
+    return;
+}
+

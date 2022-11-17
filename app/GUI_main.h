@@ -339,6 +339,19 @@ private:
     };
     std::map< int, s_user_flux_objects > _user_flux_objects;
 
+    struct s_troughs_loc_objects 
+    {
+        wxSpinCtrl* num_troughs_ptr;
+        wxGrid* gridptr;
+        s_troughs_loc_objects() {};
+        s_troughs_loc_objects(wxGrid* g, wxSpinCtrl* t)
+        {
+            num_troughs_ptr = t;
+            gridptr = g;
+        };
+    };
+    std::map< int, s_troughs_loc_objects > _troughs_loc_objects;
+
     //Objects for Layout page
     wxGrid *_design_grid;
     wxSpinCtrl *_design_ct;
@@ -592,6 +605,11 @@ protected:
     void OnUserFluxNy(wxCommandEvent &event);
     void OnUserFluxGridChange(wxGridEvent &event);
 
+    void OnTroughsLocImport(wxCommandEvent& event);
+    void OnTroughsLocExport(wxCommandEvent& event);
+    void OnNumTroughsSpin(wxCommandEvent& event);
+    void OnTroughLocChange(wxGridEvent& event);
+
     void OnDoLayout( wxCommandEvent &event);            
     void OnLayoutImport( wxCommandEvent &event);            
     void OnLayoutExport( wxCommandEvent &event);            
@@ -748,6 +766,8 @@ public:
     bool GetGeomState();
     void UpdateUserFluxGrid(int id);
     void UpdateUserFluxData(int id);
+    void UpdateTroughsLocGrid(int id);
+    void UpdateTroughLocData(int id);
 
     void DoResultsPage();  //create from _results
     void SAMInputParametric();
