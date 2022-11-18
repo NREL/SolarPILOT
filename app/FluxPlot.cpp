@@ -166,7 +166,6 @@ void FluxPlot::DoPaint(wxDC &_pdc)
     Receiver *rec = _SF->getReceivers()->at(_receiver);    //This is the receiver to use
     var_receiver *vrec = rec->getVarMap();
     int rgeom = rec->getGeometryType();
-    //int rgeom = Receiver::REC_GEOM_TYPE::CYLINDRICAL_CAV;    //For debugging
 
     wxSize parsize = this->GetClientSize();
     parsize.x = parsize.x < 100 ? 1024 : parsize.x;
@@ -189,7 +188,9 @@ void FluxPlot::DoPaint(wxDC &_pdc)
     _plotobj.SetZRange(_zax_min, _zax_max, _zax_autoscale);
 
     double rw = rec->getReceiverWidth(*vrec);
-    double rh = vrec->rec_height.val; 
+    double rh = vrec->rec_height.val;
+    if (vrec->rec_type.mapval() == var_receiver::REC_TYPE::FALLING_PARTICLE)
+        rh = vrec->curtain_total_height.Val();
 
     /* 
     Depending on the surface, define the x-axis differently.
@@ -221,6 +222,7 @@ void FluxPlot::DoPaint(wxDC &_pdc)
         xaxcent = 0.;
         is_angle = true;
         break;
+    case Receiver::REC_GEOM_TYPE::FALL_FLAT:
     case Receiver::REC_GEOM_TYPE::PLANE_RECT:
     case Receiver::REC_GEOM_TYPE::PLANE_ELLIPSE:
         //Extents will be the geometrical limits of the receiver plane
@@ -289,81 +291,80 @@ void FluxPlot::DoPaint(wxDC &_pdc)
     //1    |    Continuous open cylinder - external    
     //2    |    Continuous open cylinder - internal cavity
     //3    |    Planar rectangle
-    switch (rgeom)
-    {
-    case Receiver::REC_GEOM_TYPE::CYLINDRICAL_CLOSED:
-    case Receiver::REC_GEOM_TYPE::CYLINDRICAL_OPEN:
-    case Receiver::REC_GEOM_TYPE::PLANE_RECT:
-    case Receiver::REC_GEOM_TYPE::POLYGON_CLOSED:
-    {
-        //Set the fringe values
-        if(rgeom == Receiver::REC_GEOM_TYPE::CYLINDRICAL_CLOSED)    //For the closed cylinder, wrap around in X
-            _plotobj.SetDataWrapping(true); // not for cavity
+    if (_plot_type == 0)
+    {   //Flux map
+        switch (rgeom)
+        {
+        case Receiver::REC_GEOM_TYPE::CYLINDRICAL_CLOSED:
+        case Receiver::REC_GEOM_TYPE::CYLINDRICAL_OPEN:
+        case Receiver::REC_GEOM_TYPE::PLANE_RECT:
+        case Receiver::REC_GEOM_TYPE::POLYGON_CLOSED:
+        {
+            //Set the fringe values
+            if (rgeom == Receiver::REC_GEOM_TYPE::CYLINDRICAL_CLOSED)    //For the closed cylinder, wrap around in X
+                _plotobj.SetDataWrapping(true); // not for cavity
 
-        if(_plot_type == 0)
-        {    //Flux map
             _plotobj.SetUnits(" kW/m2");
-    
+
             //---- Draw the flux intensity ----
-            FluxSurface *ffs = &fs->at(0);
-            FluxGrid *fg = ffs->getFluxMap();
+            FluxSurface* ffs = &fs->at(0);
+            FluxGrid* fg = ffs->getFluxMap();
 
             //Calculate the element size
-            int 
+            int
                 fnx = ffs->getFluxNX(),
                 fny = ffs->getFluxNY();
-        
+
             //Copy the data into a double vector
             vector<vector<double> > fdata(fnx, vector<double>(fny));
 
             {
                 bool datok = false;
-                if( (int)fg->size() == fnx )
+                if ((int)fg->size() == fnx)
                 {
-                    if( (int)fg->front().size() == fny )
+                    if ((int)fg->front().size() == fny)
                     {
                         datok = true; //interpolation not needed
 
                         //Load data in. 
-                        for(int i=0; i<fnx; i++)
-                            for(int j=0; j<fny; j++)
+                        for (int i = 0; i < fnx; i++)
+                            for (int j = 0; j < fny; j++)
                                 fdata.at(i).at(j) = fg->at(i).at(j).flux;
                     }
                 }
-                if(!datok)
+                if (!datok)
                 {
                     //make something pretty
                     int nx = 40;
                     int ny = nx;
-                    vector<vector<double> > ddat(nx, vector<double>(ny,0.));
-
+                    vector<vector<double> > ddat(nx, vector<double>(ny, 0.));
 
                     double cf = 0.4;
-                    double cfp = cf-0.2;
+                    double cfp = cf - 0.2;
 
-                    double xc = int(cf*nx);
-                    double yc = int(cf*ny);
+                    double xc = int(cf * nx);
+                    double yc = int(cf * ny);
 
-                    double xcp = int(cfp*nx);
-                    double ycp = int(cfp*ny);
+                    double xcp = int(cfp * nx);
+                    double ycp = int(cfp * ny);
 
                     double rl = 0.4;
 
-                    for(int i=0; i<nx; i++)
+                    for (int i = 0; i < nx; i++)
                     {
-                        for(int j=0; j<ny; j++)
+                        for (int j = 0; j < ny; j++)
                         {
-                            double dxc = (i-xc)/float(nx);
-                            double dyc = (ny-1-j-yc)/float(ny);
-        
-                            double dxcp = (i-xcp)/float(nx);
-                            double dycp = (ny-1-j-ycp)/float(ny);
-        
-                            double rc = sqrt(dxc*dxc + dyc*dyc);
-        
-                            double rcp = sqrt(dxcp*dxcp + dycp*dycp);
+                            double dxc = (i - xc) / float(nx);
+                            double dyc = (ny - 1 - j - yc) / float(ny);
 
-                            if(rc < rl && rcp > rl)
+                            double dxcp = (i - xcp) / float(nx);
+                            double dycp = (ny - 1 - j - ycp) / float(ny);
+
+                            double rc = sqrt(dxc * dxc + dyc * dyc);
+
+                            double rcp = sqrt(dxcp * dxcp + dycp * dycp);
+
+                            if (rc < rl && rcp > rl)
                                 ddat.at(i).at(j) = 1.;
                         }
                     }
@@ -380,130 +381,18 @@ void FluxPlot::DoPaint(wxDC &_pdc)
                     newplt.Plot(_plotobj, fdata);
                 }
             }
-
-
+            break;
         }
-        else if(_plot_type == 1)
-        {    //Aim point scatter plot
-            _plotobj.SetUnits(" m");
-    
-            vector<vector<double> > fdata;
-            
-            //Get receiver angles
-            double raz = vrec->rec_azimuth.val*D2R;
-            double rel = vrec->rec_elevation.val*D2R;
-            double tht = vrec->optical_height.Val();
-            double offx = vrec->rec_offset_x_global.Val();
-            double offy = vrec->rec_offset_y_global.Val();
-            //double offz = vrec->rec_offset_z_global.Val();
-            double rdiam = rec->getReceiverWidth(*vrec);
-            double rheight = vrec->rec_height.val;
-
-            //Also Process to determine how many heliostats share each aim point and the average 
-            //radial position of heliostats on the point
-            //Calculate the element size
-            int 
-                fnx = fs->at(0).getFluxNX(),
-                fny = fs->at(0).getFluxNY();
-            vector<vector<int> > bins(fnx,vector<int>(fny,0));
-            vector<vector<double> > lens(fnx,vector<double>(fny,0.));
-            //----
-
-            for(int i=0; i<(int)_helios.size(); i++)
-            {
-                if( _helios.at(i)->getWhichReceiver() != rec) continue;
-                
-                
-                sp_point *aim = _helios.at(i)->getAimPoint();
-                sp_point aimc(*aim);
-                aimc.Add(-offx, -offy, -tht);
-                double radialpos = _helios.at(i)->getRadialPos();
-                
-                int binx, biny;
-                //is the receiver cylindrical? if so, adjust the aimpoint relative to the 'unwrapped' cylinder
-                if(rgeom<3)
-                {
-                    //calculate aimpoint azimuth
-                    double aimaz = atan2(aimc.x, aimc.y);
-                    aimc.x = (aimaz+PI)*180./PI;
-                    aimc.y = aimc.z + rheight/2.;    
-                    aimc.z = 0.;
-                    //now the coordinates are in the XY plane
-                    binx = (int)(floor(max(0.,min(0.9999,(PI + aimaz)/(2.*PI)))*fnx));
-                }
-                else
-                {
-                    //Transform the aim point into receiver coordinates
-                    Toolbox::rotation(PI-raz, 2, aimc);
-                    Toolbox::rotation(PI/2-rel, 0, aimc);
-                    //Adjust to center the data on the receiver
-                    aimc.Add(rdiam/2., rheight/2., 0.);
-                    binx = fnx - 1 - (int)(floor(aimc.x/rdiam*fnx));
-                }
-                biny = (int)(floor(max(0.,min(0.9999,aimc.y/rheight))*fny));
-
-                //Add data to array
-                bins.at(binx).at(biny) ++;
-                lens.at(binx).at(biny) += radialpos;
-            }
-
-            double dx, xlow;
-            if(rgeom<3)
-            {
-                dx = 360./(double)(fnx);
-                xlow = dx/2.;
-            }
-            else
-            {
-                dx = rdiam/(double)(fnx);
-                xlow = dx/2.;
-            }
-            double
-                dy = rheight/(double)(fny),
-                ylow = dy/2.;
-            //Create data array for scatter plot
-            for(int i=0; i<fnx; i++)
-            {
-                double xp = i*dx + xlow;
-                for(int j=0; j<fny; j++)
-                {
-                    double yp = j*dy + ylow;
-                    
-                    if(bins.at(i).at(j) > 0)
-                    {
-                        vector<double> dat;
-                        dat.push_back(xp);
-                        dat.push_back(yp);
-                        dat.push_back(lens.at(i).at(j)/(double)bins.at(i).at(j));
-                        dat.push_back((double)bins.at(i).at(j));
-
-                        fdata.push_back(dat);
-                    }
-                }
-            }
-                        
-
-            PlotScatter newplt;
-            newplt.Plot(_plotobj, fdata);
-        }
-        
-        
-        break;
-
-    }
-    case Receiver::REC_GEOM_TYPE::PLANE_ELLIPSE:
-        //TODO
-        break;
-    case Receiver::REC_GEOM_TYPE::POLYGON_OPEN:
-    case Receiver::REC_GEOM_TYPE::POLYGON_CAV:
-    case Receiver::REC_GEOM_TYPE::CYLINDRICAL_CAV:
-    {
-        _plotobj.SetDataWrapping(false);
-        _plotobj.SetXLabel("Receiver circumferential position [m]");
-        _plotobj.SetXAxisReversed(false);
-
-        if (_plot_type == 0)
-        {    //Flux map
+        case Receiver::REC_GEOM_TYPE::PLANE_ELLIPSE:
+            //TODO
+            break;
+        case Receiver::REC_GEOM_TYPE::POLYGON_OPEN:
+        case Receiver::REC_GEOM_TYPE::POLYGON_CAV:
+        case Receiver::REC_GEOM_TYPE::CYLINDRICAL_CAV:
+        {
+            _plotobj.SetDataWrapping(false);
+            _plotobj.SetXLabel("Receiver circumferential position [m]");
+            _plotobj.SetXAxisReversed(false);
             _plotobj.SetUnits(" kW/m2");
 
             //---- Draw the flux intensity ----
@@ -516,140 +405,184 @@ void FluxPlot::DoPaint(wxDC &_pdc)
                 fny = ffs->getFluxNY();
 
             //Copy the data into a double vector
-            vector<vector<double> > fdata(fnx*(nfs-1), vector<double>(fny));
+            vector<vector<double> > fdata(fnx * (nfs - 1), vector<double>(fny));
 
             //Load data in.
-            int offset = (nfs-2)*fnx;
+            int offset = (nfs - 2) * fnx;
             for (int n = 1; n < nfs; n++) { //Loop through surfaces
                 if (n > 1) {
                     ffs = &fs->at(n);
                     fg = ffs->getFluxMap();
                     offset -= fnx;
                 }
-                
+
                 for (int i = 0; i < fnx; i++) {
                     for (int j = 0; j < fny; j++) {
-                        fdata.at(i+offset).at(j) = fg->at(i).at(j).flux;
+                        fdata.at(i + offset).at(j) = fg->at(i).at(j).flux;
                     }
                 }
             }
             PlotContourf newplt;
             newplt.Plot(_plotobj, fdata);
+            break;
         }
-        else if (_plot_type == 1)
-        {    //Aim point scatter plot
-            _plotobj.SetUnits(" m");
+        case Receiver::REC_GEOM_TYPE::FALL_FLAT:
+        {
+            _plotobj.SetDataWrapping(false);
+            _plotobj.SetUnits(" kW/m2");
 
-            vector<vector<double> > fdata;
+            //---- Draw the flux intensity ----
+            FluxSurface* ffs = &fs->at(1);
+            FluxGrid* fg = ffs->getFluxMap();
 
-            //Get receiver angles
-            double raz = vrec->rec_azimuth.val * D2R;
-            double rel = vrec->rec_elevation.val * D2R;
-            double tht = vrec->optical_height.Val();
-            double offx = vrec->rec_offset_x_global.Val();
-            double offy = vrec->rec_offset_y_global.Val();
-            //double offz = vrec->rec_offset_z_global.Val();
-            double rdiam = rec->getReceiverWidth(*vrec);
-            double rheight = vrec->rec_height.val;
-
-            //Also Process to determine how many heliostats share each aim point and the average 
-            //radial position of heliostats on the point
             //Calculate the element size
             int
-                fnx = fs->at(0).getFluxNX(),
-                fny = fs->at(0).getFluxNY();
-            vector<vector<int> > bins(fnx, vector<int>(fny, 0));
-            vector<vector<double> > lens(fnx, vector<double>(fny, 0.));
-            //----
+                fnx = ffs->getFluxNX(),
+                fny = ffs->getFluxNY();
 
-            for (int i = 0; i < (int)_helios.size(); i++)
-            {
-                if (_helios.at(i)->getWhichReceiver() != rec) continue;
+            //Copy the data into a double vector
+            vector<vector<double> > fdata(fnx, vector<double>(fny * (nfs - 1)));
 
-
-                sp_point* aim = _helios.at(i)->getAimPoint();
-                sp_point aimc(*aim);
-                aimc.Add(-offx, -offy, -tht);
-                double radialpos = _helios.at(i)->getRadialPos();
-
-                int binx, biny;
-                //is the receiver cylindrical? if so, adjust the aimpoint relative to the 'unwrapped' cylinder
-                if (rgeom < 3)
-                {
-                    //calculate aimpoint azimuth
-                    double aimaz = atan2(aimc.x, aimc.y);
-                    aimc.x = (aimaz + PI) * 180. / PI;
-                    aimc.y = aimc.z + rheight / 2.;
-                    aimc.z = 0.;
-                    //now the coordinates are in the XY plane
-                    binx = (int)(floor(max(0., min(0.9999, (PI + aimaz) / (2. * PI))) * fnx));
+            //Load data in.
+            int offset = (nfs - 2) * fny;
+            for (int n = 1; n < nfs; n++) { //Loop through surfaces
+                if (n > 1) {
+                    ffs = &fs->at(n);
+                    fg = ffs->getFluxMap();
+                    offset -= fny;
                 }
-                else
-                {
-                    //Transform the aim point into receiver coordinates
-                    Toolbox::rotation(PI - raz, 2, aimc);
-                    Toolbox::rotation(PI / 2 - rel, 0, aimc);
-                    //Adjust to center the data on the receiver
-                    aimc.Add(rdiam / 2., rheight / 2., 0.);
-                    binx = fnx - 1 - (int)(floor(aimc.x / rdiam * fnx));
-                }
-                biny = (int)(floor(max(0., min(0.9999, aimc.y / rheight)) * fny));
-
-                //Add data to array
-                bins.at(binx).at(biny)++;
-                lens.at(binx).at(biny) += radialpos;
-            }
-
-            double dx, xlow;
-            if (rgeom < 3)
-            {
-                dx = 360. / (double)(fnx);
-                xlow = dx / 2.;
-            }
-            else
-            {
-                dx = rdiam / (double)(fnx);
-                xlow = dx / 2.;
-            }
-            double
-                dy = rheight / (double)(fny),
-                ylow = dy / 2.;
-            //Create data array for scatter plot
-            for (int i = 0; i < fnx; i++)
-            {
-                double xp = i * dx + xlow;
-                for (int j = 0; j < fny; j++)
-                {
-                    double yp = j * dy + ylow;
-
-                    if (bins.at(i).at(j) > 0)
-                    {
-                        vector<double> dat;
-                        dat.push_back(xp);
-                        dat.push_back(yp);
-                        dat.push_back(lens.at(i).at(j) / (double)bins.at(i).at(j));
-                        dat.push_back((double)bins.at(i).at(j));
-
-                        fdata.push_back(dat);
+                for (int i = 0; i < fnx; i++) {
+                    for (int j = 0; j < fny; j++) {
+                        fdata.at(i).at(j + offset) = fg->at(i).at(j).flux;
                     }
                 }
             }
-
-
-            PlotScatter newplt;
+            PlotContourf newplt;
             newplt.Plot(_plotobj, fdata);
+            break;
         }
-
-        break;
+        default:
+            break;
+        }
     }
-    default:
-        break;
-    }    
-
+    else if (_plot_type == 1)
+    {    //Aim point scatter plot
+        DoPaintAimPointScatter();
+    }
 
     _dc.SelectObject( wxNullBitmap );
     _pdc.DrawBitmap( *_plotobj.GetBitmap(), 0, 0);
+}
 
+void FluxPlot::DoPaintAimPointScatter()
+{
+    Receiver* rec = _SF->getReceivers()->at(_receiver);    //This is the receiver to use
+    var_receiver* vrec = rec->getVarMap();
+    int rgeom = rec->getGeometryType();
+
+    //Get the flux surfaces
+    FluxSurfaces* fs = rec->getFluxSurfaces();
+    int nfs = fs->size();
+
+    _plotobj.SetUnits(" m");
+
+    vector<vector<double> > fdata;
+
+    //Get receiver angles
+    double raz = vrec->rec_azimuth.val * D2R;
+    double rel = vrec->rec_elevation.val * D2R;
+    double tht = vrec->optical_height.Val();
+    double offx = vrec->rec_offset_x_global.Val();
+    double offy = vrec->rec_offset_y_global.Val();
+    //double offz = vrec->rec_offset_z_global.Val();
+    double rdiam = rec->getReceiverWidth(*vrec);
+    double rheight = vrec->rec_height.val;
+
+    //Also Process to determine how many heliostats share each aim point and the average 
+    //radial position of heliostats on the point
+    //Calculate the element size
+    int
+        fnx = fs->at(0).getFluxNX(),
+        fny = fs->at(0).getFluxNY();
+    vector<vector<int> > bins(fnx, vector<int>(fny, 0));
+    vector<vector<double> > lens(fnx, vector<double>(fny, 0.));
+    //----
+
+    for (int i = 0; i < (int)_helios.size(); i++)
+    {
+        if (_helios.at(i)->getWhichReceiver() != rec) continue;
+
+
+        sp_point* aim = _helios.at(i)->getAimPoint();
+        sp_point aimc(*aim);
+        aimc.Add(-offx, -offy, -tht);
+        double radialpos = _helios.at(i)->getRadialPos();
+
+        int binx, biny;
+        //is the receiver cylindrical? if so, adjust the aimpoint relative to the 'unwrapped' cylinder
+        if (rgeom < 3)
+        {
+            //calculate aimpoint azimuth
+            double aimaz = atan2(aimc.x, aimc.y);
+            aimc.x = (aimaz + PI) * 180. / PI;
+            aimc.y = aimc.z + rheight / 2.;
+            aimc.z = 0.;
+            //now the coordinates are in the XY plane
+            binx = (int)(floor(max(0., min(0.9999, (PI + aimaz) / (2. * PI))) * fnx));
+        }
+        else
+        {
+            //Transform the aim point into receiver coordinates
+            Toolbox::rotation(PI - raz, 2, aimc);
+            Toolbox::rotation(PI / 2 - rel, 0, aimc);
+            //Adjust to center the data on the receiver
+            aimc.Add(rdiam / 2., rheight / 2., 0.);
+            binx = fnx - 1 - (int)(floor(aimc.x / rdiam * fnx));
+        }
+        biny = (int)(floor(max(0., min(0.9999, aimc.y / rheight)) * fny));
+
+        //Add data to array
+        bins.at(binx).at(biny)++;
+        lens.at(binx).at(biny) += radialpos;
+    }
+
+    double dx, xlow;
+    if (rgeom < 3)
+    {
+        dx = 360. / (double)(fnx);
+        xlow = dx / 2.;
+    }
+    else
+    {
+        dx = rdiam / (double)(fnx);
+        xlow = dx / 2.;
+    }
+    double
+        dy = rheight / (double)(fny),
+        ylow = dy / 2.;
+    //Create data array for scatter plot
+    for (int i = 0; i < fnx; i++)
+    {
+        double xp = i * dx + xlow;
+        for (int j = 0; j < fny; j++)
+        {
+            double yp = j * dy + ylow;
+
+            if (bins.at(i).at(j) > 0)
+            {
+                vector<double> dat;
+                dat.push_back(xp);
+                dat.push_back(yp);
+                dat.push_back(lens.at(i).at(j) / (double)bins.at(i).at(j));
+                dat.push_back((double)bins.at(i).at(j));
+
+                fdata.push_back(dat);
+            }
+        }
+    }
+
+    PlotScatter newplt;
+    newplt.Plot(_plotobj, fdata);
 }
 
 void FluxPlot::SetFontSize(int hpixel)

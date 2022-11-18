@@ -87,6 +87,7 @@ public:
 
     void SetPlotData(SolarField &SF, Hvector heliostats, int receiver);
     void DoPaint(wxDC &_pdc);
+    void DoPaintAimPointScatter();
 	void SetFontSize(int hpixel);
 	void SetResolutionMultiplier(int resmult);
 	int GetFontSize();
