@@ -1572,8 +1572,6 @@ void SPFrame::OnTroughsLocImport(wxCommandEvent& evt)
                 wxString stemp;
                 matrix_t<double>* vval = &_variables.recs[recid].norm_heights_depths.val;
 
-                //_variables.recs[recid].num_troughs.val = nlines;
-
                 vval->clear();    //Clear
                 vval->resize(nlines, ns);
 
@@ -1623,7 +1621,6 @@ void SPFrame::OnTroughsLocExport(wxCommandEvent& evt)
     if (filedlg.ShowModal() == wxID_OK)
     {
         wxString info = filedlg.GetPath().c_str();
-
         matrix_t<double>* vals = &_variables.recs[recid].norm_heights_depths.val;
 
         ofstream file;
@@ -1661,8 +1658,6 @@ void SPFrame::OnNumTroughsSpin(wxCommandEvent& evt)
     wxGrid* grid = _troughs_loc_objects[recid].gridptr;
 
     int nspin = spin->GetValue();
-    //_variables.recs[recid].num_troughs.val = nspin;
-
     int ngrid = grid->GetNumberRows();
 
     if (nspin < ngrid)
@@ -1706,24 +1701,22 @@ void SPFrame::UpdateTroughsLocGrid(int id)
         return;     //out of bounds
 
     matrix_t<double>* table = &_variables.recs[id].norm_heights_depths.val;
-
     //resize the grid
     _troughs_loc_objects[id].num_troughs_ptr->SetValue(table->nrows());
     GridCount(table->nrows(), 2, _troughs_loc_objects[id].gridptr);
 
     //update the grid
     for (size_t i = 0; i < table->nrows(); i++)
-        for (size_t j = 0; j < table->ncols(); j++)
+        for (size_t j = 0; j < 2; j++)
             _troughs_loc_objects[id].gridptr->SetCellValue(i, j, wxString::Format("%f", table->at(i, j)));
 
     //update the col labels
     _troughs_loc_objects[id].gridptr->SetColLabelValue(0, "Normalized Height");
     _troughs_loc_objects[id].gridptr->SetColLabelValue(1, "Normalized Depth");
-    for (size_t j = 0; j < table->ncols(); j++)
+    for (size_t j = 0; j < 2; j++)
     {
         _troughs_loc_objects[id].gridptr->SetColSize(j, 130);
     }
-
     return;
 }
 
