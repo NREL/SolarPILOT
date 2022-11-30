@@ -2,3 +2,7 @@
 .vs/*
 .vscode/*
 __pycache__/*
+*.stinput
+*.spt
+*.dll
+*.so
