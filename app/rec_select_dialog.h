@@ -56,6 +56,7 @@
 #include <wx/wx.h>	
 #include "Receiver.h"
 typedef std::vector<Receiver*> Rvector;
+class SolarField;
 
 class rec_select_dialog : public wxDialog
 {

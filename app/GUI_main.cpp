@@ -265,7 +265,7 @@ SPFrame::SPFrame(wxWindow* parent, int id, const wxString& title, const wxPoint&
     //Set the version tag
 	_version_major = 1;
 	_version_minor = 5;
-	_version_patch = 0;
+	_version_patch = 2;
 
     _software_version = my_to_string(_version_major) + "." + my_to_string(_version_minor) + "." + my_to_string(_version_patch);
     _contact_info = "solarpilot.support@nrel.gov";
@@ -3289,18 +3289,18 @@ void SPFrame::CreateParametricsTable(parametric &par, sim_results &results, grid
         table.SetCellValue(to_string(result->coe_metric, "%.3f"), id++, i+1);
         table.SetCellValue(to_string(result->total_heliostat_area, "%.1f"), id++, i+1);
         table.SetCellValue(to_string(result->num_heliostats_used, "%d"), id++, i+1);
-        table.SetCellValue(to_string(result->power_on_field, "%.1f"), id++, i+1);
-        table.SetCellValue(to_string(result->power_absorbed, "%.1f"), id++, i+1);
-        table.SetCellValue(to_string(result->power_to_htf, "%.1f"), id++, i+1);
-        table.SetCellValue(to_string(100.*result->eff_cloud.wtmean, "%.1f"), id++, i+1);
-        table.SetCellValue(to_string(100.*(result->is_soltrace ? 1. : result->eff_shading.wtmean), "%.1f"), id++, i+1);
-        table.SetCellValue(to_string(100.*result->eff_cosine.wtmean, "%.1f"), id++, i+1);
-        table.SetCellValue(to_string(100.*result->eff_reflect.wtmean, "%.1f"), id++, i+1);
-        table.SetCellValue(to_string(100.*(result->is_soltrace ? 1. : result->eff_blocking.wtmean), "%.1f"), id++, i+1);
-        table.SetCellValue(to_string(100.*result->eff_attenuation.wtmean, "%.1f"), id++, i+1);
-        table.SetCellValue(to_string(100.*result->eff_intercept.wtmean, "%.1f"), id++, i+1);
-        table.SetCellValue(to_string(100.*result->eff_absorption.wtmean, "%.1f"), id++, i+1);
-        table.SetCellValue(to_string(100.*result->eff_total_sf.wtmean, "%.1f"), id++, i+1);
+        table.SetCellValue(to_string(result->power_on_field, "%.2f"), id++, i+1);
+        table.SetCellValue(to_string(result->power_absorbed, "%.3f"), id++, i+1);
+        table.SetCellValue(to_string(result->power_to_htf, "%.3f"), id++, i+1);
+        table.SetCellValue(to_string(100.*result->eff_cloud.wtmean, "%.2f"), id++, i+1);
+        table.SetCellValue(to_string(100.*(result->is_soltrace ? 1. : result->eff_shading.wtmean), "%.2f"), id++, i+1);
+        table.SetCellValue(to_string(100.*result->eff_cosine.wtmean, "%.2f"), id++, i+1);
+        table.SetCellValue(to_string(100.*result->eff_reflect.wtmean, "%.2f"), id++, i+1);
+        table.SetCellValue(to_string(100.*(result->is_soltrace ? 1. : result->eff_blocking.wtmean), "%.2f"), id++, i+1);
+        table.SetCellValue(to_string(100.*result->eff_attenuation.wtmean, "%.2f"), id++, i+1);
+        table.SetCellValue(to_string(100.*result->eff_intercept.wtmean, "%.2f"), id++, i+1);
+        table.SetCellValue(to_string(100.*result->eff_absorption.wtmean, "%.2f"), id++, i+1);
+        table.SetCellValue(to_string(100.*result->eff_total_sf.wtmean, "%.2f"), id++, i+1);
         table.SetCellValue(to_string(result->flux_density.ave, "%.1f"), id++, i+1);
         table.SetCellValue(to_string(result->flux_density.max, "%.1f"), id++, i+1);
     }

@@ -130,7 +130,7 @@ void PlotBase::DrawScaledPolygon( wxDC &dc, double ppx, double ppy, double origi
 
     dc.DrawPolygon(n_points, points);
 
-    delete [] points;
+    delete[] points;
 }
 
 void PlotBase::ColorGradientHotCold(wxColour &col, double index)

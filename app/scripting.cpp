@@ -1525,6 +1525,7 @@ static void _heliostats_by_region( lk::invoke_t &cxt )
             xml_document<> doc;
             doc.parse<0>(fstr);
             xml_node<> *top_node = doc.first_node();    //<data>
+            delete[] fstr;
 
             xml_node<> *node = top_node->first_node("g");
             xml_node<> *tnode = node->first_node("g");
