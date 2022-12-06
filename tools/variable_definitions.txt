@@ -281,7 +281,7 @@ receiver	rec_offset_x_global	OUT	DOUBLE	0	m	False				Receiver global positioning
 receiver	rec_offset_y_global	OUT	DOUBLE	0	m	False				Receiver global positioning offset - Y axis	Offset of receiver center in the North(+)/South(-) direction from the tower
 receiver	rec_offset_z_global	OUT	DOUBLE	0	m	False				Receiver global positioning offset - Z axis	Offset of the receiver center in the vertical direction, positive upwards
 receiver	curtain_total_height	OUT	DOUBLE	0	m	False				Particle curtain total height	Particle curtain total height
-receiver	curtain_width	OUT	DOUBLE	0	m	False				Particle curtain width	Particle curtain width
+receiver	max_curtain_width	OUT	DOUBLE	0	m	False				Particle curtain maximum width	Particle curtain maximum width
 solarfield	version	IN	STRING		none	False				SolarPILOT code base version number	SolarPILOT code base version number
 solarfield	accept_max	IN	DOUBLE	180	deg	True				Maximum solar field extent angle	Upper bound of the angular range containing the heliostat field
 solarfield	accept_min	IN	DOUBLE	-180	deg	True				Minimum solar field extent angle	Lower bound of the angular range containing the heliostat field

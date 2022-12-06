@@ -252,7 +252,7 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     trough_locs_grid->Connect(wxEVT_GRID_CELL_CHANGED, wxGridEventHandler(SPFrame::OnTroughLocChange), NULL, this);
     //----------------------------------------
     OutputControl* curtain_height = new OutputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].curtain_total_height, wxT("%.2f"));
-    OutputControl* curtain_width = new OutputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].curtain_width, wxT("%.2f"));
+    OutputControl* max_curtain_width = new OutputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].max_curtain_width, wxT("%.2f"));
 
     // additional controls for all receivers
     InputControl* accept_ang_type = new InputControl(parent, wxID_ANY, _variables.recs[id].accept_ang_type);
@@ -302,7 +302,7 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     panel_rec_fall_s->Add(norm_curtain_height);
     panel_rec_fall_s->Add(curtain_height);
     panel_rec_fall_s->Add(norm_curtain_width);
-    panel_rec_fall_s->Add(curtain_width);
+    panel_rec_fall_s->Add(max_curtain_width);
     panel_rec_fall_s->Add(max_curtain_depth);
     panel_rec_fall_s->Add(troughs_locs_button_sizer);
     panel_rec_fall_s->Add(trough_locs_grid, 1, wxEXPAND | wxALL, 5);
@@ -579,7 +579,7 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     
     i=0;
     OutputControl *outputs[] = {rec_aspect, optical_height, rec_offset_x_global, rec_offset_y_global, rec_offset_z_global, rec_cav_apw, rec_cav_aph, aperture_area,
-                                absorber_area, curtain_height, curtain_width, therm_loss, piping_loss, NULL};
+                                absorber_area, curtain_height, max_curtain_width, therm_loss, piping_loss, NULL};
     while(outputs[i] != NULL)
     { 
         _output_map[ outputs[i]->getVarObject() ] = outputs[i]; 
