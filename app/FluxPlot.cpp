@@ -189,8 +189,11 @@ void FluxPlot::DoPaint(wxDC &_pdc)
 
     double rw = rec->getReceiverWidth(*vrec);
     double rh = vrec->rec_height.val;
-    if (vrec->rec_type.mapval() == var_receiver::REC_TYPE::FALLING_PARTICLE)
+    // Update height and width to be consistent with particle curtain
+    if (vrec->rec_type.mapval() == var_receiver::REC_TYPE::FALLING_PARTICLE) {
         rh = vrec->curtain_total_height.Val();
+        rw = vrec->max_curtain_width.Val();
+    }
 
     /* 
     Depending on the surface, define the x-axis differently.
@@ -222,12 +225,21 @@ void FluxPlot::DoPaint(wxDC &_pdc)
         xaxcent = 0.;
         is_angle = true;
         break;
+    case Receiver::REC_GEOM_TYPE::FALL_CURVE:
+    {
+        double span = asin(vrec->max_curtain_width.Val() / 2 / vrec->curtain_radius.val);
+        xaxmin = -vrec->curtain_radius.val * span;
+        xaxmax = vrec->curtain_radius.val * span;
+        xaxcent = 0.;
+        is_angle = true;
+        break;
+    }
     case Receiver::REC_GEOM_TYPE::FALL_FLAT:
     case Receiver::REC_GEOM_TYPE::PLANE_RECT:
     case Receiver::REC_GEOM_TYPE::PLANE_ELLIPSE:
         //Extents will be the geometrical limits of the receiver plane
-        xaxmin = -rw/2.;
-        xaxmax = rw/2.;
+        xaxmin = -rw / 2.;
+        xaxmax = rw / 2.;
         break;
     case Receiver::REC_GEOM_TYPE::POLYGON_CLOSED:
     case Receiver::REC_GEOM_TYPE::POLYGON_OPEN:
@@ -427,7 +439,12 @@ void FluxPlot::DoPaint(wxDC &_pdc)
             break;
         }
         case Receiver::REC_GEOM_TYPE::FALL_FLAT:
+        case Receiver::REC_GEOM_TYPE::FALL_CURVE:
         {
+            if (vrec->curtain_type.mapval() == var_receiver::CURTAIN_TYPE::CURVED) {
+                _plotobj.SetXLabel("Receiver circumferential position [m]");
+            }
+            //_plotobj.SetXAxisReversed(false);
             _plotobj.SetDataWrapping(false);
             _plotobj.SetUnits(" kW/m2");
 
@@ -498,6 +515,9 @@ void FluxPlot::DoPaintAimPointScatter()
     double rdiam = rec->getReceiverWidth(*vrec);
     double rheight = vrec->rec_height.val;
 
+    if (vrec->rec_type.mapval() == var_receiver::REC_TYPE::FALLING_PARTICLE)
+        rdiam = vrec->max_curtain_width.Val();
+
     //Also Process to determine how many heliostats share each aim point and the average 
     //radial position of heliostats on the point
     //Calculate the element size
@@ -520,7 +540,7 @@ void FluxPlot::DoPaintAimPointScatter()
 
         int binx, biny;
         //is the receiver cylindrical? if so, adjust the aimpoint relative to the 'unwrapped' cylinder
-        if (rgeom < 3)
+        if (rgeom < 3) //cylindrical
         {
             //calculate aimpoint azimuth
             double aimaz = atan2(aimc.x, aimc.y);
@@ -530,7 +550,7 @@ void FluxPlot::DoPaintAimPointScatter()
             //now the coordinates are in the XY plane
             binx = (int)(floor(max(0., min(0.9999, (PI + aimaz) / (2. * PI))) * fnx));
         }
-        else
+        else //not cylindrical
         {
             //Transform the aim point into receiver coordinates
             Toolbox::rotation(PI - raz, 2, aimc);
