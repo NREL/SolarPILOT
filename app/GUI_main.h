@@ -402,6 +402,8 @@ private:
         *_flux_frame;
     MyToggleButton
         *_scatter_btn;
+    MyToggleButton
+        * _aperture_btn;
 
     wxListCtrl
         *_flux_lc;
@@ -646,6 +648,7 @@ protected:
     void OnSTRayDataButton( wxCommandEvent &event);
     void OnReceiverFluxSelect( wxCommandEvent &event);
     void OnScatterToggle( wxCommandEvent &event);
+    void OnApertureToggle(wxCommandEvent& event);
     void OnColormapSelect( wxCommandEvent &event);
     void OnFluxPlotBinChangeX( wxFocusEvent &event);
     void OnFluxPlotBinChangeY( wxFocusEvent &event);

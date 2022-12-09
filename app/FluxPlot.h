@@ -67,6 +67,7 @@ private:
     SolarField *_SF;    //Pointer to the solar field object
     PlotBase _plotobj; 
     int _plot_type;        //0=flux, 1=scatter
+    int _aperture_view;   //0=flux surface, 1=aperture plane
     Hvector _helios;
     wxBitmap _pbit; //bitmap containing the current plot
     double _zax_max, _zax_min;
@@ -96,6 +97,7 @@ public:
 	int GetResolution();
 	void SetWhichReceiver(int rec);
 	void SetPlotType(int type);
+    void SetApertureView(int view);
 	void SetColormap(int cmap);
     void SetZRange(double zmin, double zmax, bool is_autoscale); 
 

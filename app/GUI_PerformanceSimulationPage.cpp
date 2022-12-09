@@ -665,6 +665,7 @@ void SPFrame::OnDoPerformanceSimulation( wxCommandEvent &event)
             Hvector helios;
             GetSelectedHeliostats(helios, _flux_lc_check->GetValue());
             _flux_frame->SetPlotType(0); // flux
+            _flux_frame->SetApertureView(0); // flux
             _flux_frame->SetPlotData( _SF, helios, 0 );
 
             //also update the layout plot

@@ -88,6 +88,8 @@ void SPFrame::CreateFluxPlotPage(wxScrolledWindow *parent)
     save_table->SetToolTip("Save the plot data to a file");
     font_inc->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnPlotFontIncrease ), NULL, this);
     font_dec->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnPlotFontDecrease ), NULL, this);
+    save_bitmap->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnFluxBitmapSave), NULL, this);
+    save_table->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnFluxTableSave), NULL, this);
     
     //inputs for z-axis scaling
     InputControl
@@ -116,33 +118,37 @@ void SPFrame::CreateFluxPlotPage(wxScrolledWindow *parent)
     }
 
     wxStaticText *select_lab = new wxStaticText(parent, wxID_ANY, wxT("Plot display"));
+
     wxBitmap
         res_inc_bit, res_dec_bit, res_orig_bit;
     res_inc_bit.LoadFile(_image_dir.GetPath(true) + "resolution_up.png", wxBITMAP_TYPE_PNG);
     res_dec_bit.LoadFile(_image_dir.GetPath(true) + "resolution_down.png", wxBITMAP_TYPE_PNG);
     res_orig_bit.LoadFile(_image_dir.GetPath(true) + "resolution_original.png", wxBITMAP_TYPE_PNG);
+    wxBitmapButton* res_inc = new wxBitmapButton(parent, wxID_ANY, res_inc_bit);
+    wxBitmapButton* res_dec = new wxBitmapButton(parent, wxID_ANY, res_dec_bit);
+    wxBitmapButton* res_orig = new wxBitmapButton(parent, wxID_ANY, res_orig_bit);
+    res_inc->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnPlotResIncrease), NULL, this);
+    res_dec->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnPlotResDecrease), NULL, this);
+    res_orig->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnPlotResReset), NULL, this);
+    res_inc->SetToolTip("Increase plot resolution");
+    res_dec->SetToolTip("Decrease plot resolution");
+    res_orig->SetToolTip("Display at data resolution");
+
     wxBitmap
         scatter_bit_on, scatter_bit_off;
     scatter_bit_on.LoadFile(_image_dir.GetPath(true) + "scatter-on.png", wxBITMAP_TYPE_PNG);
     scatter_bit_off.LoadFile(_image_dir.GetPath(true) + "scatter-off.png", wxBITMAP_TYPE_PNG);
-        
     _scatter_btn = new MyToggleButton(parent, wxID_ANY, scatter_bit_on, scatter_bit_off);
-    
-    wxBitmapButton *res_inc = new wxBitmapButton(parent, wxID_ANY, res_inc_bit);
-    wxBitmapButton *res_dec = new wxBitmapButton(parent, wxID_ANY, res_dec_bit);
-    wxBitmapButton *res_orig = new wxBitmapButton(parent, wxID_ANY, res_orig_bit);
     _scatter_btn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnScatterToggle), NULL, this);
-
-    res_inc->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnPlotResIncrease ), NULL, this);
-    res_dec->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnPlotResDecrease ), NULL, this);
-    res_orig->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnPlotResReset ), NULL, this);
-    save_bitmap->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnFluxBitmapSave ), NULL, this);
-    save_table->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SPFrame::OnFluxTableSave ), NULL, this);
-    //Tool tips
     _scatter_btn->SetToolTip("Toggle view to/from aimpoint plot");
-	res_inc->SetToolTip( "Increase plot resolution" );
-    res_dec->SetToolTip( "Decrease plot resolution" );
-    res_orig->SetToolTip( "Display at data resolution" );
+
+    wxBitmap
+        aperture_bit_on, aperture_bit_off;
+    aperture_bit_on.LoadFile(_image_dir.GetPath(true) + "aperture-on.png", wxBITMAP_TYPE_PNG);
+    aperture_bit_off.LoadFile(_image_dir.GetPath(true) + "aperture-off.png", wxBITMAP_TYPE_PNG);
+    _aperture_btn = new MyToggleButton(parent, wxID_ANY, aperture_bit_on, aperture_bit_off);
+    _aperture_btn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(SPFrame::OnApertureToggle), NULL, this);
+    _aperture_btn->SetToolTip("Toggle view to/from receiver aperture flux plot");
 
     //Selection for the receiver
     wxArrayStr receivers;
@@ -165,6 +171,7 @@ void SPFrame::CreateFluxPlotPage(wxScrolledWindow *parent)
     GetSelectedHeliostats(helios, _flux_lc_check->GetValue());
     _flux_frame = new FluxPlot(parent, _SF, helios, 0, wxID_ANY, wxDefaultPosition, wxSize(600,500) );
     _flux_frame->SetPlotType(0); // flux
+    _flux_frame->SetApertureView(0); // flux
 
     _flux_frame->SetZRange(
         _variables.flux.plot_zmin.val,
@@ -190,6 +197,7 @@ void SPFrame::CreateFluxPlotPage(wxScrolledWindow *parent)
     top_sizer->Add(res_orig, 0, wxRight|wxALIGN_CENTER_VERTICAL, 2);
     top_sizer->Add(new wxStaticLine(parent, wxID_ANY, wxDefaultPosition, wxSize(1,1), wxLI_VERTICAL), 0, wxEXPAND|wxLEFT|wxRIGHT, 20);
     top_sizer->Add(_scatter_btn, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 10);
+    top_sizer->Add(_aperture_btn, 0, wxALIGN_CENTER_VERTICAL|wxLEFT, 10);
     top_sizer->Add(new wxStaticLine(parent, wxID_ANY, wxDefaultPosition, wxSize(1,1), wxLI_VERTICAL), 0, wxEXPAND|wxLEFT|wxRIGHT, 20);
     
     wxBoxSizer *scale_sizer = new wxBoxSizer(wxVERTICAL);
@@ -213,14 +221,14 @@ void SPFrame::CreateFluxPlotPage(wxScrolledWindow *parent)
 
 void SPFrame::OnPlotResIncrease( wxCommandEvent &WXUNUSED(event))
 {
-_flux_frame->SetResolutionMultiplier( _flux_frame->GetResolution()+1 );
+    _flux_frame->SetResolutionMultiplier( _flux_frame->GetResolution()+1 );
     this->Update();
     this->Refresh();
 }
 
 void SPFrame::OnPlotResDecrease( wxCommandEvent &WXUNUSED(event))
 {
-int res0 = _flux_frame->GetResolution();
+    int res0 = _flux_frame->GetResolution();
     if(res0 > 1) _flux_frame->SetResolutionMultiplier( res0-1);
 
     this->Update();
@@ -229,7 +237,7 @@ int res0 = _flux_frame->GetResolution();
 
 void SPFrame::OnPlotResReset( wxCommandEvent &WXUNUSED(event))
 {
-_flux_frame->SetResolutionMultiplier(1);
+    _flux_frame->SetResolutionMultiplier(1);
     this->Update();
     this->Refresh();
 }
@@ -327,6 +335,14 @@ void SPFrame::OnScatterToggle( wxCommandEvent &WXUNUSED(event) )
 {
     bool state = _scatter_btn->Toggle();
     _flux_frame->SetPlotType( state ? 1 : 0 );
+    this->Update();
+    this->Refresh();
+}
+
+void SPFrame::OnApertureToggle(wxCommandEvent& WXUNUSED(event))
+{
+    bool view = _aperture_btn->Toggle();
+    _flux_frame->SetApertureView(view ? 1 : 0);
     this->Update();
     this->Refresh();
 }

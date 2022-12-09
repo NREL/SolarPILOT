@@ -190,7 +190,7 @@ void FluxPlot::DoPaint(wxDC &_pdc)
     double rw = rec->getReceiverWidth(*vrec);
     double rh = vrec->rec_height.val;
     // Update height and width to be consistent with particle curtain
-    if (vrec->rec_type.mapval() == var_receiver::REC_TYPE::FALLING_PARTICLE) {
+    if (vrec->rec_type.mapval() == var_receiver::REC_TYPE::FALLING_PARTICLE && _aperture_view == 0) {
         rh = vrec->curtain_total_height.Val();
         rw = vrec->max_curtain_width.Val();
     }
@@ -209,7 +209,7 @@ void FluxPlot::DoPaint(wxDC &_pdc)
     be on our right side.
 
     */
-    double xaxmin=0., xaxmax=0., xaxcent;
+    double xaxmin=0., xaxmax=0.;
     bool is_angle = false;
 
     //Get the flux surfaces
@@ -222,16 +222,20 @@ void FluxPlot::DoPaint(wxDC &_pdc)
     case Receiver::REC_GEOM_TYPE::CYLINDRICAL_OPEN:
         xaxmin = -180.;
         xaxmax = 180.;
-        xaxcent = 0.;
         is_angle = true;
         break;
     case Receiver::REC_GEOM_TYPE::FALL_CURVE:
     {
-        double span = asin(vrec->max_curtain_width.Val() / 2 / vrec->curtain_radius.val);
-        xaxmin = -vrec->curtain_radius.val * span;
-        xaxmax = vrec->curtain_radius.val * span;
-        xaxcent = 0.;
-        is_angle = true;
+        if (_aperture_view == 0) {
+            double span = asin(vrec->max_curtain_width.Val() / 2 / vrec->curtain_radius.val);
+            xaxmin = -vrec->curtain_radius.val * span;
+            xaxmax = vrec->curtain_radius.val * span;
+            is_angle = true;
+        }
+        else if (_aperture_view == 1) {
+            xaxmin = -rw / 2.;
+            xaxmax = rw / 2.;
+        }
         break;
     }
     case Receiver::REC_GEOM_TYPE::FALL_FLAT:
@@ -264,19 +268,8 @@ void FluxPlot::DoPaint(wxDC &_pdc)
         {
             rwtot += fs->at(i).getSurfaceWidth();
         }
-
-        ////Calculate from the receiver azimuth angle what the corresponding zero point on the
-        ////axis would be
-        //xaxcent = (angcent - angmin)/(angmax - angmin)*rwtot;
-        ////Calculate the extents of the receiver in distance
-        ////Reverse perspective.
-        //xaxmax = xaxcent * rwtot;
-        //xaxmin = -(1.-xaxcent)*rwtot;
-        //xaxcent = 0.;
         xaxmin = -rwtot / 2.;
         xaxmax = rwtot / 2.;
-        xaxcent = 0.;
-
         break;
     }
     default:
@@ -416,26 +409,45 @@ void FluxPlot::DoPaint(wxDC &_pdc)
                 fnx = ffs->getFluxNX(),
                 fny = ffs->getFluxNY();
 
-            //Copy the data into a double vector
-            vector<vector<double> > fdata(fnx * (nfs - 1), vector<double>(fny));
+            if (_aperture_view == 0)
+            {   //Flux surface view
+                //Copy the data into a double vector
+                vector<vector<double> > fdata(fnx * (nfs - 1), vector<double>(fny));
 
-            //Load data in.
-            int offset = (nfs - 2) * fnx;
-            for (int n = 1; n < nfs; n++) { //Loop through surfaces
-                if (n > 1) {
-                    ffs = &fs->at(n);
-                    fg = ffs->getFluxMap();
-                    offset -= fnx;
-                }
+                //Load data in.
+                int offset = (nfs - 2) * fnx;
+                for (int n = 1; n < nfs; n++) { //Loop through surfaces
+                    if (n > 1) {
+                        ffs = &fs->at(n);
+                        fg = ffs->getFluxMap();
+                        offset -= fnx;
+                    }
 
-                for (int i = 0; i < fnx; i++) {
-                    for (int j = 0; j < fny; j++) {
-                        fdata.at(i + offset).at(j) = fg->at(i).at(j).flux;
+                    for (int i = 0; i < fnx; i++) {
+                        for (int j = 0; j < fny; j++) {
+                            fdata.at(i + offset).at(j) = fg->at(i).at(j).flux;
+                        }
                     }
                 }
+                PlotContourf newplt;
+                newplt.Plot(_plotobj, fdata);
             }
-            PlotContourf newplt;
-            newplt.Plot(_plotobj, fdata);
+            else if (_aperture_view == 1)
+            {   // Aperture view
+                //Copy the data into a double vector
+                vector<vector<double> > fdata(fnx, vector<double>(fny));
+
+                //Load data in.
+                ffs = &fs->at(0);
+                fg = ffs->getFluxMap();
+                for (int i = 0; i < fnx; i++) {
+                    for (int j = 0; j < fny; j++) {
+                        fdata.at(i).at(j) = fg->at(i).at(j).flux;
+                    }
+                }
+                PlotContourf newplt;
+                newplt.Plot(_plotobj, fdata);
+            }
             break;
         }
         case Receiver::REC_GEOM_TYPE::FALL_FLAT:
@@ -457,25 +469,44 @@ void FluxPlot::DoPaint(wxDC &_pdc)
                 fnx = ffs->getFluxNX(),
                 fny = ffs->getFluxNY();
 
-            //Copy the data into a double vector
-            vector<vector<double> > fdata(fnx, vector<double>(fny * (nfs - 1)));
+            if (_aperture_view == 0)
+            {   //Flux surface view
+                //Copy the data into a double vector
+                vector<vector<double> > fdata(fnx, vector<double>(fny* (nfs - 1)));
 
-            //Load data in.
-            int offset = (nfs - 2) * fny;
-            for (int n = 1; n < nfs; n++) { //Loop through surfaces
-                if (n > 1) {
-                    ffs = &fs->at(n);
-                    fg = ffs->getFluxMap();
-                    offset -= fny;
-                }
-                for (int i = 0; i < fnx; i++) {
-                    for (int j = 0; j < fny; j++) {
-                        fdata.at(i).at(j + offset) = fg->at(i).at(j).flux;
+                //Load data in.
+                int offset = (nfs - 2) * fny;
+                for (int n = 1; n < nfs; n++) { //Loop through surfaces
+                    if (n > 1) {
+                        ffs = &fs->at(n);
+                        fg = ffs->getFluxMap();
+                        offset -= fny;
+                    }
+                    for (int i = 0; i < fnx; i++) {
+                        for (int j = 0; j < fny; j++) {
+                            fdata.at(i).at(j + offset) = fg->at(i).at(j).flux;
+                        }
                     }
                 }
+                PlotContourf newplt;
+                newplt.Plot(_plotobj, fdata);
             }
-            PlotContourf newplt;
-            newplt.Plot(_plotobj, fdata);
+            else if (_aperture_view == 1)
+            {   // Aperture view
+                //Copy the data into a double vector
+                vector<vector<double> > fdata(fnx, vector<double>(fny));
+
+                //Load data in.
+                ffs = &fs->at(0);
+                fg = ffs->getFluxMap();
+                for (int i = 0; i < fnx; i++) {
+                    for (int j = 0; j < fny; j++) {
+                        fdata.at(i).at(j) = fg->at(i).at(j).flux;
+                    }
+                }
+                PlotContourf newplt;
+                newplt.Plot(_plotobj, fdata);
+            }
             break;
         }
         default:
@@ -515,7 +546,7 @@ void FluxPlot::DoPaintAimPointScatter()
     double rdiam = rec->getReceiverWidth(*vrec);
     double rheight = vrec->rec_height.val;
 
-    if (vrec->rec_type.mapval() == var_receiver::REC_TYPE::FALLING_PARTICLE)
+    if (vrec->rec_type.mapval() == var_receiver::REC_TYPE::FALLING_PARTICLE && _aperture_view == 0)
         rdiam = vrec->max_curtain_width.Val();
 
     //Also Process to determine how many heliostats share each aim point and the average 
@@ -638,6 +669,11 @@ void FluxPlot::SetWhichReceiver(int rec)
 void FluxPlot::SetPlotType(int type)
 {
 	_plot_type = type;
+}
+
+void FluxPlot::SetApertureView(int view)
+{
+    _aperture_view = view;
 }
 
 void FluxPlot::SetColormap(int cmap)
