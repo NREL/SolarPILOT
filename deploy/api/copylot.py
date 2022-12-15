@@ -1130,7 +1130,42 @@ class CoPylot:
                 eff_data.append(row)
         
         return {'azimuth': azimuth, 'elevation': elevation, 'eff_data': eff_data}
-    
+
+    #SPEXPORT void sp_calculate_get_optical_efficiency_table(sp_data_t p_data, const size_t n_azi, const size_t n_elev, double* azimuths, double* elevation, double* eff_matrix)
+    def calculate_get_optical_efficiency_table(self, p_data: int, n_azi: int, n_elev: int) -> dict:
+        """Calculates and retrieves the field optical efficiency table as a function of azimuth and elevation angles
+
+        Parameters
+        ----------
+        p_data : int
+            memory address of SolarPILOT instance
+        n_azi : int
+            Number of azimuth angles used to create efficiency table (evenly spaced)
+        n_elev : int
+            Number of elevation angles used to create efficiency table (evenly spaced)
+        
+        Returns
+        -------
+        dictionary with the following keys:
+
+            #. ``azimuth``: list, Solar azimuth angle [deg]
+            #. ``elevation``: list, Solar elevation angle [deg]
+            #. ``eff_data``: list of lists, Solar field optical efficiency at a specific azimuth (rows) and elevation (cols) angles [-]
+        """
+        # self.calculate_optical_efficiency_table(p_data, n_azi, n_elev)
+        # return self.get_optical_efficiency_table(p_data)
+        azi = (c_number * n_azi)()
+        elev = (c_number * n_elev)()
+        eff_mat = (c_number * n_elev * n_azi)()
+        self.pdll.sp_calculate_get_optical_efficiency_table( c_void_p(p_data), c_int(n_azi), c_int(n_elev), pointer(azi), pointer(elev), pointer(eff_mat))
+        azimuth = azi[0:n_azi]
+        elevation = elev[0:n_elev]
+        eff_matrix = []
+        for r in range(n_azi):
+            eff_matrix.append(eff_mat[r][0:n_elev])
+
+        return {'azimuth': azimuth, 'elevation': elevation, 'eff_data': eff_matrix}
+
 
     #SPEXPORT bool sp_save_optical_efficiency_table(sp_data_t p_data, const char* sp_fname, const char* table_name)
     def save_optical_efficiency_table(self, p_data: int, sp_fname: str, modelica_table_name: str = 'none') -> bool:

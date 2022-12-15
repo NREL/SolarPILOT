@@ -31,11 +31,17 @@ assert cp.calculate_optical_efficiency_table(r, 12, 11)
 end = time.time()
 print("Efficiency computation required {:.2f} seconds".format(end-start))
 
+# Testing getting optical efficiency table after calculation
 cwd = os.getcwd()
 assert cp.save_optical_efficiency_table(r, os.path.join(cwd, eff_filename)) # Testing simple table saving (consistent with get_optical_efficiency_table)
 assert cp.save_optical_efficiency_table(r, os.path.join(cwd, "modelica_efficiency_table.txt"), "sf_eff_table")  # Testing Modelica specific table output
-
 sf_eff = cp.get_optical_efficiency_table(r)
+
+start = time.time()
+direct = cp.calculate_get_optical_efficiency_table(r, 12, 11) # calculate and get
+end = time.time()
+print("Direct Calculate and get efficiency required {:.2f} seconds".format(end-start))
+
 assert cp.data_free(r)
 
 # Read in efficiency table
@@ -56,13 +62,16 @@ with open(eff_filename) as f:
 # Check data is consistent between two methods
 for a in range(len(sf_eff['azimuth'])):
     assert azi[a] == round(sf_eff['azimuth'][a], 4)
+    assert direct['azimuth'][a] == sf_eff['azimuth'][a], 4
 
 for e in range(len(sf_eff['elevation'])):
     assert el[e] == round(sf_eff['elevation'][e], 4)
+    assert direct['elevation'][e] == sf_eff['elevation'][e]
 
 for a in range(len(sf_eff['azimuth'])):
     for e in range(len(sf_eff['elevation'])):
         assert eff_data[a][e] == round(sf_eff['eff_data'][a][e], 6)
+        assert direct['eff_data'][a][e] == sf_eff['eff_data'][a][e]
 
 # Transpose data for plotting
 sf_eff['eff_data_T'] = np.array(sf_eff['eff_data']).T.tolist()
