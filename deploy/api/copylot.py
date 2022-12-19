@@ -2,6 +2,8 @@ import sys, os
 import pandas as pd
 from ctypes import *
 c_number = c_double   #must be either c_double or c_float depending on copilot.h definition
+import pysoltrace
+import math
 
 @CFUNCTYPE(c_int, c_number, c_char_p)
 def api_callback(fprogress, msg):
@@ -103,6 +105,7 @@ class CoPylot:
         if sys.platform == 'win32' or sys.platform == 'cygwin':
             if is_debugging:
                 self.pdll = CDLL(cwd + "/solarpilotd.dll")
+                # self.pdll = CDLL("C:\\repositories\\solarpilot\\deploy\\api\\solarpilotd.dll")
             else:
                 self.pdll = CDLL(cwd + "/solarpilot.dll")
         elif sys.platform == 'darwin':
@@ -111,7 +114,11 @@ class CoPylot:
             self.pdll = CDLL(cwd +"/solarpilot.so")  # Never tested
         else:
             print( 'Platform not supported ', sys.platform)
-
+    
+    def __unitvect(self, pt : pysoltrace.Point ):
+        r = (pt.x*pt.x + pt.y*pt.y + pt.z*pt.z)**0.5
+        return pysoltrace.Point( pt.x/r, pt.y/r, pt.z/r )
+    
     def version(self, p_data: int) -> str:
         """Provides SolarPILOT version number
         
@@ -641,7 +648,7 @@ class CoPylot:
         return self.pdll.sp_assign_layout( c_void_p(p_data), pointer(arr), c_int(nrows), c_int(ncols), c_int(nthreads))
 
     #SPEXPORT sp_number_t* sp_get_layout_info(sp_data_t p_data, int* nhelio, int* ncol, bool get_corners = false)
-    def get_layout_info(self, p_data: int, get_corners: bool = False, restype: str = "dataframe"):
+    def get_layout_info(self, p_data: int, get_corners: bool = False, get_optical_details: bool = False, restype: str = "dataframe"):
         """Get information regarding the heliostat field layout
 
         Parameters
@@ -650,6 +657,11 @@ class CoPylot:
             memory address of SolarPILOT instance
         get_corner : bool, optional
             True, output will include heliostat corner infromation, False otherwise
+        get_optical_details : bool, optional
+            True, output will include focal lengths in X and Y, and will include cant
+            panel positions and orientation vectors for each panel. False, no info.
+                Format:
+                focal x, focal y, panel1.x, .y, .z, panel1.i, .j, .k, panel2.x, ....
         restype : str, optional 
             result format type, supported options: "matrix", "dictionary", "dataframe"
 
@@ -667,10 +679,10 @@ class CoPylot:
         ncols = c_int()
         # Get data
         self.pdll.sp_get_layout_info.restype = POINTER(c_number)
-        parr = self.pdll.sp_get_layout_info( c_void_p(p_data), byref(nrows), byref(ncols),  c_bool(get_corners))
+        parr = self.pdll.sp_get_layout_info( c_void_p(p_data), byref(nrows), byref(ncols),  c_bool(get_corners), c_bool(get_optical_details))
         # Get header
         self.pdll.sp_get_layout_header.restype = c_char_p
-        header = self.pdll.sp_get_layout_header( c_void_p(p_data), c_bool(get_corners)).decode()
+        header = self.pdll.sp_get_layout_header( c_void_p(p_data), c_bool(get_corners), c_bool(get_optical_details)).decode()
         header = header.split(',')
         if restype.lower().startswith("mat"):
             # output matrix
@@ -1118,7 +1130,42 @@ class CoPylot:
                 eff_data.append(row)
         
         return {'azimuth': azimuth, 'elevation': elevation, 'eff_data': eff_data}
-    
+
+    #SPEXPORT void sp_calculate_get_optical_efficiency_table(sp_data_t p_data, const size_t n_azi, const size_t n_elev, double* azimuths, double* elevation, double* eff_matrix)
+    def calculate_get_optical_efficiency_table(self, p_data: int, n_azi: int, n_elev: int) -> dict:
+        """Calculates and retrieves the field optical efficiency table as a function of azimuth and elevation angles
+
+        Parameters
+        ----------
+        p_data : int
+            memory address of SolarPILOT instance
+        n_azi : int
+            Number of azimuth angles used to create efficiency table (evenly spaced)
+        n_elev : int
+            Number of elevation angles used to create efficiency table (evenly spaced)
+        
+        Returns
+        -------
+        dictionary with the following keys:
+
+            #. ``azimuth``: list, Solar azimuth angle [deg]
+            #. ``elevation``: list, Solar elevation angle [deg]
+            #. ``eff_data``: list of lists, Solar field optical efficiency at a specific azimuth (rows) and elevation (cols) angles [-]
+        """
+        # self.calculate_optical_efficiency_table(p_data, n_azi, n_elev)
+        # return self.get_optical_efficiency_table(p_data)
+        azi = (c_number * n_azi)()
+        elev = (c_number * n_elev)()
+        eff_mat = (c_number * n_elev * n_azi)()
+        self.pdll.sp_calculate_get_optical_efficiency_table( c_void_p(p_data), c_int(n_azi), c_int(n_elev), pointer(azi), pointer(elev), pointer(eff_mat))
+        azimuth = azi[0:n_azi]
+        elevation = elev[0:n_elev]
+        eff_matrix = []
+        for r in range(n_azi):
+            eff_matrix.append(eff_mat[r][0:n_elev])
+
+        return {'azimuth': azimuth, 'elevation': elevation, 'eff_data': eff_matrix}
+
 
     #SPEXPORT bool sp_save_optical_efficiency_table(sp_data_t p_data, const char* sp_fname, const char* table_name)
     def save_optical_efficiency_table(self, p_data: int, sp_fname: str, modelica_table_name: str = 'none') -> bool:
@@ -1220,3 +1267,542 @@ class CoPylot:
 
         self.pdll.sp_load_soltrace_context.restype = c_bool
         return self.pdll.sp_load_soltrace_context( c_void_p(p_data), c_void_p(solt_cxt))
+
+    def load_soltrace_structure(self, p_data: int):
+        """
+        **Follows CreateSTSystem in the cpp code / STObject.cpp**
+
+        Before calling this method, p_data must (1) contain a valid solar field layout and (2) a performance simulation
+        must have been run at the desired sun position and irradiation condition. This method will pull information from 
+        the most recent analytical performance simulation, including: 
+            - list of heliostats included in the layout
+            - current receiver aim point for each heliostat
+            - attenuation and soiling efficiency for each heliostat
+            - current sun position
+
+        This method takes a SolarPILOT layout and generates an instance of the PySoltrace API object needed to directly 
+        run SolTrace simulations from the SolTrace API. This differs from the function CreateSTSystem implemented in 
+        SolarPILOT in that this method creates a PySolTrace object while SolarPILOT creates a 'coretrace' context via
+        the c++ API. 
+
+        Once created, the PySolTrace object can be manipulated to add or change geometry (e.g., adding receiver 
+        complexity), to change optical property settings, or to change anything related to the SolTrace configuration
+        before a raytrace simulation is run. This method serves as a bridge between SolarPILOT and SolTrace python 
+        functionality.
+
+        Parameters
+        ----------
+        p_data : int
+            memory address of SolarPILOT instance
+
+        Returns
+        -------
+        pysoltrace.PySolTrace 
+            Returns an instance of the PySolTrace class that is populated with heliostats, optical properties, 
+            receiver geometry, and sun properties that mirror the SolarPILOT solar field. 
+
+        """
+
+        P = pysoltrace.PySolTrace()
+
+        sun_type = int(self.data_get_number(p_data, "ambient.0.sun_type"))
+        
+        P.add_sun()
+        # sun_type; {0=point sun, 1=limb darkened sun, 2=square wave sun, 3=user sun}
+        sigma = self.data_get_number(p_data, "ambient.0.sun_rad_limit")
+        shape = 'i'	#invalid
+        if sun_type == 2:
+            shape = 'p'  #Pillbox sun
+        elif sun_type == 0:
+            shape = 'g' #Point sun -- doesn't matter just use something here. it is disabled later.
+        elif sun_type == 4: 
+            shape = 'g' #Gaussian sun
+        elif sun_type == 1:
+        	#Limb-darkened sun
+            #Create a table based on the limb-darkened profile and set as a user sun
+
+            shape = 'd'
+            np = 26
+            R = 4.65e-3     #maximum subtended angle
+            dr = R/(np-1)
+            angle = [0. for i in range(np)]
+            intens = [0. for i in range(np)]
+            for i in range(np): 
+                angle[i] = dr*i
+                intens[i] = 1.0 - 0.5138*pow(angle[i]/R, 4)
+                angle[i] *= 1000.;	#mrad
+            
+            intens[np-1] = 0.
+            
+            #Fill into the sun object
+            P.sun.user_intensity_table.clear()
+            # Sun.SunShapeIntensity.resize(np);
+            # Sun.SunShapeAngle.resize(np);
+            for i in range(np):
+                P.sun.user_intensity_table.append([angle[i],intens[i]])
+        elif sun_type == 5:
+            #Buie sun
+            shape = 'd'
+            
+            #Fill into the sun object
+            P.sun.user_intensity_table.clear()
+            dt_s = .2
+            dt_tr = .05
+            dt_cs = 1.
+            angle_max = 43.6
+            delta_theta_tr = 1.
+
+            theta = -dt_s  #set so first adjustment is back to 0
+
+            #correct for chi based on tonatiuh polys
+            csr = self.data_get_number(p_data, "ambient.0.sun_csr")
+            if (csr > 0.145):
+                chi = -0.04419909985804843 + csr * (1.401323894233574 + csr * (-0.3639746714505299 + csr * (-0.9579768560161194 + 1.1550475450828657 * csr)))
+            elif (csr > 0.035):
+                chi = 0.022652077593662934 + csr * (0.5252380349996234 + (2.5484334534423887 - 0.8763755326550412 * csr) * csr)
+            else:
+                chi = 0.004733749294807862 + csr * (4.716738065192151 + csr * (-463.506669149804 + csr * (24745.88727411664 + csr * (-606122.7511711778 + 5521693.445014727 * csr))))
+
+            _buie_kappa = 0.9*math.log(13.5 * chi)*pow(chi, -0.3)
+            _buie_gamma = 2.2*math.log(0.52 * chi)*pow(chi, 0.43) - 0.1
+
+            while(theta < angle_max):
+
+                if (theta < 4.65 - delta_theta_tr / 2.):
+                    theta += dt_s
+                
+                elif (theta > 4.65 + delta_theta_tr / 2.):
+                    theta += dt_cs
+                    dt_cs *= 1.2   #take larger steps as we get away from the transition region
+                else:
+                    theta += dt_tr
+
+                if (theta > 4.65):
+                    theta = angle_max + .000001 if (theta > angle_max) else theta
+                    #in the circumsolar region
+                    P.sun.user_intensity_table.append([theta, math.exp(_buie_kappa)*pow(theta, _buie_gamma)])
+                else:
+                    #in the solar disc
+                    P.sun.user_intensity_table.append([theta, math.cos(0.326 * theta) / math.cos(0.308 * theta)])
+
+        elif sun_type == 3:
+            #User sun
+            shape = 'd'
+            pass  #user must have filled user_intensity_table manually
+        else:
+            return False
+        
+        #set other sun parameters
+        P.sun.shape = shape
+        P.sun.sigma = sigma
+        
+        #--- Set the sun position ---
+        solaz = self.data_get_number(p_data, "fluxsim.0.flux_solar_az")
+        solel = self.data_get_number(p_data, "fluxsim.0.flux_solar_el")
+        sun = pysoltrace.Point()
+        sun.z = math.cos(math.radians(90.-solel))
+        sun.x = math.sin(math.radians(solaz))*math.sqrt(1-sun.z**2)
+        sun.y = math.cos(math.radians(solaz))*math.sqrt(1-sun.z**2)
+
+        sun.unitize(inplace=True)
+        
+        P.sun.position.x = sun.x*1.e4
+        P.sun.position.y = sun.y*1.e4
+        P.sun.position.z = sun.z*1.e4
+
+
+        # --- Set up optical property set ---
+        
+        # The optical property set describes the behavior of a surface (front and back sides) optically.
+        # Reflective properties, transmissivity, slope error and specularity, and error type are specified. 
+        # Several irrelevant properties must also be set, including refraction and grating properties.
+        
+        # Create an optical property set for each heliostat template
+
+        # helios = self.heliostats_by_region(p_data)
+        
+        # merge info on the heliostat field from the detailed results (aim points) and layout_info (optical characteristics)
+        h1 = self.detail_results(p_data)
+        # 'id', 'x_location', 'y_location', 'z_location', 'x_aimpoint',
+        # 'y_aimpoint', 'z_aimpoint', 'i_tracking_vector', 'j_tracking_vector',
+        # 'k_tracking_vector', 'layout_metric', 'power_to_receiver',
+        # 'power_reflected', 'energy', 'efficiency_annual', 'efficiency',
+        # 'cosine', 'intercept', 'reflectance', 'attenuation', 'blocking',
+        # 'shading', 'clouds'
+        h1 = h1.set_index('id')
+        h2 = self.get_layout_info(p_data, get_optical_details=True, restype="dataframe")
+        h2 = h2.set_index('id')
+        helios = h1.combine_first(h2)
+        
+        nhtemp = len(helios)
+        optics_map = {}
+        for i in range(nhtemp):
+            oname = f"heliostat_{i:d}"
+            P.add_optic(oname)
+            #map the optics pointer to the heliostat template name
+            optics_map[oname] = P.optics[i]
+
+        for ii in range(nhtemp):
+            H = helios.iloc[ii]
+            
+            """
+            The optical error in SolTrace is described in spherical coordinates, so the total error 
+            budget should represent the weighted average of the X and Y components. To average, divide
+            the final terms by sqrt(2). If both X and Y errors are the same, then the result will be
+            sigma_spherical = sigma_x = sigma_y. Otherwise, the value will fall between sigma_x and 
+            sigma_y.
+            """
+            
+            refl = H.reflectance  #reflectivity * soiling
+            # scale reflectance by attenuation for this heliostat
+            refl *= H.attenuation 
+            #Note that the reflected energy is also reduced by the fraction of inactive heliostat aperture. Since
+            #we input the actual heliostat dimensions into soltrace, apply this derate on the reflectivity.
+            refl *= self.data_get_number(p_data, "heliostat.0.reflect_ratio") 
+            
+            errang = [
+                self.data_get_number(p_data, "heliostat.0.err_azimuth"),
+                self.data_get_number(p_data, "heliostat.0.err_elevation"),
+            ]
+            errsurf = [
+                self.data_get_number(p_data, "heliostat.0.err_surface_x"),
+                self.data_get_number(p_data, "heliostat.0.err_surface_y"),
+            ]
+            errrefl = [
+                self.data_get_number(p_data, "heliostat.0.err_reflect_x"),
+                self.data_get_number(p_data, "heliostat.0.err_reflect_y"),
+            ]
+
+            errnorm = math.sqrt( errang[0]*errang[0] + errang[1]*errang[1]  + errsurf[0]*errsurf[0] + errsurf[1]*errsurf[1] )*1000. #mrad  normal vector error
+            errsurface = math.sqrt( errrefl[0]*errrefl[0] + errrefl[1]*errrefl[1] ) * 1000.  #mrad - reflected vector error (specularity)
+            
+            """
+            The Hermite model definitions treat x and y components as conical error, such that the following definition holds:
+
+            sigma_tot^2 = ( sigma_x^2 + sigma_y^2 )/2
+
+            This definition is unconventional, but a conversion factor of 1/sqrt(2) is required when expressing x and y component
+            errors from the Hermite model in total error for SolTrace.
+            """
+
+            errnorm *= 1./math.sqrt(2)
+            errsurface *= 1./math.sqrt(2)
+
+            #Add the front
+            st_err_type = self.data_get_number(p_data, "heliostat.0.st_err_type")   #Gaussian=0;Pillbox=1
+            if st_err_type == 0:  #gaussian
+                P.optics[ii].front.dist_type = 'g'
+            elif st_err_type == 1: #pillbox
+                P.optics[ii].front.dist_type = 'p'
+            P.optics[ii].front.transmissivity = 0.
+            P.optics[ii].front.reflectivity = refl
+            P.optics[ii].front.slope_error = errnorm
+            P.optics[ii].front.spec_error = errsurface
+
+            P.optics[ii].back.dist_type = 'g'
+            P.optics[ii].back.reflectivity = 0.
+            P.optics[ii].back.transmissivity = 0.
+            P.optics[ii].back.slope_error = 100.
+            P.optics[ii].back.spec_error = 0.
+
+            
+        # --- Set the heliostat stage ---
+        # this contains all heliostats regardless of differeing geometry or optical properties
+
+        h_stage = P.add_stage()
+        #global origin
+        h_stage.position.x = 0.
+        h_stage.position.y = 0.
+        h_stage.position.z = 0.
+        #global aim, leave as 0,0,1
+        h_stage.aim.x = 0.
+        h_stage.aim.y = 0.
+        h_stage.aim.z = 1.
+        #no z rotation
+        h_stage.zrot = 0.
+        #{virtual stage, multiple hits per ray, trace through} UI checkboxes
+        h_stage.is_virtual = False
+        h_stage.is_multihit = True 
+        h_stage.is_tracethrough = False
+        #name
+        h_stage.name = "Heliostat field"
+
+        # 	--- Add elements to the stage ---
+        nh = len(helios)
+        
+        # determine whether each heliostat contains additional facet details
+        isdetail = bool(self.data_get_number(p_data, "heliostat.0.is_faceted"))
+            
+        ncantx = int(self.data_get_number(p_data, "heliostat.0.n_cant_x")) if isdetail else 1
+        ncanty = int(self.data_get_number(p_data, "heliostat.0.n_cant_y")) if isdetail else 1
+        
+        for i in range(nh):
+            H = helios.iloc[i]
+
+
+            #Get values that apply to the whole heliostat
+            enabled = True
+            
+            #compute tracking vector from aim point
+            V = pysoltrace.Point()
+            V.x = H.x_aimpoint - H.x_location
+            V.y = H.y_aimpoint - H.y_location
+            V.z = H.z_aimpoint - H.z_location
+            V.unitize(inplace=True)
+            V.x += sun.x
+            V.y += sun.y
+            V.z += sun.z 
+            V = V/2.
+            V.unitize(inplace=True)
+            
+            zrot = P.util_calc_zrot_azel(V)  #degrees
+
+            shape = 'c' if bool(self.data_get_number(p_data, "heliostat.0.is_round")) else 'r'
+
+            opticname = f"heliostat_{i:d}"
+            track_zen = math.acos(V.z)
+            track_az = math.atan2(V.x,V.y)
+
+            for j in range(ncantx):
+                for k in range(ncanty):
+
+                    element = h_stage.add_element()
+
+                    element.enabled = enabled
+                    
+                    if isdetail:
+                        #Calculate unique positions and aim vectors for each facet
+                        panel_name = f"panel_{k:d}_{j:d}"
+                        Floc = pysoltrace.Point( H[f"{panel_name}_x"], H[f"{panel_name}_y"], H[f"{panel_name}_z"] )
+                        Faim = pysoltrace.Point( H[f"{panel_name}_i"], H[f"{panel_name}_j"], H[f"{panel_name}_k"] )
+                        Faim = self.__unitvect(Faim) 
+
+                        #Rotate to match heliostat rotation
+                        Floc = P.util_rotation_arbitrary(track_zen, pysoltrace.Point(1,0,0), pysoltrace.Point(), Floc)
+                        Faim = P.util_rotation_arbitrary(track_zen, pysoltrace.Point(1,0,0), pysoltrace.Point(), Faim)
+                        Floc = P.util_rotation_arbitrary(math.pi - track_az, pysoltrace.Point(0,0,1), pysoltrace.Point(), Floc)
+                        Faim = P.util_rotation_arbitrary(math.pi - track_az, pysoltrace.Point(0,0,1), pysoltrace.Point(), Faim)
+                        
+                        element.position.x = H.x_location + Floc.x
+                        element.position.y = H.y_location + Floc.y
+                        element.position.z = H.z_location + Floc.z
+
+                        element.aim.x = element.position.x + Faim.x*1000.
+                        element.aim.y = element.position.y + Faim.y*1000.
+                        element.aim.z = element.position.z + Faim.z*1000.
+                    else:
+                        element.position.x = H.x_location
+                        element.position.y = H.y_location
+                        element.position.z = H.z_location
+                    
+                        element.aim.x = H.x_location + V.x*1000.
+                        element.aim.y = H.y_location + V.y*1000.
+                        element.aim.z = H.z_location + V.z*1000.
+
+                    element.zrot = zrot
+            
+                    element.aperture = shape
+                    
+                    #Set up the surface description
+                    if self.data_get_number(p_data, "heliostat.0.is_round"):
+                        element.aperture_params[0] = self.data_get_number(p_data, "heliostat.0.width")
+                    else:
+                        if isdetail:
+                            #Image size is for each individual facet.
+                            element.aperture_params[0] = H.panel_width 
+                            element.aperture_params[1] = H.panel_height
+                        else:
+                            element.aperture_params[0] = self.data_get_number(p_data, "heliostat.0.width")
+                            element.aperture_params[1] = self.data_get_number(p_data, "heliostat.0.height")
+            
+                    #Model surface as either flat or parabolic focus in X and/or Y
+                    #double spar[] ={0., 0., 0., 0., 0., 0., 0., 0.};
+                    # Flat=0;At slant=1;Group average=2;User-defined=3
+
+                    # modify the get_layout_info method to give back focal lengths and possibly canting information?
+
+                    if self.data_get_number(p_data, "heliostat.0.focus_method") == 0:
+                    	#Flat
+                        element.surface = 'f'
+                    else:	
+                        #Not flat
+                        #coefs are 1/2*f where f is focal length in x or y
+                        element.surface_params[0] = 0.5/H.focal_x
+                        element.surface_params[1] = 0.5/H.focal_y
+                        element.surface = 'p'
+                    
+                    element.interaction = 2;	#1 = refract, 2 = reflect
+                    element.optic = optics_map[ opticname ]
+
+                
+        #--- Set the receiever stages ---
+        r_stage = P.add_stage()
+        #Global origin
+        r_stage.position.x = 0.
+        r_stage.position.y = 0.
+        r_stage.position.z = 0.
+        #Aim point
+        r_stage.aim.x = 0.
+        r_stage.aim.y = 0.
+        r_stage.aim.z = 1.
+        #No z rotation
+        r_stage.zrot = 0.
+        #{virtual stage, multiple hits per ray, trace through} UI checkboxes
+        r_stage.is_virtual = False 
+        r_stage.is_multihit = True 
+        r_stage.is_tracethrough = False
+        #Name
+        r_stage.name = "Receiver"
+
+        #only the first receiver is considered
+        element = r_stage.add_element()
+
+        #Get the receiver
+
+        #Get the receiver geometry type
+        rectype = self.data_get_number(p_data, "receiver.0.rec_type") 
+        if rectype == 0:
+            recgeom = 0  #CYLINDRICAL_CLOSED
+        elif rectype == 1:
+            recgeom = 2  #CYLINDRICAL_CAV
+        elif rectype == 2:
+            recgeom = 3  #PLANE_RECT
+        
+
+        #append an optics set, required for the receiver
+        recname = self.data_get_string(p_data, "receiver.0.class_name")
+        copt = P.add_optic(recname)
+
+        if recgeom == 0:  #CYLINDRICAL_CLOSED:
+            #Add optics stage
+            
+            #set the optical properties. This should be a diffuse surface, make it a pillbox distribution w/ equal angular reflection probability.
+            copt.front.dist_type = 'g'
+            copt.front.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
+            copt.front.slope_error = 100.
+            copt.front.spec_error = 100.
+            #back
+            copt.back.dist_type = 'g'
+            copt.back.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
+            copt.back.slope_error = 100.
+            copt.back.spec_error = 100.
+
+            #displace by radius, inside is front, x1 and x2 = 0 for closed cylinder ONLY
+            #Add a closed cylindrical receiver to the stage 
+            diam = self.data_get_number(p_data, "receiver.0.rec_diameter")
+
+            element.enabled = True
+            element.position.x = self.data_get_number(p_data, "receiver.0.rec_offset_x_global")
+            element.position.y = self.data_get_number(p_data, "receiver.0.rec_offset_y_global") - diam/2.
+            element.position.z = self.data_get_number(p_data, "receiver.0.optical_height") #optical height includes z offset
+            
+            #calculate the aim point. we need to rotate the receiver from a horizontal position into a vertical
+            #position. The aim vector defines the Z axis with respect to the SolTrace receiver coordinates, and
+            #in SolTrace, the cylindrical cross section lies in the X-Z plane.
+            az = math.radians(self.data_get_number(p_data, "receiver.0.rec_azimuth")) 
+            el = math.radians(self.data_get_number(p_data, "receiver.0.rec_elevation")) 
+            aim = pysoltrace.Point(math.cos(el)*math.sin(az), math.cos(el)*math.cos(az), math.sin(el))
+            element.aim.x = element.position.x + aim.x*1000.
+            element.aim.y = element.position.y + aim.y*1000.
+            element.aim.z = element.position.z + aim.z*1000.
+            
+            element.zrot = 0.
+            # in the special case of a closed cylinder, use parameters X1=0, X2=0, L = rec height
+            element.aperture_params[0] = 0. 
+            element.aperture_params[1] = 0. 
+            element.aperture_params[2] = self.data_get_number(p_data, "receiver.0.rec_height")
+            
+            element.aperture = 'l'		#single axis curvature section
+            element.surface = 't'
+            element.surface_params[0] = 2./diam
+            element.interaction = 2
+            element.optic = copt
+            
+            #----------------------
+            #close the bottom of the receiver with a circle to prevent internal absorption
+            copt = P.add_optic(recname + " spill")
+            
+            #set the optical properties. This should be a diffuse surface, make it a pillbox distribution w/ equal angular reflection probability.
+            copt.front.dist_type = 'g'
+            copt.front.reflectivity = 0
+            copt.front.slope_error = 100.
+            copt.front.spec_error = 100.
+            #back
+            copt.back.dist_type = 'g'
+            copt.back.reflectivity = 0
+            copt.back.slope_error = 100.
+            copt.back.spec_error = 100.
+            #the circle element
+            element = r_stage.add_element()
+            element.position.x = self.data_get_number(p_data, "receiver.0.rec_offset_x_global")
+            element.position.y = self.data_get_number(p_data, "receiver.0.rec_offset_y_global")
+            element.position.z = self.data_get_number(p_data, "receiver.0.optical_height") - self.data_get_number(p_data, "receiver.0.rec_height")/2. #optical height includes z offset
+                        
+            aim = pysoltrace.Point(math.sin(el)*math.cos(az), math.sin(el)*math.sin(az), math.cos(el))
+            element.aim.x = element.position.x + aim.x*1000.
+            element.aim.y = element.position.y + aim.y*1000.
+            element.aim.z = element.position.z + aim.z*1000.
+
+            element.zrot = 0.
+            element.aperture_params[0] = diam
+            
+            element.aperture = 'c'		#single axis curvature section
+            element.surface = 'f'
+            element.interaction = 2
+            element.optic = copt
+
+        elif recgeom in [2,3]:  #CYLINDRICAL_CAV,PLANE_RECT:
+            width = self.data_get_number(p_data, "receiver.0.rec_width")
+            height = self.data_get_number(p_data, "receiver.0.rec_height")
+            #For the elliptical cavity, SolTrace can only handle circular apertures. 
+            
+            copt.front.dist_type = 'g'
+            copt.front.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
+            copt.front.slope_error = math.pi/4.
+            copt.front.spec_error = math.pi/4.
+            copt.back.dist_type = 'g'
+            copt.back.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
+            copt.back.slope_error = math.pi/4.
+            copt.back.spec_error = math.pi/4.
+            
+            #Add a flat aperture to the stage
+            element.enabled = True
+            element.position.x = self.data_get_number(p_data, "receiver.0.rec_offset_x_global")
+            element.position.y = self.data_get_number(p_data, "receiver.0.rec_offset_y_global") - diam/2.
+            element.position.z = self.data_get_number(p_data, "receiver.0.optical_height") #optical height includes z offset
+            
+            #Calculate the receiver aperture aim point
+            az = math.radians(self.data_get_number(p_data, "receiver.0.rec_azimuth")) 
+            el = math.radians(self.data_get_number(p_data, "receiver.0.rec_elevation")) 
+            aim = pysoltrace.Point(math.cos(el)*math.sin(az), math.cos(el)*math.cos(az), math.sin(el))
+            element.aim.x = element.position.x + aim.x*1000.
+            element.aim.y = element.position.y + aim.y*1000.
+            element.aim.z = element.position.z + aim.z*1000.
+
+            # element->ZRot = R2D*Toolbox::ZRotationTransform(aim);
+            element.zrot = P.util_calc_zrot_azel(element.aim)
+            
+            #Set up the aperture arguments array
+            element.aperture_params[0] = width 
+            element.aperture_params[1] = height
+            #aperture shape 'c' circular or 'r' rectangular
+            element.aperture = 'r'
+            element.surface = 'f'
+            element.interaction = 2
+            element.optic = copt
+
+        #Simulation options
+        P.num_ray_hits = self.data_get_number(p_data, "fluxsim.0.min_rays") 
+        P.max_rays_traced = self.data_get_number(p_data, "fluxsim.0.max_rays")
+        seed = self.data_get_number(p_data, "fluxsim.0.seed")
+        sun_type = self.data_get_number(p_data, "ambient.0.sun_type")
+        P.is_sunshape = self.data_get_number(p_data, "fluxsim.0.is_sunshape_err") and ( sun_type != 0 )  #point sun
+        P.is_surface_errors = self.data_get_number(p_data, "fluxsim.0.is_optical_err")
+        
+        return P
+
+
+
+if __name__ == "__main__":
+
+    pass
