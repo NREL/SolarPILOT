@@ -562,7 +562,7 @@ void FluxPlot::DoPaintAimPointScatter()
     for (int i = 0; i < (int)_helios.size(); i++)
     {
         if (_helios.at(i)->getWhichReceiver() != rec) continue;
-
+        if (!_helios.at(i)->IsEnabled()) continue;
 
         sp_point* aim = _helios.at(i)->getAimPoint();
         sp_point aimc(*aim);
