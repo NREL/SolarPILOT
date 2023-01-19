@@ -257,7 +257,7 @@ receiver	norm_curtain_width	IN	DOUBLE	1	none	True				Normalized particle curtain
 receiver	max_curtain_depth	IN	DOUBLE	1.5	m	True				Particle curtain entrance depth	Particle curtain entrance depth from the aperture
 receiver	norm_heights_depths	IN	MATRIX_T	0.5,0.8;	none	True				Normalized troughs heights and depths	Normalized troughs heights and depths starting from the receiver entrance and working down
 receiver	curtain_type	IN	STRING	0	none	False	combo	Flat=0;Curved=1		Particle curtain type	Particle curtain geometrical configuration
-receiver	curtain_radius	IN	DOUBLE	5	m	True				Particle curtain radius	Particle curtain radius of curvature
+receiver	curtain_radius	IN	DOUBLE	10	m	True				Particle curtain radius	Particle curtain radius of curvature
 receiver	is_snout	IN	BOOL	False		False	checkbox			Is SNOUT enabled?	Is SNOUT enabled?
 receiver	snout_depth	IN	DOUBLE	1.5	m	True				SNOUT depth	Distance from aperture window to SNOUT front plane
 receiver	snout_vert_angle	IN	DOUBLE	20	deg	True				Vertical SNOUT angle	SNOUT angle from aperture normal
