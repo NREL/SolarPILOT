@@ -794,7 +794,7 @@ void SPFrame::UpdateDesignSelect( int sel, var_map &vset )
             _design_days_display->SetItem(i, 2, my_to_string((int)dom)  );
             _design_days_display->SetItem(i, 3, to_string(dni_peak, "%.1f")  );
             _design_days_display->SetItem(i, 4, to_string(dni_tot, "%.1f")  );
-            _design_days_display->SetItem(i, 5, my_to_string(hrcount+1)  );
+            _design_days_display->SetItem(i, 5, my_to_string(hrcount)  );
         }
         
         _design_ndays->GetParent()->Layout();
@@ -891,7 +891,7 @@ void SPFrame::UpdateDesignSelect( int sel, var_map &vset )
             _design_days_display->InsertItem(item);
             _design_days_display->SetItem(i, 1, DateTime::GetMonthName((int)month) );
             _design_days_display->SetItem(i, 2, my_to_string((int)dom)  );
-            _design_days_display->SetItem(i, 3, my_to_string(hrcount+1)  );
+            _design_days_display->SetItem(i, 3, my_to_string(hrcount)  );
         }
         
         _design_ndays->GetParent()->Layout();
