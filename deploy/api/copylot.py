@@ -114,6 +114,9 @@ class CoPylot:
             self.pdll = CDLL(cwd +"/solarpilot.so")  # Never tested
         else:
             print( 'Platform not supported ', sys.platform)
+
+        if is_debugging:
+            print('Process ID = ' + str(os.getpid()))
     
     def __unitvect(self, pt : pysoltrace.Point ):
         r = (pt.x*pt.x + pt.y*pt.y + pt.z*pt.z)**0.5
@@ -833,9 +836,9 @@ class CoPylot:
         except:
             print("detail_results API called failed to return correct information.")
 
-    #SPEXPORT sp_number_t* sp_get_fluxmap(sp_data_t p_data, int* nrows, int* ncols, int rec_id = 0)
-    def get_fluxmap(self, p_data: int, rec_id: int = 0) -> list:
-        """Retrieve the receiver fluxmap, optionally specifying the receiver ID to retrieve
+    #SPEXPORT sp_number_t* sp_get_fluxmap(sp_data_t p_data, int* nrows, int* ncols, int rec_id = 0, int flux_surf = 0)
+    def get_fluxmap(self, p_data: int, rec_id: int = 0, flux_surface: int = 0) -> list:
+        """Retrieve the receiver fluxmap, optionally specifying the receiver ID and/or flux surface to retrieve
 
         Parameters
         ----------
@@ -843,6 +846,8 @@ class CoPylot:
             memory address of SolarPILOT instance
         rec_id : int, optional
             receiver ID to retrieve
+        flux_surface : int, optional
+            flux surface to retrieve import for multi-surface receivers (e.g., cavity and falling particle)
 
         Returns
         -------
@@ -853,7 +858,7 @@ class CoPylot:
         nrows = c_int()
         ncols = c_int()
         self.pdll.sp_get_fluxmap.restype = POINTER(c_number)
-        res = self.pdll.sp_get_fluxmap( c_void_p(p_data), byref(nrows), byref(ncols), c_int(rec_id))
+        res = self.pdll.sp_get_fluxmap( c_void_p(p_data), byref(nrows), byref(ncols), c_int(rec_id), c_int(flux_surface))
         # output matrix
         mat = []
         for r in range(nrows.value):
