@@ -360,6 +360,10 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
         is_snout->setDisabledSiblings("false", 3, dsibs);
     }
     {
+        wxWindow* dsibs[] = { rec_elevation };
+        rec_type->setDisabledSiblings("Falling particle", 1, dsibs);
+    }
+    {
         wxWindow* dsibs[] = {curtain_radius};
         curtain_type->setDisabledSiblings("Flat", 1, dsibs);
     }

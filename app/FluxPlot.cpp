@@ -539,6 +539,7 @@ void FluxPlot::DoPaintAimPointScatter()
     //Get receiver angles
     double raz = vrec->rec_azimuth.val * D2R;
     double rel = vrec->rec_elevation.val * D2R;
+    if (vrec->rec_type.mapval() == var_receiver::REC_TYPE::FALLING_PARTICLE) rel = 0.0;
     double tht = vrec->optical_height.Val();
     double offx = vrec->rec_offset_x_global.Val();
     double offy = vrec->rec_offset_y_global.Val();
