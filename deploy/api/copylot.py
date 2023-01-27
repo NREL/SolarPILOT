@@ -106,6 +106,7 @@ class CoPylot:
             if is_debugging:
                 self.pdll = CDLL(cwd + "/solarpilotd.dll")
                 # self.pdll = CDLL("C:\\repositories\\solarpilot\\deploy\\api\\solarpilotd.dll")
+                # self.pdll = CDLL("C:\\Users\\WHamilt2\\Documents\\solarPILOT_build\\build\\ssc\\solarpilot\\Debug\\solarpilotd.dll")
             else:
                 self.pdll = CDLL(cwd + "/solarpilot.dll")
         elif sys.platform == 'darwin':
@@ -1660,8 +1661,6 @@ class CoPylot:
         r_stage.name = "Receiver"
 
         #only the first receiver is considered
-        element = r_stage.add_element()
-
         #Get the receiver
 
         #Get the receiver geometry type
@@ -1672,8 +1671,9 @@ class CoPylot:
             recgeom = 2  #CYLINDRICAL_CAV
         elif rectype == 2:
             recgeom = 3  #PLANE_RECT
+        elif rectype == 3:
+            recgeom = 8 # FALLING PARTICLE
         
-
         #append an optics set, required for the receiver
         recname = self.data_get_string(p_data, "receiver.0.class_name")
         copt = P.add_optic(recname)
@@ -1696,6 +1696,7 @@ class CoPylot:
             #Add a closed cylindrical receiver to the stage 
             diam = self.data_get_number(p_data, "receiver.0.rec_diameter")
 
+            element = r_stage.add_element()
             element.enabled = True
             element.position.x = self.data_get_number(p_data, "receiver.0.rec_offset_x_global")
             element.position.y = self.data_get_number(p_data, "receiver.0.rec_offset_y_global") - diam/2.
@@ -1771,6 +1772,7 @@ class CoPylot:
             copt.back.spec_error = math.pi/4.
             
             #Add a flat aperture to the stage
+            element = r_stage.add_element()
             element.enabled = True
             element.position.x = self.data_get_number(p_data, "receiver.0.rec_offset_x_global")
             element.position.y = self.data_get_number(p_data, "receiver.0.rec_offset_y_global") - diam/2.
@@ -1795,6 +1797,397 @@ class CoPylot:
             element.surface = 'f'
             element.interaction = 2
             element.optic = copt
+
+        elif recgeom in [8,9]:  #FALL_FLAT, FALL_CURVE:
+            r_stage.zrot = self.data_get_number(p_data, "receiver.0.rec_azimuth")
+            
+            #**** Add optics stage *****#
+            copt.front.dist_type = 'g'
+            copt.front.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
+            copt.front.transmissivity = 0.4
+            copt.front.slope_error = 100.
+            copt.front.spec_error = 100.
+            copt.back.dist_type = 'g'
+            copt.back.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
+            copt.back.transmissivity = 0.4
+            copt.back.slope_error = 100.
+            copt.back.spec_error = 100.
+
+            rec_offset_x = self.data_get_number(p_data, "receiver.0.rec_offset_x_global")
+            rec_offset_y = self.data_get_number(p_data, "receiver.0.rec_offset_y_global")
+            rec_offset_z = self.data_get_number(p_data, "receiver.0.optical_height")
+            
+            #**** Add particle curtain *****#
+            troughs_heights_depths = self.data_get_matrix(p_data, "receiver.0.norm_heights_depths")
+            n_surfs = len(troughs_heights_depths) + 1
+            
+            #Receiver geometry must be recreated here: DefineReceiverGeometry() in Receiver.cpp
+            rec_height = self.data_get_number(p_data, "receiver.0.rec_height")
+            rec_width = self.data_get_number(p_data, "receiver.0.rec_width")
+            max_height = self.data_get_number(p_data, "receiver.0.norm_curtain_height") * rec_height
+            max_curtain_depth = self.data_get_number(p_data, "receiver.0.max_curtain_depth")
+            max_curtain_width = self.data_get_number(p_data, "receiver.0.norm_curtain_width") * rec_width
+            outer_curtain_radius = self.data_get_number(p_data, "receiver.0.curtain_radius")
+            last_trough_height = 1.0    # Normalized height of previous trough 
+            last_trough_depth = 1.0     # Normalized depth of the previous trough
+            is_curved = self.data_get_number(p_data, "receiver.0.curtain_type") == 1 # Is the particle curtain curved
+            for s in range(1, n_surfs+1):
+                element = r_stage.add_element()
+                element.enabled = True
+                height_norm = 1.0
+                depth_norm = 1.0
+                if (s != n_surfs):
+                    height_norm = troughs_heights_depths[s-1][0] # Height
+                    depth_norm = troughs_heights_depths[s-1][1]  # Depth
+                    curtain_height = (last_trough_height - height_norm) * max_height
+                else:
+                    # Last curtain
+                    curtain_height = last_trough_height * max_height
+                
+                # Surface normal vector
+                depth_offset = last_trough_depth * max_curtain_depth
+                if (is_curved):
+                    curtain_radius = outer_curtain_radius - (1.0 - last_trough_depth) * max_curtain_depth
+
+                element.position.x = rec_offset_x
+                element.position.y = -depth_offset + rec_offset_y
+                element.position.z = (last_trough_height * max_height - curtain_height / 2. 
+                                        - rec_height / 2. + rec_offset_z)
+
+                element.aim.x = element.position.x
+                element.aim.y = element.position.y + 1.
+                element.aim.z = element.position.z
+                element.zrot = 180.
+
+                if not is_curved:
+                    #Set up the aperture arguments array
+                    element.aperture = 'r'
+                    element.aperture_params[0] = max_curtain_width
+                    element.aperture_params[1] = curtain_height
+                    element.surface = 'f'
+                else:
+                    element.aperture = 'l'
+                    element.aperture_params[0] = - max_curtain_width / 2.
+                    element.aperture_params[1] = max_curtain_width / 2.
+                    element.aperture_params[2] = curtain_height
+                    element.surface = 's' # approximate as a parabola
+                    element.surface_params[0] = 1. / curtain_radius
+
+                element.interaction = 2
+                element.optic = copt
+                element.comment = "Particle Curtain " + str(s)
+                last_trough_height = height_norm
+                last_trough_depth = depth_norm
+
+            #**** Cavity Surfaces *****//
+            # Create a diffuse-like optic surface
+            copt = P.add_optic("Cavity Surface")			
+			# set the optical properties. (Front)
+            copt.front.dist_type = 'g'
+            copt.front.reflectivity = 0.9 # Assuming white surface
+            copt.front.slope_error = 1000.
+            copt.front.spec_error = 1000.
+			# back surface optics
+            copt.back.dist_type = 'g'
+            copt.back.reflectivity = 0.9 # Assuming white surface
+            copt.back.slope_error = 1000.
+            copt.back.spec_error = 1000.
+
+            # Bottom cavity surface
+            back_cavity_offset = 0.5        # [m] assumed distance between curtain and back of cavity
+
+            element = r_stage.add_element()
+            element.enabled = True
+
+            element.position.x = rec_offset_x
+            element.position.y = -(max_curtain_depth + back_cavity_offset)/2. + rec_offset_y
+            element.position.z = -rec_height/2. + rec_offset_z
+
+            element.aim.x = element.position.x
+            element.aim.y = element.position.y
+            element.aim.z = element.position.z + 1.
+            element.zrot = 0.
+
+            element.aperture = 'r'
+            element.aperture_params[0] = max_curtain_width
+            element.aperture_params[1] = max_curtain_depth + back_cavity_offset
+
+            element.surface = 'f'
+            element.interaction = 2
+            element.optic = copt
+            element.comment = "Cavity Bottom"
+
+            # Back Cavity surface
+            element = r_stage.add_element()
+            element.enabled = True
+
+            element.position.x = rec_offset_x
+            element.position.y = -max_curtain_depth - back_cavity_offset + rec_offset_y
+            element.position.z = -rec_height/2. + max_height/2. + rec_offset_z
+
+            element.aim.x = element.position.x
+            element.aim.y = element.position.y + 1.
+            element.aim.z = element.position.z
+            element.zrot = 0.
+
+            element.aperture = 'r'
+            element.aperture_params[0] = max_curtain_width
+            element.aperture_params[1] = max_height
+
+            element.surface = 'f'
+            element.interaction = 2
+            element.optic = copt
+            element.comment = "Cavity Back"
+
+            # Top Cavity surface
+            element = r_stage.add_element()
+            element.enabled = True
+
+            element.position.x = rec_offset_x
+            element.position.y = -(max_curtain_depth - back_cavity_offset) / 2. + rec_offset_y
+            element.position.z = -rec_height/2. + max_height + rec_offset_z
+
+            element.aim.x = element.position.x
+            element.aim.y = element.position.y
+            element.aim.z = element.position.z - 1
+            element.zrot = 0.
+
+            element.aperture = 'r'
+            element.aperture_params[0] = max_curtain_width
+            element.aperture_params[1] = max_curtain_depth + back_cavity_offset
+
+            element.surface = 'f'
+            element.interaction = 2
+            element.optic = copt
+            element.comment = "Cavity Top"
+
+            # East Cavity Surface
+            element = r_stage.add_element()
+            element.enabled = True
+
+            element.position.x = max_curtain_width / 2. + rec_offset_x
+            element.position.y = -(max_curtain_depth + back_cavity_offset) / 2. + rec_offset_y
+            element.position.z = -rec_height/2. + max_height / 2. + rec_offset_z
+
+            element.aim.x = element.position.x - 1
+            element.aim.y = element.position.y
+            element.aim.z = element.position.z
+            element.zrot = 90.
+
+            element.aperture = 'r'
+            element.aperture_params[0] = max_curtain_depth + back_cavity_offset
+            element.aperture_params[1] = max_height
+
+            element.surface = 'f'
+            element.interaction = 2
+            element.optic = copt
+            element.comment = "Cavity East"
+
+            # West Cavity Surface
+            element = r_stage.add_element()
+            element.enabled = True
+
+            element.position.x = - max_curtain_width / 2. + rec_offset_x
+            element.position.y = -(max_curtain_depth + back_cavity_offset) / 2. + rec_offset_y
+            element.position.z = -rec_height/2. + max_height / 2. + rec_offset_z
+
+            element.aim.x = element.position.x + 1.
+            element.aim.y = element.position.y
+            element.aim.z = element.position.z
+            element.zrot = -90.
+
+            element.aperture = 'r'
+            element.aperture_params[0] = max_curtain_depth + back_cavity_offset
+            element.aperture_params[1] = max_height
+
+            element.surface = 'f'
+            element.interaction = 2
+            element.optic = copt
+            element.comment = "Cavity West"
+
+ 			# Front Top surface
+            if (self.data_get_number(p_data, "receiver.0.norm_curtain_height") > 1.):
+                element = r_stage.add_element()
+                element.enabled = True
+
+                element.position.x = rec_offset_x
+                element.position.y = rec_offset_y
+                element.position.z = rec_height / 2. + (max_height - rec_height) / 2. + rec_offset_z
+
+                element.aim.x = element.position.x
+                element.aim.y = element.position.y - 1.
+                element.aim.z = element.position.z
+                element.zrot = 0.
+
+                element.aperture = 'r'
+                element.aperture_params[0] = max_curtain_width
+                element.aperture_params[1] = max_height - rec_height
+
+                element.surface = 'f'
+                element.interaction = 2
+                element.optic = copt
+                element.comment = "Cavity Front Top"
+
+			# Front East Cavity Surface
+            element = r_stage.add_element()
+            element.enabled = True
+
+            element.position.x = max_curtain_width / 2. - (max_curtain_width - rec_width) / 4. + rec_offset_x
+            element.position.y = rec_offset_y
+            element.position.z = rec_offset_z
+
+            element.aim.x = element.position.x
+            element.aim.y = element.position.y - 1.
+            element.aim.z = element.position.z
+            element.zrot = 0.
+
+            element.aperture = 'r'
+            element.aperture_params[0] = (max_curtain_width - rec_width) / 2.
+            element.aperture_params[1] = rec_height
+
+            element.surface = 'f'
+            element.interaction = 2
+            element.optic = copt
+            element.comment = "Cavity Front East"
+
+			# Front West Cavity Surface
+            element = r_stage.add_element()
+            element.enabled = True
+
+            element.position.x = -max_curtain_width / 2. + (max_curtain_width - rec_width) / 4. + rec_offset_x
+            element.position.y = rec_offset_y
+            element.position.z = rec_offset_z
+
+            element.aim.x = element.position.x
+            element.aim.y = element.position.y - 1.
+            element.aim.z = element.position.z
+            element.zrot = 0.
+
+            element.aperture = 'r'
+            element.aperture_params[0] = (max_curtain_width - rec_width) / 2.
+            element.aperture_params[1] = rec_height
+
+            element.surface = 'f'
+            element.interaction = 2
+            element.optic = copt
+            element.comment = "Cavity Front West"
+
+            if (self.data_get_number(p_data, "receiver.0.is_snout")):
+                snout_depth = self.data_get_number(p_data, "receiver.0.snout_depth")
+                snout_horiz_angle = math.radians(self.data_get_number(p_data, "receiver.0.snout_horiz_angle")) 
+                snout_vert_angle = math.radians(self.data_get_number(p_data, "receiver.0.snout_vert_angle"))
+
+                # SNOUT Top Panel
+                element = r_stage.add_element()
+                element.enabled = True
+
+                element.position.x = rec_offset_x
+                element.position.y = rec_offset_y
+                element.position.z = rec_height / 2. + rec_offset_z
+
+                element.aim.x = element.position.x
+                element.aim.y = element.position.y
+                element.aim.z = element.position.z - 1.
+                element.zrot = 0.
+
+                element.aperture = 'q'
+                element.aperture_params[0] = rec_width / 2. + snout_depth * math.tan(snout_horiz_angle / 2.)
+                element.aperture_params[1] = snout_depth
+                element.aperture_params[2] = - rec_width / 2. - snout_depth * math.tan(snout_horiz_angle / 2.)
+                element.aperture_params[3] = snout_depth
+                element.aperture_params[4] = - rec_width / 2.
+                element.aperture_params[5] = 0.
+                element.aperture_params[6] = rec_width / 2.
+                element.aperture_params[7] = 0.
+
+                element.surface = 'f'
+                element.interaction = 2
+                element.optic = copt
+                element.comment = "SNOUT Top Panel"
+
+                # SNOUT Bottom Panel
+                element = r_stage.add_element()
+                element.enabled = True
+
+                element.position.x = rec_offset_x
+                element.position.y = rec_offset_y
+                element.position.z = - rec_height / 2. + rec_offset_z
+
+                element.aim.x = element.position.x
+                element.aim.y = element.position.y + math.sin(snout_vert_angle)
+                element.aim.z = element.position.z + math.cos(snout_vert_angle)
+                element.zrot = 0.
+
+                element.aperture = 'q'
+                element.aperture_params[0] = rec_width / 2. + snout_depth * math.tan(snout_horiz_angle / 2.)
+                element.aperture_params[1] = snout_depth / math.cos(snout_vert_angle)
+                element.aperture_params[2] = - rec_width / 2. - snout_depth * math.tan(snout_horiz_angle / 2.)
+                element.aperture_params[3] = snout_depth / math.cos(snout_vert_angle)
+                element.aperture_params[4] = - rec_width / 2.
+                element.aperture_params[5] = 0.
+                element.aperture_params[6] = rec_width / 2.
+                element.aperture_params[7] = 0.
+
+                element.surface = 'f'
+                element.interaction = 2
+                element.optic = copt
+                element.comment = "SNOUT Bottom Panel"
+
+                # SNOUT East Panel
+                element = r_stage.add_element()
+                element.enabled = True
+
+                element.position.x = rec_width / 2. + rec_offset_x
+                element.position.y = rec_offset_y
+                element.position.z = rec_offset_z
+
+                element.aim.x = element.position.x - math.cos(snout_horiz_angle / 2.)
+                element.aim.y = element.position.y + math.sin(snout_horiz_angle / 2.)
+                element.aim.z = element.position.z
+                element.zrot = 90.
+
+                element.aperture = 'q'
+                element.aperture_params[0] = 0.
+                element.aperture_params[1] = rec_height / 2.
+                element.aperture_params[2] = - snout_depth / math.cos(snout_horiz_angle / 2.)
+                element.aperture_params[3] = rec_height / 2.
+                element.aperture_params[4] = - snout_depth / math.cos(snout_horiz_angle / 2.)
+                element.aperture_params[5] = - rec_height / 2. - snout_depth * math.tan(snout_vert_angle)
+                element.aperture_params[6] = 0.
+                element.aperture_params[7] = -rec_height / 2.
+
+                element.surface = 'f'
+                element.interaction = 2
+                element.optic = copt
+                element.comment = "SNOUT East Panel"
+
+            	# SNOUT West Panel
+                element = r_stage.add_element()
+                element.enabled = True
+
+                element.position.x = - rec_width / 2. + rec_offset_x
+                element.position.y = rec_offset_y
+                element.position.z = rec_offset_z
+
+                element.aim.x = element.position.x + math.cos(snout_horiz_angle / 2.)
+                element.aim.y = element.position.y + math.sin(snout_horiz_angle / 2.)
+                element.aim.z = element.position.z
+                element.zrot = -90.
+
+                element.aperture = 'q'
+                element.aperture_params[0] = snout_depth / math.cos(snout_horiz_angle / 2.)
+                element.aperture_params[1] = rec_height / 2.
+                element.aperture_params[2] = 0.
+                element.aperture_params[3] = rec_height / 2.
+                element.aperture_params[4] = 0.
+                element.aperture_params[5] = - rec_height / 2. 
+                element.aperture_params[6] = snout_depth / math.cos(snout_horiz_angle / 2.)
+                element.aperture_params[7] = - rec_height / 2. - snout_depth * math.tan(snout_vert_angle)
+
+                element.surface = 'f'
+                element.interaction = 2
+                element.optic = copt
+                element.comment = "SNOUT West Panel"
 
         #Simulation options
         P.num_ray_hits = self.data_get_number(p_data, "fluxsim.0.min_rays") 
