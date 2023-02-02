@@ -521,11 +521,11 @@ void SPFrame::OnHeliotempAdd( wxCommandEvent &WXUNUSED(event))
             return;
         }
     
-        int ind = _variables.hels.size();
+        int ind = _variables.hels.back().id.val + 1; // Add to the last id value to ensure it is unique
 
         //which name to use?
         //Create a popup dialog
-        string name = my_to_string(nitems+1);
+        string name = my_to_string(ind + 1);
         name = "Template " + name;
     
         bool no_errs = false;
