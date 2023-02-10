@@ -605,6 +605,8 @@ class PySolTrace:
                 *.ply --> 'r' / Polynomial revolution
                 *.csi --> 'i' / Cubic spline interpolation
                 *.fed --> 'e' / Finite element data
+            comment : string
+                Comment useful for naming element
             
             Methods
             ----------
@@ -644,6 +646,8 @@ class PySolTrace:
                 self.interaction = 2        #1=refract, 2=reflect
                 ## Reference to *Optics* instance associated with this element
                 self.optic = None
+                ## Comment useful for naming element
+                self.comment = ""
 
             def copy(self, enew):
                 c = self.__dict__.copy()
@@ -1453,11 +1457,11 @@ class PySolTrace:
 
             # Modify the ray number for threads 2+ to avoid duplication
             dfs = [r[0] for r in res.get()]
-            rstart = int(dfs[0].iloc[-1].number)
+            rstart = int(dfs[0].number.max())
             if len(dfs)>1:
                 for d in dfs[1:]:
                     d.number = d.number+rstart
-                    rstart = d.number.iloc[-1]
+                    rstart = int(d.number.max())
 
             self.raydata = pd.concat(dfs)
             self.sunstats = res.get()[0][1]  #take the first thread result
@@ -2011,7 +2015,7 @@ class PySolTrace:
                         *el.surface_params,
                         "" if not el.surface_file else el.surface_file, #Surface geometry file
                         el.optic.name, el.interaction, 
-                        "" ) )
+                        el.comment ) )
         return
 # -----------------------------------------------------------------------------------------------------------------------------
 
