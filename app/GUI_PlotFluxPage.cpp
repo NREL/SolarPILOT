@@ -414,7 +414,6 @@ void SPFrame::OnFluxPlotBinChange( int axis )
     sim_params P;
     P.dni = _variables.flux.flux_dni.val;
     double azzen[] = { _results.back().solar_az, _results.back().solar_zen};  //re-use last position
-    _results.back().process_raytrace_simulation(_SF, P, 2, azzen, helios, _sim_control._STSim->IntData.q_ray, _sim_control._STSim->IntData.emap, _sim_control._STSim->IntData.smap,
-        _sim_control._STSim->IntData.rnum, _sim_control._STSim->IntData.nint, _sim_control._STSim->IntData.bounds);
+    _results.back().process_raytrace_simulation(_SF, P, 2, azzen, helios, _sim_control._STSim);
     return;
 }
