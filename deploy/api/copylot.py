@@ -1799,31 +1799,91 @@ class CoPylot:
             element.optic = copt
 
         elif recgeom in [8,9]:  #FALL_FLAT, FALL_CURVE:
-            r_stage.zrot = self.data_get_number(p_data, "receiver.0.rec_azimuth")
-            
-            #**** Add optics stage *****#
-            copt.front.dist_type = 'g'
-            copt.front.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
-            copt.front.transmissivity = 0.4
-            copt.front.slope_error = 100.
-            copt.front.spec_error = 100.
-            copt.back.dist_type = 'g'
-            copt.back.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
-            copt.back.transmissivity = 0.4
-            copt.back.slope_error = 100.
-            copt.back.spec_error = 100.
-
             rec_offset_x = self.data_get_number(p_data, "receiver.0.rec_offset_x_global")
             rec_offset_y = self.data_get_number(p_data, "receiver.0.rec_offset_y_global")
             rec_offset_z = self.data_get_number(p_data, "receiver.0.optical_height")
+            rec_height = self.data_get_number(p_data, "receiver.0.rec_height")
+            rec_width = self.data_get_number(p_data, "receiver.0.rec_width")
+
+			#Creating a virtual stage for the aperture
+			#aperture_virtual_stage = true;
+            r_stage.zrot = self.data_get_number(p_data, "receiver.0.rec_azimuth")
+            r_stage.name = "Aperture"
+            r_stage.is_virtual = True
+            r_stage.is_tracethrough = True
+            
+            element = r_stage.add_element()
+            element.enabled = True
+            
+            element.position.x = rec_offset_x
+            if (self.data_get_number(p_data, "receiver.0.is_snout")):
+                snout_depth = self.data_get_number(p_data, "receiver.0.snout_depth")
+                snout_horiz_angle = math.radians(self.data_get_number(p_data, "receiver.0.snout_horiz_angle")) 
+                snout_vert_angle = math.radians(self.data_get_number(p_data, "receiver.0.snout_vert_angle"))
+
+                element_height = rec_height + snout_depth * math.tan(snout_vert_angle)
+                element_width = rec_width + 2 * snout_depth * math.tan(snout_horiz_angle / 2.)
+                
+                element.position.y = snout_depth + rec_offset_y
+                element.position.z = rec_height/2. - element_height/2. + rec_offset_z
+
+            else:
+                element_height = rec_height
+                element_width = rec_width
+
+                element.position.y = rec_offset_y
+                element.position.z = rec_offset_z
+
+            element.aim.x = element.position.x
+            element.aim.y = element.position.y + 1
+            element.aim.z = element.position.z
+            element.zrot = 0.
+            
+            element.aperture = 'r'
+            element.aperture_params[0] = element_width
+            element.aperture_params[1] = element_height
+            
+            element.surface = 'f'
+            element.interaction = 1  # ignored by SolTrace
+            element.optic = copt     # ignored by SolTrace
+            element.comment = "Aperture"
+
+            #*** Re-adding receiver stage ***#
+            r_stage = P.add_stage()
+            #Global origin
+            r_stage.position.x = 0.
+            r_stage.position.y = 0.
+            r_stage.position.z = 0.
+            #Aim point
+            r_stage.aim.x = 0.
+            r_stage.aim.y = 0.
+            r_stage.aim.z = 1.
+            #No z rotation
+            r_stage.zrot = self.data_get_number(p_data, "receiver.0.rec_azimuth")
+            #{virtual stage, multiple hits per ray, trace through} UI checkboxes
+            r_stage.is_virtual = False 
+            r_stage.is_multihit = True 
+            r_stage.is_tracethrough = False
+            #Name
+            r_stage.name = "Receiver"
+            
+            #**** Add optics stage *****#
+            copt.front.dist_type = 'd'
+            #copt.front.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
+            copt.front.transmissivity = 0.3
+            copt.front.slope_error = 0.00001
+            copt.front.spec_error = 10000.
+            copt.back.dist_type = 'd'
+            #copt.back.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
+            copt.back.transmissivity = 0.3
+            copt.back.slope_error = 0.00001
+            copt.back.spec_error = 10000.
             
             #**** Add particle curtain *****#
             troughs_heights_depths = self.data_get_matrix(p_data, "receiver.0.norm_heights_depths")
             n_surfs = len(troughs_heights_depths) + 1
             
             #Receiver geometry must be recreated here: DefineReceiverGeometry() in Receiver.cpp
-            rec_height = self.data_get_number(p_data, "receiver.0.rec_height")
-            rec_width = self.data_get_number(p_data, "receiver.0.rec_width")
             max_height = self.data_get_number(p_data, "receiver.0.norm_curtain_height") * rec_height
             max_curtain_depth = self.data_get_number(p_data, "receiver.0.max_curtain_depth")
             max_curtain_width = self.data_get_number(p_data, "receiver.0.norm_curtain_width") * rec_width
@@ -1870,10 +1930,10 @@ class CoPylot:
                     element.aperture_params[0] = - max_curtain_width / 2.
                     element.aperture_params[1] = max_curtain_width / 2.
                     element.aperture_params[2] = curtain_height
-                    element.surface = 's' # approximate as a parabola
+                    element.surface = 's'
                     element.surface_params[0] = 1. / curtain_radius
 
-                element.interaction = 2
+                element.interaction = 1  # Refraction surface for transmissivity
                 element.optic = copt
                 element.comment = "Particle Curtain " + str(s)
                 last_trough_height = height_norm
@@ -1883,14 +1943,14 @@ class CoPylot:
             # Create a diffuse-like optic surface
             copt = P.add_optic("Cavity Surface")			
 			# set the optical properties. (Front)
-            copt.front.dist_type = 'g'
+            copt.front.dist_type = 'd'
             copt.front.reflectivity = 0.9 # Assuming white surface
-            copt.front.slope_error = 1000.
+            copt.front.slope_error = 0.00001
             copt.front.spec_error = 1000.
 			# back surface optics
-            copt.back.dist_type = 'g'
+            copt.back.dist_type = 'd'
             copt.back.reflectivity = 0.9 # Assuming white surface
-            copt.back.slope_error = 1000.
+            copt.back.slope_error = 0.00001
             copt.back.spec_error = 1000.
 
             # Bottom cavity surface
@@ -1944,7 +2004,7 @@ class CoPylot:
             element.enabled = True
 
             element.position.x = rec_offset_x
-            element.position.y = -(max_curtain_depth - back_cavity_offset) / 2. + rec_offset_y
+            element.position.y = -(max_curtain_depth + back_cavity_offset) / 2. + rec_offset_y
             element.position.z = -rec_height/2. + max_height + rec_offset_z
 
             element.aim.x = element.position.x
