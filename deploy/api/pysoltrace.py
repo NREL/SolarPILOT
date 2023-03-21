@@ -292,7 +292,7 @@ class PySolTrace:
             ----------
             dist_type : char
                 Distribution type for surface interactions. One of:
-                {'g':Gaussian, 'p':Pillbox, 'd':Diffuse }
+                {'g':Gaussian, 'p':Pillbox, 'f':Diffuse }
             refraction_real : float
                 Real component of the refraction index
             reflectivity : float
@@ -314,8 +314,8 @@ class PySolTrace:
             """
             def __init__(self):
                 ## Distribution type for surface interactions. One of:
-                # {'g':Gaussian, 'p':Pillbox, 'd':Diffuse }
-                self.dist_type = 'g'     #One of 'g'->Gauss 'p'->Pillbox 'd'->Diffuse
+                # {'g':Gaussian, 'p':Pillbox, 'f':Diffuse }
+                self.dist_type = 'g'     #One of 'g'->Gaussian 'p'->Pillbox 'f'->Diffuse
                 ## Real component of the refraction index
                 self.refraction_real = 1.1         #real component of the refraction index 
                 ## [0..1] Surface reflectivity
