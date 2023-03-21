@@ -1805,43 +1805,191 @@ class CoPylot:
             rec_height = self.data_get_number(p_data, "receiver.0.rec_height")
             rec_width = self.data_get_number(p_data, "receiver.0.rec_width")
 
-			#Creating a virtual stage for the aperture
-			#aperture_virtual_stage = true;
-            r_stage.zrot = self.data_get_number(p_data, "receiver.0.rec_azimuth")
-            r_stage.name = "Aperture"
-            r_stage.is_virtual = True
-            r_stage.is_tracethrough = True
-            
-            element = r_stage.add_element()
-            element.enabled = True
-            
-            element.position.x = rec_offset_x
+			# Creating a stage for the SNOUT -> This must occur before the virtual aperture stage
             if (self.data_get_number(p_data, "receiver.0.is_snout")):
                 snout_depth = self.data_get_number(p_data, "receiver.0.snout_depth")
                 snout_horiz_angle = math.radians(self.data_get_number(p_data, "receiver.0.snout_horiz_angle")) 
                 snout_vert_angle = math.radians(self.data_get_number(p_data, "receiver.0.snout_vert_angle"))
 
-                element_height = rec_height + snout_depth * math.tan(snout_vert_angle)
-                element_width = rec_width + 2 * snout_depth * math.tan(snout_horiz_angle / 2.)
-                
-                element.position.y = snout_depth + rec_offset_y
-                element.position.z = rec_height/2. - element_height/2. + rec_offset_z
+                snout_stage = r_stage  #renaming r_stage
+                snout_stage.zrot = self.data_get_number(p_data, "receiver.0.rec_azimuth")
+                snout_stage.name = "SNOUT"
+                snout_stage.is_virtual = False
+                snout_stage.is_multihit = True 
+                snout_stage.is_tracethrough = True
 
-            else:
-                element_height = rec_height
-                element_width = rec_width
+                #//**** SNOUT Surfaces *****//
+				# Create a diffuse-like optic surface
+                snout_opt_name = "SNOUT Surface"
+                copt.name  = snout_opt_name
+                # set the optical properties. (Front)
+                copt.front.dist_type = 'f'
+                copt.front.reflectivity = 0.9 # Assuming white surface
+                copt.front.slope_error = 0.00001
+                copt.front.spec_error = 1000.
+			    # back surface optics
+                copt.back.dist_type = 'f'
+                copt.back.reflectivity = 0.9 # Assuming white surface
+                copt.back.slope_error = 0.00001
+                copt.back.spec_error = 1000.
 
+                # SNOUT Top Panel
+                element = snout_stage.add_element()
+                element.enabled = True
+
+                element.position.x = rec_offset_x
+                element.position.y = rec_offset_y
+                element.position.z = rec_height / 2. + rec_offset_z
+
+                element.aim.x = element.position.x
+                element.aim.y = element.position.y
+                element.aim.z = element.position.z - 1.
+                element.zrot = 0.
+
+                element.aperture = 'q'
+                element.aperture_params[0] = rec_width / 2. + snout_depth * math.tan(snout_horiz_angle / 2.)
+                element.aperture_params[1] = snout_depth
+                element.aperture_params[2] = - rec_width / 2. - snout_depth * math.tan(snout_horiz_angle / 2.)
+                element.aperture_params[3] = snout_depth
+                element.aperture_params[4] = - rec_width / 2.
+                element.aperture_params[5] = 0.
+                element.aperture_params[6] = rec_width / 2.
+                element.aperture_params[7] = 0.
+
+                element.surface = 'f'
+                element.interaction = 2
+                element.optic = copt
+                element.comment = "SNOUT Top Panel"
+
+                # SNOUT Bottom Panel
+                element = snout_stage.add_element()
+                element.enabled = True
+
+                element.position.x = rec_offset_x
+                element.position.y = rec_offset_y
+                element.position.z = - rec_height / 2. + rec_offset_z
+
+                element.aim.x = element.position.x
+                element.aim.y = element.position.y + math.sin(snout_vert_angle)
+                element.aim.z = element.position.z + math.cos(snout_vert_angle)
+                element.zrot = 0.
+
+                element.aperture = 'q'
+                element.aperture_params[0] = rec_width / 2. + snout_depth * math.tan(snout_horiz_angle / 2.)
+                element.aperture_params[1] = snout_depth / math.cos(snout_vert_angle)
+                element.aperture_params[2] = - rec_width / 2. - snout_depth * math.tan(snout_horiz_angle / 2.)
+                element.aperture_params[3] = snout_depth / math.cos(snout_vert_angle)
+                element.aperture_params[4] = - rec_width / 2.
+                element.aperture_params[5] = 0.
+                element.aperture_params[6] = rec_width / 2.
+                element.aperture_params[7] = 0.
+
+                element.surface = 'f'
+                element.interaction = 2
+                element.optic = copt
+                element.comment = "SNOUT Bottom Panel"
+
+                # SNOUT East Panel
+                element = snout_stage.add_element()
+                element.enabled = True
+
+                element.position.x = rec_width / 2. + rec_offset_x
                 element.position.y = rec_offset_y
                 element.position.z = rec_offset_z
 
+                element.aim.x = element.position.x - math.cos(snout_horiz_angle / 2.)
+                element.aim.y = element.position.y + math.sin(snout_horiz_angle / 2.)
+                element.aim.z = element.position.z
+                element.zrot = 90.
+
+                element.aperture = 'q'
+                element.aperture_params[0] = 0.
+                element.aperture_params[1] = rec_height / 2.
+                element.aperture_params[2] = - snout_depth / math.cos(snout_horiz_angle / 2.)
+                element.aperture_params[3] = rec_height / 2.
+                element.aperture_params[4] = - snout_depth / math.cos(snout_horiz_angle / 2.)
+                element.aperture_params[5] = - rec_height / 2. - snout_depth * math.tan(snout_vert_angle)
+                element.aperture_params[6] = 0.
+                element.aperture_params[7] = -rec_height / 2.
+
+                element.surface = 'f'
+                element.interaction = 2
+                element.optic = copt
+                element.comment = "SNOUT East Panel"
+
+            	# SNOUT West Panel
+                element = snout_stage.add_element()
+                element.enabled = True
+
+                element.position.x = - rec_width / 2. + rec_offset_x
+                element.position.y = rec_offset_y
+                element.position.z = rec_offset_z
+
+                element.aim.x = element.position.x + math.cos(snout_horiz_angle / 2.)
+                element.aim.y = element.position.y + math.sin(snout_horiz_angle / 2.)
+                element.aim.z = element.position.z
+                element.zrot = -90.
+
+                element.aperture = 'q'
+                element.aperture_params[0] = snout_depth / math.cos(snout_horiz_angle / 2.)
+                element.aperture_params[1] = rec_height / 2.
+                element.aperture_params[2] = 0.
+                element.aperture_params[3] = rec_height / 2.
+                element.aperture_params[4] = 0.
+                element.aperture_params[5] = - rec_height / 2. 
+                element.aperture_params[6] = snout_depth / math.cos(snout_horiz_angle / 2.)
+                element.aperture_params[7] = - rec_height / 2. - snout_depth * math.tan(snout_vert_angle)
+
+                element.surface = 'f'
+                element.interaction = 2
+                element.optic = copt
+                element.comment = "SNOUT West Panel"
+
+                #/*--- Re-adding receiver stage ---*/
+                r_stage = P.add_stage()
+                #Global origin
+                r_stage.position.x = 0.
+                r_stage.position.y = 0.
+                r_stage.position.z = 0.
+                #Aim point
+                r_stage.aim.x = 0.
+                r_stage.aim.y = 0.
+                r_stage.aim.z = 1.
+                #No z rotation
+                r_stage.zrot = 0.
+                #{virtual stage, multiple hits per ray, trace through} UI checkboxes
+                r_stage.is_virtual = False 
+                r_stage.is_multihit = True 
+                r_stage.is_tracethrough = False
+                #Name
+                r_stage.name = "Receiver"
+
+                recname = self.data_get_string(p_data, "receiver.0.class_name")
+                copt = P.add_optic(recname)
+
+			#Creating a virtual stage for the aperture
+			#aperture_virtual_stage = true;
+            ap_stage = r_stage  # Renaming r_stage
+            ap_stage.zrot = self.data_get_number(p_data, "receiver.0.rec_azimuth")
+            ap_stage.name = "Aperture"
+            ap_stage.is_virtual = True
+            ap_stage.is_tracethrough = False
+            
+            element = ap_stage.add_element()
+            element.enabled = True
+            
+            element.position.x = rec_offset_x
+            element.position.y = rec_offset_y
+            element.position.z = rec_offset_z
+            
             element.aim.x = element.position.x
             element.aim.y = element.position.y + 1
             element.aim.z = element.position.z
             element.zrot = 0.
             
             element.aperture = 'r'
-            element.aperture_params[0] = element_width
-            element.aperture_params[1] = element_height
+            element.aperture_params[0] = rec_width
+            element.aperture_params[1] = rec_height
             
             element.surface = 'f'
             element.interaction = 1  # ignored by SolTrace
@@ -1868,12 +2016,12 @@ class CoPylot:
             r_stage.name = "Receiver"
             
             #**** Add optics stage *****#
-            copt.front.dist_type = 'd'
+            copt.front.dist_type = 'f'
             #copt.front.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
             copt.front.transmissivity = 0.3
             copt.front.slope_error = 0.00001
             copt.front.spec_error = 10000.
-            copt.back.dist_type = 'd'
+            copt.back.dist_type = 'f'
             #copt.back.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
             copt.back.transmissivity = 0.3
             copt.back.slope_error = 0.00001
@@ -1943,12 +2091,12 @@ class CoPylot:
             # Create a diffuse-like optic surface
             copt = P.add_optic("Cavity Surface")			
 			# set the optical properties. (Front)
-            copt.front.dist_type = 'd'
+            copt.front.dist_type = 'f'
             copt.front.reflectivity = 0.9 # Assuming white surface
             copt.front.slope_error = 0.00001
             copt.front.spec_error = 1000.
 			# back surface optics
-            copt.back.dist_type = 'd'
+            copt.back.dist_type = 'f'
             copt.back.reflectivity = 0.9 # Assuming white surface
             copt.back.slope_error = 0.00001
             copt.back.spec_error = 1000.
@@ -2131,123 +2279,6 @@ class CoPylot:
             element.interaction = 2
             element.optic = copt
             element.comment = "Cavity Front West"
-
-            if (self.data_get_number(p_data, "receiver.0.is_snout")):
-                snout_depth = self.data_get_number(p_data, "receiver.0.snout_depth")
-                snout_horiz_angle = math.radians(self.data_get_number(p_data, "receiver.0.snout_horiz_angle")) 
-                snout_vert_angle = math.radians(self.data_get_number(p_data, "receiver.0.snout_vert_angle"))
-
-                # SNOUT Top Panel
-                element = r_stage.add_element()
-                element.enabled = True
-
-                element.position.x = rec_offset_x
-                element.position.y = rec_offset_y
-                element.position.z = rec_height / 2. + rec_offset_z
-
-                element.aim.x = element.position.x
-                element.aim.y = element.position.y
-                element.aim.z = element.position.z - 1.
-                element.zrot = 0.
-
-                element.aperture = 'q'
-                element.aperture_params[0] = rec_width / 2. + snout_depth * math.tan(snout_horiz_angle / 2.)
-                element.aperture_params[1] = snout_depth
-                element.aperture_params[2] = - rec_width / 2. - snout_depth * math.tan(snout_horiz_angle / 2.)
-                element.aperture_params[3] = snout_depth
-                element.aperture_params[4] = - rec_width / 2.
-                element.aperture_params[5] = 0.
-                element.aperture_params[6] = rec_width / 2.
-                element.aperture_params[7] = 0.
-
-                element.surface = 'f'
-                element.interaction = 2
-                element.optic = copt
-                element.comment = "SNOUT Top Panel"
-
-                # SNOUT Bottom Panel
-                element = r_stage.add_element()
-                element.enabled = True
-
-                element.position.x = rec_offset_x
-                element.position.y = rec_offset_y
-                element.position.z = - rec_height / 2. + rec_offset_z
-
-                element.aim.x = element.position.x
-                element.aim.y = element.position.y + math.sin(snout_vert_angle)
-                element.aim.z = element.position.z + math.cos(snout_vert_angle)
-                element.zrot = 0.
-
-                element.aperture = 'q'
-                element.aperture_params[0] = rec_width / 2. + snout_depth * math.tan(snout_horiz_angle / 2.)
-                element.aperture_params[1] = snout_depth / math.cos(snout_vert_angle)
-                element.aperture_params[2] = - rec_width / 2. - snout_depth * math.tan(snout_horiz_angle / 2.)
-                element.aperture_params[3] = snout_depth / math.cos(snout_vert_angle)
-                element.aperture_params[4] = - rec_width / 2.
-                element.aperture_params[5] = 0.
-                element.aperture_params[6] = rec_width / 2.
-                element.aperture_params[7] = 0.
-
-                element.surface = 'f'
-                element.interaction = 2
-                element.optic = copt
-                element.comment = "SNOUT Bottom Panel"
-
-                # SNOUT East Panel
-                element = r_stage.add_element()
-                element.enabled = True
-
-                element.position.x = rec_width / 2. + rec_offset_x
-                element.position.y = rec_offset_y
-                element.position.z = rec_offset_z
-
-                element.aim.x = element.position.x - math.cos(snout_horiz_angle / 2.)
-                element.aim.y = element.position.y + math.sin(snout_horiz_angle / 2.)
-                element.aim.z = element.position.z
-                element.zrot = 90.
-
-                element.aperture = 'q'
-                element.aperture_params[0] = 0.
-                element.aperture_params[1] = rec_height / 2.
-                element.aperture_params[2] = - snout_depth / math.cos(snout_horiz_angle / 2.)
-                element.aperture_params[3] = rec_height / 2.
-                element.aperture_params[4] = - snout_depth / math.cos(snout_horiz_angle / 2.)
-                element.aperture_params[5] = - rec_height / 2. - snout_depth * math.tan(snout_vert_angle)
-                element.aperture_params[6] = 0.
-                element.aperture_params[7] = -rec_height / 2.
-
-                element.surface = 'f'
-                element.interaction = 2
-                element.optic = copt
-                element.comment = "SNOUT East Panel"
-
-            	# SNOUT West Panel
-                element = r_stage.add_element()
-                element.enabled = True
-
-                element.position.x = - rec_width / 2. + rec_offset_x
-                element.position.y = rec_offset_y
-                element.position.z = rec_offset_z
-
-                element.aim.x = element.position.x + math.cos(snout_horiz_angle / 2.)
-                element.aim.y = element.position.y + math.sin(snout_horiz_angle / 2.)
-                element.aim.z = element.position.z
-                element.zrot = -90.
-
-                element.aperture = 'q'
-                element.aperture_params[0] = snout_depth / math.cos(snout_horiz_angle / 2.)
-                element.aperture_params[1] = rec_height / 2.
-                element.aperture_params[2] = 0.
-                element.aperture_params[3] = rec_height / 2.
-                element.aperture_params[4] = 0.
-                element.aperture_params[5] = - rec_height / 2. 
-                element.aperture_params[6] = snout_depth / math.cos(snout_horiz_angle / 2.)
-                element.aperture_params[7] = - rec_height / 2. - snout_depth * math.tan(snout_vert_angle)
-
-                element.surface = 'f'
-                element.interaction = 2
-                element.optic = copt
-                element.comment = "SNOUT West Panel"
 
         #Simulation options
         P.num_ray_hits = self.data_get_number(p_data, "fluxsim.0.min_rays") 
