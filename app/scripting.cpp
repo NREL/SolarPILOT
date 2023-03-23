@@ -799,6 +799,25 @@ static void _summary_results( lk::invoke_t &cxt )
         }
         r.hash_item("Shadowing and Cosine loss", Qin - Qwf);
 
+        double Q_before_ref_att = Qwf;
+        if (is_soltrace) { // SolTrace Reflection and Attenuation Efficiency is grouped
+            double eta_ra = r.hash()->at("Reflection and Attenuation efficiency")->as_number() / 100.;
+            Qwf *= eta_ra;
+        }
+        else { // Hermite
+            double eta_ra = r.hash()->at("Reflection efficiency")->as_number() * r.hash()->at("Attenuation efficiency")->as_number() / 100.;
+            r.hash_item("Reflection and Attenuation efficiency", eta_ra);
+
+            double eta_r = r.hash()->at("Reflection efficiency")->as_number() / 100.;
+            r.hash_item("Reflection loss", Qwf * (1. - eta_r));
+            Qwf *= eta_r;
+
+            double eta_a = r.hash()->at("Attenuation efficiency")->as_number() / 100.;
+            r.hash_item("Attenuation loss", Qwf * (1. - eta_a));
+            Qwf *= eta_a;
+        }
+        r.hash_item("Reflection and Attenuation loss", Q_before_ref_att - Qwf);
+
         double eta_r = r.hash()->at("Reflection efficiency")->as_number() / 100.;
         r.hash_item("Reflection loss", Qwf * (1. - eta_r));
         Qwf *= eta_r;
