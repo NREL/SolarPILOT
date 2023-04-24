@@ -200,20 +200,6 @@
 <h1 class="rvps9"><a name="Receiver Geometry "></a><span class="rvts0"><span class="rvts22">Receiver Geometry&nbsp;</span></span></h1>
 <p class="rvps2"><a class="rvts35" href="ReceiverTemplate.html#top">- Top of page -</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Receiver height</span></span></h2>
-<p class="rvps2"><span class="rvts6">The height of the receiver heat absorption surface.</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Receiver orientation azimuth</span></span></h2>
-<p class="rvps2"><span class="rvts6">The azimuthal orientation of the receiver. North=0, East=90, West=270.&nbsp;</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">** Currently, this is only implemented for Flat Plate receivers.</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Receiver orientation elevation</span></span></h2>
-<p class="rvps2"><span class="rvts6">The elevation orientation of the receiver. The normal vector from the plane of the receiver surface is tilted at this elevation angle.&nbsp;</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">** Currently, this is only implemented for Flat Plate receivers.</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
 <h2 class="rvps6"><span class="rvts0"><span class="rvts20">Receiver Type</span></span></h2>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps10"><span class="rvts0"><span class="rvts26">External cylindrical</span></span></h3>
@@ -222,7 +208,7 @@
 <h4 class="rvps11"><span class="rvts0"><span class="rvts27">Receiver diameter</span></span></h4>
 <p class="rvps12"><span class="rvts6">The diameter of the receiver cylinder.</span></p>
 <p class="rvps12"><span class="rvts6"><br/></span></p>
-<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Flat Plate</span></span></h3>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Flat plate</span></span></h3>
 <p class="rvps8"><span class="rvts6">Select the receiver type to be "flat plate". The heat absorbing surface lies within a flat plane with a surface normal vector pointing toward the horizon at due North unless otherwise specified.&nbsp;</span></p>
 <p class="rvps8"><span class="rvts6"><br/></span></p>
 <h4 class="rvps11"><span class="rvts0"><span class="rvts27">Receiver acceptance angles shape</span></span></h4>
@@ -250,6 +236,62 @@
 <h4 class="rvps11"><span class="rvts0"><span class="rvts27">Receiver vertical acceptance angle</span></span></h4>
 <p class="rvps12"><span class="rvts6">The angular extent in the vertical direction from the perspective of the receiver from which incident light can be accepted. The angular span is symmetric about the normal vector from the surface of the receiver.</span></p>
 <p class="rvps12"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Falling particle</span></span></h3>
+<p class="rvps8"><span class="rvts6">Select the receiver type to be "falling particle". The heat absorbing surface is defined as a particle curtain within a cavity receiver.</span></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Normalized particle curtain height</span></span></h4>
+<p class="rvps12"><span class="rvts6">The particle curtain height normialized by the aperture height which is defined by the "Receiver height".</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Normalized particle curtain width</span></span></h4>
+<p class="rvps12"><span class="rvts6">The particle curtain width normialized by the aperture width which is defined by the "Receiver width".</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Particle curtain entrance depth</span></span></h4>
+<p class="rvps12"><span class="rvts6">The distance between the entrance of particles and the receiver's aperture. For curved curtain geometry, this parameter defines the maximum distance between the first particle curtain and the aperture.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Number of troughs</span></span></h4>
+<p class="rvps12"><span class="rvts6">The number of "catch-and-release" troughs within the receivers. The number particle curtains is equal to the number of troughs plus one. This parameter defines the size of the normalized height and depth table.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Normalize height and depth</span></span></h4>
+<p class="rvps12"><span class="rvts6">The trough normalized height and depth defines the location of each "catch-and-release" trough. The normalized height defines the height of the trough relative to the particle curtain total height. The normalized depth defines trough's release point (i.e., start of following curtain) relative to particle curtain entrance depth. These values must be in decending order.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Particle curtain type</span></span></h4>
+<p class="rvps12"><span class="rvts6">The specific geometry of the curtain which can be "Flat" and "Curved." The curved curtain type requires a radius to define the curvature of the first curtain particles travel through. Succeeding curtains radii are defined by the normalized depth trough parameter so that all curtains have the same center point.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<p class="rvps12"><img width="725" height="360" alt="" style="padding : 1px;" src="lib/FallingParticleRecGeom.png"></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Is SNOUT enable?</span></span></h4>
+<p class="rvps12"><span class="rvts6">Toggles on and off the SNOUT that extends outward from the receiver's aperture.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">SNOUT depth</span></span></h4>
+<p class="rvps12"><span class="rvts6">The distance from the front of the SNOUT window and the aperture.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Vertical SNOUT angle</span></span></h4>
+<p class="rvps12"><span class="rvts6">The angle defined by the ground and the SNOUT's bottom surface.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<h4 class="rvps11"><span class="rvts0"><span class="rvts27">Horizontal SNOUT angle</span></span></h4>
+<p class="rvps12"><span class="rvts6">The angle defined by the left and right SNOUT surfaces. If this value is set to zero, then the SNOUT left and right surfaces are parallel.</span></p>
+<p class="rvps12"><span class="rvts6"><br/></span></p>
+<p class="rvps12"><img width="731" height="334" alt="" style="padding : 1px;" src="lib/SnoutGeom.png"></p>
+<p class="rvps8"><span class="rvts6"><br/></span></p>
+<h3 class="rvps10"><span class="rvts0"><span class="rvts26">Cavity</span></span></h3>
+<p class="rvps8"><span class="rvts6">Select the receiver type to be "cavity". The heat absorbing surface is defined as a semi-circle of HTF panels behind a aperture.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Receiver height</span></span></h2>
+<p class="rvps2"><span class="rvts6">The height of the receiver heat absorption surface. This parameter defines the aperture height for falling particle and cavity receiver types.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Receiver width</span></span></h2>
+<p class="rvps2"><span class="rvts6">The width of the receiver heat absorption surface. This parameter defines the aperture width for falling particle and cavity receiver types.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Receiver orientation azimuth</span></span></h2>
+<p class="rvps2"><span class="rvts6">The azimuthal orientation of the receiver. North=0, East=90, West=270.&nbsp;</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">** Currently, this is only implemented for Flat Plate receivers.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps6"><span class="rvts0"><span class="rvts20">Receiver orientation elevation</span></span></h2>
+<p class="rvps2"><span class="rvts6">The elevation orientation of the receiver. The normal vector from the plane of the receiver surface is tilted at this elevation angle.&nbsp;</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">** Currently, this is only implemented for Flat Plate receivers.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
 <h2 class="rvps6"><span class="rvts0"><span class="rvts20">Receiver aspect ratio (H/W)</span></span></h2>
 <p class="rvps2"><span class="rvts6">Calculated value indicating the aspect ratio of the receiver. The aspect ratio is defined as the height of the receiver divided by the width, where the width is equal to the specified with for a flat plate receiver or the specified diameter for a cylindrical receiver.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>

@@ -781,7 +781,7 @@ class CoPylot:
         restype : str, optional
             result format type, supported options "matrix", "dictionary", "dataframe" \n
         get_corner : bool, optional
-            True, output will include heliostat corner infromation, False otherwise
+            True, output will include heliostat corner information, False otherwise
 
         Returns
         -------
