@@ -260,7 +260,8 @@ receiver	curtain_type	IN	STRING	0	none	False	combo	Flat=0;Curved=1		Particle cur
 receiver	curtain_radius	IN	DOUBLE	10	m	True				Particle curtain radius	Particle curtain radius of curvature
 receiver	is_snout	IN	BOOL	False		False	checkbox			Is SNOUT enabled?	Is SNOUT enabled?
 receiver	snout_depth	IN	DOUBLE	1.5	m	True				SNOUT depth	Distance from aperture window to SNOUT front plane
-receiver	snout_vert_angle	IN	DOUBLE	20	deg	True				Vertical SNOUT angle	SNOUT angle from aperture normal
+receiver	snout_vert_top_angle	IN	DOUBLE	20	deg	True				Vertical SNOUT top angle	SNOUT top surface angle from aperture normal
+receiver	snout_vert_bot_angle	IN	DOUBLE	20	deg	True				Vertical SNOUT bottom angle	SNOUT bottom surface angle from aperture normal
 receiver	snout_horiz_angle	IN	DOUBLE	120	deg	True				Horizontal SNOUT angle	SNOUT spanning angle defined in the aperture vertical midplane
 receiver	therm_loss_base	IN	DOUBLE	30	kW/m2	True				Design point receiver thermal loss	Thermal loss from the receiver at design-point conditions
 receiver	therm_loss_load	IN	MATRIX_T	1,0,0,0	none	False				Load-based thermal loss adjustment	Temperature-dependant thermal loss

@@ -7,7 +7,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 PrivilegesRequired=none
 AppId={{67C0F37C-E0F4-4D6A-9A20-5BA8FB27308E}}
-AppName=SolarPILOT
+AppName=SolarPILOT (Beta)
 
 ; 64-bit installer extensions - remove if an issue
 ;ArchitecturesAllowed=x86 x64 ia64
@@ -21,8 +21,8 @@ ArchitecturesInstallIn64BitMode=x64
 
 
 ; UPDATE THESE TO MATCH THE VERSION
-AppVerName=SolarPILOT 1.5.2
-DefaultDirName={pf}\SolarPILOT\1.5.2
+AppVerName=SolarPILOT 1.6.0 (Beta)
+DefaultDirName={pf}\SolarPILOT\1.6.0_beta
 
 AppPublisher=National Renewable Energy Laboratory
 AppPublisherURL=http://www.nrel.gov/csp/solarpilot.html
@@ -30,7 +30,7 @@ AppSupportURL=http://www.nrel.gov/csp/solarpilot.html
 AppUpdatesURL=http://www.nrel.gov/csp/solarpilot.html
 DefaultGroupName=SolarPILOT
 OutputDir=.
-OutputBaseFilename=solarpilot-install
+OutputBaseFilename=solarpilot-install-Beta
 Compression=lzma
 SolidCompression=yes
 ChangesAssociations=yes

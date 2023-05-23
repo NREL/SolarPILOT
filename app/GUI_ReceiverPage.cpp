@@ -224,7 +224,8 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     InputControl* curtain_radius = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].curtain_radius);
     InputControl* is_snout = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].is_snout);
     InputControl* snout_depth = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].snout_depth);
-    InputControl* snout_vert_angle = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].snout_vert_angle);
+    InputControl* snout_vert_top_angle = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].snout_vert_top_angle);
+    InputControl* snout_vert_bot_angle = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].snout_vert_bot_angle);
     InputControl* snout_horiz_angle = new InputControl(panel_rec_fall, wxID_ANY, _variables.recs[id].snout_horiz_angle);
 
     //----- Troughs location panel -------------
@@ -310,7 +311,8 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     panel_rec_fall_s->Add(curtain_radius);
     panel_rec_fall_s->Add(is_snout);
     panel_rec_fall_s->Add(snout_depth);
-    panel_rec_fall_s->Add(snout_vert_angle);
+    panel_rec_fall_s->Add(snout_vert_top_angle);
+    panel_rec_fall_s->Add(snout_vert_bot_angle);
     panel_rec_fall_s->Add(snout_horiz_angle);
 
     sbs0->Add(rec_type);
@@ -356,8 +358,8 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
 		rec_type->setDisabledSiblings("Flat plate", 1, dsibs);
     }
     {
-        wxWindow* dsibs[] = {snout_depth, snout_vert_angle, snout_horiz_angle};
-        is_snout->setDisabledSiblings("false", 3, dsibs);
+        wxWindow* dsibs[] = {snout_depth, snout_vert_top_angle, snout_vert_bot_angle, snout_horiz_angle};
+        is_snout->setDisabledSiblings("false", 4, dsibs);
     }
     {
         wxWindow* dsibs[] = { rec_elevation };
@@ -572,7 +574,7 @@ void SPFrame::CreateReceiverPage(wxScrolledWindow *parent, int id)
     InputControl *inputs[] = {rec_type, is_polygon, n_panels, panel_rotation, rec_height, rec_diameter, rec_width, aperture_type, rec_azimuth, rec_elevation, 
                               rec_cav_rad, rec_cav_cdepth, rec_offset_reference, rec_offset_x, rec_offset_y, rec_offset_z, rec_cav_apwfrac, rec_cav_tlip, rec_cav_blip, 
                               rec_width_fall, norm_curtain_width, norm_curtain_height, max_curtain_depth, curtain_type, 
-                              curtain_radius, is_snout, snout_depth, snout_vert_angle, snout_horiz_angle, therm_loss_base, piping_loss_coef, piping_loss_const, peak_flux, 
+                              curtain_radius, is_snout, snout_depth, snout_vert_top_angle, snout_vert_bot_angle, snout_horiz_angle, therm_loss_base, piping_loss_coef, piping_loss_const, peak_flux,
                               flux_profile_type, absorptance, accept_ang_type, is_open_geom, accept_ang_x, accept_ang_y, NULL};
     int i=0;
     while(inputs[i] != NULL)
