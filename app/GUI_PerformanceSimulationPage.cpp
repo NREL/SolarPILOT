@@ -101,6 +101,7 @@ void SPFrame::CreateSimulationsFluxTab( wxScrolledWindow *flux)
         *raydata_file = new InputControl(soltrace_panel, wxID_ANY, _variables.flux.raydata_file ),
         *is_sunshape_err = new InputControl(soltrace_panel, wxID_ANY, _variables.flux.is_sunshape_err ),
         *is_optical_err = new InputControl(soltrace_panel, wxID_ANY, _variables.flux.is_optical_err ),
+        *is_dynamic_group = new InputControl(soltrace_panel, wxID_ANY, _variables.flux.is_dynamic_group ),
         *is_cloudy = new InputControl(flux, wxID_ANY, _variables.flux.is_cloudy ),
         *cloud_shape = new InputControl(cloud_panel, wxID_ANY, _variables.flux.cloud_shape ),
         *cloud_width = new InputControl(cloud_panel, wxID_ANY, _variables.flux.cloud_width ),
@@ -216,6 +217,7 @@ void SPFrame::CreateSimulationsFluxTab( wxScrolledWindow *flux)
     soltrace_sizer->Add(min_rays);
     soltrace_sizer->Add(max_rays);
     soltrace_sizer->Add(seed);
+    soltrace_sizer->Add(is_dynamic_group);
     
     wxStaticBox *sb_s1 = new wxStaticBox(soltrace_panel, wxID_ANY, "Optical errors");
     wxStaticBoxSizer *sbs_s1 = new wxStaticBoxSizer(sb_s1, wxVERTICAL);
@@ -329,7 +331,7 @@ void SPFrame::CreateSimulationsFluxTab( wxScrolledWindow *flux)
     //Add any input or output controls
     InputControl *inputs[] = {flux_model, flux_time_type, aim_method, sigma_limit_x, sigma_limit_y, flux_month, flux_day, flux_hour, 
                               flux_dist, norm_dist_sigma, flux_solar_az_in, flux_solar_el_in, x_res, y_res, min_rays, 
-                              max_rays, seed, save_data, is_sunshape_err, is_optical_err, is_cloudy, cloud_shape, 
+                              max_rays, seed, is_dynamic_group, save_data, is_sunshape_err, is_optical_err, is_cloudy, cloud_shape,
                               cloud_width, cloud_depth, cloud_opacity, cloud_skew, is_cloud_pattern, cloud_sep_width, 
                               cloud_sep_depth, cloud_loc_x, cloud_loc_y, is_cloud_symd, is_cloud_symw, flux_dni, 
                               is_load_raydata, is_save_raydata, raydata_file, NULL};

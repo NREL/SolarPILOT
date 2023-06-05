@@ -82,6 +82,7 @@ fluxsim	is_load_raydata	IN	BOOL	False	none	True	checkbox		X	Load existing helios
 fluxsim	is_optical_err	IN	BOOL	True		False	checkbox			Include optical errors	Include the reflector optical error sources in the SolTrace simulation
 fluxsim	is_save_raydata	IN	BOOL	False	none	True	checkbox		X	Save heliostat stage ray data	Save heliostat field raytrace data to a file for future re-use
 fluxsim	is_sunshape_err	IN	BOOL	True		False	checkbox			Include sun shape	Include the sun shape error in the SolTrace simulation
+fluxsim	is_dynamic_group	IN	BOOL	True	none	False	checkbox			Include dynamic heliostat grouping	Include the dynamic heliostat grouping methodology in the SolTrace simulation
 fluxsim	max_rays	IN	INT	1000000	none	True				Maximum number of generated rays	The maximum number of generated rays allowed before terminating the simulation. Overrides the desired rays setting.
 fluxsim	min_rays	IN	INT	10000	none	True				Desired number of ray intersections	The minimum number of ray hits on the receiver before terminating the simulation.
 fluxsim	norm_dist_sigma	IN	DOUBLE	0.25		True				Aiming distribution standard dev.	Size of the standard distribution relative to half of the height of the receiver.
