@@ -1809,10 +1809,19 @@ class CoPylot:
             if (self.data_get_number(p_data, "receiver.0.is_snout")):
                 snout_depth = self.data_get_number(p_data, "receiver.0.snout_depth")
                 snout_horiz_angle = math.radians(self.data_get_number(p_data, "receiver.0.snout_horiz_angle")) 
-                snout_vert_angle = math.radians(self.data_get_number(p_data, "receiver.0.snout_vert_angle"))
+                snout_vert_top_angle = math.radians(self.data_get_number(p_data, "receiver.0.snout_vert_top_angle"))
+                snout_vert_bot_angle = math.radians(self.data_get_number(p_data, "receiver.0.snout_vert_bot_angle"))
 
                 snout_stage = r_stage  #renaming r_stage
                 snout_stage.zrot = self.data_get_number(p_data, "receiver.0.rec_azimuth")
+                snout_stage.position.x = rec_offset_x
+                snout_stage.position.y = rec_offset_y
+                snout_stage.position.z = rec_offset_z
+
+                snout_stage.aim.x = snout_stage.position.x
+                snout_stage.aim.y = snout_stage.position.y
+                snout_stage.aim.z = snout_stage.position.z + 1.0
+
                 snout_stage.name = "SNOUT"
                 snout_stage.is_virtual = False
                 snout_stage.is_multihit = True 
@@ -1824,12 +1833,12 @@ class CoPylot:
                 copt.name  = snout_opt_name
                 # set the optical properties. (Front)
                 copt.front.dist_type = 'f'
-                copt.front.reflectivity = 0.9 # Assuming white surface
+                copt.front.reflectivity = 0.0 #0.9 # Assuming white surface
                 copt.front.slope_error = 0.00001
                 copt.front.spec_error = 1000.
 			    # back surface optics
                 copt.back.dist_type = 'f'
-                copt.back.reflectivity = 0.9 # Assuming white surface
+                copt.back.reflectivity = 0.0 #0.9 # Assuming white surface
                 copt.back.slope_error = 0.00001
                 copt.back.spec_error = 1000.
 
@@ -1837,20 +1846,20 @@ class CoPylot:
                 element = snout_stage.add_element()
                 element.enabled = True
 
-                element.position.x = rec_offset_x
-                element.position.y = rec_offset_y
-                element.position.z = rec_height / 2. + rec_offset_z
+                element.position.x = 0.0
+                element.position.y = 0.0
+                element.position.z = rec_height / 2.
 
                 element.aim.x = element.position.x
-                element.aim.y = element.position.y
-                element.aim.z = element.position.z - 1.
+                element.aim.y = element.position.y - math.sin(snout_vert_top_angle)
+                element.aim.z = element.position.z - math.cos(snout_vert_top_angle)
                 element.zrot = 0.
 
                 element.aperture = 'q'
                 element.aperture_params[0] = rec_width / 2. + snout_depth * math.tan(snout_horiz_angle / 2.)
-                element.aperture_params[1] = snout_depth
+                element.aperture_params[1] = snout_depth / math.cos(snout_vert_top_angle)
                 element.aperture_params[2] = - rec_width / 2. - snout_depth * math.tan(snout_horiz_angle / 2.)
-                element.aperture_params[3] = snout_depth
+                element.aperture_params[3] = snout_depth / math.cos(snout_vert_top_angle)
                 element.aperture_params[4] = - rec_width / 2.
                 element.aperture_params[5] = 0.
                 element.aperture_params[6] = rec_width / 2.
@@ -1865,20 +1874,20 @@ class CoPylot:
                 element = snout_stage.add_element()
                 element.enabled = True
 
-                element.position.x = rec_offset_x
-                element.position.y = rec_offset_y
-                element.position.z = - rec_height / 2. + rec_offset_z
+                element.position.x = 0.0
+                element.position.y = 0.0
+                element.position.z = - rec_height / 2.
 
                 element.aim.x = element.position.x
-                element.aim.y = element.position.y + math.sin(snout_vert_angle)
-                element.aim.z = element.position.z + math.cos(snout_vert_angle)
+                element.aim.y = element.position.y + math.sin(snout_vert_bot_angle)
+                element.aim.z = element.position.z + math.cos(snout_vert_bot_angle)
                 element.zrot = 0.
 
                 element.aperture = 'q'
                 element.aperture_params[0] = rec_width / 2. + snout_depth * math.tan(snout_horiz_angle / 2.)
-                element.aperture_params[1] = snout_depth / math.cos(snout_vert_angle)
+                element.aperture_params[1] = snout_depth / math.cos(snout_vert_bot_angle)
                 element.aperture_params[2] = - rec_width / 2. - snout_depth * math.tan(snout_horiz_angle / 2.)
-                element.aperture_params[3] = snout_depth / math.cos(snout_vert_angle)
+                element.aperture_params[3] = snout_depth / math.cos(snout_vert_bot_angle)
                 element.aperture_params[4] = - rec_width / 2.
                 element.aperture_params[5] = 0.
                 element.aperture_params[6] = rec_width / 2.
@@ -1893,9 +1902,9 @@ class CoPylot:
                 element = snout_stage.add_element()
                 element.enabled = True
 
-                element.position.x = rec_width / 2. + rec_offset_x
-                element.position.y = rec_offset_y
-                element.position.z = rec_offset_z
+                element.position.x = rec_width / 2.
+                element.position.y = 0.0
+                element.position.z = 0.0
 
                 element.aim.x = element.position.x - math.cos(snout_horiz_angle / 2.)
                 element.aim.y = element.position.y + math.sin(snout_horiz_angle / 2.)
@@ -1906,9 +1915,9 @@ class CoPylot:
                 element.aperture_params[0] = 0.
                 element.aperture_params[1] = rec_height / 2.
                 element.aperture_params[2] = - snout_depth / math.cos(snout_horiz_angle / 2.)
-                element.aperture_params[3] = rec_height / 2.
+                element.aperture_params[3] = rec_height / 2. - snout_depth * math.tan(snout_vert_top_angle)
                 element.aperture_params[4] = - snout_depth / math.cos(snout_horiz_angle / 2.)
-                element.aperture_params[5] = - rec_height / 2. - snout_depth * math.tan(snout_vert_angle)
+                element.aperture_params[5] = - rec_height / 2. - snout_depth * math.tan(snout_vert_bot_angle)
                 element.aperture_params[6] = 0.
                 element.aperture_params[7] = -rec_height / 2.
 
@@ -1921,9 +1930,9 @@ class CoPylot:
                 element = snout_stage.add_element()
                 element.enabled = True
 
-                element.position.x = - rec_width / 2. + rec_offset_x
-                element.position.y = rec_offset_y
-                element.position.z = rec_offset_z
+                element.position.x = - rec_width / 2.
+                element.position.y = 0.0
+                element.position.z = 0.0
 
                 element.aim.x = element.position.x + math.cos(snout_horiz_angle / 2.)
                 element.aim.y = element.position.y + math.sin(snout_horiz_angle / 2.)
@@ -1932,13 +1941,13 @@ class CoPylot:
 
                 element.aperture = 'q'
                 element.aperture_params[0] = snout_depth / math.cos(snout_horiz_angle / 2.)
-                element.aperture_params[1] = rec_height / 2.
+                element.aperture_params[1] = rec_height / 2. - snout_depth * math.tan(snout_vert_top_angle)
                 element.aperture_params[2] = 0.
                 element.aperture_params[3] = rec_height / 2.
                 element.aperture_params[4] = 0.
                 element.aperture_params[5] = - rec_height / 2. 
                 element.aperture_params[6] = snout_depth / math.cos(snout_horiz_angle / 2.)
-                element.aperture_params[7] = - rec_height / 2. - snout_depth * math.tan(snout_vert_angle)
+                element.aperture_params[7] = - rec_height / 2. - snout_depth * math.tan(snout_vert_bot_angle)
 
                 element.surface = 'f'
                 element.interaction = 2
@@ -1948,13 +1957,13 @@ class CoPylot:
                 #/*--- Re-adding receiver stage ---*/
                 r_stage = P.add_stage()
                 #Global origin
-                r_stage.position.x = 0.
-                r_stage.position.y = 0.
-                r_stage.position.z = 0.
+                r_stage.position.x = rec_offset_x   # making stage origin account for offsets
+                r_stage.position.y = rec_offset_y
+                r_stage.position.z = rec_offset_z
                 #Aim point
-                r_stage.aim.x = 0.
-                r_stage.aim.y = 0.
-                r_stage.aim.z = 1.
+                r_stage.aim.x = r_stage.position.x
+                r_stage.aim.y = r_stage.position.y
+                r_stage.aim.z = r_stage.position.z + 1.
                 #No z rotation
                 r_stage.zrot = 0.
                 #{virtual stage, multiple hits per ray, trace through} UI checkboxes
@@ -1978,9 +1987,9 @@ class CoPylot:
             element = ap_stage.add_element()
             element.enabled = True
             
-            element.position.x = rec_offset_x
-            element.position.y = rec_offset_y
-            element.position.z = rec_offset_z
+            element.position.x = 0.0
+            element.position.y = 0.0
+            element.position.z = 0.0
             
             element.aim.x = element.position.x
             element.aim.y = element.position.y + 1
@@ -1999,13 +2008,13 @@ class CoPylot:
             #*** Re-adding receiver stage ***#
             r_stage = P.add_stage()
             #Global origin
-            r_stage.position.x = 0.
-            r_stage.position.y = 0.
-            r_stage.position.z = 0.
+            r_stage.position.x = rec_offset_x
+            r_stage.position.y = rec_offset_y
+            r_stage.position.z = rec_offset_z
             #Aim point
-            r_stage.aim.x = 0.
-            r_stage.aim.y = 0.
-            r_stage.aim.z = 1.
+            r_stage.aim.x = r_stage.position.x
+            r_stage.aim.y = r_stage.position.y
+            r_stage.aim.z = r_stage.position.z + 1.
             #No z rotation
             r_stage.zrot = self.data_get_number(p_data, "receiver.0.rec_azimuth")
             #{virtual stage, multiple hits per ray, trace through} UI checkboxes
@@ -2016,22 +2025,24 @@ class CoPylot:
             r_stage.name = "Receiver"
             
             #**** Add optics stage *****#
-            copt.front.dist_type = 'f'
+            copt.front.dist_type = 'g' # 'f'
             #copt.front.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
             copt.front.transmissivity = 0.3
-            copt.front.slope_error = 0.00001
-            copt.front.spec_error = 10000.
-            copt.back.dist_type = 'f'
-            #copt.back.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
-            copt.back.transmissivity = 0.3
-            copt.back.slope_error = 0.00001
-            copt.back.spec_error = 10000.
+            copt.front.slope_error = math.pi / 4. # 0.00001
+            copt.front.spec_error = math.pi / 4. # 10000.
+            # Back
+            copt.back.dist_type = 'g' # 'f'
+            copt.back.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
+            #copt.back.transmissivity = 0.3
+            copt.back.slope_error = math.pi / 4. # 0.00001
+            copt.back.spec_error = math.pi / 4. # 10000.
             
             #**** Add particle curtain *****#
             troughs_heights_depths = self.data_get_matrix(p_data, "receiver.0.norm_heights_depths")
             n_surfs = len(troughs_heights_depths) + 1
             
             #Receiver geometry must be recreated here: DefineReceiverGeometry() in Receiver.cpp
+            rec_azi = self.data_get_number(p_data, "receiver.0.rec_azimuth")
             max_height = self.data_get_number(p_data, "receiver.0.norm_curtain_height") * rec_height
             max_curtain_depth = self.data_get_number(p_data, "receiver.0.max_curtain_depth")
             max_curtain_width = self.data_get_number(p_data, "receiver.0.norm_curtain_width") * rec_width
@@ -2042,25 +2053,36 @@ class CoPylot:
             for s in range(1, n_surfs+1):
                 element = r_stage.add_element()
                 element.enabled = True
-                height_norm = 1.0
-                depth_norm = 1.0
+                height_norm = 0.0
+                depth_norm = 0.0
                 if (s != n_surfs):
                     height_norm = troughs_heights_depths[s-1][0] # Height
                     depth_norm = troughs_heights_depths[s-1][1]  # Depth
-                    curtain_height = (last_trough_height - height_norm) * max_height
-                else:
-                    # Last curtain
-                    curtain_height = last_trough_height * max_height
+                    if (height_norm > last_trough_height):
+                        raise ValueError("Troughs heights must be in descending order.")
+                    elif (height_norm <= 0.0):
+                        raise ValueError("Troughs heights must be greater than zero.")
+                    elif (height_norm >= 1.0):
+                        raise ValueError("Troughs heights must be less than one.")
+                    if (depth_norm > last_trough_depth):
+                        raise ValueError("Troughs depths must be in descending order.")
+                    elif (depth_norm <= 0.0):
+                        raise ValueError("Troughs depths must be greater than zero.")
+                    elif (depth_norm >= 1.0):
+                        raise ValueError("Troughs depths must be less than one.")
+
+                curtain_height = (last_trough_height - height_norm) * max_height
                 
                 # Surface normal vector
                 depth_offset = last_trough_depth * max_curtain_depth
                 if (is_curved):
                     curtain_radius = outer_curtain_radius - (1.0 - last_trough_depth) * max_curtain_depth
+                    depth_offset -= curtain_radius
 
-                element.position.x = rec_offset_x
-                element.position.y = -depth_offset + rec_offset_y
-                element.position.z = (last_trough_height * max_height - curtain_height / 2. 
-                                        - rec_height / 2. + rec_offset_z)
+                # back to CreateSTSystem within STObject.cpp 
+                element.position.x = 0.0
+                element.position.y = -depth_offset
+                element.position.z = last_trough_height * max_height - curtain_height / 2. - rec_height / 2.
 
                 element.aim.x = element.position.x
                 element.aim.y = element.position.y + 1.
@@ -2081,7 +2103,7 @@ class CoPylot:
                     element.surface = 's'
                     element.surface_params[0] = 1. / curtain_radius
 
-                element.interaction = 1  # Refraction surface for transmissivity
+                element.interaction = 2 #1  # Refraction surface for transmissivity
                 element.optic = copt
                 element.comment = "Particle Curtain " + str(s)
                 last_trough_height = height_norm
@@ -2092,12 +2114,12 @@ class CoPylot:
             copt = P.add_optic("Cavity Surface")			
 			# set the optical properties. (Front)
             copt.front.dist_type = 'f'
-            copt.front.reflectivity = 0.9 # Assuming white surface
+            copt.front.reflectivity = self.data_get_number(p_data, "receiver.0.absorptance") # 0.9 # Assuming white surface
             copt.front.slope_error = 0.00001
             copt.front.spec_error = 1000.
 			# back surface optics
             copt.back.dist_type = 'f'
-            copt.back.reflectivity = 0.9 # Assuming white surface
+            copt.back.reflectivity = self.data_get_number(p_data, "receiver.0.absorptance") # 0.9 # Assuming white surface
             copt.back.slope_error = 0.00001
             copt.back.spec_error = 1000.
 
@@ -2107,9 +2129,9 @@ class CoPylot:
             element = r_stage.add_element()
             element.enabled = True
 
-            element.position.x = rec_offset_x
-            element.position.y = -(max_curtain_depth + back_cavity_offset)/2. + rec_offset_y
-            element.position.z = -rec_height/2. + rec_offset_z
+            element.position.x = 0.0
+            element.position.y = -(max_curtain_depth + back_cavity_offset)/2.
+            element.position.z = -rec_height/2.
 
             element.aim.x = element.position.x
             element.aim.y = element.position.y
@@ -2129,9 +2151,9 @@ class CoPylot:
             element = r_stage.add_element()
             element.enabled = True
 
-            element.position.x = rec_offset_x
-            element.position.y = -max_curtain_depth - back_cavity_offset + rec_offset_y
-            element.position.z = -rec_height/2. + max_height/2. + rec_offset_z
+            element.position.x = 0.0
+            element.position.y = -max_curtain_depth - back_cavity_offset
+            element.position.z = -rec_height/2. + max_height/2.
 
             element.aim.x = element.position.x
             element.aim.y = element.position.y + 1.
@@ -2151,9 +2173,9 @@ class CoPylot:
             element = r_stage.add_element()
             element.enabled = True
 
-            element.position.x = rec_offset_x
-            element.position.y = -(max_curtain_depth + back_cavity_offset) / 2. + rec_offset_y
-            element.position.z = -rec_height/2. + max_height + rec_offset_z
+            element.position.x = 0.0
+            element.position.y = -(max_curtain_depth + back_cavity_offset) / 2.
+            element.position.z = -rec_height/2. + max_height
 
             element.aim.x = element.position.x
             element.aim.y = element.position.y
@@ -2173,9 +2195,9 @@ class CoPylot:
             element = r_stage.add_element()
             element.enabled = True
 
-            element.position.x = max_curtain_width / 2. + rec_offset_x
-            element.position.y = -(max_curtain_depth + back_cavity_offset) / 2. + rec_offset_y
-            element.position.z = -rec_height/2. + max_height / 2. + rec_offset_z
+            element.position.x = max_curtain_width / 2.
+            element.position.y = -(max_curtain_depth + back_cavity_offset) / 2.
+            element.position.z = -rec_height/2. + max_height / 2.
 
             element.aim.x = element.position.x - 1
             element.aim.y = element.position.y
@@ -2195,9 +2217,9 @@ class CoPylot:
             element = r_stage.add_element()
             element.enabled = True
 
-            element.position.x = - max_curtain_width / 2. + rec_offset_x
-            element.position.y = -(max_curtain_depth + back_cavity_offset) / 2. + rec_offset_y
-            element.position.z = -rec_height/2. + max_height / 2. + rec_offset_z
+            element.position.x = - max_curtain_width / 2.
+            element.position.y = -(max_curtain_depth + back_cavity_offset) / 2.
+            element.position.z = -rec_height/2. + max_height / 2.
 
             element.aim.x = element.position.x + 1.
             element.aim.y = element.position.y
@@ -2218,9 +2240,9 @@ class CoPylot:
                 element = r_stage.add_element()
                 element.enabled = True
 
-                element.position.x = rec_offset_x
-                element.position.y = rec_offset_y
-                element.position.z = rec_height / 2. + (max_height - rec_height) / 2. + rec_offset_z
+                element.position.x = 0.0
+                element.position.y = 0.0
+                element.position.z = rec_height / 2. + (max_height - rec_height) / 2.
 
                 element.aim.x = element.position.x
                 element.aim.y = element.position.y - 1.
@@ -2240,9 +2262,9 @@ class CoPylot:
             element = r_stage.add_element()
             element.enabled = True
 
-            element.position.x = max_curtain_width / 2. - (max_curtain_width - rec_width) / 4. + rec_offset_x
-            element.position.y = rec_offset_y
-            element.position.z = rec_offset_z
+            element.position.x = max_curtain_width / 2. - (max_curtain_width - rec_width) / 4.
+            element.position.y = 0.0
+            element.position.z = 0.0
 
             element.aim.x = element.position.x
             element.aim.y = element.position.y - 1.
@@ -2262,9 +2284,9 @@ class CoPylot:
             element = r_stage.add_element()
             element.enabled = True
 
-            element.position.x = -max_curtain_width / 2. + (max_curtain_width - rec_width) / 4. + rec_offset_x
-            element.position.y = rec_offset_y
-            element.position.z = rec_offset_z
+            element.position.x = -max_curtain_width / 2. + (max_curtain_width - rec_width) / 4.
+            element.position.y = 0.0
+            element.position.z = 0.0
 
             element.aim.x = element.position.x
             element.aim.y = element.position.y - 1.

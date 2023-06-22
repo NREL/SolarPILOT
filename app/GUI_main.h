@@ -776,7 +776,6 @@ public:
     void SAMInputParametric();
     void SAMInputParametric2();
     void LayoutSimulationExport(SolarField &SF, wxString &fname, std::vector<bool> &options, wxString &header, wxString &delim, bool quiet = false);
-    void CreateResultsTable(sim_result &result, grid_emulator &table);
     void CreateParametricsTable(parametric &par, sim_results &results, grid_emulator &table);
     
     void StartSimTimer();
@@ -793,8 +792,6 @@ public:
     void CheckOptGridRange();
 
     bool DoPerformanceSimulation(SolarField &SF, var_map &vset, Hvector &helios);
-    bool SolTraceFluxSimulation(SolarField &SF, var_map &vset, Hvector &helios);
-    bool SolTraceFluxBinning(SolarField &SF);
     void UpdateFluxLC(int sortkey=0);
     int SolTraceProgressUpdate(st_uint_t ntracedtotal, st_uint_t ntraced, st_uint_t ntotrace, st_uint_t curstage, st_uint_t nstages, void *data);
     void SolTraceFileExport(std::string fname);

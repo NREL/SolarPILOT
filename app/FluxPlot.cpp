@@ -453,6 +453,7 @@ void FluxPlot::DoPaint(wxDC &_pdc)
         case Receiver::REC_GEOM_TYPE::FALL_FLAT:
         case Receiver::REC_GEOM_TYPE::FALL_CURVE:
         {
+            //TODO: Flux plot spaces curtain evenly across height. This should be updated!
             if (vrec->curtain_type.mapval() == var_receiver::CURTAIN_TYPE::CURVED) {
                 _plotobj.SetXLabel("Receiver circumferential position [m]");
             }
@@ -470,7 +471,7 @@ void FluxPlot::DoPaint(wxDC &_pdc)
                 fny = ffs->getFluxNY();
 
             if (_aperture_view == 0)
-            {   //Flux surface view
+            {   // Flux surface view
                 //Copy the data into a double vector
                 vector<vector<double> > fdata(fnx, vector<double>(fny* (nfs - 1)));
 
