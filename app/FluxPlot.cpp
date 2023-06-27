@@ -453,7 +453,6 @@ void FluxPlot::DoPaint(wxDC &_pdc)
         case Receiver::REC_GEOM_TYPE::FALL_FLAT:
         case Receiver::REC_GEOM_TYPE::FALL_CURVE:
         {
-            //TODO: Flux plot spaces curtain evenly across height. This should be updated!
             if (vrec->curtain_type.mapval() == var_receiver::CURTAIN_TYPE::CURVED) {
                 _plotobj.SetXLabel("Receiver circumferential position [m]");
             }
@@ -462,7 +461,7 @@ void FluxPlot::DoPaint(wxDC &_pdc)
             _plotobj.SetUnits(" kW/m2");
 
             //---- Draw the flux intensity ----
-            FluxSurface* ffs = &fs->at(1);
+            FluxSurface* ffs = &fs->at(0);
             FluxGrid* fg = ffs->getFluxMap();
 
             //Calculate the element size
@@ -473,16 +472,14 @@ void FluxPlot::DoPaint(wxDC &_pdc)
             if (_aperture_view == 0)
             {   // Flux surface view
                 //Copy the data into a double vector
-                vector<vector<double> > fdata(fnx, vector<double>(fny* (nfs - 1)));
-
+                vector<vector<double> > fdata(fnx, vector<double>(fny));
                 //Load data in.
-                int offset = (nfs - 2) * fny;
+                int offset = fny;
                 for (int n = 1; n < nfs; n++) { //Loop through surfaces
-                    if (n > 1) {
-                        ffs = &fs->at(n);
-                        fg = ffs->getFluxMap();
-                        offset -= fny;
-                    }
+                    ffs = &fs->at(n);
+                    fg = ffs->getFluxMap();
+                    fny = ffs->getFluxNY();
+                    offset -= fny;
                     for (int i = 0; i < fnx; i++) {
                         for (int j = 0; j < fny; j++) {
                             fdata.at(i).at(j + offset) = fg->at(i).at(j).flux;
@@ -494,12 +491,10 @@ void FluxPlot::DoPaint(wxDC &_pdc)
             }
             else if (_aperture_view == 1)
             {   // Aperture view
+
                 //Copy the data into a double vector
                 vector<vector<double> > fdata(fnx, vector<double>(fny));
 
-                //Load data in.
-                ffs = &fs->at(0);
-                fg = ffs->getFluxMap();
                 for (int i = 0; i < fnx; i++) {
                     for (int j = 0; j < fny; j++) {
                         fdata.at(i).at(j) = fg->at(i).at(j).flux;
