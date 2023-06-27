@@ -1956,23 +1956,7 @@ class CoPylot:
 
                 #/*--- Re-adding receiver stage ---*/
                 r_stage = P.add_stage()
-                #Global origin
-                r_stage.position.x = rec_offset_x   # making stage origin account for offsets
-                r_stage.position.y = rec_offset_y
-                r_stage.position.z = rec_offset_z
-                #Aim point
-                r_stage.aim.x = r_stage.position.x
-                r_stage.aim.y = r_stage.position.y
-                r_stage.aim.z = r_stage.position.z + 1.
-                #No z rotation
-                r_stage.zrot = 0.
-                #{virtual stage, multiple hits per ray, trace through} UI checkboxes
-                r_stage.is_virtual = False 
-                r_stage.is_multihit = True 
-                r_stage.is_tracethrough = False
-                #Name
-                r_stage.name = "Receiver"
-
+                
                 recname = self.data_get_string(p_data, "receiver.0.class_name")
                 copt = P.add_optic(recname)
 
@@ -1983,6 +1967,17 @@ class CoPylot:
             ap_stage.name = "Aperture"
             ap_stage.is_virtual = True
             ap_stage.is_tracethrough = False
+
+            #Global origin - making stage origin account for offsets
+            ap_stage.position.x = rec_offset_x
+            ap_stage.position.y = rec_offset_y
+            ap_stage.position.z = rec_offset_z
+            #Aim point
+            ap_stage.aim.x = ap_stage.position.x
+            ap_stage.aim.y = ap_stage.position.y
+            ap_stage.aim.z = ap_stage.position.z + 1.
+            #No z rotation
+            ap_stage.zrot = 0.
             
             element = ap_stage.add_element()
             element.enabled = True
