@@ -1768,7 +1768,7 @@ class CoPylot:
             #Add a flat aperture to the stage
             element.enabled = True
             element.position.x = self.data_get_number(p_data, "receiver.0.rec_offset_x_global")
-            element.position.y = self.data_get_number(p_data, "receiver.0.rec_offset_y_global") - diam/2.
+            element.position.y = self.data_get_number(p_data, "receiver.0.rec_offset_y_global")
             element.position.z = self.data_get_number(p_data, "receiver.0.optical_height") #optical height includes z offset
             
             #Calculate the receiver aperture aim point
@@ -1780,7 +1780,7 @@ class CoPylot:
             element.aim.z = element.position.z + aim.z*1000.
 
             # element->ZRot = R2D*Toolbox::ZRotationTransform(aim);
-            element.zrot = P.util_calc_zrot_azel(element.aim)
+            element.zrot = P.util_calc_zrot_azel(P.util_calc_unitvect(element.aim))
             
             #Set up the aperture arguments array
             element.aperture_params[0] = width 
@@ -1798,7 +1798,9 @@ class CoPylot:
         sun_type = self.data_get_number(p_data, "ambient.0.sun_type")
         P.is_sunshape = self.data_get_number(p_data, "fluxsim.0.is_sunshape_err") and ( sun_type != 0 )  #point sun
         P.is_surface_errors = self.data_get_number(p_data, "fluxsim.0.is_optical_err")
+        P.dni = self.data_get_number(p_data, "fluxsim.0.flux_dni")
         
+
         return P
 
 
