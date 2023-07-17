@@ -1832,13 +1832,13 @@ class CoPylot:
                 snout_opt_name = "SNOUT Surface"
                 copt.name  = snout_opt_name
                 # set the optical properties. (Front)
-                copt.front.dist_type = 'f'
-                copt.front.reflectivity = 0.0 #0.9 # Assuming white surface
+                copt.front.dist_type = 'f'  # diffuse surface
+                copt.front.reflectivity = 0.8
                 copt.front.slope_error = 0.00001
                 copt.front.spec_error = 1000.
 			    # back surface optics
                 copt.back.dist_type = 'f'
-                copt.back.reflectivity = 0.0 #0.9 # Assuming white surface
+                copt.back.reflectivity = 0.8
                 copt.back.slope_error = 0.00001
                 copt.back.spec_error = 1000.
 
@@ -2023,14 +2023,16 @@ class CoPylot:
             copt.front.dist_type = 'g' # 'f'
             #copt.front.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
             copt.front.transmissivity = 0.3
-            copt.front.slope_error = math.pi / 4. # 0.00001
-            copt.front.spec_error = math.pi / 4. # 10000.
+            copt.front.slope_error = 0.00001
+            copt.front.spec_error = 10000.
+            copt.front.refraction_real = 1.0
             # Back
-            copt.back.dist_type = 'g' # 'f'
-            copt.back.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
-            #copt.back.transmissivity = 0.3
-            copt.back.slope_error = math.pi / 4. # 0.00001
-            copt.back.spec_error = math.pi / 4. # 10000.
+            copt.back.dist_type = 'g'
+            #copt.back.reflectivity = 1.-self.data_get_number(p_data, "receiver.0.absorptance")
+            copt.back.transmissivity = 0.3
+            copt.back.slope_error = 0.00001
+            copt.back.spec_error = 10000.
+            copt.back.refraction_real = 1.0
             
             #**** Add particle curtain *****#
             troughs_heights_depths = self.data_get_matrix(p_data, "receiver.0.norm_heights_depths")
@@ -2098,7 +2100,7 @@ class CoPylot:
                     element.surface = 's'
                     element.surface_params[0] = 1. / curtain_radius
 
-                element.interaction = 2 #1  # Refraction surface for transmissivity
+                element.interaction = 1  # Refraction surface for transmissivity
                 element.optic = copt
                 element.comment = "Particle Curtain " + str(s)
                 last_trough_height = height_norm
@@ -2109,12 +2111,12 @@ class CoPylot:
             copt = P.add_optic("Cavity Surface")			
 			# set the optical properties. (Front)
             copt.front.dist_type = 'f'
-            copt.front.reflectivity = self.data_get_number(p_data, "receiver.0.absorptance") # 0.9 # Assuming white surface
+            copt.front.reflectivity = 0.8 # Assuming white surface
             copt.front.slope_error = 0.00001
             copt.front.spec_error = 1000.
 			# back surface optics
             copt.back.dist_type = 'f'
-            copt.back.reflectivity = self.data_get_number(p_data, "receiver.0.absorptance") # 0.9 # Assuming white surface
+            copt.back.reflectivity = 0.8 # Assuming white surface
             copt.back.slope_error = 0.00001
             copt.back.spec_error = 1000.
 
