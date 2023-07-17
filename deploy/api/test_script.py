@@ -213,15 +213,26 @@ if True:
     if True:
         ##check = cp.add_land(r, b'exclus', [[1000, 1000],[500,1000], [500,500], [1000, 500]]) # - Testing - Pass
         if True:
+            tht = cp.data_get_number(r, "solarfield.0.tht")
             res = cp.detail_results(r)
             helio_dict = {}
             helio_dict["id"] = [res.id[0], res.id[1]]
-            helio_dict["location-x"] = [1500, -1500]
-            helio_dict["location-y"] = [1500, 1500]
+            helio_dict["location-x"] = [750, -750]
+            helio_dict["location-y"] = [750, 750]
+            helio_dict["aimpoint-x"] = [-5, 5]
+            helio_dict["aimpoint-z"] = [tht-5, tht+5]
             helio_dict["soiling"] = [0.5, 0.3]
             helio_dict["reflectivity"] = [0.2, 0.8]
-            helio_dict["enabled"] = [1, 0]
+            helio_dict["enabled"] = [1, 1]
+            # NOTE: Aim method must be set to "Keep existing" for heliostat aimpoint modification
+            assert cp.data_set_string(r, "fluxsim.0.aim_method", "Keep existing")
             assert cp.modify_heliostats(r, helio_dict)
+            post_mod_res = cp.detail_results(r)
+            for i in range(len(helio_dict['id'])):
+                assert helio_dict["location-x"][i] == post_mod_res.x_location[i]
+                assert helio_dict["location-y"][i] == post_mod_res.y_location[i]
+                assert helio_dict["aimpoint-x"][i] == post_mod_res.x_aimpoint[i]
+                assert helio_dict["aimpoint-z"][i] == post_mod_res.z_aimpoint[i]
 
         if True:
 
