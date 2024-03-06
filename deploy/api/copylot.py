@@ -205,6 +205,10 @@ class CoPylot:
         bool
             True if successful, False otherwise
         """
+        not_settable_vars = ['optical_height']
+        for ns_var in not_settable_vars:
+            if ns_var in name:
+                raise TypeError(name + ' is not a settable variable.')
 
         self.pdll.sp_set_number.restype = c_bool
         return self.pdll.sp_set_number(c_void_p(p_data), c_char_p(name.encode()), c_number(value)) 
