@@ -681,7 +681,7 @@ static void _simulate( lk::invoke_t &cxt )
 
     Hvector *helios = SF->getHeliostats();
 
-    if(! interop::PerformanceSimulationPrep(*SF, *helios, simtype) ) 
+    if(! interop::PerformanceSimulationPrep(*SF, *helios) ) 
     {
         cxt.result().assign( 0. );
         return;

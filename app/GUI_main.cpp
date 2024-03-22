@@ -3313,7 +3313,7 @@ bool SPFrame::DoPerformanceSimulation( SolarField &SF, var_map &vset, Hvector &h
     int simtype = vset.flux.flux_model.mapval();    //0=Delsol, 1=Soltrace
     
     //Set up field, update aimpoints, and simulate at the performance sun position
-    if(! interop::PerformanceSimulationPrep(SF, helios, simtype) ) 
+    if(! interop::PerformanceSimulationPrep(SF, helios) ) 
         return false;
     
     Vect sun = Ambient::calcSunVectorFromAzZen( SF.getVarMap()->flux.flux_solar_az.Val() * D2R, (90. - SF.getVarMap()->flux.flux_solar_el.Val())*D2R );
