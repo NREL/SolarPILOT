@@ -610,11 +610,11 @@ void SPFrame::OnReceiverAdd( wxCommandEvent& evt )
             return;
         }
 
-        int ind = _variables.recs.size();
+        int ind = _variables.recs.back().id.val + 1; // Add to the last id value to ensure it is unique
 
         //which name to use?
         //Create a popup dialog
-        string name = my_to_string(nitems+1);
+        string name = my_to_string(ind + 1);
         name = "Receiver " + name;
     
         bool no_errs = false;
@@ -667,8 +667,7 @@ void SPFrame::OnReceiverAdd( wxCommandEvent& evt )
 					}
                 }
 
-                _variables.recs[ind].rec_name.val = tname;
-                
+                _variables.recs.back().rec_name.val = tname;
             }
             else
             {
