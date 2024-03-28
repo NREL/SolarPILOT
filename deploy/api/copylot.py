@@ -758,16 +758,23 @@ class CoPylot:
 
         self.pdll.sp_summary_results.restype = c_char_p
         ret = self.pdll.sp_summary_results( c_void_p(p_data)).decode()
+
+        n_results = sum(1 for i in range(len(ret)) if ret.startswith("Receiver name", i))
         # save result table to dictionary
         if save_dict:
             items = ret.split('\n')
             res_dict = {}
+            case_dict = {}
             for i in items:
                 key_val = i.split(',')
-                try:
-                    res_dict[key_val[0]] = float(key_val[1])
-                except:
-                    res_dict[key_val[0]] = key_val[1]
+                if key_val[0] == "Receiver name":
+                    res_dict[key_val[1]] = case_dict
+                    case_dict = {}  # reset
+                else:
+                    try:
+                        case_dict[key_val[0]] = float(key_val[1])
+                    except:
+                        case_dict[key_val[0]] = key_val[1]
             return res_dict
         else:    # print results table
             return print(ret)
