@@ -99,8 +99,6 @@ fdh.write( \
 	#define SP_USE_SOLTRACE
 	//Compile without threading functionality? Comment out to remove.
 	#define SP_USE_THREADS
-    //Compile without multiple receiver support? Comment out to remove.
-    #define SP_MULTI_REC
 	//create local make-dir functions
 	#ifdef _WIN32 
 	    #define SP_USE_MKDIR

@@ -2211,7 +2211,11 @@ void SPFrame::SAMInputParametric()
 
         for(int i=0; i<(int)fluxtab.efficiency.size(); i++)
         {
-            file << (fluxtab.azimuths.at(i)*R2D - 180.) << "," << fluxtab.zeniths.at(i)*R2D << "," << fluxtab.efficiency.at(i) << "\n";
+            file << (fluxtab.azimuths.at(i) * R2D - 180.) << "," << fluxtab.zeniths.at(i) * R2D;
+            for (int j = 0; j < (int)_variables.recs.size(); j++) {
+                file << "," << fluxtab.efficiency.at(i).at(j);
+            }
+            file << "\n";
         }
 
         file.close();
