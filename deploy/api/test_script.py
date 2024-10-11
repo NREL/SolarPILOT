@@ -5,7 +5,7 @@ from copylot import CoPylot
 
 plot_results = True
 test_solTrace_sim = True
-cp = CoPylot()
+cp = CoPylot(debug=True)
 print("Process ID: ", os.getpid())
 
 if True:
@@ -16,11 +16,13 @@ if True:
             r,
             "ambient.0.weather_file",
             "../climate_files/USA CA Daggett (TMY2).csv")
+    
     assert cp.generate_layout(r)
     field = cp.get_layout_info(r)
     assert cp.simulate(r)  
     flux = cp.get_fluxmap(r)
     assert cp.data_free(r)
+    
 
     # Plotting (default) solar field and flux map
     if plot_results:
@@ -40,6 +42,13 @@ r = cp.data_create()  # New SolarPILOT instance
 print(cp.version(r))    # Version number
 cp.api_callback_create(r)   # callback
 #cp.api_disable_callback(r) - tested
+
+assert cp.data_set_string(
+        r,
+        "ambient.0.weather_file",
+        "../climate_files/USA CA Daggett (TMY2).csv")
+wf_data = cp.generate_weather_simulation_data(r, 3)
+assert len(wf_data) == 8760     # Full year of data
 
 if True:
     ## Testing set and get number - Pass

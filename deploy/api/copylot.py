@@ -546,21 +546,23 @@ class CoPylot:
         self.pdll.sp_drop_heliostat_template.restype = c_bool
         return self.pdll.sp_drop_heliostat_template( c_void_p(p_data), c_char_p(helio_name.encode()))
 
-    #SPEXPORT bool sp_generate_simulation_days(sp_data_t p_data, int *nrecord)
-    def generate_simulation_days(self, p_data: int):
-        """Report out the days, hours, and weather data used to generate the annual performance estimate
-        for the heliostat field layout. 
-
-        ** This function requires that a layout has previously been created **
+    #SPEXPORT sp_number_t* sp_generate_simulation_days(sp_data_t p_data, int* nrecord, int* ncol, int sim_method = -2)
+    def generate_weather_simulation_data(self, p_data: int, sim_method: int):
+        """Report out the days, hours, and weather data used for heliostat field layout based on simulation method. 
 
         Parameters
         ----------
         p_data : int
             memory address of SolarPILOT instance
+        sim_method : int
+            Simulation method used for the layout of heliostats\n
+                1 = Single simulation point\n
+                3 = Annual simulation\n
+                5 = Representative profiles\n
 
         Returns
         -------
-        list | Each row is a time step; columns are as follows:
+        list | Each row is a time step; columns are as follows:\n
             0 | Month (1-12)
             1 | Day of the month (1-N)
             2 | Hour of the day (0-23.999..)
@@ -573,10 +575,9 @@ class CoPylot:
         """
         nrecord = c_int()
         ncol = c_int()
-        self.pdll.sp_generate_simulation_days.restype = POINTER(c_number)
-        simdays = self.pdll.sp_generate_simulation_days( c_void_p(p_data), byref(nrecord), byref(ncol))
-        # self.pdll._sp_free_var.restype = c_void_p
-        # self.pdll._sp_free_var( byref(simdays) )
+        self.pdll.sp_generate_weather_simulation_data.restype = POINTER(c_number)
+        simdays = self.pdll.sp_generate_weather_simulation_data( c_void_p(p_data), byref(nrecord), byref(ncol), c_int(sim_method))
+
         data = []
         for i in range(nrecord.value):
             data.append(simdays[i*ncol.value:i*ncol.value+ncol.value])
