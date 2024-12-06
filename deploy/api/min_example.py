@@ -9,6 +9,7 @@ assert cp.data_set_string(
         "ambient.0.weather_file",
         "../climate_files/USA CA Daggett (TMY2).csv",
     )
+cp.data_set_number(r, "solarfield.0.q_des", 100.)
 assert cp.generate_layout(r)
 field = cp.get_layout_info(r)
 assert cp.simulate(r)
