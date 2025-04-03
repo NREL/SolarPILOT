@@ -28,7 +28,7 @@ if ( NOT APPLE)
 	set(CURL_DIR build_resources/libcurl_ssl_x64)
 endif()
 
-include_directories(. $ENV{WEXDIR}/include $ENV{LKDIR}/include $ENV{CORETRACEDIR} $ENV{SSCDIR}/shared $ENV{SSCDIR}/solarpilot)
+include_directories(. $ENV{WEXDIR}/include $ENV{LKDIR}/include $ENV{CORETRACEDIR} $ENV{SSCDIR}/shared $ENV{SSCDIR}/solarpilot $ENV{RAPIDJSONDIR})
 
 set(SOLARPILOT_SRC
 	app/FieldPlot.cpp                         app/FieldPlot.h
