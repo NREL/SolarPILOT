@@ -95,6 +95,8 @@ class CoPylot:
         Modify attributes of a subset of heliostats in the current layout
     save_from_script(p_data: int, sp_fname: str) -> bool
         Save the current case as a SolarPILOT .spt file
+    load_from_script(p_data: int, sp_fname: str) -> bool
+        Load a SolarPILOT .spt file
     dump_varmap_tofile(p_data: int, fname: str) -> bool
         Dump the variable structure to a text csv file
     """
